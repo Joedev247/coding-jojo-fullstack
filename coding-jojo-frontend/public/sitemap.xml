@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Pages Sitemap -->
+  <sitemap>
+    <loc>https://codingjojo.vercel.app/main-sitemap.xml</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+  </sitemap>
+  
+  <!-- Courses Sitemap -->
+  <sitemap>
+    <loc>https://codingjojo.vercel.app/courses-sitemap.xml</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+  </sitemap>
+  
+  <!-- Community Sitemap -->
+  <sitemap>
+    <loc>https://codingjojo.vercel.app/community-sitemap.xml</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+  </sitemap>
+  
+  <!-- Blog/Resources Sitemap -->
+  <sitemap>
+    <loc>https://codingjojo.vercel.app/resources-sitemap.xml</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+  </sitemap>
+</sitemapindex>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Community Main Pages -->
+  <url>
+    <loc>https://codingjojo.vercel.app/community</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/questions</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/discussions</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/showcase</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/resources</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Community Categories -->
+  <url>
+    <loc>https://codingjojo.vercel.app/community/javascript</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/python</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/react</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/nodejs</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/web-design</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/career</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/community/help</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

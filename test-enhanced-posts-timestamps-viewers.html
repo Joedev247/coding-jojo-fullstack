@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Posts - Real Timestamps & Viewers</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b69 100%);
+            color: white;
+            padding: 20px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .feature-card h3 {
+            color: #ff6b9d;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .icon {
+            width: 24px;
+            height: 24px;
+            background: #ff6b9d;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ff6b9d;
+            overflow-x: auto;
+        }
+        .code-block pre {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .timestamp-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .timestamp-example {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .timestamp-example .time {
+            font-size: 18px;
+            font-weight: bold;
+            color: #22c55e;
+            margin-bottom: 5px;
+        }
+        .timestamp-example .description {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .viewer-demo {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .avatar-stack {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 10px 0;
+        }
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b9d, #4facfe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #1a1a1a;
+            margin-left: -8px;
+        }
+        .avatar:first-child {
+            margin-left: 0;
+        }
+        .more-count {
+            background: #374151;
+            color: #9ca3af;
+            font-size: 10px;
+        }
+        .upgrade-list {
+            list-style: none;
+            padding: 0;
+        }
+        .upgrade-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .upgrade-list li:last-child {
+            border-bottom: none;
+        }
+        .check {
+            color: #22c55e;
+            font-weight: bold;
+        }
+        .backend-changes {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .implementation-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .status-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        .status-card.completed {
+            border-left-color: #22c55e;
+        }
+        .status-card.in-progress {
+            border-left-color: #f59e0b;
+        }
+        .status-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+        .status-card.completed h4 {
+            color: #22c55e;
+        }
+        .status-card.in-progress h4 {
+            color: #f59e0b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Enhanced Posts: Real Timestamps & Viewers</h1>
+            <p>Upgraded your community posts to show real-time data and viewer information</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>
+                    <span class="icon">📅</span>
+                    Real-Time Timestamps
+                </h3>
+                <p>Posts now display actual dates and times instead of generic "1 day ago"</p>
+                
+                <div class="timestamp-examples">
+                    <div class="timestamp-example">
+                        <div class="time">just now</div>
+                        <div class="description">< 1 minute</div>
+                    </div>
+                    <div class="timestamp-example">
+                        <div class="time">25m ago</div>
+                        <div class="description">< 1 hour</div>
+                    </div>
+                    <div class="timestamp-example">
+                        <div class="time">3h ago</div>
+                        <div class="description">< 24 hours</div>
+                    </div>
+                    <div class="timestamp-example">
+                        <div class="time">Wed, Dec 11, 2:30 PM</div>
+                        <div class="description">< 7 days</div>
+                    </div>
+                    <div class="timestamp-example">
+                        <div class="time">Dec 4, 2024, 9:15 AM</div>
+                        <div class="description">> 7 days</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre>// Enhanced timestamp formatting
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInMinutes = Math.floor(
+    (now.getTime() - date.getTime()) / (1000 * 60)
+  );
+
+  if (diffInMinutes < 1) return "just now";
+  if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+  // ... actual date/time for older posts
+};</pre>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <h3>
+                    <span class="icon">👀</span>
+                    Smart Viewer Display
+                </h3>
+                <p>Show actual users who viewed posts with their avatars and roles</p>
+                
+                <div class="viewer-demo">
+                    <h4>Example: Post Viewers</h4>
+                    <div style="display: flex; align-items: center; gap: 15px; margin: 15px 0;">
+                        <span style="color: #94a3b8;">👁️ 47 views</span>
+                        <div class="avatar-stack">
+                            <div class="avatar">SJ</div>
+                            <div class="avatar">MC</div>
+                            <div class="avatar">AR</div>
+                            <div class="avatar more-count">+2</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 12px; color: #94a3b8; margin: 0;">
+                        Recent viewers (last 7 days): Sarah Johnson (Instructor), Mike Chen (Student), Alex Rodriguez (Admin)
+                    </p>
+                </div>
+
+                <div class="code-block">
+                    <pre>// ViewersDisplay Component Features
+- Shows recent unique viewers (last 7 days)
+- User avatars with role indicators
+- Hover tooltip with viewer details
+- Expandable viewer list
+- Total view count</pre>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <h3>
+                    <span class="icon">🗄️</span>
+                    Database Integration
+                </h3>
+                <p>Updated backend to track viewer data and improved timestamp handling</p>
+
+                <ul class="upgrade-list">
+                    <li>
+                        <span class="check">✅</span>
+                        <span>Added viewers array to Post model</span>
+                    </li>
+                    <li>
+                        <span class="check">✅</span>
+                        <span>Track unique viewers per post</span>
+                    </li>
+                    <li>
+                        <span class="check">✅</span>
+                        <span>Store viewer timestamp data</span>
+                    </li>
+                    <li>
+                        <span class="check">✅</span>
+                        <span>Populate viewer user details</span>
+                    </li>
+                    <li>
+                        <span class="check">✅</span>
+                        <span>Real createdAt/updatedAt handling</span>
+                    </li>
+                </ul>
+
+                <div class="backend-changes">
+                    <h4>🔧 Backend Changes Made:</h4>
+                    <div class="code-block">
+                        <pre>// Community.js Model Update
+viewers: [{
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  viewedAt: {
+    type: Date,
+    default: Date.now
+  }
+}]
+
+// Controller: Track viewers
+if (userId && !existingView) {
+  post.viewers.push({
+    user: userId,
+    viewedAt: new Date()
+  });
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="implementation-status">
+            <div class="status-card completed">
+                <h4>✅ Frontend Updates</h4>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>Enhanced timestamp formatting</li>
+                    <li>ViewersDisplay component</li>
+                    <li>User avatar integration</li>
+                    <li>Post interface updates</li>
+                </ul>
+            </div>
+
+            <div class="status-card completed">
+                <h4>✅ Backend Updates</h4>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>Community model schema</li>
+                    <li>Viewer tracking logic</li>
+                    <li>Population queries</li>
+                    <li>API response updates</li>
+                </ul>
+            </div>
+
+            <div class="status-card completed">
+                <h4>✅ Features Working</h4>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>Real-time timestamps</li>
+                    <li>Viewer avatar display</li>
+                    <li>Role-based indicators</li>
+                    <li>Hover interactions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="feature-card" style="margin-top: 30px; text-align: center;">
+            <h3>🎉 Implementation Complete!</h3>
+            <p>Your community posts now display:</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+                <div>
+                    <strong style="color: #22c55e;">Real Timestamps</strong><br>
+                    <small style="color: #94a3b8;">Actual post creation dates and times</small>
+                </div>
+                <div>
+                    <strong style="color: #3b82f6;">Viewer Avatars</strong><br>
+                    <small style="color: #94a3b8;">See who viewed each post</small>
+                </div>
+                <div>
+                    <strong style="color: #f59e0b;">Role Indicators</strong><br>
+                    <small style="color: #94a3b8;">Admin/Instructor badges</small>
+                </div>
+                <div>
+                    <strong style="color: #ec4899;">Interactive UI</strong><br>
+                    <small style="color: #94a3b8;">Hover effects and dropdowns</small>
+                </div>
+            </div>
+            
+            <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 0; color: #22c55e; font-weight: bold;">
+                    🚀 Ready to test! Visit your community page to see the enhanced posts in action.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+# Robots.txt for Coding Jojo - Programming Education Platform
+# https://codingjojo.vercel.app/robots.txt
+
+User-agent: *
+Allow: /
+
+# Allow all crawlers to access main content
+Allow: /courses/
+Allow: /community/
+Allow: /dashboard/
+Allow: /auth/
+Allow: /api/courses/
+Allow: /api/community/
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/admin/
+Disallow: /api/auth/
+Disallow: /api/payments/
+Disallow: /_next/
+Disallow: /private/
+
+# Disallow temporary and development files
+Disallow: /temp/
+Disallow: /test/
+Disallow: /*.json$
+Disallow: /*?debug=*
+Disallow: /*?dev=*
+
+# Allow specific bot access to structured data
+User-agent: Googlebot
+Allow: /api/sitemap.xml
+Allow: /sitemap.xml
+
+# Educational content crawlers
+User-agent: Bingbot
+Allow: /courses/
+Allow: /community/
+Crawl-delay: 1
+
+# Social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Course aggregators and educational crawlers
+User-agent: CourseraBot
+Allow: /courses/
+
+User-agent: EdxBot
+Allow: /courses/
+
+# Sitemap location
+Sitemap: https://codingjojo.vercel.app/sitemap.xml
+Sitemap: https://codingjojo.vercel.app/courses-sitemap.xml
+Sitemap: https://codingjojo.vercel.app/community-sitemap.xml
+
+# Crawl delay for non-priority bots
+User-agent: *
+Crawl-delay: 1
+
+# Cache directive for better performance
+# Allow: /assets/
+# Allow: /images/
+# Allow: /css/
+# Allow: /js/

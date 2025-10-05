@@ -1,0 +1,293 @@
+{
+  "search": "Buscar cursos, tutoriales o tecnologías...",
+  "login": "Iniciar Sesión",
+  "signup": "Comenzar",
+  "announcement": {
+    "text": "Oferta de Año Nuevo - ¡Obtén 70% de descuento en todos los cursos!",
+    "hours": "horas",
+    "minutes": "min",
+    "seconds": "seg",
+    "cta": "Reclamar Oferta",
+    "new": "NUEVO"
+  },
+  "navigation": {
+    "dashboard": "Panel",
+    "courses": "Cursos",
+    "community": "Comunidad",
+    "services": "Servicios",
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto"
+  },
+  "user": {
+    "profile": "Mi Perfil",
+    "trackProgress": "Seguir progreso",
+    "settings": "Configuración",
+    "signOut": "Cerrar Sesión",
+    "premiumMember": "Miembro Premium",
+    "getStartedFree": "Comenzar Gratis"
+  },
+  "language": {
+    "selectLanguage": "Seleccionar Idioma",
+    "choosePreferred": "Elige tu idioma preferido"
+  },
+  "mobile": {
+    "searchCourses": "Buscar cursos...",
+    "language": "Idioma"
+  },
+  "descriptions": {
+    "dashboardDesc": "Ve tu progreso de aprendizaje",
+    "coursesDesc": "Explorar todos los cursos",
+    "communityDesc": "Conecta con estudiantes",
+    "servicesDesc": "Certificados reconocidos por la industria"
+  },
+  "hero": {
+    "badge": "Bienvenido a Coding Jojo",
+    "title": "Domina Nuevas",
+    "titleHighlight": "Habilidades Hoy",
+    "subtitle": "Eleva tu carrera con nuestros cursos dirigidos por expertos, proyectos prácticos y rutas de aprendizaje personalizadas.",
+    "exploreCourses": "Explorar Cursos",
+    "watchDemo": "Ver Demo",
+    "stats": {
+      "courses": "Cursos",
+      "students": "Estudiantes",
+      "successRate": "Tasa de Éxito"
+    },
+    "badges": {
+      "certifiedCourses": "Cursos Certificados",
+      "aiMentor": "Mentor IA",
+      "expertInstructors": "Instructores Expertos"
+    },
+    "slides": {
+      "aiLearning": {
+        "title": "Aprendizaje con IA",
+        "description": "Ruta personalizada e inteligente para dominar la programación"
+      },
+      "interactiveCoding": {
+        "title": "Codificación Interactiva", 
+        "description": "Retroalimentación en tiempo real mientras codificas y aprendes"
+      },
+      "smartMentor": {
+        "title": "Mentor Inteligente",
+        "description": "Orientación 24/7 de nuestro asistente inteligente"
+      }
+    }
+  },
+  "whyChooseUs": {
+    "features": {
+      "aiLearning": {
+        "title": "Rutas de Aprendizaje con IA",
+        "description": "Currículum adaptativo que evoluciona con tu progreso, usando aprendizaje automático para identificar tus fortalezas y enfocarse en áreas de mejora."
+      },
+      "mentorNetwork": {
+        "title": "Red de Mentores Elite",
+        "description": "Conéctate con desarrolladores senior verificados de empresas FAANG que proporcionan revisiones de código y te guían a través de conceptos desafiantes."
+      },
+      "interactiveProjects": {
+        "title": "Proyectos Interactivos",
+        "description": "Construye aplicaciones del mundo real con retroalimentación inmediata usando nuestro sistema inteligente de análisis de código que detecta errores y sugiere optimizaciones."
+      },
+      "flexibleSchedule": {
+        "title": "Horario de Aprendizaje Flexible",
+        "description": "Currículum asíncrono con algoritmos de repetición espaciada para optimizar tu tiempo de estudio y maximizar la retención incluso con horarios ocupados."
+      },
+      "codeReview": {
+        "title": "Revisión Inteligente de Código",
+        "description": "Obtén retroalimentación en tiempo real sobre la eficiencia, estilo y errores potenciales de tu código de nuestro asistente IA que aprende de millones de repositorios de código."
+      },
+      "certification": {
+        "title": "Certificación Verificada por la Industria",
+        "description": "Completa desafíos verificados por las mejores empresas para obtener certificados asegurados por blockchain que demuestran tus habilidades a los empleadores."
+      }
+    }
+  },
+  "featuredCourses": {
+    "badge": "Cursos mejor calificados",
+    "title": "Cursos",
+    "titleHighlight": "Destacados",
+    "subtitle": "Seleccionados por nuestros expertos en aprendizaje para acelerar tu crecimiento profesional",
+    "categories": {
+      "all": "Todos los Cursos",
+      "development": "Desarrollo Web",
+      "dataScience": "Ciencia de Datos",
+      "mobile": "Desarrollo Móvil",
+      "design": "Diseño",
+      "cryptocurrency": "Criptomonedas"
+    },
+    "addToCart": "Agregar al Carrito",
+    "viewCourse": "Ver Curso",
+    "exploreAll": "Explorar Todos los Cursos",
+    "inCart": "En el Carrito"
+  },
+  "pricing": {
+    "title": "Elige Tu Plan",
+    "subtitle": "Comienza tu viaje de programación con el plan perfecto para ti",
+    "billingToggle": {
+      "monthly": "Mensual",
+      "annually": "Anual",
+      "saveText": "Ahorra 20%"
+    },
+    "plans": {
+      "personal": {
+        "title": "Plan Personal",
+        "forText": "Para ti",
+        "userCount": "Individual",
+        "buttonText": "Pruébalo gratis",
+        "features": [
+          "Acceso a más de 500 cursos",
+          "Desafíos básicos de codificación",
+          "Soporte de la comunidad",
+          "Acceso a la aplicación móvil",
+          "Certificados de finalización de cursos"
+        ]
+      },
+      "team": {
+        "title": "Plan de Equipo",
+        "forText": "Para tu equipo",
+        "userCount": "Hasta 10 usuarios",
+        "buttonText": "Iniciar prueba de equipo",
+        "popular": "Más Popular",
+        "features": [
+          "Todo en Personal",
+          "Herramientas de colaboración en equipo",
+          "Análisis avanzados",
+          "Soporte prioritario",
+          "Rutas de aprendizaje personalizadas",
+          "Seguimiento del progreso del equipo"
+        ]
+      },
+      "enterprise": {
+        "title": "Plan Empresarial",
+        "forText": "Para tu organización",
+        "userCount": "Usuarios ilimitados",
+        "priceText": "Precio Personalizado",
+        "buttonText": "Contactar Ventas",
+        "features": [
+          "Todo en Equipo",
+          "Integraciones personalizadas",
+          "Gerente de cuenta dedicado",
+          "Seguridad avanzada",
+          "Marca personalizada",
+          "Garantía SLA"
+        ]
+      }
+    }
+  },
+  "footer": {
+    "newsletter": {
+      "title": "Suscríbete a nuestro boletín",
+      "subtitle": "Mantente actualizado con los últimos tutoriales, consejos y ofertas.",
+      "placeholder": "Ingresa tu email",
+      "subscribe": "Suscribirse"
+    },
+    "about": "Capacitando desarrolladores con las herramientas y conocimientos para construir aplicaciones web increíbles. Aprende a programar de la manera correcta con nuestros tutoriales y recursos integrales.",
+    "sections": {
+      "quickLinks": "Enlaces Rápidos",
+      "popularTopics": "Temas Populares",
+      "contact": "Contáctanos"
+    },
+    "links": {
+      "community": "Comunidad",
+      "contact": "Contacto",
+      "services": "Servicios",
+      "support": "Soporte",
+      "help": "Ayuda",
+      "privacy": "Política de Privacidad",
+      "terms": "Términos de Servicio",
+      "cookies": "Política de Cookies"
+    },
+    "copyright": "© 2024 Coding Jojo. Todos los derechos reservados."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "viewMore": "Ver Más",
+    "showLess": "Mostrar Menos"
+  },
+  "courses": {
+    "html": "HTML",
+    "css": "CSS",
+    "javascript": "JavaScript",
+    "typescript": "TypeScript",
+    "python": "Python",
+    "java": "Java",
+    "cpp": "C++",
+    "csharp": "C#",
+    "php": "PHP",
+    "ruby": "Ruby",
+    "go": "Go",
+    "rust": "Rust",
+    "swift": "Swift",
+    "kotlin": "Kotlin",
+    "dart": "Dart",
+    "scala": "Scala",
+    "r": "R",
+    "matlab": "MATLAB",
+    "react": "React",
+    "vuejs": "Vue.js",
+    "angular": "Angular",
+    "nodejs": "Node.js",
+    "nextjs": "Next.js",
+    "svelte": "Svelte",
+    "expressjs": "Express.js",
+    "django": "Django",
+    "flask": "Flask",
+    "springboot": "Spring Boot",
+    "laravel": "Laravel",
+    "rubyonrails": "Ruby on Rails",
+    "aspnet": "ASP.NET",
+    "reactnative": "React Native",
+    "flutter": "Flutter",
+    "ionic": "Ionic",
+    "xamarin": "Xamarin",
+    "unity": "Unity",
+    "unrealengine": "Unreal Engine",
+    "mongodb": "MongoDB",
+    "postgresql": "PostgreSQL",
+    "mysql": "MySQL",
+    "redis": "Redis",
+    "firebase": "Firebase",
+    "supabase": "Supabase",
+    "aws": "AWS",
+    "azure": "Azure",
+    "googlecloud": "Google Cloud",
+    "docker": "Docker",
+    "kubernetes": "Kubernetes",
+    "devops": "DevOps",
+    "machinelearning": "Aprendizaje Automático",
+    "datascience": "Ciencia de Datos",
+    "ai": "IA",
+    "deeplearning": "Aprendizaje Profundo",
+    "tensorflow": "TensorFlow",
+    "pytorch": "PyTorch",
+    "blockchain": "Blockchain",
+    "web3": "Web3",
+    "solidity": "Solidity",
+    "ethereum": "Ethereum",
+    "bitcoin": "Bitcoin",
+    "defi": "DeFi",
+    "cybersecurity": "Ciberseguridad",
+    "ethicalhacking": "Hacking Ético",
+    "networksecurity": "Seguridad de Redes",
+    "cloudsecurity": "Seguridad en la Nube",
+    "uiuxdesign": "Diseño UI/UX",
+    "figma": "Figma",
+    "adobexd": "Adobe XD",
+    "sketch": "Sketch",
+    "photoshop": "Photoshop",
+    "illustrator": "Illustrator"
+  }
+}
+  

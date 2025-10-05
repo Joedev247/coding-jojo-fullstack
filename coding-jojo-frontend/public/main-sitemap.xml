@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://codingjojo.vercel.app/</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://codingjojo.vercel.app/hero1.png</image:loc>
+      <image:title>Coding Jojo - Learn Programming Online</image:title>
+      <image:caption>Interactive programming education platform</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Course Categories -->
+  <url>
+    <loc>https://codingjojo.vercel.app/courses</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/courses/javascript</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/courses/python</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/courses/react</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/courses/nodejs</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/courses/html-css</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Community -->
+  <url>
+    <loc>https://codingjojo.vercel.app/community</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Dashboard -->
+  <url>
+    <loc>https://codingjojo.vercel.app/dashboard</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Authentication -->
+  <url>
+    <loc>https://codingjojo.vercel.app/signup</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Static Pages -->
+  <url>
+    <loc>https://codingjojo.vercel.app/about</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/contact</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/support</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/help</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/terms</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/cookies</loc>
+    <lastmod>2025-07-26T00:00:00+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

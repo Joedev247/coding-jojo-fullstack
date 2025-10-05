@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Direct Login Test</title>
+</head>
+<body>
+    <h1>Direct Backend Login Test</h1>
+    <div>
+        <input type="email" id="email" placeholder="Email" value="newdev123@gmail.com">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="testLogin()">Test Login</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        async function testLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                console.log('🧪 Testing direct backend call...');
+                
+                const response = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+                
+                const data = await response.json();
+                console.log('🔍 Raw server response:', data);
+                
+                if (data.token) {
+                    console.log('🔑 Token details:', {
+                        type: typeof data.token,
+                        length: data.token?.length || 0,
+                        isUndefinedString: data.token === "undefined",
+                        preview: data.token.substring(0, 30) + '...',
+                        fullValue: data.token
+                    });
+                    
+                    // Test storing the token
+                    localStorage.setItem('test_token', data.token);
+                    const stored = localStorage.getItem('test_token');
+                    console.log('✅ Storage test:', {
+                        original: data.token,
+                        stored: stored,
+                        match: stored === data.token
+                    });
+                }
+                
+                resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                
+            } catch (error) {
+                console.error('❌ Test failed:', error);
+                resultDiv.innerHTML = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Learning Resources -->
+  <url>
+    <loc>https://codingjojo.vercel.app/resources</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/resources/javascript-guide</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/resources/python-tutorial</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/resources/react-best-practices</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/resources/web-development-roadmap</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/resources/coding-interview-prep</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Blog Articles -->
+  <url>
+    <loc>https://codingjojo.vercel.app/blog</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/blog/getting-started-programming</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/blog/javascript-vs-python</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://codingjojo.vercel.app/blog/web-development-trends-2025</loc>
+    <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

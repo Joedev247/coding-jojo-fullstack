@@ -1,0 +1,293 @@
+{
+  "search": "Search courses, tutorials, or technologies...",
+  "login": "Sign In",
+  "signup": "Get Started",
+  "announcement": {
+    "text": "New Year Sale - Get 70% OFF on all courses!",
+    "hours": "hours",
+    "minutes": "min",
+    "seconds": "sec",
+    "cta": "Claim Offer",
+    "new": "NEW"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "courses": "Courses",
+    "community": "Community",
+    "services": "Services",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "user": {
+    "profile": "My Profile",
+    "trackProgress": "Track progress",
+    "settings": "Settings",
+    "signOut": "Sign Out",
+    "premiumMember": "Premium Member",
+    "getStartedFree": "Get Started Free"
+  },
+  "language": {
+    "selectLanguage": "Select Language",
+    "choosePreferred": "Choose your preferred language"
+  },
+  "mobile": {
+    "searchCourses": "Search courses...",
+    "language": "Language"
+  },
+  "descriptions": {
+    "dashboardDesc": "View your learning progress",
+    "coursesDesc": "Browse all courses",
+    "communityDesc": "Connect with learners",
+    "servicesDesc": "Industry-recognized certificates"
+  },
+  "hero": {
+    "badge": "Welcome to Coding Jojo",
+    "title": "Master New",
+    "titleHighlight": "Skills Today",
+    "subtitle": "Elevate your career with our expert-led courses, hands-on projects, and personalized learning paths.",
+    "exploreCourses": "Explore Courses",
+    "watchDemo": "Watch Demo",
+    "stats": {
+      "courses": "Courses",
+      "students": "Students",
+      "successRate": "Success Rate"
+    },
+    "badges": {
+      "certifiedCourses": "Certified Courses",
+      "aiMentor": "AI Mentor",
+      "expertInstructors": "Expert Instructors"
+    },
+    "slides": {
+      "aiLearning": {
+        "title": "AI-Powered Learning",
+        "description": "Smart, personalized pathway to master coding"
+      },
+      "interactiveCoding": {
+        "title": "Interactive Coding",
+        "description": "Real-time feedback as you code and learn"
+      },
+      "smartMentor": {
+        "title": "Smart Mentor",
+        "description": "24/7 guidance from our intelligent assistant"
+      }
+    }
+  },
+  "whyChooseUs": {
+    "features": {
+      "aiLearning": {
+        "title": "AI-Powered Learning Paths",
+        "description": "Adaptive curriculum that evolves with your progress, using machine learning to identify your strengths and focus on improvement areas."
+      },
+      "mentorNetwork": {
+        "title": "Elite Mentor Network",
+        "description": "Connect with verified senior developers from FAANG companies who provide code reviews and mentor you through challenging concepts."
+      },
+      "interactiveProjects": {
+        "title": "Interactive Projects",
+        "description": "Build real-world applications with immediate feedback using our intelligent code analysis system that catches bugs and suggests optimizations."
+      },
+      "flexibleSchedule": {
+        "title": "Flexible Learning Schedule",
+        "description": "Asynchronous curriculum with spaced repetition algorithms to optimize your study time and maximize retention even with busy schedules."
+      },
+      "codeReview": {
+        "title": "Intelligent Code Review",
+        "description": "Get real-time feedback on your code's efficiency, style, and potential bugs from our AI assistant that learns from millions of code repositories."
+      },
+      "certification": {
+        "title": "Industry-Verified Certification",
+        "description": "Complete challenges verified by top companies to earn blockchain-secured certificates that prove your skills to employers."
+      }
+    }
+  },
+  "featuredCourses": {
+    "badge": "Top-rated courses",
+    "title": "Featured",
+    "titleHighlight": "Courses",
+    "subtitle": "Handpicked by our learning experts to accelerate your career growth",
+    "categories": {
+      "all": "All Courses",
+      "development": "Web Development",
+      "dataScience": "Data Science",
+      "mobile": "Mobile Development", 
+      "design": "Design",
+      "cryptocurrency": "Cryptocurrency"
+    },
+    "addToCart": "Add to Cart",
+    "viewCourse": "View Course",
+    "exploreAll": "Explore All Courses",
+    "inCart": "In Cart"
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Start your coding journey with the perfect plan for you",
+    "billingToggle": {
+      "monthly": "Monthly",
+      "annually": "Annually",
+      "saveText": "Save 20%"
+    },
+    "plans": {
+      "personal": {
+        "title": "Personal Plan",
+        "forText": "For you",
+        "userCount": "Individual",
+        "buttonText": "Try it free",
+        "features": [
+          "Access to 500+ courses",
+          "Basic coding challenges",
+          "Community support",
+          "Mobile app access",
+          "Course completion certificates"
+        ]
+      },
+      "team": {
+        "title": "Team Plan",
+        "forText": "For your team",
+        "userCount": "Up to 10 users",
+        "buttonText": "Start team trial",
+        "popular": "Most Popular",
+        "features": [
+          "Everything in Personal",
+          "Team collaboration tools",
+          "Advanced analytics",
+          "Priority support",
+          "Custom learning paths",
+          "Team progress tracking"
+        ]
+      },
+      "enterprise": {
+        "title": "Enterprise Plan",
+        "forText": "For your organization", 
+        "userCount": "Unlimited users",
+        "priceText": "Custom Pricing",
+        "buttonText": "Contact Sales",
+        "features": [
+          "Everything in Team",
+          "Custom integrations",
+          "Dedicated account manager",
+          "Advanced security",
+          "Custom branding",
+          "SLA guarantee"
+        ]
+      }
+    }
+  },
+  "footer": {
+    "newsletter": {
+      "title": "Subscribe to our newsletter",
+      "subtitle": "Stay updated with the latest tutorials, tips, and offers.",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
+    "about": "Empowering developers with the tools and knowledge to build amazing web applications. Learn coding the right way with our comprehensive tutorials and resources.",
+    "sections": {
+      "quickLinks": "Quick Links",
+      "popularTopics": "Popular Topics",
+      "contact": "Contact Us"
+    },
+    "links": {
+      "community": "Community",
+      "contact": "Contact",
+      "services": "Services", 
+      "support": "Support",
+      "help": "Help",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy"
+    },
+    "copyright": "© 2024 Coding Jojo. All rights reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "filter": "Filter",
+    "sort": "Sort",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "viewMore": "View More",
+    "showLess": "Show Less"
+  },
+  "courses": {
+    "html": "HTML",
+    "css": "CSS",
+    "javascript": "JavaScript",
+    "typescript": "TypeScript",
+    "python": "Python",
+    "java": "Java",
+    "cpp": "C++",
+    "csharp": "C#",
+    "php": "PHP",
+    "ruby": "Ruby",
+    "go": "Go",
+    "rust": "Rust",
+    "swift": "Swift",
+    "kotlin": "Kotlin",
+    "dart": "Dart",
+    "scala": "Scala",
+    "r": "R",
+    "matlab": "MATLAB",
+    "react": "React",
+    "vuejs": "Vue.js",
+    "angular": "Angular",
+    "nodejs": "Node.js",
+    "nextjs": "Next.js",
+    "svelte": "Svelte",
+    "expressjs": "Express.js",
+    "django": "Django",
+    "flask": "Flask",
+    "springboot": "Spring Boot",
+    "laravel": "Laravel",
+    "rubyonrails": "Ruby on Rails",
+    "aspnet": "ASP.NET",
+    "reactnative": "React Native",
+    "flutter": "Flutter",
+    "ionic": "Ionic",
+    "xamarin": "Xamarin",
+    "unity": "Unity",
+    "unrealengine": "Unreal Engine",
+    "mongodb": "MongoDB",
+    "postgresql": "PostgreSQL",
+    "mysql": "MySQL",
+    "redis": "Redis",
+    "firebase": "Firebase",
+    "supabase": "Supabase",
+    "aws": "AWS",
+    "azure": "Azure",
+    "googlecloud": "Google Cloud",
+    "docker": "Docker",
+    "kubernetes": "Kubernetes",
+    "devops": "DevOps",
+    "machinelearning": "Machine Learning",
+    "datascience": "Data Science",
+    "ai": "AI",
+    "deeplearning": "Deep Learning",
+    "tensorflow": "TensorFlow",
+    "pytorch": "PyTorch",
+    "blockchain": "Blockchain",
+    "web3": "Web3",
+    "solidity": "Solidity",
+    "ethereum": "Ethereum",
+    "bitcoin": "Bitcoin",
+    "defi": "DeFi",
+    "cybersecurity": "Cybersecurity",
+    "ethicalhacking": "Ethical Hacking",
+    "networksecurity": "Network Security",
+    "cloudsecurity": "Cloud Security",
+    "uiuxdesign": "UI/UX Design",
+    "figma": "Figma",
+    "adobexd": "Adobe XD",
+    "sketch": "Sketch",
+    "photoshop": "Photoshop",
+    "illustrator": "Illustrator"
+  }
+}
+  
