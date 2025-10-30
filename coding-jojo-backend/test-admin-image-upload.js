@@ -7,7 +7,7 @@ const path = require('path');
 
 async function testAdminCourseCreationWithImage() {
   try {
-    const baseURL = 'http://localhost:5000';
+    const baseURL = 'https://codingjojo-backend.onrender.com';
     
     // Test without authentication first to see if we can create courses directly
     console.log('📚 Creating test course with image upload...');

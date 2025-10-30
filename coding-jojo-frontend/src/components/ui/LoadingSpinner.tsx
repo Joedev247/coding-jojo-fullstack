@@ -84,6 +84,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
               width={imageSizes[size]}
               height={imageSizes[size]}
               className="object-contain animate-pulse filter blur-[0.3px] drop-shadow-md"
+              style={{ aspectRatio: '1 / 1' }}
               priority
             />
           </div>

@@ -1,396 +1,486 @@
 "use client";
 
-import React, { useState } from "react";
-import { ChevronDown, ChevronUp, Camera, Save } from "lucide-react";
-import Button from "../../../components/ui/button";
-import DangerZone from "../../../components/dashboard/DangerZone";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import {
+  BookOpen,
+  Calendar as CalendarIcon,
+  ChevronDown,
+  Clock,
+  Home,
+  LayoutDashboard,
+  MessageSquare,
+  Search,
+  Settings,
+  Bell,
+  MoreVertical,
+  User,
+  Award,
+  UserPlus,
+  HelpCircle,
+  Trash2,
+  Trophy,
+  Star,
+  CheckCircle,
+} from "lucide-react";
+import { useToast } from "../../../hooks/useToast";
+import { profileService } from "../../../services/profileService";
+import { dashboardService } from "../../../lib/dashboardService";
+import Header from "../../../components/dashboard/Header";
 import { useAuth } from "../../../contexts/AuthContext";
 import LoadingSpinner from "../../../components/ui/LoadingSpinner";
-import { useProfileUpdate } from "../../../hooks/useProfileUpdate";
+import Sidebar from "../../../components/dashboard/Sidebar";
 
-const Settings: React.FC = () => {
-  const { user } = useAuth();
-  const { updateProfile, isUpdating } = useProfileUpdate();
-  const [expanded, setExpanded] = useState<string>("profile");
-  const [profileData, setProfileData] = useState({
-    firstName: user?.firstName || user?.name?.split(" ")[0] || "",
-    lastName: user?.lastName || user?.name?.split(" ").slice(1).join(" ") || "",
-    email: user?.email || "",
-    bio:
-      user?.bio || "Passionate learner exploring new technologies and skills.",
-    profilePicture: user?.profilePicture || "",
+export default function ProfilePage() {
+  const { user, isAuthenticated } = useAuth();
+  const [mounted, setMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState<"personal" | "notification" | "privacy" | "payment">("personal");
+  
+  // Form state (populate from backend)
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
   });
+  const [loadingProfile, setLoadingProfile] = useState(false);
+  const [savingProfile, setSavingProfile] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const toast = useToast();
+  const [stats, setStats] = useState({ coursesInProgress: 0, coursesComplete: 0 });
 
-  // Update form data when user data changes
-  React.useEffect(() => {
-    if (user) {
-      setProfileData({
-        firstName: user.firstName || user.name?.split(" ")[0] || "",
-        lastName:
-          user.lastName || user.name?.split(" ").slice(1).join(" ") || "",
-        email: user.email || "",
-        bio:
-          user.bio ||
-          "Passionate learner exploring new technologies and skills.",
-        profilePicture: user.profilePicture || "",
-      });
-    }
-  }, [user]);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const toggleSection = (section: string) => {
-    if (expanded === section) {
-      setExpanded("");
-    } else {
-      setExpanded(section);
-    }
-  };
+  // Load profile and stats from backend
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      if (!isAuthenticated) return;
+      setLoadingProfile(true);
+      try {
+        const resp = await profileService.getProfile();
+        if (!mounted) return;
+        if (resp.success && resp.data?.user) {
+          const u = resp.data.user;
+          setFormData((prev) => ({
+            ...prev,
+            fullName: u.name || '',
+            email: u.email || '',
+          }));
+        }
 
-  const handleInputChange = (field: string, value: string) => {
-    setProfileData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-  const handleSaveProfile = async () => {
-    console.log("=== PROFILE SAVE CLICKED ===");
-    console.log("Current profileData:", profileData);
+        const statsResp = await dashboardService.getUserStats();
+        if (!mounted) return;
+        if (statsResp.success && statsResp.data) {
+          setStats({
+            coursesInProgress: statsResp.data.inProgress || statsResp.data.coursesInProgress || 0,
+            coursesComplete: statsResp.data.earned || statsResp.data.coursesCompleted || 0
+          });
+        } else {
+          // fallback to enrolled courses count
+          const coursesResp = await dashboardService.getUserCourses();
+          if (coursesResp.success && coursesResp.data) {
+            const inProgress = (coursesResp.data as any[]).filter(c => c.status === 'in-progress').length;
+            const completed = (coursesResp.data as any[]).filter(c => c.status === 'completed').length;
+            setStats({ coursesInProgress: inProgress, coursesComplete: completed });
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load profile or stats:', err);
+        setProfileError(err instanceof Error ? err.message : String(err));
+      } finally {
+        if (mounted) setLoadingProfile(false);
+      }
+    };
 
-    const result = await updateProfile({
-      firstName: profileData.firstName,
-      lastName: profileData.lastName,
-      email: profileData.email,
-      bio: profileData.bio,
-      profilePicture: profileData.profilePicture,
+    load();
+    return () => { mounted = false; };
+  }, [isAuthenticated]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
-
-    console.log("=== PROFILE SAVE RESULT ===", result);
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setProfileData((prev) => ({
-          ...prev,
-          profilePicture: result,
-        }));
-      };
-      reader.readAsDataURL(file);
+  const handleSaveProfile = async () => {
+    setSavingProfile(true);
+    try {
+      const payload: any = {};
+      if (formData.fullName) payload.name = formData.fullName;
+      if (formData.email) payload.email = formData.email;
+      // address/city/state may not be supported by backend; include if present
+      const resp = await profileService.updateProfile(payload);
+      if (resp.success) {
+        toast?.success?.('Profile updated');
+      } else {
+        toast?.error?.(resp.error || 'Failed to update profile');
+      }
+    } catch (err) {
+      console.error('Save profile failed:', err);
+      toast?.error?.(err instanceof Error ? err.message : 'Failed to save profile');
+    } finally {
+      setSavingProfile(false);
     }
   };
 
-  const renderSectionHeader = (title: string, section: string) => (
-    <div
-      className="flex justify-between items-center cursor-pointer py-6   bg-gray-900/80 backdrop-blur-sm border-b border-gray-700/50"
-      onClick={() => toggleSection(section)}
-    >
-      <h3 className="text-lg font-medium text-white px-8">{title}</h3>
-      <div className="px-8">
-        {expanded === section ? (
-          <ChevronUp className="h-5 w-5 text-gray-400" />
-        ) : (
-          <ChevronDown className="h-5 w-5 text-gray-400" />
-        )}
+  const handleCancel = () => {
+    // Reset form or navigate away
+    console.log("Cancelled");
+  };
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <LoadingSpinner size="sm" />
       </div>
-    </div>
-  );
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Please Login</h2>
+          <p className="text-gray-600">
+            You need to be logged in to access your profile.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="space-y-6">
-          {/* Profile Information */}
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50">
-            {renderSectionHeader("Profile Information", "profile")}
-            {expanded === "profile" && (
-              <div className="py-8 px-8 space-y-8">
-                <div className="flex flex-col md:flex-row gap-12">
-                  <div className="md:w-1/3">
-                    <div className="flex flex-col items-center">
+    <div className="flex h-screen bg-gray-50 overflow-hidden">
+      <Sidebar />
+
+      {/* Main Content */}
+      <div className="flex-1 overflow-auto">
+        <Header title="Profile" subtitle="Manage your account settings and preferences" />
+
+        {/* Profile Content */}
+        <div className="p-8">
+          <div className="grid grid-cols-12 gap-6">
+            {/* Left Column - Profile Card */}
+            <div className="col-span-3">
+              <div className="bg-white  border border-gray-200 p-6">
+                {/* Profile Avatar */}
+                <div className="text-center mb-6">
+                  <div className="relative inline-block mb-4">
+                    <Image
+                      src={user?.profilePicture || "/testimonial-avatar.jpg"}
+                      alt={user?.name || "User"}
+                      width={120}
+                      height={120}
+                      className="rounded-full object-cover"
+                    />
+                    <button className="absolute bottom-0 right-0 w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white hover:bg-indigo-700">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </button>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">
+                    {formData.fullName || user?.name || 'Your name'}
+                  </h3>
+                  <span className="inline-block px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full">
+                    {user?.isPremium ? 'Pro' : 'Free'}
+                  </span>
+                </div>
+
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-indigo-600">{stats.coursesInProgress}</p>
+                    <p className="text-xs text-gray-500">Course in progress</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-emerald-600">{stats.coursesComplete}</p>
+                    <p className="text-xs text-gray-500">Course Complete</p>
+                  </div>
+                </div>
+
+                {/* Last Achievement */}
+                <div className="mb-6">
+                  <h4 className="text-sm font-bold text-gray-900 mb-4">
+                    Last Achievement
+                  </h4>
+                  <div className="flex justify-between">
+                    <div className="text-center">
+              <div className="text-3xl mb-1"><Award className="w-6 h-6 text-yellow-500" /></div>
+                    </div>
+                    <div className="text-center">
+                <div className="text-3xl mb-1"><Trophy className="w-6 h-6 text-yellow-600" /></div>
+                    </div>
+                    <div className="text-center">
+                <div className="text-3xl mb-1"><Star className="w-6 h-6 text-indigo-500" /></div>
+                    </div>
+                    <div className="text-center">
+                <div className="text-3xl mb-1"><CheckCircle className="w-6 h-6 text-emerald-500" /></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Support Section */}
+                <div>
+                  <h4 className="text-sm font-bold text-gray-900 mb-4">Support</h4>
+                  <div className="space-y-2">
+                    <button className="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50  transition-colors">
+                      <div className="w-8 h-8 bg-blue-100  flex items-center justify-center">
+                        <UserPlus className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <span className="text-sm font-medium">Become a Mentor</span>
+                    </button>
+                    <button className="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50  transition-colors">
+                      <div className="w-8 h-8 bg-green-100  flex items-center justify-center">
+                        <HelpCircle className="w-4 h-4 text-green-600" />
+                      </div>
+                      <span className="text-sm font-medium">Support</span>
+                    </button>
+                    <button className="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50  transition-colors">
+                      <div className="w-8 h-8 bg-purple-100  flex items-center justify-center">
+                        <UserPlus className="w-4 h-4 text-purple-600" />
+                      </div>
+                      <span className="text-sm font-medium">Invite friend</span>
+                    </button>
+                    <button className="w-full flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50  transition-colors">
+                      <div className="w-8 h-8 bg-red-100  flex items-center justify-center">
+                        <Trash2 className="w-4 h-4 text-red-600" />
+                      </div>
+                      <span className="text-sm font-medium">Delete Account</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Profile Settings */}
+            <div className="col-span-9">
+              <div className="bg-white  border border-gray-200 p-8">
+                {/* Profile Setting Header */}
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  Profile Setting
+                </h2>
+
+                {/* Tabs */}
+                <div className="border-b border-gray-200 mb-8">
+                  <div className="flex space-x-8">
+                    <button
+                      onClick={() => setActiveTab("personal")}
+                      className={`pb-4 text-sm font-medium transition-colors ${
+                        activeTab === "personal"
+                          ? "text-gray-900 border-b-2 border-gray-900"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                    >
+                      Personal Details
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("notification")}
+                      className={`pb-4 text-sm font-medium transition-colors ${
+                        activeTab === "notification"
+                          ? "text-gray-900 border-b-2 border-gray-900"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                    >
+                      Notification
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("privacy")}
+                      className={`pb-4 text-sm font-medium transition-colors ${
+                        activeTab === "privacy"
+                          ? "text-gray-900 border-b-2 border-gray-900"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                    >
+                      Privacy
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("payment")}
+                      className={`pb-4 text-sm font-medium transition-colors ${
+                        activeTab === "payment"
+                          ? "text-gray-900 border-b-2 border-gray-900"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                    >
+                      Payment
+                    </button>
+                  </div>
+                </div>
+
+                {/* Tab Content */}
+                {activeTab === "personal" && (
+                  <div className="space-y-6">
+                    {/* Profile Image Upload */}
+                    <div className="flex items-center space-x-6">
                       <div className="relative">
-                        {profileData.profilePicture &&
-                        profileData.profilePicture.trim() !== "" ? (
-                          <img
-                            src={profileData.profilePicture}
-                            alt="Profile"
-                            className="w-32 h-32 rounded-full object-cover border-4 border-gray-700"
-                          />
-                        ) : (
-                          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white font-bold text-3xl border-4 border-gray-700">
-                            {profileData.firstName.charAt(0)}
-                            {profileData.lastName.charAt(0)}
-                          </div>
-                        )}
-                        <label className="absolute bottom-0 right-0 bg-gradient-to-r from-pink-500 to-orange-500 text-white p-3 rounded-full cursor-pointer hover:from-pink-600 hover:to-orange-600 transition-all duration-300">
-                          <Camera className="h-5 w-5" />
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            className="hidden"
-                          />
-                        </label>
+                        <Image
+                          src={user?.profilePicture || "/testimonial-avatar.jpg"}
+                          alt={user?.name || "User"}
+                          width={80}
+                          height={80}
+                          className="rounded-full object-cover"
+                        />
+                        <button className="absolute bottom-0 right-0 w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center text-white hover:bg-indigo-700">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                          </svg>
+                        </button>
                       </div>
-                      <p className="mt-6 text-sm text-gray-400 text-center">
-                        Click the camera icon to upload a new photo
-                      </p>
                     </div>
-                  </div>
 
-                  <div className="md:w-2/3 space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Form Fields */}
+                    <div className="grid grid-cols-2 gap-6">
+                      {/* Full Name */}
                       <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-2">
-                          First Name
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Full Name
                         </label>
                         <input
                           type="text"
-                          value={profileData.firstName}
-                          onChange={(e) =>
-                            handleInputChange("firstName", e.target.value)
-                          }
-                          className="w-full  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300"
-                          placeholder="Enter first name"
+                          name="fullName"
+                          value={formData.fullName}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-200  focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
                         />
                       </div>
+
+                      {/* Email */}
                       <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-2">
-                          Last Name
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Email address
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-200  focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                        />
+                      </div>
+
+                      {/* Address - Full Width */}
+                      <div className="col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Address
                         </label>
                         <input
                           type="text"
-                          value={profileData.lastName}
-                          onChange={(e) =>
-                            handleInputChange("lastName", e.target.value)
-                          }
-                          className="w-full  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300"
-                          placeholder="Enter last name"
+                          name="address"
+                          value={formData.address}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-200  focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
                         />
+                      </div>
+
+                      {/* City */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          City
+                        </label>
+                        <input
+                          type="text"
+                          name="city"
+                          value={formData.city}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-200  focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                        />
+                      </div>
+
+                      {/* State/Province */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          State/Province
+                        </label>
+                        <input
+                          type="text"
+                          name="state"
+                          value={formData.state}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-200  focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                        />
+                      </div>
+
+                      {/* Zip Code */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Zip Code
+                        </label>
+                        <input
+                          type="text"
+                          name="zipCode"
+                          value={formData.zipCode}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-200  focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                        />
+                      </div>
+
+                      {/* Country */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Country
+                        </label>
+                        <select
+                          name="country"
+                          value={formData.country}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-200  focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm appearance-none bg-white"
+                        >
+                          <option value="Bangladesh">Bangladesh</option>
+                          <option value="USA">USA</option>
+                          <option value="UK">UK</option>
+                          <option value="Canada">Canada</option>
+                          <option value="Australia">Australia</option>
+                        </select>
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        value={profileData.email}
-                        onChange={(e) =>
-                          handleInputChange("email", e.target.value)
-                        }
-                        className="w-full  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300"
-                        placeholder="Enter email address"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">
-                        Bio
-                      </label>
-                      <textarea
-                        rows={4}
-                        value={profileData.bio}
-                        onChange={(e) =>
-                          handleInputChange("bio", e.target.value)
-                        }
-                        className="w-full  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300 resize-none"
-                        placeholder="Tell us about yourself..."
-                      />
-                    </div>
-
-                    <div className="flex justify-end pt-4">
-                      <Button
-                        variant="primary"
+                    {/* Action Buttons */}
+                    <div className="flex items-center space-x-4 pt-4">
+                      <button
                         onClick={handleSaveProfile}
-                        disabled={isUpdating}
-                        className="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                        className="px-8 py-3 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white  font-semibold hover:from-emerald-500 hover:to-cyan-600 transition-all"
                       >
-                        {isUpdating ? (
-                          <LoadingSpinner size="xs" />
-                        ) : (
-                          <Save className="h-4 w-4" />
-                        )}
-                        {isUpdating ? "Saving..." : "Save Changes"}
-                      </Button>
+                        Save profile
+                      </button>
+                      <button
+                        onClick={handleCancel}
+                        className="px-8 py-3 border-2 border-gray-200 text-gray-700  font-semibold hover:bg-gray-50 transition-all"
+                      >
+                        Cancel
+                      </button>
                     </div>
                   </div>
-                </div>
+                )}
+
+                {activeTab === "notification" && (
+                  <div className="text-center py-12">
+                    <p className="text-gray-500">Notification settings coming soon...</p>
+                  </div>
+                )}
+
+                {activeTab === "privacy" && (
+                  <div className="text-center py-12">
+                    <p className="text-gray-500">Privacy settings coming soon...</p>
+                  </div>
+                )}
+
+                {activeTab === "payment" && (
+                  <div className="text-center py-12">
+                    <p className="text-gray-500">Payment settings coming soon...</p>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
-
-          {/* Security Settings */}
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50">
-            {renderSectionHeader("Password & Security", "security")}
-            {expanded === "security" && (
-              <div className="py-8 px-8 space-y-8">
-                <div className="space-y-6 max-w-md">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">
-                      Current Password
-                    </label>
-                    <input
-                      type="password"
-                      placeholder="••••••••"
-                      className="w-full  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">
-                      New Password
-                    </label>
-                    <input
-                      type="password"
-                      placeholder="••••••••"
-                      className="w-full  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">
-                      Confirm New Password
-                    </label>
-                    <input
-                      type="password"
-                      placeholder="••••••••"
-                      className="w-full  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300"
-                    />
-                  </div>
-
-                  <div className="flex justify-end pt-4">
-                    <Button
-                      variant="primary"
-                      className="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600"
-                    >
-                      Update Password
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Preferences */}
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50">
-            {renderSectionHeader("Preferences", "preferences")}
-            {expanded === "preferences" && (
-              <div className="py-8 px-8 space-y-8">
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-4">
-                      Notifications
-                    </h4>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between p-6  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50">
-                        <div>
-                          <p className="text-sm text-white">
-                            Email Notifications
-                          </p>
-                          <p className="text-xs text-gray-400 mt-2">
-                            Receive course updates and announcements via email
-                          </p>
-                        </div>
-                        <label className="relative inline-flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            defaultChecked
-                            className="sr-only peer"
-                          />
-                          <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-500/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
-                        </label>
-                      </div>
-
-                      <div className="flex items-center justify-between p-6  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50">
-                        <div>
-                          <p className="text-sm text-white">
-                            Push Notifications
-                          </p>
-                          <p className="text-xs text-gray-400 mt-2">
-                            Receive notifications for course updates in browser
-                          </p>
-                        </div>
-                        <label className="relative inline-flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            defaultChecked
-                            className="sr-only peer"
-                          />
-                          <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-500/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium text-white mb-4">
-                      Language & Region
-                    </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-2">
-                          Language
-                        </label>
-                        <select className="w-full  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300">
-                          <option value="en">English</option>
-                          <option value="es">Spanish</option>
-                          <option value="fr">French</option>
-                          <option value="de">German</option>
-                          <option value="zh">Chinese</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-2">
-                          Timezone
-                        </label>
-                        <select className="w-full  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500/50 transition-all duration-300">
-                          <option value="utc">
-                            UTC (Coordinated Universal Time)
-                          </option>
-                          <option value="est">
-                            EST (Eastern Standard Time)
-                          </option>
-                          <option value="cst">
-                            CST (Central Standard Time)
-                          </option>
-                          <option value="mst">
-                            MST (Mountain Standard Time)
-                          </option>
-                          <option value="pst">
-                            PST (Pacific Standard Time)
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-end pt-4">
-                    <Button
-                      variant="primary"
-                      className="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600"
-                    >
-                      Save Preferences
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Danger Zone */}
-          <DangerZone
-            onDeactivateAccount={() => console.log("Deactivate account")}
-            onDeleteData={() => console.log("Delete data")}
-            onDeleteAccount={() => console.log("Delete account")}
-          />
         </div>
       </div>
     </div>
   );
-};
-
-export default Settings;
+}

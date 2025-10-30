@@ -65,10 +65,10 @@ const CourseVideoSection: React.FC<CourseVideoSectionProps> = ({
 
   if (!course.courseContent || course.courseContent.length === 0) {
     return (
-      <div className="bg-gray-800  p-8 text-center">
-        <div className="text-gray-400 text-4xl mb-4">📹</div>
-        <h3 className="text-white text-xl mb-2">No course content available</h3>
-        <p className="text-gray-400">This course doesn't have any video content yet.</p>
+      <div className="bg-white border border-gray-200  p-6 text-center">
+        <div className="text-gray-400 text-3xl mb-3">📹</div>
+        <h3 className="text-gray-800 text-lg mb-2">No course content available</h3>
+        <p className="text-gray-600 text-sm">This course doesn't have any video content yet.</p>
       </div>
     );
   }
@@ -77,7 +77,7 @@ const CourseVideoSection: React.FC<CourseVideoSectionProps> = ({
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Video Player */}
       <div className="lg:col-span-2">
-        <div className="bg-gray-900  overflow-hidden">
+        <div className="bg-white border border-gray-200  overflow-hidden">
           {selectedVideo?.videoUrl ? (
             <VideoPlayer
               videoUrl={selectedVideo.videoUrl}
@@ -86,20 +86,20 @@ const CourseVideoSection: React.FC<CourseVideoSectionProps> = ({
               className="w-full aspect-video"
             />
           ) : (
-            <div className="aspect-video bg-gray-800 flex items-center justify-center">
-              <div className="text-center text-gray-400">
-                <Play className="w-12 h-12 mx-auto mb-4" />
-                <p>Select a lesson to start watching</p>
+            <div className="aspect-video bg-gray-50 flex items-center justify-center">
+              <div className="text-center text-gray-500">
+                <Play className="w-10 h-10 mx-auto mb-3" />
+                <p className="text-sm">Select a lesson to start watching</p>
               </div>
             </div>
           )}
           
           {selectedVideo && (
-            <div className="p-4 bg-gray-800">
-              <h2 className="text-xl font-semibold text-white mb-2">
+            <div className="p-3 bg-gray-50 border-t border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-800 mb-1">
                 {selectedVideo.title}
               </h2>
-              <p className="text-gray-300 text-sm">
+              <p className="text-gray-600 text-sm">
                 Course: {course.title}
               </p>
             </div>
@@ -108,54 +108,54 @@ const CourseVideoSection: React.FC<CourseVideoSectionProps> = ({
       </div>
 
       {/* Course Content Sidebar */}
-      <div className="bg-gray-900  overflow-hidden">
-        <div className="p-4 bg-gray-800 border-b border-gray-700">
-          <h3 className="text-lg font-semibold text-white">Course Content</h3>
-          <p className="text-sm text-gray-400">
+      <div className="bg-white border border-gray-200  overflow-hidden">
+        <div className="p-3 bg-gray-50 border-b border-gray-200">
+          <h3 className="text-xs font-semibold text-gray-800">Course Content</h3>
+          <p className="text-sm text-gray-600">
             {course.courseContent.length} sections
           </p>
         </div>
         
         <div className="max-h-96 overflow-y-auto">
           {course.courseContent.map((section, sectionIndex) => (
-            <div key={sectionIndex} className="border-b border-gray-700 last:border-b-0">
-              <div className="p-4 bg-gray-850">
-                <h4 className="font-medium text-white mb-1">
+            <div key={sectionIndex} className="border-b border-gray-200 last:border-b-0">
+              <div className="p-3 bg-gray-50">
+                <h4 className="font-medium text-gray-800 mb-0.5 text-sm">
                   {section.sectionTitle}
                 </h4>
                 {section.lessons && (
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-gray-600">
                     {section.lessons.length} lessons
                   </p>
                 )}
               </div>
               
               {section.lessons && (
-                <div className="bg-gray-900">
+                <div className="bg-white">
                   {section.lessons.map((lesson, lessonIndex) => (
                     <button
                       key={lessonIndex}
                       onClick={() => handleVideoSelect(sectionIndex, lessonIndex)}
-                      className={`w-full p-3 text-left hover:bg-gray-800 transition-colors border-b border-gray-700 last:border-b-0 ${
+                      className={`w-full p-2.5 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0 ${
                         selectedVideo?.title === lesson.title 
-                          ? 'bg-pink-600/20 border-pink-500/50' 
+                          ? 'bg-blue-50 border-blue-200' 
                           : ''
                       }`}
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5">
                         {lesson.videoUrl ? (
-                          <Play className="w-4 h-4 text-pink-400 flex-shrink-0" />
+                          <Play className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
                         ) : (
-                          <Lock className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                          <Lock className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
                         )}
                         <div className="min-w-0 flex-1">
-                          <p className={`text-sm font-medium truncate ${
-                            lesson.videoUrl ? 'text-white' : 'text-gray-500'
+                          <p className={`text-xs font-medium truncate ${
+                            lesson.videoUrl ? 'text-gray-800' : 'text-gray-500'
                           }`}>
                             {lesson.title}
                           </p>
                           {lesson.videoData?.duration && (
-                            <p className="text-xs text-gray-400">
+                            <p className="text-xs text-gray-500">
                               {Math.floor(lesson.videoData.duration / 60)}:
                               {(lesson.videoData.duration % 60).toString().padStart(2, '0')}
                             </p>

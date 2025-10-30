@@ -140,8 +140,8 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
           ) : (
             <>
               <div className="text-center">
-                <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="h-8 w-8 text-green-500" />
+                <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="h-8 w-8 text-blue-500" />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">
                   Email Sent!

@@ -26,7 +26,7 @@ import {
   Linkedin,
   Settings as SettingsIcon
 } from 'lucide-react';
-import AnimatedBackground from '../../../components/ui/AnimatedBackground';
+
 import teacherService from '../../../services/teacherService';
 import { useToast } from '../../../hooks/useToast';
 
@@ -208,27 +208,27 @@ export default function SettingsPage() {
   };
 
   const renderProfileTab = () => (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Avatar Section */}
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-4">
         <div className="relative">
           <img
             src={profile.avatar}
             alt="Profile"
-            className="w-24 h-24 rounded-full object-cover border-4 border-gray-700"
+            className="w-16 h-16 rounded-full object-cover border-2 border-gray-200"
           />
-          <button className="absolute -bottom-2 -right-2 bg-pink-600 hover:bg-pink-700 text-white p-2 rounded-full transition-colors">
-            <Camera className="h-4 w-4" />
+          <button className="absolute -bottom-1 -right-1 bg-blue-600 hover:bg-blue-700 text-white p-1 rounded-full transition-colors">
+            <Camera className="h-3 w-3" />
           </button>
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-white">Profile Photo</h3>
-          <p className="text-gray-400 text-sm mb-3">Upload a professional photo that represents you</p>
-          <div className="flex space-x-3">
-            <button className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2  text-sm transition-colors">
+          <h3 className="text-xs font-semibold text-gray-900">Profile Photo</h3>
+          <p className="text-gray-600 text-sm mb-2">Upload a professional photo that represents you</p>
+          <div className="flex space-x-2">
+            <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1  text-xs transition-colors border border-gray-200">
               Change Photo
             </button>
-            <button className="text-red-400 hover:text-red-300 px-4 py-2 text-sm transition-colors">
+            <button className="text-red-600 hover:text-red-700 px-3 py-1 text-xs transition-colors">
               Remove
             </button>
           </div>
@@ -236,84 +236,84 @@ export default function SettingsPage() {
       </div>
 
       {/* Basic Information */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
           <input
             type="text"
             value={profile.name}
             onChange={(e) => setProfile({...profile, name: e.target.value})}
-            className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none"
+            className="w-full bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
           <input
             type="email"
             value={profile.email}
             onChange={(e) => setProfile({...profile, email: e.target.value})}
-            className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none"
+            className="w-full bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Phone</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
           <input
             type="tel"
             value={profile.phone}
             onChange={(e) => setProfile({...profile, phone: e.target.value})}
-            className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none"
+            className="w-full bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Location</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
           <input
             type="text"
             value={profile.location}
             onChange={(e) => setProfile({...profile, location: e.target.value})}
-            className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none"
+            className="w-full bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Professional Title</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Professional Title</label>
           <input
             type="text"
             value={profile.title}
             onChange={(e) => setProfile({...profile, title: e.target.value})}
-            className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none"
+            className="w-full bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Website</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
           <input
             type="url"
             value={profile.website}
             onChange={(e) => setProfile({...profile, website: e.target.value})}
-            className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none"
+            className="w-full bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
           />
         </div>
       </div>
 
       {/* Bio */}
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Bio</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
         <textarea
           value={profile.bio}
           onChange={(e) => setProfile({...profile, bio: e.target.value})}
-          rows={4}
-          className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none resize-none"
+          rows={3}
+          className="w-full bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none resize-none text-sm"
           placeholder="Tell students about yourself, your background, and teaching philosophy..."
         />
       </div>
 
       {/* Social Links */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Social Media Links</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <h3 className="text-xs font-semibold text-gray-900 mb-3">Social Media Links</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {Object.entries(profile.socialLinks).map(([platform, url]) => {
             const icons = {
               facebook: Facebook,
@@ -326,8 +326,8 @@ export default function SettingsPage() {
             const Icon = icons[platform as keyof typeof icons];
             
             return (
-              <div key={platform} className="flex items-center space-x-3">
-                <Icon className="h-5 w-5 text-gray-400" />
+              <div key={platform} className="flex items-center space-x-2">
+                <Icon className="h-4 w-4 text-gray-600" />
                 <input
                   type="url"
                   value={url}
@@ -336,7 +336,7 @@ export default function SettingsPage() {
                     socialLinks: {...profile.socialLinks, [platform]: e.target.value}
                   })}
                   placeholder={`https://${platform}.com/username`}
-                  className="flex-1 bg-gray-700 border border-gray-600  px-3 py-2 text-white focus:border-pink-500 focus:outline-none text-sm"
+                  className="flex-1 bg-white border border-gray-300  px-2 py-1.5 text-gray-900 focus:border-blue-500 focus:outline-none text-xs"
                 />
               </div>
             );
@@ -348,16 +348,16 @@ export default function SettingsPage() {
         <button
           onClick={() => handleSave('Profile')}
           disabled={isLoading}
-          className="bg-pink-600 hover:bg-pink-700 disabled:opacity-50 text-white px-6 py-2  font-medium transition-colors flex items-center"
+          className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2  font-medium transition-colors flex items-center text-sm"
         >
           {isLoading ? (
             <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1"></div>
               Saving...
             </>
           ) : (
             <>
-              <Save className="h-4 w-4 mr-2" />
+              <Save className="h-3 w-3 mr-1" />
               Save Changes
             </>
           )}
@@ -367,16 +367,16 @@ export default function SettingsPage() {
   );
 
   const renderNotificationsTab = () => (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Email Notifications */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Email Notifications</h3>
-        <div className="space-y-4">
+        <h3 className="text-xs font-semibold text-gray-900 mb-3">Email Notifications</h3>
+        <div className="space-y-3">
           {Object.entries(notifications.emailNotifications).map(([key, value]) => (
             <div key={key} className="flex items-center justify-between">
               <div>
-                <p className="text-white capitalize">{key.replace(/([A-Z])/g, ' $1').toLowerCase()}</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-900 capitalize text-sm">{key.replace(/([A-Z])/g, ' $1').toLowerCase()}</p>
+                <p className="text-gray-600 text-xs">
                   {key === 'newEnrollments' && 'Get notified when students enroll in your courses'}
                   {key === 'courseReviews' && 'Receive notifications for new course reviews and ratings'}
                   {key === 'messages' && 'Get email alerts for new messages from students'}
@@ -395,7 +395,7 @@ export default function SettingsPage() {
                   })}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+                <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
               </label>
             </div>
           ))}
@@ -404,13 +404,13 @@ export default function SettingsPage() {
 
       {/* Push Notifications */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Push Notifications</h3>
-        <div className="space-y-4">
+        <h3 className="text-xs font-semibold text-gray-900 mb-3">Push Notifications</h3>
+        <div className="space-y-3">
           {Object.entries(notifications.pushNotifications).map(([key, value]) => (
             <div key={key} className="flex items-center justify-between">
               <div>
-                <p className="text-white capitalize">{key.replace(/([A-Z])/g, ' $1').toLowerCase()}</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-900 capitalize text-sm">{key.replace(/([A-Z])/g, ' $1').toLowerCase()}</p>
+                <p className="text-gray-600 text-xs">
                   {key === 'newEnrollments' && 'Instant notifications for new student enrollments'}
                   {key === 'liveSessionReminders' && 'Reminders before your scheduled live sessions'}
                   {key === 'messages' && 'Real-time alerts for new messages'}
@@ -427,7 +427,7 @@ export default function SettingsPage() {
                   })}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+                <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
               </label>
             </div>
           ))}
@@ -438,16 +438,16 @@ export default function SettingsPage() {
         <button
           onClick={() => handleSave('Notifications')}
           disabled={isLoading}
-          className="bg-pink-600 hover:bg-pink-700 disabled:opacity-50 text-white px-6 py-2  font-medium transition-colors flex items-center"
+          className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2  font-medium transition-colors flex items-center text-sm"
         >
           {isLoading ? (
             <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1"></div>
               Saving...
             </>
           ) : (
             <>
-              <Save className="h-4 w-4 mr-2" />
+              <Save className="h-3 w-3 mr-1" />
               Save Changes
             </>
           )}
@@ -457,46 +457,46 @@ export default function SettingsPage() {
   );
 
   const renderSecurityTab = () => (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Password */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Change Password</h3>
-        <div className="space-y-4">
+        <h3 className="text-xs font-semibold text-gray-900 mb-3">Change Password</h3>
+        <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Current Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
-                className="w-full bg-gray-700 border border-gray-600  px-4 py-2 pr-12 text-white focus:border-pink-500 focus:outline-none"
+                className="w-full bg-white border border-gray-300  px-3 py-2 pr-10 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">New Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
               <input
                 type={showPassword ? 'text' : 'password'}
-                className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none"
+                className="w-full bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Confirm New Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
               <input
                 type={showPassword ? 'text' : 'password'}
-                className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none"
+                className="w-full bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
               />
             </div>
           </div>
           
-          <button className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2  font-medium transition-colors">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2  font-medium transition-colors text-sm">
             Update Password
           </button>
         </div>
@@ -504,12 +504,12 @@ export default function SettingsPage() {
 
       {/* Two-Factor Authentication */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Two-Factor Authentication</h3>
-        <div className="bg-gray-700 p-6 ">
-          <div className="flex items-center justify-between mb-4">
+        <h3 className="text-xs font-semibold text-gray-900 mb-3">Two-Factor Authentication</h3>
+        <div className="bg-gray-50 p-4  border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
             <div>
-              <p className="text-white font-medium">Enable 2FA</p>
-              <p className="text-gray-400 text-sm">Add an extra layer of security to your account</p>
+              <p className="text-gray-900 font-medium text-sm">Enable 2FA</p>
+              <p className="text-gray-600 text-xs">Add an extra layer of security to your account</p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
               <input
@@ -518,13 +518,13 @@ export default function SettingsPage() {
                 onChange={(e) => setSecurity({...security, twoFactorEnabled: e.target.checked})}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+              <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
             </label>
           </div>
           
           {security.twoFactorEnabled && (
             <div className="space-y-3">
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-gray-600">
                 Scan the QR code with your authenticator app or enter the setup key manually.
               </p>
               <div className="bg-white p-4  inline-block">
@@ -532,8 +532,8 @@ export default function SettingsPage() {
                   QR Code
                 </div>
               </div>
-              <p className="text-sm text-gray-300">
-                Setup key: <code className="bg-gray-600 px-2 py-1 rounded text-pink-400">ABCD EFGH IJKL MNOP</code>
+              <p className="text-sm text-gray-600">
+                Setup key: <code className="bg-blue-100 px-2 py-1 rounded text-blue-600">ABCD EFGH IJKL MNOP</code>
               </p>
             </div>
           )}
@@ -542,12 +542,12 @@ export default function SettingsPage() {
 
       {/* Security Options */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Security Options</h3>
-        <div className="space-y-4">
+        <h3 className="text-xs font-semibold text-gray-900 mb-3">Security Options</h3>
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-white">Login Notifications</p>
-              <p className="text-gray-400 text-sm">Get notified of new logins to your account</p>
+              <p className="text-gray-900 text-sm">Login Notifications</p>
+              <p className="text-gray-600 text-xs">Get notified of new logins to your account</p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
               <input
@@ -556,16 +556,16 @@ export default function SettingsPage() {
                 onChange={(e) => setSecurity({...security, loginNotifications: e.target.checked})}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+              <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
             </label>
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Session Timeout (minutes)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Session Timeout (minutes)</label>
             <select
               value={security.sessionTimeout}
               onChange={(e) => setSecurity({...security, sessionTimeout: parseInt(e.target.value)})}
-              className="bg-gray-700 border border-gray-600  px-3 py-2 text-white focus:border-pink-500 focus:outline-none"
+              className="bg-white border border-gray-300  px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none text-sm"
             >
               <option value={15}>15 minutes</option>
               <option value={30}>30 minutes</option>
@@ -582,16 +582,16 @@ export default function SettingsPage() {
         <button
           onClick={() => handleSave('Security')}
           disabled={isLoading}
-          className="bg-pink-600 hover:bg-pink-700 disabled:opacity-50 text-white px-6 py-2  font-medium transition-colors flex items-center"
+          className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2  font-medium transition-colors flex items-center text-sm"
         >
           {isLoading ? (
             <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1"></div>
               Saving...
             </>
           ) : (
             <>
-              <Save className="h-4 w-4 mr-2" />
+              <Save className="h-3 w-3 mr-1" />
               Save Changes
             </>
           )}
@@ -601,48 +601,48 @@ export default function SettingsPage() {
   );
 
   const renderBillingTab = () => (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Payment Methods */}
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-white">Payment Methods</h3>
-          <button className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2  text-sm transition-colors">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-xs font-semibold text-blue-800">Payment Methods</h3>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5  text-xs transition-colors">
             Add Payment Method
           </button>
         </div>
         
-        <div className="space-y-3">
-          <div className="bg-gray-700 p-4  border-l-4 border-pink-500">
+        <div className="space-y-2">
+          <div className="bg-blue-50 p-3  border-l-4 border-blue-500">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <CreditCard className="h-8 w-8 text-pink-400" />
+              <div className="flex items-center space-x-2">
+                <CreditCard className="h-5 w-5 text-blue-600" />
                 <div>
-                  <p className="text-white font-medium">Mobile Money - MTN</p>
-                  <p className="text-gray-400 text-sm">****-****-**34</p>
+                  <p className="text-blue-800 font-medium text-sm">Mobile Money - MTN</p>
+                  <p className="text-blue-600 text-xs">****-****-**34</p>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
                   Primary
                 </span>
-                <button className="text-gray-400 hover:text-white text-sm">Edit</button>
+                <button className="text-blue-500 hover:text-blue-600 text-xs">Edit</button>
               </div>
             </div>
           </div>
           
-          <div className="bg-gray-700 p-4 ">
+          <div className="bg-white p-3  border border-blue-200">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <CreditCard className="h-8 w-8 text-gray-400" />
+              <div className="flex items-center space-x-2">
+                <CreditCard className="h-5 w-5 text-blue-400" />
                 <div>
-                  <p className="text-white font-medium">Orange Money</p>
-                  <p className="text-gray-400 text-sm">****-****-**78</p>
+                  <p className="text-blue-800 font-medium text-sm">Orange Money</p>
+                  <p className="text-blue-600 text-xs">****-****-**78</p>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
-                <button className="text-pink-400 hover:text-pink-300 text-sm">Set Primary</button>
-                <button className="text-gray-400 hover:text-white text-sm">Edit</button>
-                <button className="text-red-400 hover:text-red-300 text-sm">Remove</button>
+                <button className="text-blue-600 hover:text-blue-700 text-xs">Set Primary</button>
+                <button className="text-blue-500 hover:text-blue-600 text-xs">Edit</button>
+                <button className="text-red-500 hover:text-red-600 text-xs">Remove</button>
               </div>
             </div>
           </div>
@@ -651,33 +651,33 @@ export default function SettingsPage() {
 
       {/* Earnings */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Earnings Overview</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-gray-700 p-6  text-center">
-            <p className="text-gray-400 text-sm mb-2">This Month</p>
-            <p className="text-2xl font-bold text-white">125,000 XAF</p>
-            <p className="text-green-400 text-sm mt-1">+12% from last month</p>
+        <h3 className="text-xs font-semibold text-blue-800 mb-3">Earnings Overview</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="bg-white p-4  text-center border border-blue-200">
+            <p className="text-blue-600 text-xs mb-1">This Month</p>
+            <p className="text-lg font-bold text-blue-800">125,000 XAF</p>
+            <p className="text-blue-500 text-xs mt-1">+12% from last month</p>
           </div>
-          <div className="bg-gray-700 p-6  text-center">
-            <p className="text-gray-400 text-sm mb-2">Total Earnings</p>
-            <p className="text-2xl font-bold text-white">2,450,000 XAF</p>
-            <p className="text-gray-400 text-sm mt-1">All time</p>
+          <div className="bg-white p-4  text-center border border-blue-200">
+            <p className="text-blue-600 text-xs mb-1">Total Earnings</p>
+            <p className="text-lg font-bold text-blue-800">2,450,000 XAF</p>
+            <p className="text-blue-500 text-xs mt-1">All time</p>
           </div>
-          <div className="bg-gray-700 p-6  text-center">
-            <p className="text-gray-400 text-sm mb-2">Pending</p>
-            <p className="text-2xl font-bold text-white">45,000 XAF</p>
-            <p className="text-gray-400 text-sm mt-1">Will be paid on March 30</p>
+          <div className="bg-white p-4  text-center border border-blue-200">
+            <p className="text-blue-600 text-xs mb-1">Pending</p>
+            <p className="text-lg font-bold text-blue-800">45,000 XAF</p>
+            <p className="text-blue-500 text-xs mt-1">Will be paid on March 30</p>
           </div>
         </div>
       </div>
 
       {/* Payout Settings */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Payout Settings</h3>
-        <div className="bg-gray-700 p-6  space-y-4">
+        <h3 className="text-xs font-semibold text-blue-800 mb-3">Payout Settings</h3>
+        <div className="bg-blue-50 p-4  border border-blue-200 space-y-3">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Payout Schedule</label>
-            <select className="bg-gray-600 border border-gray-500  px-3 py-2 text-white focus:border-pink-500 focus:outline-none w-full md:w-auto">
+            <label className="block text-sm font-medium text-blue-700 mb-1">Payout Schedule</label>
+            <select className="bg-white border border-blue-200  px-3 py-2 text-blue-800 focus:border-blue-500 focus:outline-none w-full md:w-auto text-sm">
               <option>Monthly (30th of each month)</option>
               <option>Bi-weekly</option>
               <option>Weekly</option>
@@ -685,8 +685,8 @@ export default function SettingsPage() {
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Minimum Payout Amount</label>
-            <select className="bg-gray-600 border border-gray-500  px-3 py-2 text-white focus:border-pink-500 focus:outline-none w-full md:w-auto">
+            <label className="block text-sm font-medium text-blue-700 mb-1">Minimum Payout Amount</label>
+            <select className="bg-white border border-blue-200  px-3 py-2 text-blue-800 focus:border-blue-500 focus:outline-none w-full md:w-auto text-sm">
               <option>25,000 XAF</option>
               <option>50,000 XAF</option>
               <option>100,000 XAF</option>
@@ -698,53 +698,53 @@ export default function SettingsPage() {
   );
 
   const renderAppearanceTab = () => (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Theme */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Theme</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <h3 className="text-xs font-semibold text-blue-800 mb-3">Theme</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div
-            className={`p-4 border-2  cursor-pointer transition-colors ${
+            className={`p-3 border-2  cursor-pointer transition-colors ${
               appearance.theme === 'light' 
-                ? 'border-pink-500 bg-gray-700' 
-                : 'border-gray-600 hover:border-gray-500'
+                ? 'border-blue-500 bg-blue-50' 
+                : 'border-blue-200 hover:border-blue-300 bg-white'
             }`}
             onClick={() => setAppearance({...appearance, theme: 'light'})}
           >
-            <div className="flex items-center space-x-3 mb-2">
-              <Sun className="h-6 w-6 text-yellow-400" />
-              <span className="text-white font-medium">Light Mode</span>
+            <div className="flex items-center space-x-2 mb-1">
+              <Sun className="h-5 w-5 text-yellow-500" />
+              <span className="text-blue-800 font-medium text-sm">Light Mode</span>
             </div>
-            <p className="text-gray-400 text-sm">Bright and clean interface</p>
+            <p className="text-blue-600 text-xs">Bright and clean interface</p>
           </div>
           
           <div
-            className={`p-4 border-2  cursor-pointer transition-colors ${
+            className={`p-3 border-2  cursor-pointer transition-colors ${
               appearance.theme === 'dark' 
-                ? 'border-pink-500 bg-gray-700' 
-                : 'border-gray-600 hover:border-gray-500'
+                ? 'border-blue-500 bg-blue-50' 
+                : 'border-blue-200 hover:border-blue-300 bg-white'
             }`}
             onClick={() => setAppearance({...appearance, theme: 'dark'})}
           >
-            <div className="flex items-center space-x-3 mb-2">
-              <Moon className="h-6 w-6 text-blue-400" />
-              <span className="text-white font-medium">Dark Mode</span>
+            <div className="flex items-center space-x-2 mb-1">
+              <Moon className="h-5 w-5 text-blue-500" />
+              <span className="text-blue-800 font-medium text-sm">Dark Mode</span>
             </div>
-            <p className="text-gray-400 text-sm">Easy on the eyes, perfect for long sessions</p>
+            <p className="text-blue-600 text-xs">Easy on the eyes, perfect for long sessions</p>
           </div>
         </div>
       </div>
 
       {/* Language */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4">Language & Region</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <h3 className="text-xs font-semibold text-blue-800 mb-3">Language & Region</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Interface Language</label>
+            <label className="block text-sm font-medium text-blue-700 mb-1">Interface Language</label>
             <select
               value={appearance.language}
               onChange={(e) => setAppearance({...appearance, language: e.target.value})}
-              className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none"
+              className="w-full bg-white border border-blue-200  px-3 py-2 text-blue-800 focus:border-blue-500 focus:outline-none text-sm"
             >
               <option value="en">English</option>
               <option value="fr">Français</option>
@@ -753,8 +753,8 @@ export default function SettingsPage() {
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Time Zone</label>
-            <select className="w-full bg-gray-700 border border-gray-600  px-4 py-2 text-white focus:border-pink-500 focus:outline-none">
+            <label className="block text-sm font-medium text-blue-700 mb-1">Time Zone</label>
+            <select className="w-full bg-white border border-blue-200  px-3 py-2 text-blue-800 focus:border-blue-500 focus:outline-none text-sm">
               <option>West Africa Time (GMT+1)</option>
               <option>Central Europe Time (GMT+1)</option>
               <option>Eastern Time (GMT-5)</option>
@@ -768,16 +768,16 @@ export default function SettingsPage() {
         <button
           onClick={() => handleSave('Appearance')}
           disabled={isLoading}
-          className="bg-pink-600 hover:bg-pink-700 disabled:opacity-50 text-white px-6 py-2  font-medium transition-colors flex items-center"
+          className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2  font-medium transition-colors flex items-center text-sm"
         >
           {isLoading ? (
             <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1"></div>
               Saving...
             </>
           ) : (
             <>
-              <Save className="h-4 w-4 mr-2" />
+              <Save className="h-3 w-3 mr-1" />
               Save Changes
             </>
           )}
@@ -788,49 +788,49 @@ export default function SettingsPage() {
 
   return (
     <>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="bg-gradient-to-r from-purple-500/10 to-indigo-500/10 backdrop-blur-sm border border-gray-700/50  p-8 mb-8">
+        <div className="bg-gradient-to-r from-blue-50 to-gray-50 border border-gray-200  p-6 mb-6 shadow-sm">
           <div className="flex items-center">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mr-6">
-              <SettingsIcon className="h-8 w-8 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full flex items-center justify-center mr-4 shadow-md">
+              <SettingsIcon className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent mb-2">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent mb-1">
                 Settings
               </h1>
-              <p className="text-gray-300 text-lg">Manage your account preferences and security settings</p>
+              <p className="text-gray-600 text-sm">Manage your account preferences and security settings</p>
             </div>
           </div>
         </div>
 
         {/* Success Message */}
         {successMessage && (
-          <div className="bg-green-600 text-white p-4  mb-6 flex items-center">
-            <div className="h-5 w-5 rounded-full bg-white text-green-600 flex items-center justify-center text-sm font-bold mr-3">
+          <div className="bg-blue-50 border border-blue-200 text-blue-800 p-3  mb-4 flex items-center">
+            <div className="h-4 w-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold mr-2">
               ✓
             </div>
             {successMessage}
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <nav className="space-y-2">
+            <nav className="space-y-1">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3  text-left transition-colors ${
+                    className={`w-full flex items-center space-x-2 px-3 py-2  text-left transition-colors text-sm ${
                       activeTab === tab.id
-                        ? 'bg-pink-600 text-white'
-                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                     }`}
                   >
-                    <Icon className="h-5 w-5" />
+                    <Icon className="h-4 w-4" />
                     <span>{tab.label}</span>
                   </button>
                 );
@@ -840,7 +840,7 @@ export default function SettingsPage() {
 
           {/* Content */}
           <div className="lg:col-span-3">
-            <div className="bg-gray-800  border border-gray-700 p-8">
+            <div className="bg-white  border border-gray-200 p-6 shadow-sm">
               {activeTab === 'profile' && renderProfileTab()}
               {activeTab === 'notifications' && renderNotificationsTab()}
               {activeTab === 'security' && renderSecurityTab()}

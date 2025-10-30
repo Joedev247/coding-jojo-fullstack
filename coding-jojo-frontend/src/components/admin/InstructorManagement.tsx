@@ -43,7 +43,7 @@ interface InstructorDetails extends Instructor {
   }>;
 }
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://codingjojo-backend.onrender.com/api';
 
 const InstructorManagement: React.FC = () => {
   const [instructors, setInstructors] = useState<Instructor[]>([]);
@@ -110,7 +110,7 @@ const InstructorManagement: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'approved':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       case 'rejected':
         return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'suspended':
@@ -446,7 +446,7 @@ const InstructorManagement: React.FC = () => {
                         <div className="text-right">
                           <p className="text-white font-medium">{formatCurrency(earning.netAmount)}</p>
                           <p className="text-gray-400 text-sm">
-                            Status: <span className={`${earning.paymentStatus === 'paid' ? 'text-green-400' : 'text-orange-400'}`}>
+                            Status: <span className={`${earning.paymentStatus === 'paid' ? 'text-blue-400' : 'text-orange-400'}`}>
                               {earning.paymentStatus}
                             </span>
                           </p>

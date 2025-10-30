@@ -57,23 +57,23 @@ export default function InstructorCertificatesPage() {
   return (
     <>
       {/* Header */}
-      <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 backdrop-blur-sm border border-gray-700/50  p-8 mb-8">
+      <div className="bg-gradient-to-r from-blue-50 to-gray-50 border border-gray-200  p-6 mb-6 shadow-sm">
         <div className="flex items-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mr-6">
-            <Award className="h-8 w-8 text-white" />
+          <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full flex items-center justify-center mr-4 shadow-md">
+            <Award className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent mb-1">
               Certificates
             </h1>
-            <p className="text-gray-300 text-lg">Generate and manage course completion certificates</p>
+            <p className="text-gray-600 text-sm">Generate and manage course completion certificates</p>
           </div>
         </div>
       </div>
       
       {loading ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500"></div>
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
         </div>
       ) : (
         <CertificateGenerator

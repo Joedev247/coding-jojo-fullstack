@@ -24,7 +24,7 @@ export default function Button({
     primary: 'bg-gradient-to-r from-pink-500 to-orange-500 hover:from-orange-500 hover:to-pink-500 text-white',
     secondary: 'bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700',
     ghost: 'bg-transparent hover:bg-gray-800 text-gray-300',
-    success: 'bg-green-600 hover:bg-green-700 text-white',
+    success: 'bg-blue-600 hover:bg-blue-700 text-white',
     warning: 'bg-yellow-600 hover:bg-yellow-700 text-white',
     info: 'bg-pink-600 hover:bg-pink-700 text-white',
     danger: 'bg-red-600 hover:bg-red-700 text-white'
@@ -33,7 +33,7 @@ export default function Button({
   const sizes = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2 text-sm',
-    lg: 'px-6 py-3 text-base'
+    lg: 'px-6 py-3 text-xs'
   };
 
   return (

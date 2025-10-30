@@ -38,7 +38,7 @@ export default function AdminLoginPage() {
   const checkAdminExists = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"}/auth/admin-status`,
+        `${process.env.NEXT_PUBLIC_API_URL || "https://codingjojo-backend.onrender.com/api"}/auth/admin-status`,
         {
           method: "GET",
           headers: {
@@ -59,7 +59,6 @@ export default function AdminLoginPage() {
   if (!mounted) {
     return (
       <div className="min-h-screen bg-black text-white relative flex items-center justify-center">
-        <AnimatedBackground />
         <div className="z-10 flex flex-col items-center">
           <LoadingSpinner size="sm"  />
         </div>
@@ -80,7 +79,7 @@ export default function AdminLoginPage() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"}/auth/admin-login`,
+        `${process.env.NEXT_PUBLIC_API_URL || "https://codingjojo-backend.onrender.com/api"}/auth/admin-login`,
         {
           method: "POST",
           headers: {
@@ -266,8 +265,8 @@ export default function AdminLoginPage() {
                   Protected by enterprise-grade security
                 </p>
                 <div className="flex items-center justify-center gap-2 mb-4">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-green-400">Secure Connection</span>
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-blue-400">Secure Connection</span>
                 </div>
                 <div className="text-center">
                   <p className="text-xs text-gray-500 mb-2">

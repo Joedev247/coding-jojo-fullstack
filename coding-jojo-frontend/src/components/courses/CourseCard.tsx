@@ -9,6 +9,7 @@ import {
   Eye,
   ShoppingCart,
   CheckCircle,
+  BookOpen,
 } from "lucide-react";
 import { Course } from "../../types/courses";
 import Link from "next/link";
@@ -102,182 +103,140 @@ const CourseCard: React.FC<CourseCardProps> = ({
   };
 
   return (
-    <div className="group h-full flex flex-col overflow-hidden  bg-gray-900/70 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-pink-500/20 hover:translate-y-[-2px] hover:border-pink-500/30">
-      {/* Card Header/Image with gradient overlay */}
+    <div className="bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-200">
+      {/* Course Image with Duration Badge (restored thumbnail) */}
       <div className="relative aspect-video overflow-hidden">
         <Image
-          src={course.thumbnailUrl || course.thumbnail || '/placeholder-course.jpg'} // FIXED: Use thumbnailUrl first
+          src={course.thumbnailUrl || course.thumbnail || '/placeholder-course.jpg'}
           alt={course.title || 'Course thumbnail'}
-          width={400}
-          height={225}
+          width={480}
+          height={270}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          onError={(e) => {
-            console.error('Failed to load course thumbnail:', course.thumbnailUrl || course.thumbnail);
-            // Fallback to placeholder image
-            e.currentTarget.src = '/placeholder-course.jpg';
+          onError={(e: any) => {
+            try {
+              e.currentTarget.src = '/placeholder-course.jpg';
+            } catch (err) {
+              // ignore
+            }
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-        {/* Tags and badges */}
-        <div className="absolute top-3 left-3 flex gap-2">
-          {course.isFeatured && (
-            <div className="bg-gradient-to-r from-pink-500 to-orange-500 text-white text-xs py-1 px-2 font-medium shadow-lg">
-              Featured
-            </div>
-          )}
-          {course.isNew && (
-            <div className="bg-green-500 text-white text-xs py-1 px-2 font-medium shadow-lg">
-              New
-            </div>
-          )}
+
+        {/* subtle dark gradient overlay to keep text/badges readable */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+
+        {/* Duration Badge */}
+        <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded font-medium">
+          {course.duration}
         </div>
-        {/* Level indicator */}
-        <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-xs py-1 px-2 rounded-full">
-          <Users className="w-3 h-3" />
-          <span>{course.level}</span>
-        </div>{" "}
-        {/* Duration badge */}
-        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-xs py-1 px-2 rounded-full">
+
+        {/* Course Time Badge */}
+        <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded flex items-center gap-1">
           <Clock className="w-3 h-3" />
-          <span>{formatDuration(course.duration)}</span>
+          <span>{Math.floor((course.lectures ?? 0) * 1.5)}h {Math.floor(((course.lectures ?? 0) * 1.5 % 1) * 60)}m</span>
         </div>
-        {/* Play button overlay */}
+
+        {/* optional play overlay for preview */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="w-12 h-12 rounded-full bg-pink-500/80 backdrop-blur-sm flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
-            <Play className="h-5 w-5 text-white" fill="white" />
+          <div className="w-10 h-10 rounded-full bg-blue-600/90 backdrop-blur-sm flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
+            <Play className="h-4 w-4 text-white" />
           </div>
         </div>
-        {/* Save button */}
-        <button
-          onClick={() => handleSaveCourse(course.id)}
-          className="absolute top-2 right-2 p-1.5   bg-gray-900/70 hover:bg-gray-800 rounded-full transition duration-200"
-        >
-          <Heart
-            className={`w-4 h-4 ${
-              course.isSaved ? "text-pink-500 fill-pink-500" : "text-gray-300"
-            }`}
-          />
-        </button>
-        {course.progress !== undefined && (
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-700">
-            <div
-              className="h-1 bg-gradient-to-r from-pink-500 to-orange-500"
-              style={{ width: `${course.progress}%` }}
-            ></div>
-          </div>
-        )}
       </div>
 
-      {/* Card Body with improved layout */}
-      <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-white mb-2 line-clamp-2 group-hover:text-pink-500 transition-colors">
+      {/* Course Content (popular-courses style) */}
+      <div className="p-4">
+        {/* Rating and Level Row */}
+        <div className="flex items-center justify-between mb-2">
+          {/* Rating - Left */}
+          <div className="flex items-center gap-1">
+            {renderStars(course.rating)}
+            <span className="text-gray-600 text-xs ml-1">({course.ratingCount})</span>
+          </div>
+
+          {/* Level - Right */}
+          <div className="flex items-center gap-1">
+            <Star className="w-3 h-3 text-gray-600" />
+            <span className="text-gray-600 text-xs">{course.level}</span>
+          </div>
+        </div>
+
+        {/* Course Title */}
+        <h3 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
           {course.title}
         </h3>
 
-        <p className="text-xs text-gray-300 mb-2 flex items-center gap-1">
-          <Users className="w-3 h-3" />
-          <span>
-            <Image
-              src={course.instructor.avatarUrl && course.instructor.avatarUrl.trim() !== "" ? course.instructor.avatarUrl : "/default-avatar.png"}
-              alt={course.instructor.name}
-              width={18}
-              height={18}
-              className="inline-block rounded-full mr-1 align-middle"
-            />
-            {course.instructor.name}
-          </span>
-        </p>
+        {/* Course Stats */}
+        <div className="flex items-center justify-between text-gray-600 text-xs mb-3">
+          {/* Lessons - Left */}
+          <div className="flex items-center gap-1">
+            <BookOpen className="w-3 h-3" />
+            <span>Lesson {course.lectures}</span>
+          </div>
 
-        <div className="flex items-center gap-1 mb-3">
-          {renderStars(course.rating)}
-          <span className="text-amber-400 font-bold text-xs ml-1">
-            {course.rating}
-          </span>
-          <span className="text-gray-400 text-xs">
-            ({course.ratingCount?.toLocaleString() || "0"})
-          </span>
+          {/* Students - Right */}
+          <div className="flex items-center gap-1">
+            <Users className="w-3 h-3" />
+            <span>Students {course.studentsEnrolled}+</span>
+          </div>
         </div>
 
-        {/* Course description - truncated */}
-        <p className="text-xs text-gray-400 mb-4 line-clamp-2">
-          {course.description}
-        </p>
-
-        {/* Progress Bar with gradient - Only shown if progress exists */}
-        {course.progress !== undefined && (
-          <div className="mb-3">
-            <div className="mb-1.5 flex justify-between items-center">
-              <span className="text-xs font-medium text-gray-300">
-                Course Progress
-              </span>
-              <span className="text-xs text-gray-300">{course.progress}%</span>
+        {/* Instructor and Price */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
+              <Users className="w-3 h-3 text-gray-600" />
             </div>
-            <div className="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-pink-500 to-orange-500"
-                style={{ width: `${course.progress}%` }}
-              ></div>
-            </div>
+            <span className="text-xs text-gray-700 font-medium">{course.instructor.name}</span>
           </div>
-        )}
-
-        {/* Price tag with improved styling */}
-        <div className="mt-auto">
-          <div className="flex items-baseline justify-between mb-3">
-            <div>
-              <span className="font-bold text-white">
-                {formatPrice(course.price)}
-              </span>
-              {course.originalPrice && (
-                <span className="text-gray-400 text-xs line-through ml-1">
-                  ${course.originalPrice.toFixed(2)}
-                </span>
-              )}
+          <div className="text-right">
+            <div className="text-blue-600 font-bold text-sm">
+              ${course.price}
             </div>
-            {calculateDiscount(course) && (
-              <span className="text-xs font-medium text-green-400">
-                {calculateDiscount(course)}% off
-              </span>
+            {course.originalPrice && (
+              <div className="text-gray-400 text-xs line-through">
+                ${course.originalPrice}
+              </div>
             )}
           </div>
+        </div>
 
-          {/* Added View Detail and Add to Cart buttons */}
-          <div className="grid grid-cols-2 gap-2">
-            <Link href={`/courses/${course.id}`}>
-              <button className="w-full py-2.5 px-3 bg-gray-700 hover:bg-gray-600 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap min-w-fit flex-shrink-0">
-                <Eye className="h-3.5 w-3.5 flex-shrink-0" />
-                <span>View Details</span>
-              </button>
-            </Link>{" "}
-            <button
-              onClick={handleAddToCart}
-              disabled={isInCart(course.id) || isAddingToCart}
-              className={`py-2.5 px-3 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1.5 shadow-lg whitespace-nowrap min-w-fit flex-shrink-0 ${
-                isInCart(course.id)
-                  ? "bg-green-600 hover:bg-green-700"
-                  : isAddingToCart
-                  ? "bg-pink-600 hover:bg-pink-700"
-                  : "bg-gradient-to-r from-pink-500 to-orange-500 hover:from-orange-500 hover:to-pink-500"
-              }`}
-            >
-              {isInCart(course.id) ? (
-                <>
-                  <CheckCircle className="h-3.5 w-3.5 flex-shrink-0" />
-                  <span>Added to Cart</span>{" "}
-                </>
-              ) : isAddingToCart ? (
-                <>
-                  <LoadingSpinner size="xs" />
-                  <span>Adding...</span>
-                </>
-              ) : (
-                <>
-                  <ShoppingCart className="h-3.5 w-3.5 flex-shrink-0" />
-                  <span>Add to Cart</span>
-                </>
-              )}
+        {/* Action Buttons */}
+        <div className="grid grid-cols-2 gap-2">
+          <Link href={`/courses/${course.id}`}>
+            <button className="w-full py-1.5 px-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 hover:text-gray-800 text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded">
+              <Eye className="h-3 w-3" />
+              <span>View Detail</span>
             </button>
-          </div>
+          </Link>
+
+          <button
+            onClick={handleAddToCart}
+            className={`w-full py-1.5 px-2 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded ${
+              isInCart(course.id)
+                ? "bg-blue-600 hover:bg-blue-700"
+                : isAddingToCart
+                ? "bg-blue-700 hover:bg-blue-800"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+            disabled={isInCart(course.id) || isAddingToCart}
+          >
+            {isInCart(course.id) ? (
+              <>
+                <CheckCircle className="h-3 w-3 flex-shrink-0" />
+                <span>Added</span>
+              </>
+            ) : isAddingToCart ? (
+              <>
+                <LoadingSpinner size="xs" />
+                <span>Adding...</span>
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="h-3 w-3" />
+                <span>Add to Cart</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>

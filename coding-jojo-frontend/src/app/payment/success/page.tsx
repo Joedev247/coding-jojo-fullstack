@@ -8,7 +8,7 @@ export default function PaymentSuccessPage() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
       <div className="max-w-md w-full bg-white dark:bg-gray-800  shadow-lg p-8 text-center">
         <div className="mb-6">
-          <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
+          <CheckCircle className="h-16 w-16 text-blue-500 mx-auto" />
         </div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Payment Successful!

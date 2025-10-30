@@ -117,7 +117,7 @@ const TestimonialSection = () => {
         quote:
           "CODING JOJO's cybersecurity bootcamp prepared me for real-world challenges. The ethical hacking labs were particularly engaging and practical.",
         verified: true,
-        avatarColor: "from-green-500 to-teal-500",
+        avatarColor: "from-blue-500 to-teal-500",
         rating: 5,
         completedCourses: 7,
         skillLevel: "Intermediate",
@@ -171,33 +171,33 @@ const TestimonialSection = () => {
   const getSkillLevelColor = (level: string) => {
     switch (level) {
       case "Beginner":
-        return "text-green-400 bg-green-500/10";
+        return "text-blue-600 bg-blue-500/10";
       case "Intermediate":
-        return "text-yellow-400 bg-yellow-500/10";
+        return "text-yellow-600 bg-yellow-500/10";
       case "Advanced":
-        return "text-orange-400 bg-orange-500/10";
+        return "text-blue-600 bg-blue-500/10";
       case "Expert":
-        return "text-pink-400 bg-pink-500/10";
+        return "text-indigo-600 bg-indigo-500/10";
       default:
-        return "text-gray-400 bg-gray-500/10";
+        return "text-gray-600 bg-gray-500/10";
     }
   };
 
   // Loading skeleton
   if (!mounted) {
     return (
-      <div className="relative overflow-hidden py-16 md:py-24">
+      <div className="relative overflow-hidden py-12 md:py-16 bg-white">
         <div className="container mx-auto px-4 max-w-7xl relative z-10">
-          <div className="mb-12 max-w-3xl mx-auto text-center">
-            <div className="h-8  bg-gray-900 rounded animate-pulse mb-4 mx-auto w-48"></div>
-            <div className="h-12  bg-gray-900 rounded animate-pulse mb-4 mx-auto max-w-2xl"></div>
-            <div className="h-6  bg-gray-900 rounded animate-pulse mx-auto max-w-xl"></div>
+          <div className="mb-10 max-w-3xl mx-auto text-center">
+            <div className="h-6 bg-gray-200 rounded animate-pulse mb-3 mx-auto w-48"></div>
+            <div className="h-8 bg-gray-200 rounded animate-pulse mb-3 mx-auto max-w-2xl"></div>
+            <div className="h-5 bg-gray-200 rounded animate-pulse mx-auto max-w-xl"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[...Array(3)].map((_, i) => (
               <div
                 key={i}
-                className="h-80  bg-gray-900  animate-pulse"
+                className="h-64 bg-gray-200 animate-pulse "
               ></div>
             ))}
           </div>
@@ -206,52 +206,52 @@ const TestimonialSection = () => {
     );
   }
   return (
-    <section className="relative py-16 md:py-24 font-['Inter',sans-serif]">
+    <section className="relative py-12 md:py-16 font-['Inter',sans-serif]">
       {/* <AnimatedBackground /> */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Enhanced Section Header for CODING JOJO */}
-        <div className="mb-12 md:mb-16 max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded-full text-sm font-semibold backdrop-blur-sm shadow-lg mb-6 border border-pink-500/20">
-            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center">
-              <Star className="h-3 w-3 text-white fill-white" />
+        <div className="mb-10 md:mb-12 max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-full text-xs font-semibold backdrop-blur-sm shadow-lg mb-4 border border-blue-500/20">
+            <div className="h-5 w-5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
+              <Star className="h-2.5 w-2.5 text-white fill-white" />
             </div>
-            <span className="bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent font-bold">
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent font-bold">
               Student Success Stories
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-extrabold leading-tight tracking-tight text-white mb-4">
-            <span className="text-white">Transforming Careers at </span>
-            <span className="bg-gradient-to-r from-pink-500 via-orange-500 to-pink-500 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient">
+          <h2 className="text-2xl md:text-3xl font-extrabold leading-tight tracking-tight text-gray-800 mb-3">
+            <span className="text-gray-800">Transforming Careers at </span>
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient">
               CODING JOJO
             </span>
           </h2>
 
-          <p className="max-w-2xl mx-auto text-gray-300 text-lg">
+          <p className="max-w-2xl mx-auto text-gray-600 text-xs">
             Join thousands of developers who've landed their dream jobs through
             our comprehensive coding bootcamps and mentorship programs
           </p>
 
           {/* Enhanced Stats */}
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
-            <div className="  bg-gray-900/60 backdrop-blur-sm p-4 hover:border-pink-500/30 transition-all duration-300">
-              <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+            <div className="bg-white border border-gray-200 backdrop-blur-sm p-3 hover:border-blue-500/30 transition-all duration-300 ">
+              <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 4.9★
               </div>
-              <div className="text-sm text-gray-400">Average Rating</div>
+              <div className="text-xs text-gray-600">Average Rating</div>
             </div>
-            <div className="  bg-gray-900/60 backdrop-blur-sm p-4 hover:border-pink-500/30 transition-all duration-300">
-              <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+            <div className="bg-white border border-gray-200 backdrop-blur-sm p-3 hover:border-blue-500/30 transition-all duration-300 ">
+              <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 50K+
               </div>
-              <div className="text-sm text-gray-400">Students Enrolled</div>
+              <div className="text-xs text-gray-600">Students Enrolled</div>
             </div>
-            <div className="  bg-gray-900/60 backdrop-blur-sm p-4 hover:border-pink-500/30 transition-all duration-300">
-              <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+            <div className="bg-white border border-gray-200 backdrop-blur-sm p-3 hover:border-blue-500/30 transition-all duration-300 ">
+              <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 95%
               </div>
-              <div className="text-sm text-gray-400">Job Placement</div>
+              <div className="text-xs text-gray-600">Job Placement</div>
             </div>
           </div>
         </div>
@@ -262,14 +262,14 @@ const TestimonialSection = () => {
           <button
             onClick={prevSlide}
             disabled={animating}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20   bg-gray-900/90 hover:border-pink-500/50 rounded-full shadow-xl p-3 backdrop-blur-sm transition-all duration-300 group ${
+            className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-white border border-gray-200 hover:border-blue-500/50 rounded-full shadow-xl p-2.5 backdrop-blur-sm transition-all duration-300 group ${
               animating
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:shadow-pink-500/20 hover:bg-gray-800"
+                : "hover:shadow-blue-500/20 hover:bg-blue-50"
             }`}
             aria-label="Previous testimonial"
           >
-            <ChevronLeft className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" />
+            <ChevronLeft className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors" />
           </button>
 
           <div className="overflow-hidden px-8">
@@ -289,34 +289,34 @@ const TestimonialSection = () => {
                   style={{ width: `${100 / slidesToShow}%` }}
                 >
                   {/* Compact Testimonial Card */}
-                  <div className="  bg-gray-900/60 backdrop-blur-sm  p-6 shadow-xl hover:border-pink-500/30 h-full flex flex-col hover:shadow-2xl hover:shadow-pink-500/10 transition-all duration-300 relative group hover:transform hover:scale-[1.02] cursor-pointer">
+                  <div className="bg-white border border-gray-200 backdrop-blur-sm p-5 shadow-xl hover:border-blue-500/30 h-full flex flex-col hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 relative group hover:transform hover:scale-[1.02] cursor-pointer ">
                     {/* User Info Header */}
-                    <div className="flex items-center mb-4">
+                    <div className="flex items-center mb-3">
                       <div className="mr-3 flex-shrink-0 relative">
                         <div
-                          className={`w-12 h-12 rounded-full bg-gradient-to-r ${testimonial.avatarColor} flex items-center justify-center text-white font-bold text-lg shadow-lg border-2 border-white/10`}
+                          className={`w-10 h-10 rounded-full bg-gradient-to-r ${testimonial.avatarColor} flex items-center justify-center text-white font-bold text-xs shadow-lg border-2 border-white/20`}
                         >
                           {testimonial.initial}
                         </div>
                         {/* Verified Badge */}
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center shadow-md border-2 border-gray-900">
-                          <Code className="w-2.5 h-2.5 text-white" />
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center shadow-md border-2 border-white">
+                          <Code className="w-2 h-2 text-white" />
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-white text-lg truncate">
+                        <h4 className="font-bold text-gray-800 text-xs truncate">
                           {testimonial.author}
                         </h4>
-                        <div className="flex items-center text-sm">
-                          <span className="text-gray-300 font-medium">
+                        <div className="flex items-center text-xs">
+                          <span className="text-gray-600 font-medium">
                             {testimonial.role}
                           </span>
                         </div>
                         <div className="flex items-center mt-1">
-                          <span className="text-pink-400 text-xs font-semibold">
+                          <span className="text-blue-600 text-xs font-semibold">
                             {testimonial.company}
                           </span>
-                          <span className="mx-2 text-gray-600 text-xs">•</span>
+                          <span className="mx-2 text-gray-400 text-xs">•</span>
                           <span className="text-gray-500 text-xs">
                             {testimonial.timeAgo}
                           </span>
@@ -325,25 +325,25 @@ const TestimonialSection = () => {
                     </div>
 
                     {/* Rating Stars */}
-                    <div className="flex items-center mb-4">
+                    <div className="flex items-center mb-3">
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <Star
                           key={i}
-                          className="w-4 h-4 text-amber-400 fill-amber-400"
+                          className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400"
                         />
                       ))}
-                      <span className="ml-2 text-sm text-gray-400">
+                      <span className="ml-2 text-xs text-gray-600">
                         ({testimonial.rating}.0)
                       </span>
                     </div>
 
                     {/* Testimonial Quote - Compact */}
-                    <p className="text-gray-300 text-sm leading-relaxed flex-grow mb-4 line-clamp-3">
+                    <p className="text-gray-700 text-xs leading-relaxed flex-grow mb-3 line-clamp-3">
                       "{testimonial.quote}"
                     </p>
 
                     {/* Skills & Progress */}
-                    <div className="mt-auto space-y-3">
+                    <div className="mt-auto space-y-2">
                       <div className="flex items-center justify-between">
                         <span
                           className={`text-xs px-2 py-1 rounded-full font-medium ${getSkillLevelColor(
@@ -352,14 +352,14 @@ const TestimonialSection = () => {
                         >
                           {testimonial.skillLevel}
                         </span>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-gray-500">
                           {testimonial.completedCourses} courses completed
                         </span>
                       </div>
 
                       {/* Decorative Bottom Border */}
-                      <div className="w-full h-1  bg-gray-900 rounded-full overflow-hidden">
-                        <div className="w-full h-full bg-gradient-to-r from-pink-500 to-orange-500 rounded-full transform origin-left group-hover:scale-x-110 transition-transform duration-500"></div>
+                      <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full transform origin-left group-hover:scale-x-110 transition-transform duration-500"></div>
                       </div>
                     </div>
                   </div>
@@ -371,19 +371,19 @@ const TestimonialSection = () => {
           <button
             onClick={nextSlide}
             disabled={animating}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20   bg-gray-900/90 hover:border-pink-500/50 rounded-full shadow-xl p-3 backdrop-blur-sm transition-all duration-300 group ${
+            className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 bg-white border border-gray-200 hover:border-blue-500/50 rounded-full shadow-xl p-2.5 backdrop-blur-sm transition-all duration-300 group ${
               animating
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:shadow-pink-500/20 hover:bg-gray-800"
+                : "hover:shadow-blue-500/20 hover:bg-blue-50"
             }`}
             aria-label="Next testimonial"
           >
-            <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" />
+            <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors" />
           </button>
         </div>
 
         {/* Compact Pagination Dots */}
-        <div className="flex justify-center mt-8 space-x-2">
+        <div className="flex justify-center mt-6 space-x-2">
           {Array.from({
             length: Math.max(1, totalSlides - slidesToShow + 1),
           }).map((_, index) => {
@@ -396,8 +396,8 @@ const TestimonialSection = () => {
                 disabled={animating}
                 className={`h-2 rounded-full transition-all duration-300 ease-out ${
                   isActive
-                    ? "bg-gradient-to-r from-pink-500 to-orange-500 w-8 shadow-lg shadow-pink-500/30"
-                    : "bg-gray-700 w-2 hover:bg-gray-600 hover:w-4"
+                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 w-6 shadow-lg shadow-blue-500/30"
+                    : "bg-gray-300 w-2 hover:bg-gray-400 hover:w-3"
                 } ${animating ? "opacity-50" : ""}`}
                 aria-label={`Go to slide ${index + 1}`}
               />

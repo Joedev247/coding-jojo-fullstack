@@ -184,7 +184,6 @@ export default function InstructorRegister() {
   if (!mounted) {
     return (
       <div className="min-h-screen text-white relative flex items-center justify-center">
-        <AnimatedBackground />
         <div className="z-10 flex flex-col items-center">
           <LoadingSpinner size="sm" />
         </div>
@@ -324,15 +323,15 @@ export default function InstructorRegister() {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Name Input */}
             <div className="space-y-1">
-              <label htmlFor="name" className="block text-xs font-medium text-gray-300">
+              <label htmlFor="name" className="block text-xs text-gray-600 mb-1">
                 Full Name
               </label>
-              <div className={`relative transition-all duration-300 ${formFocus.name ? "transform scale-[1.02]" : ""}`}>
+              <div className={`relative transition-all duration-300 ${formFocus.name ? "transform scale-[1.01]" : ""}`}>
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className={`h-4 w-4 transition-colors duration-300 ${formFocus.name ? "text-pink-400" : "text-gray-500"}`} />
+                  <User className={`h-3.5 w-3.5 transition-colors duration-300 ${formFocus.name ? "text-blue-600" : "text-gray-400"}`} />
                 </div>
                 <input
                   id="name"
@@ -343,21 +342,21 @@ export default function InstructorRegister() {
                   onChange={handleInputChange}
                   onFocus={() => handleFocus("name")}
                   onBlur={() => handleBlur("name")}
-                  className="w-full h-11 pl-12 pr-4 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded p-5 backdrop-blur-sm shadow-lg focus:border-pink-500/50 focus:ring-2 focus:ring-pink-500/20 text-white text-sm outline-none transition-all duration-300 focus:shadow-lg focus:shadow-pink-500/10 placeholder-slate-400"
+                  className="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm"
                   placeholder="Your full name"
                 />
               </div>
-              {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
+              {errors.name && <p className="text-red-600 text-xs mt-1">{errors.name}</p>}
             </div>
 
             {/* Email Input */}
             <div className="space-y-1">
-              <label htmlFor="email" className="block text-xs font-medium text-gray-300">
+              <label htmlFor="email" className="block text-xs text-gray-600 mb-1">
                 Email Address
               </label>
-              <div className={`relative transition-all duration-300 ${formFocus.email ? "transform scale-[1.02]" : ""}`}>
+              <div className={`relative transition-all duration-300 ${formFocus.email ? "transform scale-[1.01]" : ""}`}>
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className={`h-4 w-4 transition-colors duration-300 ${formFocus.email ? "text-pink-400" : "text-gray-500"}`} />
+                  <Mail className={`h-3.5 w-3.5 transition-colors duration-300 ${formFocus.email ? "text-blue-600" : "text-gray-400"}`} />
                 </div>
                 <input
                   id="email"
@@ -368,21 +367,21 @@ export default function InstructorRegister() {
                   onChange={handleInputChange}
                   onFocus={() => handleFocus("email")}
                   onBlur={() => handleBlur("email")}
-                  className="w-full h-11 pl-12 pr-4 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded p-5 backdrop-blur-sm shadow-lg focus:border-pink-500/50 focus:ring-2 focus:ring-pink-500/20 text-white text-sm outline-none transition-all duration-300 focus:shadow-lg focus:shadow-pink-500/10 placeholder-slate-400"
+                  className="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm"
                   placeholder="instructor@example.com"
                 />
               </div>
-              {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+              {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email}</p>}
             </div>
 
             {/* Password Input */}
             <div className="space-y-1">
-              <label htmlFor="password" className="block text-xs font-medium text-gray-300">
+              <label htmlFor="password" className="block text-xs text-gray-600 mb-1">
                 Password
               </label>
-              <div className={`relative transition-all duration-300 ${formFocus.password ? "transform scale-[1.02]" : ""}`}>
+              <div className={`relative transition-all duration-300 ${formFocus.password ? "transform scale-[1.01]" : ""}`}>
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className={`h-4 w-4 transition-colors duration-300 ${formFocus.password ? "text-pink-400" : "text-gray-500"}`} />
+                  <Lock className={`h-3.5 w-3.5 transition-colors duration-300 ${formFocus.password ? "text-blue-600" : "text-gray-400"}`} />
                 </div>
                 <input
                   id="password"
@@ -393,30 +392,30 @@ export default function InstructorRegister() {
                   onChange={handleInputChange}
                   onFocus={() => handleFocus("password")}
                   onBlur={() => handleBlur("password")}
-                  className="w-full h-11 pl-12 pr-12 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded p-5 backdrop-blur-sm shadow-lg focus:border-pink-500/50 focus:ring-2 focus:ring-pink-500/20 text-white text-sm outline-none transition-all duration-300 focus:shadow-lg focus:shadow-pink-500/10 placeholder-slate-400"
+                  className="w-full h-9 pl-10 pr-10 bg-white border border-gray-300 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-200 text-gray-800 text-xs outline-none transition-all duration-300 placeholder-gray-500"
                   placeholder="Create a strong password"
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="text-gray-400 hover:text-pink-400 focus:outline-none transition-colors duration-200"
+                    className="text-gray-400 hover:text-blue-600 focus:outline-none transition-colors duration-200"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                   </button>
                 </div>
               </div>
-              {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
+              {errors.password && <p className="text-red-600 text-xs mt-1">{errors.password}</p>}
             </div>
 
             {/* Confirm Password Input */}
             <div className="space-y-1">
-              <label htmlFor="confirmPassword" className="block text-xs font-medium text-gray-300">
+              <label htmlFor="confirmPassword" className="block text-xs text-gray-600 mb-1">
                 Confirm Password
               </label>
-              <div className={`relative transition-all duration-300 ${formFocus.confirmPassword ? "transform scale-[1.02]" : ""}`}>
+              <div className={`relative transition-all duration-300 ${formFocus.confirmPassword ? "transform scale-[1.01]" : ""}`}>
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className={`h-4 w-4 transition-colors duration-300 ${formFocus.confirmPassword ? "text-pink-400" : "text-gray-500"}`} />
+                  <Lock className={`h-3.5 w-3.5 transition-colors duration-300 ${formFocus.confirmPassword ? "text-blue-600" : "text-gray-400"}`} />
                 </div>
                 <input
                   id="confirmPassword"
@@ -427,59 +426,59 @@ export default function InstructorRegister() {
                   onChange={handleInputChange}
                   onFocus={() => handleFocus("confirmPassword")}
                   onBlur={() => handleBlur("confirmPassword")}
-                  className="w-full h-11 pl-12 pr-12 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded p-5 backdrop-blur-sm shadow-lg focus:border-pink-500/50 focus:ring-2 focus:ring-pink-500/20 text-white text-sm outline-none transition-all duration-300 focus:shadow-lg focus:shadow-pink-500/10 placeholder-slate-400"
+                  className="w-full h-9 pl-10 pr-10 bg-white border border-gray-300 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-200 text-gray-800 text-xs outline-none transition-all duration-300 placeholder-gray-500"
                   placeholder="Confirm your password"
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="text-gray-400 hover:text-pink-400 focus:outline-none transition-colors duration-200"
+                    className="text-gray-400 hover:text-blue-600 focus:outline-none transition-colors duration-200"
                   >
-                    {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showConfirmPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                   </button>
                 </div>
               </div>
-              {errors.confirmPassword && <p className="text-red-400 text-sm mt-1">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && <p className="text-red-600 text-xs mt-1">{errors.confirmPassword}</p>}
             </div>
           </div>
         );
       case 2:
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Bio Input */}
             <div className="space-y-1">
-              <label htmlFor="bio" className="block text-xs font-medium text-gray-300">
+              <label htmlFor="bio" className="block text-xs text-gray-600 mb-1">
                 Professional Bio
               </label>
-              <div className={`relative transition-all duration-300 ${formFocus.bio ? "transform scale-[1.02]" : ""}`}>
+              <div className={`relative transition-all duration-300 ${formFocus.bio ? "transform scale-[1.01]" : ""}`}>
                 <textarea
                   id="bio"
                   name="bio"
-                  rows={4}
+                  rows={3}
                   required
                   value={formData.bio}
                   onChange={handleInputChange}
                   onFocus={() => handleFocus("bio")}
                   onBlur={() => handleBlur("bio")}
-                  className="w-full p-4 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded backdrop-blur-sm shadow-lg focus:border-pink-500/50 focus:ring-2 focus:ring-pink-500/20 text-white text-sm outline-none transition-all duration-300 focus:shadow-lg focus:shadow-pink-500/10 placeholder-slate-400 resize-none"
+                  className="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm resize-none"
                   placeholder="Tell us about your teaching experience, skills, and what makes you a great instructor... (minimum 50 characters)"
                 />
               </div>
               <div className="flex justify-between items-center">
-                {errors.bio && <p className="text-red-400 text-sm">{errors.bio}</p>}
-                <p className="text-gray-400 text-xs">{formData.bio.length}/50 characters minimum</p>
+                {errors.bio && <p className="text-red-600 text-xs">{errors.bio}</p>}
+                <p className="text-gray-500 text-xs">{formData.bio.length}/50 characters minimum</p>
               </div>
             </div>
 
             {/* Expertise Input */}
             <div className="space-y-1">
-              <label htmlFor="expertise" className="block text-xs font-medium text-gray-300">
+              <label htmlFor="expertise" className="block text-xs text-gray-600 mb-1">
                 Primary Area of Expertise
               </label>
-              <div className={`relative transition-all duration-300 ${formFocus.expertise ? "transform scale-[1.02]" : ""}`}>
+              <div className={`relative transition-all duration-300 ${formFocus.expertise ? "transform scale-[1.01]" : ""}`}>
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <BookOpen className={`h-4 w-4 transition-colors duration-300 ${formFocus.expertise ? "text-pink-400" : "text-gray-500"}`} />
+                  <BookOpen className={`h-3.5 w-3.5 transition-colors duration-300 ${formFocus.expertise ? "text-blue-600" : "text-gray-400"}`} />
                 </div>
                 <input
                   id="expertise"
@@ -490,21 +489,21 @@ export default function InstructorRegister() {
                   onChange={handleInputChange}
                   onFocus={() => handleFocus("expertise")}
                   onBlur={() => handleBlur("expertise")}
-                  className="w-full h-11 pl-12 pr-4 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded p-5 backdrop-blur-sm shadow-lg focus:border-pink-500/50 focus:ring-2 focus:ring-pink-500/20 text-white text-sm outline-none transition-all duration-300 focus:shadow-lg focus:shadow-pink-500/10 placeholder-slate-400"
+                  className="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm"
                   placeholder="e.g. Web Development, Data Science, Mobile Apps"
                 />
               </div>
-              {errors.expertise && <p className="text-red-400 text-sm mt-1">{errors.expertise}</p>}
+              {errors.expertise && <p className="text-red-600 text-xs mt-1">{errors.expertise}</p>}
             </div>
 
             {/* Phone Number Input */}
             <div className="space-y-1">
-              <label htmlFor="phoneNumber" className="block text-xs font-medium text-gray-300">
+              <label htmlFor="phoneNumber" className="block text-xs text-gray-600 mb-1">
                 Phone Number
               </label>
-              <div className={`relative transition-all duration-300 ${formFocus.phoneNumber ? "transform scale-[1.02]" : ""}`}>
+              <div className={`relative transition-all duration-300 ${formFocus.phoneNumber ? "transform scale-[1.01]" : ""}`}>
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Phone className={`h-4 w-4 transition-colors duration-300 ${formFocus.phoneNumber ? "text-pink-400" : "text-gray-500"}`} />
+                  <Phone className={`h-3.5 w-3.5 transition-colors duration-300 ${formFocus.phoneNumber ? "text-blue-600" : "text-gray-400"}`} />
                 </div>
                 <input
                   id="phoneNumber"
@@ -515,68 +514,68 @@ export default function InstructorRegister() {
                   onChange={handleInputChange}
                   onFocus={() => handleFocus("phoneNumber")}
                   onBlur={() => handleBlur("phoneNumber")}
-                  className="w-full h-11 pl-12 pr-4 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded p-5 backdrop-blur-sm shadow-lg focus:border-pink-500/50 focus:ring-2 focus:ring-pink-500/20 text-white text-sm outline-none transition-all duration-300 focus:shadow-lg focus:shadow-pink-500/10 placeholder-slate-400"
+                  className="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm"
                   placeholder="+1 (555) 123-4567"
                 />
               </div>
-              {errors.phoneNumber && <p className="text-red-400 text-sm mt-1">{errors.phoneNumber}</p>}
+              {errors.phoneNumber && <p className="text-red-600 text-xs mt-1">{errors.phoneNumber}</p>}
             </div>
           </div>
         );
       case 3:
         return (
-          <div className="space-y-6">
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle className="h-8 w-8 text-white" />
+          <div className="space-y-4">
+            <div className="text-center space-y-3">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                <CheckCircle className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white">Almost Done!</h3>
-              <p className="text-gray-300">Review your information and agree to our terms to complete your registration.</p>
+              <h3 className="text-lg font-bold text-gray-800">Almost Done!</h3>
+              <p className="text-gray-600 text-xs">Review your information and agree to our terms to complete your registration.</p>
             </div>
 
-            <div className="bg-gray-900 rounded p-4 space-y-3">
+            <div className="bg-blue-50 rounded border border-blue-100 p-3 space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-300">Name:</span>
-                <span className="text-white">{formData.name}</span>
+                <span className="text-gray-600 text-xs">Name:</span>
+                <span className="text-gray-800 text-xs font-medium">{formData.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-300">Email:</span>
-                <span className="text-white">{formData.email}</span>
+                <span className="text-gray-600 text-xs">Email:</span>
+                <span className="text-gray-800 text-xs font-medium">{formData.email}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-300">Expertise:</span>
-                <span className="text-white">{formData.expertise}</span>
+                <span className="text-gray-600 text-xs">Expertise:</span>
+                <span className="text-gray-800 text-xs font-medium">{formData.expertise}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-300">Phone:</span>
-                <span className="text-white">{formData.phoneNumber}</span>
+                <span className="text-gray-600 text-xs">Phone:</span>
+                <span className="text-gray-800 text-xs font-medium">{formData.phoneNumber}</span>
               </div>
             </div>
 
             {/* Terms Agreement */}
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
+            <div className="space-y-3">
+              <div className="flex items-start space-x-2">
                 <input
                   id="agreeToTerms"
                   name="agreeToTerms"
                   type="checkbox"
                   checked={formData.agreeToTerms}
                   onChange={handleInputChange}
-                  className="mt-1 h-4 w-4 text-pink-500 bg-gray-900 border-gray-600 rounded focus:ring-pink-500 focus:ring-offset-gray-800 transition-all duration-200"
+                  className="mt-0.5 h-3.5 w-3.5 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500 focus:ring-offset-white transition-all duration-200"
                 />
-                <label htmlFor="agreeToTerms" className="text-sm text-gray-300 leading-relaxed">
+                <label htmlFor="agreeToTerms" className="text-xs text-gray-700 leading-relaxed">
                   I agree to the{" "}
-                  <Link href="/terms" className="text-pink-400 hover:text-pink-300 transition-colors">
+                  <Link href="/terms" className="text-blue-600 hover:text-blue-700 transition-colors">
                     Terms of Service
                   </Link>
                   {" "}and{" "}
-                  <Link href="/privacy" className="text-pink-400 hover:text-pink-300 transition-colors">
+                  <Link href="/privacy" className="text-blue-600 hover:text-blue-700 transition-colors">
                     Privacy Policy
                   </Link>
                   . I understand that my instructor application will be reviewed and I'll receive verification instructions via email.
                 </label>
               </div>
-              {errors.agreeToTerms && <p className="text-red-400 text-sm">{errors.agreeToTerms}</p>}
+              {errors.agreeToTerms && <p className="text-red-600 text-xs">{errors.agreeToTerms}</p>}
             </div>
           </div>
         );
@@ -586,240 +585,178 @@ export default function InstructorRegister() {
   };
 
   return (
-    <div className="min-h-screen text-white relative">
-      <AnimatedBackground />
-      <Breadcrumb items={breadcrumbItems} />
-      <div className="relative z-10 flex items-center justify-center px-4 py-8">
-        <div className="w-full max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Left Column: Brand imagery and message */}
-            <div className="bg-gray-900/40 backdrop-blur-sm  shadow-xl p-6 hover:shadow-purple-900/20 transition duration-300 order-2 md:order-1">
-              <div className="flex flex-col items-center h-full justify-between">
-                <div className="relative w-20 h-20 mb-6">
-                  <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full opacity-20 blur-md transform scale-110"></div>
-                  <div className="flex items-center justify-center h-full relative z-10">
-                    <Image
-                      src="/image-removebg-preview.png"
-                      alt="Coding Jojo Logo"
-                      width={80}
-                      height={80}
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
+    <div className="relative w-full h-screen bg-white overflow-hidden">
+      {/* Purple decorative shapes */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-gray-100 via-blue-900 to-gray-100 rounded-bl-[100px] z-0" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-gray-100 via-blue-900 to-gray-100 rounded-tr-[100px] z-0" />
 
-                {/* Carousel for motivational content */}
-                <div className="h-40 relative w-full">
-                  {motivationalContent.map((content, index) => (
-                    <div
-                      key={index}
-                      className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 ${
-                        currentSlide === index ? "opacity-100" : "opacity-0"
-                      }`}
-                    >
-                      <h2 className="text-2xl md:text-3xl font-bold mb-3 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-orange-400">
-                        {content.title}
-                      </h2>
-                      <div className="h-1 w-20 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full mb-4"></div>
-                      <p className="text-center text-gray-300 mb-6">
-                        {content.description}
-                      </p>
+      <div className="relative z-10 w-full h-full flex items-center justify-center p-8">
+        <div className="flex w-full max-w-6xl h-[600px] bg-white shadow-2xl overflow-hidden">
+          {/* Left Side - Instructor Registration Form */}
+          <div className="w-[40%] bg-white p-8 flex flex-col justify-center">
+            {/* Blue accent bar at top */}
+            <div className="w-70 h-0.5 bg-indigo-600 mb-6 rounded-full" />
+
+            <h1 className="text-2xl font-bold text-center text-gray-800 mb-1">Become an Instructor</h1>
+            <p className="text-xs text-center text-gray-500 mb-6">Join thousands of educators worldwide</p>
+
+            {/* Step Indicator */}
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-3">
+                {steps.map((step, index) => (
+                  <div key={step.number} className="flex items-center">
+                    <div className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold transition-all duration-300 ${
+                      currentStep >= step.number
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-gray-200 text-gray-500'
+                    }`}>
+                      {step.number}
                     </div>
-                  ))}
-                </div>
-
-                {/* Slide indicators */}
-                <div className="flex justify-center space-x-2 my-6">
-                  {motivationalContent.map((_, index) => (
-                    <div
-                      key={index}
-                      className={`h-2 ${
-                        index === currentSlide
-                          ? "w-6 bg-gradient-to-r from-pink-500 to-orange-500"
-                          : "w-2 bg-gray-700"
-                      } rounded-full transition-all duration-300 cursor-pointer`}
-                      onClick={() => setCurrentSlide(index)}
-                    ></div>
-                  ))}
-                </div>
-
-                {/* Stats section */}
-                <div className="w-full grid grid-cols-2 gap-4">
-                  {motivationalContent[currentSlide].stats.map(
-                    (stat, index) => (
-                      <div
-                        key={index}
-                        className="text-center bg-gray-900/50 rounded p-4 hover:border-pink-500/30 transition-all duration-300 group"
-                      >
-                        <p className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-orange-400 group-hover:from-pink-300 group-hover:to-orange-300 transition-all duration-300">
-                          {stat.number}
-                        </p>
-                        <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-all duration-300">
-                          {stat.label}
-                        </p>
-                      </div>
-                    )
-                  )}
-                </div>
-
-                {/* Community Preview */}
-                <div className="mt-8 w-full">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-white flex items-center">
-                      <Users className="w-4 h-4 mr-2 text-pink-400" />
-                      Instructor Community
-                    </h3>
+                    {index < steps.length - 1 && (
+                      <div className={`w-6 h-px transition-all duration-300 ${
+                        currentStep > step.number
+                          ? 'bg-indigo-600'
+                          : 'bg-gray-200'
+                      }`} />
+                    )}
                   </div>
-                  <div className="p-4 bg-gray-900 rounded">
-                    <div className="flex items-center space-x-2 mb-3">
-                      <div className="flex -space-x-2">
-                        {featuredInstructors.slice(0, 3).map((instructor) => (
-                          <div
-                            key={instructor.id}
-                            className="w-6 h-6 rounded-full relative"
-                          >
-                            <Image
-                              src={instructor.avatarUrl}
-                              alt={instructor.name}
-                              fill
-                              className="rounded-full object-cover"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                      <span className="text-xs text-gray-400">
-                        {
-                          featuredInstructors.filter(
-                            (m) => m.lastActive === "Online now"
-                          ).length
-                        }{" "}
-                        instructors online
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {["teaching", "mentoring", "course-creation", "community"].map(
-                        (topic, index) => (
-                          <span
-                            key={index}
-                            className="bg-gray-800 text-gray-400 text-xs rounded-full px-2 py-1"
-                          >
-                            #{topic}
-                          </span>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </div>
+                ))}
+              </div>
+              <div className="text-center">
+                <h4 className="text-xs font-semibold text-gray-800">
+                  {steps[currentStep - 1].title}
+                </h4>
+                <p className="text-xs text-gray-600">
+                  {steps[currentStep - 1].description}
+                </p>
               </div>
             </div>
 
-            {/* Right Column: Registration Form */}
-            <div className="bg-gray-900/40 backdrop-blur-sm  shadow-xl p-6 hover:shadow-pink-900/20 transition duration-300 order-1 md:order-2">
-              <div className="flex flex-col h-full">
-                <div className="mb-6">
-                  <h3 className="text-xl text-center font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-orange-400 mb-2">
-                    Become an Instructor
-                  </h3>
-                  <p className="text-gray-400 text-center text-sm">
-                    Join thousands of educators worldwide
-                  </p>
-                </div>
+            {/* Display error message if there is one */}
+            {errors.submit && (
+              <div className="mb-4 p-2 bg-red-50 border border-red-200 rounded">
+                <p className="text-red-600 text-xs">{errors.submit}</p>
+              </div>
+            )}
 
-                {/* Step Indicator */}
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-4">
-                    {steps.map((step, index) => (
-                      <div key={step.number} className="flex items-center">
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-all duration-300 ${
-                          currentStep >= step.number
-                            ? 'bg-gradient-to-r from-pink-500 to-orange-500 text-white'
-                            : 'bg-gray-700 text-gray-300'
-                        }`}>
-                          {step.number}
-                        </div>
-                        {index < steps.length - 1 && (
-                          <div className={`w-8 h-px transition-all duration-300 ${
-                            currentStep > step.number
-                              ? 'bg-gradient-to-r from-pink-500 to-orange-500'
-                              : 'bg-gray-700'
-                          }`} />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="text-center">
-                    <h4 className="text-sm font-semibold text-white">
-                      {steps[currentStep - 1].title}
-                    </h4>
-                    <p className="text-xs text-gray-400">
-                      {steps[currentStep - 1].description}
-                    </p>
-                  </div>
-                </div>
+            <form onSubmit={handleSubmit} className="space-y-4 flex-grow">
+              {renderStepContent()}
 
-                {/* Display error message if there is one */}
-                {errors.submit && (
-                  <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded">
-                    <p className="text-red-400 text-sm">{errors.submit}</p>
-                  </div>
+              {/* Form Actions */}
+              <div className="flex justify-between items-center pt-3">
+                {currentStep > 1 && (
+                  <button
+                    type="button"
+                    onClick={handlePrevious}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 rounded text-xs transition-all duration-300"
+                  >
+                    Previous+-
+                  </button>
                 )}
+                
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`${currentStep === 1 ? 'w-full' : 'ml-auto'} text-white py-3 px-6 rounded font-semibold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm ${
+                    isLoading 
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-indigo-600 hover:bg-indigo-700"
+                  }`}
+                >
+                  {isLoading ? (
+                    <span className="flex items-center justify-center gap-1">
+                      <LoadingSpinner size="xs" />
+                      {currentStep === 3 ? 'Creating Account...' : 'Processing...'}
+                    </span>
+                  ) : (
+                    currentStep === 3 ? 'COMPLETE REGISTRATION' : 'CONTINUE'
+                  )}
+                </button>
+              </div>
+            </form>
 
-                <form onSubmit={handleSubmit} className="space-y-6 flex-grow">
-                  {renderStepContent()}
+            {/* Login Link */}
+            <div className="mt-4">
+              <Link href="/instructor/login" className="flex items-center text-xs text-center pl-7 text-gray-600 hover:text-indigo-600 transition-colors group">
+                <span>Already an instructor? Sign in here</span>
+                <svg 
+                  className="w-3 h-3 ml-1 transform group-hover:translate-x-1 transition-transform" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
 
-                  {/* Form Actions */}
-                  <div className="flex justify-between items-center pt-4">
-                    {currentStep > 1 && (
-                      <button
-                        type="button"
-                        onClick={handlePrevious}
-                        className="px-6 py-2 text-gray-300 hover:text-white border border-gray-600 hover:border-gray-500 rounded transition-all duration-300"
-                      >
-                        Previous
-                      </button>
-                    )}
-                    
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className={`${currentStep === 1 ? 'w-full' : 'ml-auto'} flex justify-center items-center py-3 px-6 border border-transparent rounded text-white ${
-                        isLoading
-                          ? "bg-gray-700 cursor-not-allowed"
-                          : "bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
-                      } transition-all duration-300 font-medium shadow-lg shadow-pink-500/20 hover:shadow-pink-500/30 group`}
-                    >
-                      {isLoading ? (
-                        <span className="text-sm flex items-center gap-2">
-                          <LoadingSpinner size="xs" />
-                          {currentStep === 3 ? 'Creating Account...' : 'Processing...'}
-                        </span>
-                      ) : (
-                        <>
-                          <span className="text-sm">
-                            {currentStep === 3 ? 'Create Account' : 'Continue'}
-                          </span>
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                        </>
-                      )}
-                    </button>
+          {/* Right Side - Teaching Platform Content */}
+          <div className="w-[70%] relative overflow-hidden">
+            {/* Background Image */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: "url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop')",
+              }}
+            >
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 to-purple-900/80" />
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-12 text-white">
+              <div className="mb-8">
+                <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-6">
+                  <span className="text-sm font-semibold">🎓 Share Your Expertise</span>
+                </div>
+                <h2 className="text-5xl font-bold mb-6">Start Your <br /> Teaching Journey</h2>
+                <p className="text-bold justify-center text-center leading-relaxed w-full max-w-lg mb-8">
+                  Join thousands of instructors who are sharing their expertise and building sustainable income streams. Create courses that reach students worldwide.
+                </p>
+              </div>
+
+              {/* Stats Cards */}
+              <div className="grid grid-cols-3 gap-4 w-full max-w-lg">
+                <div className="bg-white/10 backdrop-blur-md p-4 border border-white/20 rounded">
+                  <div className="text-3xl font-bold mb-1">10K+</div>
+                  <div className="text-xs text-white/80">Instructors</div>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md p-4 border border-white/20 rounded">
+                  <div className="text-3xl font-bold mb-1">$3,200</div>
+                  <div className="text-xs text-white/80">Avg Monthly</div>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md p-4 border border-white/20 rounded">
+                  <div className="text-3xl font-bold mb-1">97%</div>
+                  <div className="text-xs text-white/80">Satisfaction</div>
+                </div>
+              </div>
+
+              {/* Featured Instructor Card */}
+              <div className="mt-8 bg-white p-4 shadow-2xl max-w-sm w-full rounded">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">👨‍🏫</span>
                   </div>
-                </form>
-
-                {/* Login Link */}
-                <div className="mt-6 text-center text-sm">
-                  <p className="text-gray-400">
-                    Already have an instructor account?{" "}
-                    <Link
-                      href="/instructor/login"
-                      className="text-pink-400 hover:text-pink-300 font-medium"
-                    >
-                      Sign in here
-                    </Link>
-                  </p>
+                  <div className="text-left flex-1">
+                    <div className="text-sm font-semibold text-gray-800">Featured Instructor</div>
+                    <div className="text-xs text-gray-500 mt-1">Dr. Sarah Chen - Web Development</div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <div className="flex items-center">
+                        <span className="text-yellow-400 text-xs">★★★★★</span>
+                      </div>
+                      <span className="text-xs text-gray-400">4.9 (1.2K students)</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-bold text-indigo-600">$2,400</div>
+                    <div className="text-xs text-gray-500">This month</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>

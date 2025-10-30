@@ -1,3 +1,30 @@
+// Dashboard Statistics types
+export interface LearningTime {
+  reading: number;
+  writing: number;
+  video: number;
+  assignment: number;
+  total: string;
+}
+
+export interface Activity {
+  day: string;
+  value: number;
+}
+
+export interface DashboardStats {
+  learningTime: LearningTime;
+  activity: Activity[];
+  courses: Course[];
+  upcomingTasks: Event[];
+  paymentHistory: Invoice[];
+  completedLessons: number;
+}
+
+export type TimeFilter = 'Today' | 'Week' | 'Month';
+export type ActivityFilter = 'Weekly' | 'Monthly' | 'Yearly';
+export type CourseFilter = 'All' | 'Ongoing' | 'Complete';
+
 // User types
 export interface User {
   id: string;

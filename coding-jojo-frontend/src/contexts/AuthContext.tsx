@@ -23,6 +23,11 @@ export interface User {
   role: "student" | "instructor" | "admin";
   enrolledCourses?: string[];
   isEmailVerified?: boolean;
+  onboardingCompleted?: boolean;
+  learningGoals?: string[];
+  experienceLevel?: string;
+  interests?: string[];
+  howDidYouHear?: string;
 }
 
 // Auth context interface
@@ -316,9 +321,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (response.success && response.data) {
         const userData = convertAuthUserToUser(response.data.user);
 
-        // Properly store both token and user data using authService
-        authService.setAuthData(response.data.token, response.data.user);
-
+        // Auth data is already stored in authService.register method
         setUser(userData);
         toast.success("Account created successfully! Welcome to Coding JoJo.");
 
@@ -366,9 +369,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
           setUser(convertedUser);
           toast.success("Successfully signed in with Google!");
-          // Redirect to authenticated home page after successful authentication
+          
+          // Check if user needs onboarding before redirecting
           if (typeof window !== "undefined") {
-            window.location.href = "/?welcome=true";
+            const needsOnboarding = localStorage.getItem('needs_onboarding');
+            const hasCompletedOnboarding = localStorage.getItem('onboarding_completed');
+            
+            if (needsOnboarding === 'true' && !hasCompletedOnboarding) {
+              window.location.href = "/onboarding";
+            } else {
+              window.location.href = "/?welcome=true";
+            }
           }
         } else {
           throw new Error(response.message || "Google sign-in failed");

@@ -51,7 +51,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
     xs: 'w-6 h-6 text-xs',
     sm: 'w-8 h-8 text-xs',
     md: 'w-10 h-10 text-sm',
-    lg: 'w-12 h-12 text-base',
+    lg: 'w-12 h-12 text-xs',
     xl: 'w-16 h-16 text-lg'
   };
 
@@ -108,7 +108,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
     const colors = [
       'bg-red-600',
       'bg-pink-600', 
-      'bg-green-600',
+      'bg-blue-600',
       'bg-yellow-600',
       'bg-purple-600',
       'bg-pink-600',
@@ -154,7 +154,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
           size === 'xs' ? 'w-2 h-2' : 
           size === 'sm' ? 'w-2.5 h-2.5' : 
           'w-3 h-3'
-        } bg-green-400 rounded-full border-2 border-gray-900`}></div>
+        } bg-blue-400 rounded-full border-2 border-gray-900`}></div>
       )}
 
       {/* Role icon */}

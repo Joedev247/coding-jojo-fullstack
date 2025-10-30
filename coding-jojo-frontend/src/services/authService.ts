@@ -61,7 +61,7 @@ class AuthService {
 
   constructor() {
     this.baseURL =
-      process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+      process.env.NEXT_PUBLIC_API_URL || "https://codingjojo-backend.onrender.com/api";
   }
   async login(
     credentials: LoginCredentials

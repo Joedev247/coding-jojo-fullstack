@@ -358,7 +358,7 @@ export default function ForgotPasswordPage() {
                   <li
                     className={
                       newPassword.length >= 6
-                        ? "text-green-400"
+                        ? "text-blue-400"
                         : "text-gray-400"
                     }
                   >
@@ -367,7 +367,7 @@ export default function ForgotPasswordPage() {
                   <li
                     className={
                       /[a-z]/.test(newPassword)
-                        ? "text-green-400"
+                        ? "text-blue-400"
                         : "text-gray-400"
                     }
                   >
@@ -376,7 +376,7 @@ export default function ForgotPasswordPage() {
                   <li
                     className={
                       /[A-Z]/.test(newPassword)
-                        ? "text-green-400"
+                        ? "text-blue-400"
                         : "text-gray-400"
                     }
                   >
@@ -385,7 +385,7 @@ export default function ForgotPasswordPage() {
                   <li
                     className={
                       /\d/.test(newPassword)
-                        ? "text-green-400"
+                        ? "text-blue-400"
                         : "text-gray-400"
                     }
                   >
@@ -411,8 +411,8 @@ export default function ForgotPasswordPage() {
           {/* Step 4: Success */}
           {step === "success" && (
             <div className="text-center space-y-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500/20 rounded-full mb-4">
-                <CheckCircle className="w-8 h-8 text-green-400" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-500/20 rounded-full mb-4">
+                <CheckCircle className="w-8 h-8 text-blue-400" />
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-white mb-2">
@@ -441,9 +441,9 @@ export default function ForgotPasswordPage() {
           )}
 
           {successMessage && step !== "success" && (
-            <div className="mt-4 p-4 bg-green-500/20 border border-green-500/30  flex items-center space-x-2">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <p className="text-green-400 text-sm">{successMessage}</p>
+            <div className="mt-4 p-4 bg-blue-500/20 border border-blue-500/30  flex items-center space-x-2">
+              <CheckCircle className="w-5 h-5 text-blue-400 flex-shrink-0" />
+              <p className="text-blue-400 text-sm">{successMessage}</p>
             </div>
           )}
 

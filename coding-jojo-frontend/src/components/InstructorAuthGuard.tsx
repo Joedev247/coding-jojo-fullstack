@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import teacherService from '../services/teacherService';
 import LoadingSpinner from './ui/LoadingSpinner';
-import AnimatedBackground from './ui/AnimatedBackground';
 
 interface InstructorAuthGuardProps {
   children: React.ReactNode;
@@ -57,7 +56,6 @@ export default function InstructorAuthGuard({ children, requireVerification = fa
   if (isLoading) {
     return (
       <div className="min-h-screen text-white relative flex items-center justify-center">
-        <AnimatedBackground />
         <div className="z-10 flex flex-col items-center">
           <LoadingSpinner size="lg" />
           <p className="mt-4 text-lg text-gray-300">Verifying authentication...</p>

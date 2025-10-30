@@ -8,53 +8,53 @@ export default function RightSidebar() {
     <div className="hidden xl:block w-72 flex-shrink-0">
       <div className="space-y-6 sticky top-[156px]">
         {/* Community Stats */}
-        <div className="  bg-gray-900/50 backdrop-blur-sm  shadow-xl p-5 hover:shadow-purple-900/20 transition duration-300">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-            <span className="bg-gradient-to-r from-pink-500 to-orange-500 w-1 h-5 mr-3 rounded-full"></span>
+        <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition duration-300">
+          <h3 className="text-xs font-semibold text-gray-800 mb-3 flex items-center">
+            <span className="bg-blue-600 w-1 h-4 mr-2 rounded-full"></span>
             Community Stats
           </h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-800/70 p-4 text-center">
-              <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-yellow-400">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-gray-50 p-3  text-center">
+              <div className="text-xl font-bold text-blue-600">
                 1,245
               </div>
-              <div className="text-sm text-gray-400 mt-1">Members</div>
+              <div className="text-xs text-gray-600 mt-1">Members</div>
             </div>
-            <div className="bg-gray-800/70 p-4 text-center">
-              <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-yellow-400">
+            <div className="bg-gray-50 p-3  text-center">
+              <div className="text-xl font-bold text-blue-600">
                 347
               </div>
-              <div className="text-sm text-gray-400 mt-1">Posts</div>
+              <div className="text-xs text-gray-600 mt-1">Posts</div>
             </div>
-            <div className="bg-gray-800/70 p-4 text-center">
-              <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-yellow-400">
+            <div className="bg-gray-50 p-3  text-center">
+              <div className="text-xl font-bold text-blue-600">
                 89%
               </div>
-              <div className="text-sm text-gray-400 mt-1">Engagement</div>
+              <div className="text-xs text-gray-600 mt-1">Engagement</div>
             </div>
-            <div className="bg-gray-800/70 p-4 text-center">
-              <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-yellow-400">
+            <div className="bg-gray-50 p-3  text-center">
+              <div className="text-xl font-bold text-blue-600">
                 52
               </div>
-              <div className="text-sm text-gray-400 mt-1">Online</div>
+              <div className="text-xs text-gray-600 mt-1">Online</div>
             </div>
           </div>
         </div>
 
         {/* Quick Links */}
-        <div className="  bg-gray-900/50 backdrop-blur-sm  shadow-xl p-5 hover:shadow-blue-900/20 transition duration-300">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-            <span className="bg-gradient-to-r from-pink-500 to-orange-500 w-1 h-5 mr-3 rounded-full"></span>
+        <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition duration-300">
+          <h3 className="text-xs font-semibold text-gray-800 mb-3 flex items-center">
+            <span className="bg-blue-600 w-1 h-4 mr-2 rounded-full"></span>
             Quick Links
           </h3>
-          <ul className="space-y-2">
+          <ul className="space-y-1">
             <li>
               <a
                 href="#"
-                className="flex items-center justify-between text-gray-300 hover:text-pink-400 transition duration-200 py-2 px-3 hover:bg-gray-800/50"
+                className="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-200 py-1.5 px-2 hover:bg-gray-50  text-sm"
               >
                 <span className="flex items-center">
-                  <BookOpen className="w-4 h-4 mr-3 text-gray-500" />
+                  <BookOpen className="w-4 h-4 mr-2 text-gray-500" />
                   Community Guidelines
                 </span>
                 <svg
@@ -74,14 +74,14 @@ export default function RightSidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center justify-between text-gray-300 hover:text-pink-400 transition duration-200 py-2 px-3 hover:bg-gray-800/50"
+                className="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-200 py-1.5 px-2 hover:bg-gray-50  text-sm"
               >
                 <span className="flex items-center">
-                  <Award className="w-4 h-4 mr-3 text-gray-500" />
+                  <Award className="w-4 h-4 mr-2 text-gray-500" />
                   Badges & Rewards
                 </span>
                 <svg
-                  className="w-4 h-4 text-gray-500"
+                  className="w-3 h-3 text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -97,14 +97,14 @@ export default function RightSidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center justify-between text-gray-300 hover:text-pink-400 transition duration-200 py-2 px-3 hover:bg-gray-800/50"
+                className="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-200 py-1.5 px-2 hover:bg-gray-50  text-sm"
               >
                 <span className="flex items-center">
-                  <Calendar className="w-4 h-4 mr-3 text-gray-500" />
+                  <Calendar className="w-4 h-4 mr-2 text-gray-500" />
                   Upcoming Events
                 </span>
                 <svg
-                  className="w-4 h-4 text-gray-500"
+                  className="w-3 h-3 text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -120,10 +120,10 @@ export default function RightSidebar() {
             <li>
               <a
                 href="#"
-                className="flex items-center justify-between text-gray-300 hover:text-pink-400 transition duration-200 py-2 px-3 hover:bg-gray-800/50"
+                className="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-200 py-1.5 px-2 hover:bg-gray-50  text-sm"
               >
                 <span className="flex items-center">
-                  <HelpCircle className="w-4 h-4 mr-3 text-gray-500" />
+                  <HelpCircle className="w-4 h-4 mr-2 text-gray-500" />
                   FAQ & Support
                 </span>
                 <svg
@@ -144,20 +144,20 @@ export default function RightSidebar() {
         </div>
 
         {/* Post a Message */}
-        <div className="  bg-gray-900/50 backdrop-blur-sm  shadow-xl p-5 hover:shadow-orange-900/20 transition duration-300">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-            <span className="bg-gradient-to-r from-pink-500 to-orange-500 w-1 h-5 mr-3 rounded-full"></span>
+        <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition duration-300">
+          <h3 className="text-xs font-semibold text-gray-800 mb-3 flex items-center">
+            <span className="bg-blue-600 w-1 h-4 mr-2 rounded-full"></span>
             Start a Discussion
           </h3>
-          <div className="mb-3">
+          <div className="mb-2">
             <textarea
               placeholder="What's on your mind?"
-              className="w-full  bg-gray-900/70 p-3 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition duration-200 min-h-24 resize-none"
+              className="w-full bg-gray-50 border border-gray-300  p-2.5 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 min-h-20 resize-none text-sm"
             ></textarea>
           </div>
           <div className="flex justify-end">
-            <button className="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white px-4 py-2 flex items-center font-medium transition duration-200 shadow-md">
-              <Send className="w-4 h-4 mr-2" />
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5  flex items-center font-medium text-sm transition duration-200">
+              <Send className="w-3.5 h-3.5 mr-1.5" />
               Post
             </button>
           </div>

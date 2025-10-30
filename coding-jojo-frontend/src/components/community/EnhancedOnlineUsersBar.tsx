@@ -82,7 +82,7 @@ const OnlineUsersBar: React.FC<OnlineUsersBarProps> = ({
       case "Admin":
         return <Crown className="w-3 h-3 text-purple-400" />;
       case "Instructor":
-        return <Award className="w-3 h-3 text-pink-400" />;
+        return <Award className="w-3 h-3 text-blue-600" />;
       case "Moderator":
         return <Zap className="w-3 h-3 text-blue-400" />;
       default:
@@ -96,11 +96,11 @@ const OnlineUsersBar: React.FC<OnlineUsersBarProps> = ({
       case "Admin":
         return "border-purple-500 ring-purple-500/20";
       case "Instructor":
-        return "border-pink-500 ring-pink-500/20";
+        return "border-blue-500 ring-blue-500/20";
       case "Moderator":
         return "border-blue-500 ring-blue-500/20";
       default:
-        return "border-green-500 ring-green-500/20";
+        return "border-blue-500 ring-blue-500/20";
     }
   };
 
@@ -118,21 +118,21 @@ const OnlineUsersBar: React.FC<OnlineUsersBarProps> = ({
   };
 
   return (
-    <div className="  bg-gray-900/50 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-40">
-      <div className="max-w-[1400px] mx-auto px-4 py-3">
+    <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Online Status and Count */}
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2">
               <div className="relative">
-                <Users className="w-5 h-5 text-green-400" />
-                <Circle className="absolute -top-1 -right-1 w-3 h-3 text-green-400 fill-green-400" />
+                <Users className="w-5 h-5 text-blue-400" />
+                <Circle className="absolute -top-1 -right-1 w-3 h-3 text-blue-400 fill-blue-400" />
               </div>
               <div>
-                <span className="text-green-400 font-medium">
+                <span className="text-blue-600 font-medium text-sm">
                   {totalOnline || onlineUsers.length} Online
                 </span>
-                <span className="text-gray-400 text-sm ml-2">
+                <span className="text-gray-500 text-xs ml-2">
                   • {users.length} Total Members
                 </span>
               </div>
@@ -165,19 +165,19 @@ const OnlineUsersBar: React.FC<OnlineUsersBarProps> = ({
 
                 {/* Hover tooltip */}
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-50">
-                  <div className="bg-gray-800 text-white text-xs py-2 px-3 shadow-lg border border-gray-700 whitespace-nowrap">
+                  <div className="bg-white text-gray-900 text-xs py-2 px-3 rounded shadow-lg border border-gray-200 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
                       <div className="font-medium">{user.name}</div>
                       {getRoleIcon(user)}
                     </div>
-                    <div className="text-gray-400 mt-1">
+                    <div className="text-gray-600 mt-1">
                       {getUserRole(user)} • {user.reputation} rep
                     </div>
-                    <div className="text-green-400 text-xs mt-1">
+                    <div className="text-blue-600 text-xs mt-1">
                       Online now
                     </div>
                     {user.bio && (
-                      <div className="text-gray-300 mt-1 max-w-48 text-wrap">
+                      <div className="text-gray-700 mt-1 max-w-48 text-wrap">
                         {user.bio.length > 50
                           ? `${user.bio.substring(0, 50)}...`
                           : user.bio}
@@ -185,7 +185,7 @@ const OnlineUsersBar: React.FC<OnlineUsersBarProps> = ({
                     )}
 
                     {/* Tooltip arrow */}
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
                   </div>
                 </div>
               </div>
@@ -195,7 +195,7 @@ const OnlineUsersBar: React.FC<OnlineUsersBarProps> = ({
             {remainingCount > 0 && !showAllUsers && (
               <button
                 onClick={() => setShowAllUsers(true)}
-                className="w-8 h-8 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center text-xs text-gray-300 hover:text-white transition duration-200 border border-gray-600"
+                className="w-6 h-6 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-xs text-gray-600 hover:text-gray-800 transition duration-200 border border-gray-300"
                 title={`Show ${remainingCount} more online users`}
               >
                 +{remainingCount}
@@ -206,7 +206,7 @@ const OnlineUsersBar: React.FC<OnlineUsersBarProps> = ({
             {showAllUsers && onlineUsers.length > maxDisplayUsers && (
               <button
                 onClick={() => setShowAllUsers(false)}
-                className="w-8 h-8 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center text-xs text-gray-300 hover:text-white transition duration-200 border border-gray-600"
+                className="w-6 h-6 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-xs text-gray-600 hover:text-gray-800 transition duration-200 border border-gray-300"
                 title="Show less"
               >
                 ←
@@ -215,14 +215,14 @@ const OnlineUsersBar: React.FC<OnlineUsersBarProps> = ({
           </div>
 
           {/* Community Activity Indicator */}
-          <div className="hidden md:flex items-center space-x-4 text-sm text-gray-400">
+          <div className="hidden md:flex items-center space-x-3 text-xs text-gray-500">
             <div className="flex items-center space-x-1">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></div>
               <span>Live Activity</span>
             </div>
 
             {/* Activity stats */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               <span>
                 {Math.floor(onlineUsers.length * 0.3)} active discussions
               </span>
@@ -253,9 +253,9 @@ const OnlineUsersBar: React.FC<OnlineUsersBarProps> = ({
                       fill
                       className="rounded-full object-cover"
                     />
-                    <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-green-400 rounded-full border border-gray-900"></div>
+                    <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-blue-400 rounded-full border border-gray-900"></div>
                   </div>
-                  <span className="text-xs text-gray-400 truncate w-12 text-center mt-1">
+                  <span className="text-xs text-gray-600 truncate w-12 text-center mt-1">
                     {user.name.split(" ")[0]}
                   </span>
                 </div>

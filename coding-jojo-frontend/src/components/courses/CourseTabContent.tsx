@@ -125,18 +125,18 @@ const CourseTabContent: React.FC<CourseTabContentProps> = ({
   };
 
   return (
-    <div className="  bg-gray-900/50 backdrop-blur-sm border border-gray-800  p-6 mt-6">
+    <div className="bg-white border border-gray-200  p-4 mt-4">
       {activeTab === "overview" && (
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-semibold text-white mb-3">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
               About This Course
             </h3>
-            <p className="text-gray-300 leading-relaxed">{courseDescription}</p>
+            <p className="text-gray-600 leading-relaxed text-sm">{courseDescription}</p>
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-white mb-3">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
               What You&apos;ll Learn
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -149,18 +149,18 @@ const CourseTabContent: React.FC<CourseTabContentProps> = ({
                 "Write clean, maintainable code",
               ].map((item, index) => (
                 <div key={index} className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-pink-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-300">{item}</span>
+                  <CheckCircle className="w-4 h-4 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-600 text-sm">{item}</span>
                 </div>
               ))}
             </div>
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-white mb-3">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
               Requirements
             </h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-300">
+            <ul className="list-disc list-inside space-y-1 text-gray-600 text-sm">
               {courseRequirements.map((req, index) => (
                 <li key={index}>{req}</li>
               ))}
@@ -168,10 +168,10 @@ const CourseTabContent: React.FC<CourseTabContentProps> = ({
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-white mb-3">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
               Who This Course Is For
             </h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-300">
+            <ul className="list-disc list-inside space-y-1 text-gray-600 text-sm">
               <li>Beginners looking to gain practical skills</li>
               <li>Intermediate developers wanting to level up</li>
               <li>Professionals transitioning to a new technology stack</li>
@@ -183,39 +183,39 @@ const CourseTabContent: React.FC<CourseTabContentProps> = ({
 
       {activeTab === "curriculum" && (
         <div>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold text-white">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-lg font-semibold text-gray-800">
               Course Curriculum
             </h3>
-            <div className="text-sm text-gray-400">
-              <span className="text-pink-400 font-medium">9 lectures</span> • 4h
+            <div className="text-sm text-gray-600">
+              <span className="text-blue-600 font-medium">9 lectures</span> • 4h
               15m total length
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Section 1 */}
-            <div className="border border-gray-800  overflow-hidden">
-              <div className="bg-gray-800/70 px-4 py-3 flex justify-between items-center">
-                <div className="font-medium text-white">Getting Started</div>
-                <div className="text-sm text-gray-400">3 lectures • 41:45</div>
+            <div className="border border-gray-200  overflow-hidden">
+              <div className="bg-gray-50 px-3 py-2 flex justify-between items-center">
+                <div className="font-medium text-gray-800 text-sm">Getting Started</div>
+                <div className="text-sm text-gray-600">3 lectures • 41:45</div>
               </div>
-              <div className="divide-y divide-gray-800">
+              <div className="divide-y divide-gray-100">
                 {lectures.slice(0, 3).map((lecture) => (
                   <div
                     key={lecture.id}
-                    className="px-4 py-3 hover:bg-gray-800/30 flex items-center justify-between transition duration-200"
+                    className="px-3 py-2.5 hover:bg-gray-50 flex items-center justify-between transition duration-200"
                   >
                     <div className="flex items-center">
                       {lecture.type === "video" ? (
-                        <PlayCircle className="w-5 h-5 text-pink-400 mr-3 flex-shrink-0" />
+                        <PlayCircle className="w-4 h-4 text-blue-600 mr-2.5 flex-shrink-0" />
                       ) : lecture.type === "document" ? (
-                        <FileText className="w-5 h-5 text-blue-400 mr-3 flex-shrink-0" />
+                        <FileText className="w-4 h-4 text-indigo-600 mr-2.5 flex-shrink-0" />
                       ) : (
-                        <Award className="w-5 h-5 text-yellow-400 mr-3 flex-shrink-0" />
+                        <Award className="w-4 h-4 text-yellow-500 mr-2.5 flex-shrink-0" />
                       )}
                       <div>
-                        <p className="text-gray-200 font-medium">
+                        <p className="text-gray-700 font-medium text-sm">
                           {lecture.title}
                         </p>
                         <p className="text-xs text-gray-500">
@@ -225,12 +225,12 @@ const CourseTabContent: React.FC<CourseTabContentProps> = ({
                     </div>
                     <div className="flex items-center">
                       {lecture.isFree && (
-                        <span className="text-xs text-green-400 font-medium bg-green-900/30 px-2 py-1 rounded mr-3">
+                        <span className="text-xs text-blue-600 font-medium bg-blue-100 px-1.5 py-0.5 rounded mr-2">
                           FREE
                         </span>
                       )}
-                      <div className="flex items-center text-gray-400 text-sm">
-                        <Clock className="w-3.5 h-3.5 mr-1" />
+                      <div className="flex items-center text-gray-500 text-xs">
+                        <Clock className="w-3 h-3 mr-1" />
                         {lecture.duration}
                       </div>
                     </div>
@@ -272,7 +272,7 @@ const CourseTabContent: React.FC<CourseTabContentProps> = ({
                     </div>
                     <div className="flex items-center">
                       {lecture.isFree && (
-                        <span className="text-xs text-green-400 font-medium bg-green-900/30 px-2 py-1 rounded mr-3">
+                        <span className="text-xs text-blue-400 font-medium bg-blue-900/30 px-2 py-1 rounded mr-3">
                           FREE
                         </span>
                       )}
@@ -324,7 +324,7 @@ const CourseTabContent: React.FC<CourseTabContentProps> = ({
                     </div>
                     <div className="flex items-center">
                       {lecture.isFree && (
-                        <span className="text-xs text-green-400 font-medium bg-green-900/30 px-2 py-1 rounded mr-3">
+                        <span className="text-xs text-blue-400 font-medium bg-blue-900/30 px-2 py-1 rounded mr-3">
                           FREE
                         </span>
                       )}

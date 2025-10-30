@@ -33,7 +33,7 @@ interface PayoutData {
   notes?: string;
 }
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://codingjojo-backend.onrender.com/api';
 
 const EarningsManagement: React.FC = () => {
   const [earnings, setEarnings] = useState<InstructorEarnings[]>([]);
@@ -157,10 +157,10 @@ const EarningsManagement: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-green-600 to-green-700  p-6">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700  p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-100 text-sm">Instructor Earnings</p>
+                <p className="text-blue-100 text-sm">Instructor Earnings</p>
                 <p className="text-2xl font-bold text-white">
                   {formatCurrency(platformStats.totalInstructorEarnings)}
                 </p>
@@ -311,7 +311,7 @@ const EarningsManagement: React.FC = () => {
                             setShowPayoutModal(true);
                           }}
                           disabled={processingPayout === earning.instructor._id}
-                          className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 px-3 py-1  text-white text-sm transition-colors"
+                          className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 px-3 py-1  text-white text-sm transition-colors"
                         >
                           {processingPayout === earning.instructor._id ? 'Processing...' : 'Process Payout'}
                         </button>
@@ -417,7 +417,7 @@ const EarningsManagement: React.FC = () => {
               <button
                 onClick={processPayout}
                 disabled={!payoutData.paymentReference.trim() || processingPayout !== null}
-                className="px-6 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white  font-medium transition-colors"
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white  font-medium transition-colors"
               >
                 {processingPayout ? 'Processing...' : 'Process Payout'}
               </button>

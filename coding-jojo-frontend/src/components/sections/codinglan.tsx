@@ -161,7 +161,7 @@
 //             </button>
 //           </div>
 //           <div className="overflow-x-auto rounded border border-gray-200   bg-gray-900 p-4">
-//             <pre className="text-sm text-green-400 whitespace-pre-wrap">{language.codePreview}</pre>
+//             <pre className="text-sm text-blue-400 whitespace-pre-wrap">{language.codePreview}</pre>
 //           </div>
 //         </div>
 //       );

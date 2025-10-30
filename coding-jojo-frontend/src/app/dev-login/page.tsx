@@ -13,7 +13,7 @@ export default function DevLoginPage() {
       setStatus("Creating admin user...");
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/create-admin",
+        "https://codingjojo-backend.onrender.com/api/auth/create-admin",
         {
           method: "POST",
           headers: {
@@ -72,7 +72,7 @@ export default function DevLoginPage() {
 
         // Validate token with the backend
         const response = await fetch(
-          "http://localhost:5000/api/auth/verify-token",
+          "https://codingjojo-backend.onrender.com/api/auth/verify-token",
           {
             method: "GET",
             headers: {

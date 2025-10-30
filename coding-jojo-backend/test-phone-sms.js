@@ -7,7 +7,7 @@ async function testPhoneSMS() {
   try {
     // First login to get fresh token
     console.log('1️⃣ Getting fresh authentication token...');
-    const loginResponse = await axios.post('http://localhost:5000/api/teacher/login', {
+    const loginResponse = await axios.post('https://codingjojo-backend.onrender.com/api/teacher/login', {
       email: 'joedev247@gmail.com',
       password: 'your_password' // You'll need to update this
     });
@@ -23,7 +23,7 @@ async function testPhoneSMS() {
     // Reset rate limits first
     console.log('2️⃣ Resetting rate limits...');
     try {
-      await axios.post('http://localhost:5000/api/teacher/verification/reset-limits', {}, {
+      await axios.post('https://codingjojo-backend.onrender.com/api/teacher/verification/reset-limits', {}, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       console.log('✅ Rate limits reset');
@@ -34,7 +34,7 @@ async function testPhoneSMS() {
     // Test phone SMS sending
     console.log('3️⃣ Testing phone verification SMS...');
     const smsResponse = await axios.post(
-      'http://localhost:5000/api/teacher/verification/phone/send-code',
+      'https://codingjojo-backend.onrender.com/api/teacher/verification/phone/send-code',
       {},
       {
         headers: {

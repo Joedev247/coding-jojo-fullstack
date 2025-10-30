@@ -341,7 +341,7 @@ const CloudinaryUpload: React.FC<CloudinaryUploadProps> = ({
               )}
 
               {progress.status === "success" && progress.url && (
-                <div className="text-xs text-green-600">Upload successful</div>
+                <div className="text-xs text-blue-600">Upload successful</div>
               )}
 
               {progress.status === "error" && (

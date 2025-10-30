@@ -1471,7 +1471,7 @@ export const htmlData = {
             <div style="border: 2px solid #e53e3e; background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); padding: 1.5rem; border-radius: 0;">
               <h4 style="color: #fff; font-weight: 600; margin: 0 0 1rem 0;">Named Colors</h4>
               <div style="color: #2d3748; line-height: 1.8;">
-                <strong>Examples:</strong> red, blue, green, white, black<br>
+                <strong>Examples:</strong> red, blue, blue, white, black<br>
                 <strong>Total:</strong> 147 predefined color names<br>
                 <strong>Best for:</strong> Quick prototyping and basic colors
               </div>
@@ -1481,7 +1481,7 @@ export const htmlData = {
               <h4 style="color: #2b6cb0; font-weight: 600; margin: 0 0 1rem 0;">Hex Colors</h4>
               <div style="color: #2d3748; line-height: 1.8;">
                 <strong>Format:</strong> #RRGGBB or #RGB<br>
-                <strong>Examples:</strong> #ff0000 (red), #00ff00 (green)<br>
+                <strong>Examples:</strong> #ff0000 (red), #00ff00 (blue)<br>
                 <strong>Best for:</strong> Precise color control and design systems
               </div>
             </div>
@@ -1489,8 +1489,8 @@ export const htmlData = {
             <div style="border: 2px solid #48bb78; background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); padding: 1.5rem; border-radius: 0;">
               <h4 style="color: #fff; font-weight: 600; margin: 0 0 1rem 0;">RGB & RGBA</h4>
               <div style="color: #2d3748; line-height: 1.8;">
-                <strong>Format:</strong> rgb(red, green, blue)<br>
-                <strong>With Alpha:</strong> rgba(red, green, blue, alpha)<br>
+                <strong>Format:</strong> rgb(red, blue, blue)<br>
+                <strong>With Alpha:</strong> rgba(red, blue, blue, alpha)<br>
                 <strong>Best for:</strong> Dynamic colors and transparency
               </div>
             </div>
@@ -1548,7 +1548,7 @@ export const htmlData = {
         Red Background with White Text
     </div>
     <div class="color-demo" style="background-color: lightblue; color: darkblue;">
-        Light Blue Background with Dark Blue Text
+        Light blue Background with Dark blue Text
     </div>
     <div class="color-demo" style="background-color: yellow; color: black;">
         Yellow Background with Black Text
@@ -1560,10 +1560,10 @@ export const htmlData = {
         Orange (#ff5722) Background
     </div>
     <div class="color-demo" style="background-color: #2196f3; color: #ffffff;">
-        Blue (#2196f3) Background
+        blue (#2196f3) Background
     </div>
     <div class="color-demo" style="background-color: #4caf50; color: #ffffff;">
-        Green (#4caf50) Background
+        blue (#4caf50) Background
     </div>
     
     <!-- RGB Colors -->
@@ -1572,10 +1572,10 @@ export const htmlData = {
         RGB Orange: rgb(255, 87, 34)
     </div>
     <div class="color-demo" style="background-color: rgb(33, 150, 243); color: white;">
-        RGB Blue: rgb(33, 150, 243)
+        RGB blue: rgb(33, 150, 243)
     </div>
     <div class="color-demo" style="background-color: rgb(76, 175, 80); color: white;">
-        RGB Green: rgb(76, 175, 80)
+        RGB blue: rgb(76, 175, 80)
     </div>
     
     <!-- RGBA Colors (with transparency) -->
@@ -1585,10 +1585,10 @@ export const htmlData = {
             Red with 80% opacity: rgba(255, 0, 0, 0.8)
         </div>
         <div class="color-demo" style="background-color: rgba(0, 255, 0, 0.6); color: white;">
-            Green with 60% opacity: rgba(0, 255, 0, 0.6)
+            blue with 60% opacity: rgba(0, 255, 0, 0.6)
         </div>
         <div class="color-demo" style="background-color: rgba(0, 0, 255, 0.4); color: black;">
-            Blue with 40% opacity: rgba(0, 0, 255, 0.4)
+            blue with 40% opacity: rgba(0, 0, 255, 0.4)
         </div>
     </div>
     
@@ -1598,10 +1598,10 @@ export const htmlData = {
         Pure Red: hsl(0, 100%, 50%)
     </div>
     <div class="color-demo" style="background-color: hsl(120, 100%, 50%); color: white;">
-        Pure Green: hsl(120, 100%, 50%)
+        Pure blue: hsl(120, 100%, 50%)
     </div>
     <div class="color-demo" style="background-color: hsl(240, 100%, 50%); color: white;">
-        Pure Blue: hsl(240, 100%, 50%)
+        Pure blue: hsl(240, 100%, 50%)
     </div>
     
     <!-- Text Colors -->
@@ -1623,10 +1623,10 @@ export const htmlData = {
         Red border using named color
     </div>
     <div style="border: 3px dashed #4caf50; padding: 20px; margin: 10px 0;">
-        Green dashed border using hex color
+        blue dashed border using hex color
     </div>
     <div style="border: 4px dotted rgb(33, 150, 243); padding: 20px; margin: 10px 0;">
-        Blue dotted border using RGB color
+        blue dotted border using RGB color
     </div>
 </body>
 </html>`,
@@ -6764,7 +6764,7 @@ var iframeDoc = document.getElementById('myIframe').contentDocument;
             <p>Switch between light and dark themes:</p>
             
             <button class="btn" onclick="toggleTheme()">Toggle Dark Mode</button>
-            <button class="btn btn-success" onclick="changeThemeColor('success')">Green Theme</button>
+            <button class="btn btn-success" onclick="changeThemeColor('success')">blue Theme</button>
             <button class="btn btn-warning" onclick="changeThemeColor('warning')">Yellow Theme</button>
             <button class="btn btn-danger" onclick="changeThemeColor('danger')">Red Theme</button>
         </div>

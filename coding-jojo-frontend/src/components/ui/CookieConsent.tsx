@@ -83,7 +83,7 @@ const CookieConsent: React.FC<CookieConsentProps> = ({
   const cookieTypes = [
     {
       key: "essential" as keyof CookiePreferences,
-      icon: <Shield className="h-5 w-5 text-green-400" />,
+      icon: <Shield className="h-5 w-5 text-blue-400" />,
       title: "Essential Cookies",
       description:
         "Required for basic site functionality, security, and user authentication.",
@@ -203,7 +203,7 @@ const CookieConsent: React.FC<CookieConsentProps> = ({
                               {type.title}
                             </h4>
                             {type.required && (
-                              <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded">
+                              <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">
                                 Required
                               </span>
                             )}

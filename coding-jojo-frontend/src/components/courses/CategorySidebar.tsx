@@ -65,7 +65,7 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-4 h-4 text-green-400"
+            className="w-4 h-4 text-blue-400"
           >
             <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
             <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
@@ -155,9 +155,9 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
     <div className="hidden lg:block w-64 flex-shrink-0">
       <div className="space-y-6">
         {/* Categories Section */}
-        <div className="  bg-gray-900/50 backdrop-blur-sm shadow-xl p-5 hover:shadow-purple-900/20 transition duration-300">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-            <span className="bg-gradient-to-r from-pink-500 to-orange-500 w-1 h-5 mr-3 rounded-full"></span>
+        <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition duration-300">
+          <h3 className="text-xs font-semibold text-gray-800 mb-3 flex items-center">
+            <span className="bg-blue-600 w-1 h-4 mr-2 rounded-full"></span>
             Course Categories
           </h3>
           <ul className="space-y-1">
@@ -171,13 +171,13 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
                         : category.name.toLowerCase()
                     )
                   }
-                  className={`w-full text-left flex items-center justify-between py-2.5 px-3 transition duration-200 ${
+                  className={`w-full text-left flex items-center justify-between py-2 px-2.5  transition duration-200 ${
                     activeCategory ===
                     (category.id === "all"
                       ? "all"
                       : category.name.toLowerCase())
-                      ? "bg-gradient-to-r from-pink-600/20 to-orange-600/20 text-pink-400 font-medium border-l-4 border-pink-500"
-                      : "hover:bg-gray-800/70 text-gray-300"
+                      ? "bg-blue-50 text-blue-600 font-medium border-l-4 border-blue-500"
+                      : "hover:bg-gray-50 text-gray-700"
                   }`}
                 >
                   <div className="flex items-center">
@@ -185,13 +185,13 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
                     <span className="ml-2">{category.name}</span>
                   </div>
                   <span
-                    className={`text-xs rounded-full px-2.5 py-1 ${
+                    className={`text-xs rounded-full px-2 py-0.5 ${
                       activeCategory ===
                       (category.id === "all"
                         ? "all"
                         : category.name.toLowerCase())
-                        ? "bg-pink-500/20 text-pink-400"
-                        : "bg-gray-800 text-gray-400"
+                        ? "bg-blue-100 text-blue-600"
+                        : "bg-gray-100 text-gray-500"
                     }`}
                   >
                     {category.count}
@@ -203,10 +203,10 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
         </div>
 
         {/* Skill Levels */}
-        <div className="  bg-gray-900/50 backdrop-blur-sm shadow-xl p-5 hover:shadow-orange-900/20 transition duration-300">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-            <span className="bg-gradient-to-r from-pink-500 to-orange-500 w-1 h-5 mr-3 rounded-full"></span>
-            <Layers className="w-4 h-4 mr-2 text-orange-400" />
+        <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition duration-300">
+          <h3 className="text-xs font-semibold text-gray-800 mb-3 flex items-center">
+            <span className="bg-blue-600 w-1 h-4 mr-2 rounded-full"></span>
+            <Layers className="w-4 h-4 mr-2 text-blue-600" />
             Skill Level
           </h3>
           <div className="space-y-2">
@@ -215,17 +215,17 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
                 <button
                   key={index}
                   onClick={() => setActiveLevel(level)}
-                  className={`w-full text-left flex items-center justify-between py-2.5 px-3 transition duration-200 ${
+                  className={`w-full text-left flex items-center justify-between py-2 px-2.5  transition duration-200 ${
                     activeLevel === level
-                      ? "bg-gradient-to-r from-orange-600/20 to-pink-600/20 text-orange-400 font-medium"
-                      : "hover:bg-gray-800/70 text-gray-300"
+                      ? "bg-blue-50 text-blue-600 font-medium"
+                      : "hover:bg-gray-50 text-gray-700"
                   }`}
                 >
                   <span className="capitalize">
                     {level === "all" ? "All Levels" : level}
                   </span>
                   {activeLevel === level && (
-                    <CheckCircle className="w-4 h-4 text-orange-400" />
+                    <CheckCircle className="w-4 h-4 text-blue-600" />
                   )}
                 </button>
               )
@@ -234,27 +234,27 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
         </div>
 
         {/* Trending Courses */}
-        <div className="  bg-gray-900/50 backdrop-blur-sm shadow-xl p-5 hover:shadow-blue-900/20 transition duration-300">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-white flex items-center">
-              <span className="bg-gradient-to-r from-pink-500 to-orange-500 w-1 h-5 mr-3 rounded-full"></span>
-              <TrendingUp className="w-4 h-4 mr-2 text-blue-400" />
+        <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition duration-300">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-xs font-semibold text-gray-800 flex items-center">
+              <span className="bg-blue-600 w-1 h-4 mr-2 rounded-full"></span>
+              <TrendingUp className="w-4 h-4 mr-2 text-blue-600" />
               Trending Now
             </h3>
           </div>
-          <ul className="space-y-4">
+          <ul className="space-y-3">
             {trendingCourses.map((course, index) => (
               <li key={index} className="group">
-                <button className="flex items-start space-x-3 w-full text-left">
-                  <div className="flex-shrink-0 w-2 font-bold text-pink-500">
+                <button className="flex items-start space-x-2.5 w-full text-left hover:bg-gray-50 p-1.5  transition-colors">
+                  <div className="flex-shrink-0 w-2 font-bold text-blue-600 text-sm">
                     {index + 1}
                   </div>
                   <div>
-                    <p className="font-medium text-gray-200 group-hover:text-pink-400 transition-colors">
+                    <p className="font-medium text-gray-700 group-hover:text-blue-600 transition-colors text-sm">
                       {course}
                     </p>
-                    <p className="text-xs text-gray-400 flex items-center mt-1">
-                      <TrendingUp className="w-3 h-3 mr-1 text-green-400" />
+                    <p className="text-xs text-gray-500 flex items-center mt-0.5">
+                      <TrendingUp className="w-3 h-3 mr-1 text-blue-500" />
                       Trending this week
                     </p>
                   </div>
@@ -265,39 +265,39 @@ const CategorySidebar: React.FC<CategorySidebarProps> = ({
         </div>
 
         {/* Featured Instructors */}
-        <div className="  bg-gray-900/50 backdrop-blur-sm shadow-xl p-5 hover:shadow-blue-900/20 transition duration-300">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-white flex items-center">
-              <span className="bg-gradient-to-r from-pink-500 to-orange-500 w-1 h-5 mr-3 rounded-full"></span>
-              <Users className="w-4 h-4 mr-2 text-blue-400" />
+        <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition duration-300">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-xs font-semibold text-gray-800 flex items-center">
+              <span className="bg-blue-600 w-1 h-4 mr-2 rounded-full"></span>
+              <Users className="w-4 h-4 mr-2 text-blue-600" />
               Featured Instructors
             </h3>
-            <button className="text-sm text-pink-400 hover:text-pink-300 font-medium">
+            <button className="text-xs text-blue-600 hover:text-blue-700 font-medium">
               View all
             </button>
           </div>
-          <ul className="space-y-4">
+          <ul className="space-y-3">
             {featuredInstructors.slice(0, 3).map((instructor) => (
               <li key={instructor.id} className="group">
-                <button className="flex items-center space-x-3 w-full text-left">
-                  <div className="relative w-10 h-10">
+                <button className="flex items-center space-x-2.5 w-full text-left hover:bg-gray-50 p-1.5  transition-colors">
+                  <div className="relative w-9 h-9">
                     <Image
                       src={instructor.avatarUrl}
                       alt={instructor.name}
                       fill
-                      className="rounded-full object-cover border-2 border-gray-700 group-hover:border-pink-500 transition-colors"
+                      className="rounded-full object-cover border-2 border-gray-200 group-hover:border-blue-300 transition-colors"
                     />
                     {instructor.role === "Senior Instructor" && (
-                      <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full p-1 border border-gray-900">
-                        <Star className="w-2 h-2 text-white" fill="white" />
+                      <div className="absolute -bottom-0.5 -right-0.5 bg-blue-600 rounded-full p-1 border-2 border-white">
+                        <Star className="w-1.5 h-1.5 text-white" fill="white" />
                       </div>
                     )}
                   </div>
                   <div>
-                    <p className="font-medium text-gray-200 group-hover:text-pink-400 transition-colors">
+                    <p className="font-medium text-gray-700 group-hover:text-blue-600 transition-colors text-sm">
                       {instructor.name}
                     </p>
-                    <div className="flex items-center text-xs text-gray-400">
+                    <div className="flex items-center text-xs text-gray-500">
                       {instructor.rating && (
                         <RatingStars rating={instructor.rating} />
                       )}

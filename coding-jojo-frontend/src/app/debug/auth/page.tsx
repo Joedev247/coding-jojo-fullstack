@@ -87,7 +87,7 @@ export default function AuthDebugPage() {
 
               <button
                 onClick={testLogin}
-                className="w-full bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
+                className="w-full bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"
               >
                 🧪 Test Login (Update credentials in code)
               </button>

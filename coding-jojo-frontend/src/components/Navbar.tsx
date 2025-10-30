@@ -320,144 +320,145 @@ export default function Navbar() {
 
 
   return (
-    <div className="sticky top-0 z-50 w-full font-['Inter',sans-serif]">
+    <div className="sticky top-0 z-50 w-full font-['Montserrat',sans-serif]">
       {/* Announcement Bar - Updated with pink-orange gradient */}
       {showAnnouncement && (
-        <div className="relative bg-gradient-to-r from-pink-500 to-orange-500 text-white">
+        <div className="relative bg-gradient-to-r from-blue-600 to-emerald-600 text-white">
           <div className="max-w-[1500] mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-center md:justify-between gap-2 sm:gap-3">
-            <div className="flex items-center gap-1 sm:gap-3 flex-wrap justify-center">
-              <span className="inline-flex items-center bg-white/20 backdrop-blur-sm text-xs font-bold px-2 sm:px-3 py-1 sm:py-1 text-white">
-                <Sparkles className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-1 sm:mr-1.5" />
-                <span className="text-xs sm:text-xs">{t('announcement.new')}</span>
+            <div className="flex items-center gap-1 sm:gap-2 flex-wrap justify-center">
+              <span className="inline-flex items-center bg-white/25 backdrop-blur-sm text-[10px] font-bold px-1.5 sm:px-2 py-0.5 sm:py-0.5 text-white  border border-white/30">
+                <Sparkles className="h-2 w-2 sm:h-2.5 sm:w-2.5 mr-0.5 sm:mr-1" />
+                <span className="text-[10px] sm:text-[10px]">{t('announcement.new')}</span>
               </span>
-              <p className="text-xs sm:text-sm font-medium">{t('announcement.text')}</p>
-              <div className="flex items-center gap-1 sm:gap-1.5">
-                <div className="px-1.5 sm:px-2 py-0.5 sm:py-1">
-                  <span className="text-xs sm:text-sm font-bold">{timeLeft.hours}</span>
+              <p className="text-[10px] sm:text-xs font-medium">{t('announcement.text')}</p>
+              <div className="flex items-center gap-0.5 sm:gap-1">
+                <div className="px-1 sm:px-1.5 py-0.5">
+                  <span className="text-[10px] sm:text-xs font-bold">{timeLeft.hours}</span>
                 </div>
-                <span className="text-white/80 text-xs sm:text-sm">:</span>
-                <div className="px-1.5 sm:px-2 py-0.5 sm:py-1">
-                  <span className="text-xs sm:text-sm font-bold">{timeLeft.minutes.toString().padStart(2, '0')}</span>
+                <span className="text-white/80 text-[10px] sm:text-xs">:</span>
+                <div className="px-1 sm:px-1.5 py-0.5">
+                  <span className="text-[10px] sm:text-xs font-bold">{timeLeft.minutes.toString().padStart(2, '0')}</span>
                 </div>
-                <span className="text-white/80 text-xs sm:text-sm">:</span>
-                <div className="px-1.5 sm:px-2 py-0.5 sm:py-1">
-                  <span className="text-xs sm:text-sm font-bold">{timeLeft.seconds.toString().padStart(2, '0')}</span>
+                <span className="text-white/80 text-[10px] sm:text-xs">:</span>
+                <div className="px-1 sm:px-1.5 py-0.5">
+                  <span className="text-[10px] sm:text-xs font-bold">{timeLeft.seconds.toString().padStart(2, '0')}</span>
                 </div>
               </div>
-            </div>            <div className="flex items-center gap-2 sm:gap-3">
+            </div>            <div className="flex items-center gap-1 sm:gap-2">
               <button
                 onClick={() => setShowAnnouncement(false)}
-                className="inline-flex items-center bg-white/20 backdrop-blur-sm text-xs font-bold px-2 sm:px-3 py-1 sm:py-1 text-white hover:bg-white/30 transition-all duration-300"
+                className="inline-flex items-center bg-white text-blue-700 text-[10px] font-bold px-1.5 sm:px-2 py-0.5 sm:py-0.5 hover:bg-gray-100 transition-all duration-300  shadow-sm"
               >
                 {t('announcement.cta')}
               </button>
               <button
                 onClick={() => setShowAnnouncement(false)}
-                className="text-white/80 hover:text-white transition-colors p-1"
+                className="text-white/80 hover:text-white transition-colors p-0.5"
               >
-                <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                <X className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
               </button>
             </div>
           </div>
         </div>
-      )}      {/* Main Navbar - Increased max-width */}
-      <nav className={`relative w-full transition-all duration-300 ${scrolled
-        ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl'
-        : 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl'
-        }`}>
+      )}      {/* Main Navbar - Professional White Theme */}
+      <nav className={`relative w-full transition-all duration-300 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white border-b border-primary-100 shadow-sm`}>
 
         <div className="max-w-[1500] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-15">
+          <div className="flex items-center justify-between h-12">
             {/* Logo Section */}
             <div className="flex items-center flex-shrink-0">
               <Link href="/" className="flex items-center group">
                 <div className="relative">
                   <Image
-                    src="/image-removebg-preview.png"
+                    src="/image-removebg-preview-6.png"
                     alt="CodeLearn Academy"
-                    width={100}
-                    height={40}
+                    width={80}
+                    height={80}
                     className="object-contain transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
               </Link>
-            </div>            {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-1">
+            </div>  
+                      {/* Desktop Navigation Links */}
+            <div className="hidden lg:flex items-center space-x-0.5">
               {primaryNavItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="group text-sm relative flex items-center gap-2 px-4 py-2.5 text-slate-300 dark:text-slate-300 text-slate-600 hover:text-white dark:hover:text-white hover:text-slate-900 transition-all duration-300 hover:bg-slate-800/50 dark:hover:bg-slate-800/50 hover:bg-slate-200/50"
+                  className="group text-xs relative flex items-center gap-1.5 px-3 py-2 text-gray-100 hover:text-blue-600 transition-all duration-300 hover:bg-blue-50 "
                 >
-                  <item.icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-                  <span className="font-medium">{t(`navigation.${item.name}`)}</span>
+                  <item.icon className="w-3.5 h-3.5 transition-transform duration-300 group-hover:scale-110" />
+                  <span className="font-semibold">{t(`navigation.${item.name}`)}</span>
                 </Link>
               ))}
-            </div>            {/* Search Bar - Centered and Enhanced */}
-            <div className="hidden md:block flex-1 max-w-lg mx-8">
+            </div>   
+                     {/* Search Bar - Professional White Design */}
+            <div className="hidden md:block flex-1 max-w-md mx-6">
               <div className="relative group">
                 <input
                   type="text"
                   placeholder={t('search')}
-                  className="w-full h-11 pl-12 pr-4 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 p-5 backdrop-blur-sm shadow-lg focus:border-pink-500/50 focus:ring-2 focus:ring-pink-500/20 text-white dark:text-white text-gray-900 text-sm outline-none transition-all duration-300 focus:shadow-lg focus:shadow-pink-500/10 placeholder-slate-400 dark:placeholder-slate-400 placeholder-slate-500"
+                  className="w-full h-8 pl-9 pr-3 bg-gray-50 border border-gray-300 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-100 text-gray-800 text-xs outline-none transition-all duration-300 placeholder-gray-500 shadow-sm"
                 />
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-400 text-slate-500 group-focus-within:text-pink-400 transition-colors duration-300" />
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-orange-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 -z-10"></div>
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-3.5 w-3.5 text-gray-500 group-focus-within:text-blue-500 transition-colors duration-300" />
               </div>
-            </div>            {/* Right Section */}
-            <div className="flex items-center gap-4">
-              {/* Shopping Cart - Updated gradient */}
-              <Link href="/cart" className="relative text-slate-300 dark:text-slate-300 text-slate-600 hover:text-white dark:hover:text-white hover:text-slate-900 transition-colors duration-300 p-2 hover:bg-slate-800/50 dark:hover:bg-slate-800/50 hover:bg-slate-200/50">
-                <ShoppingCart className="h-5 w-5" />
+            </div>       
+                 {/* Right Section */}
+            <div className="flex items-center gap-2">
+              {/* Shopping Cart - Professional White */}
+              <Link href="/cart" className="relative text-gray-100 hover:text-blue-600 transition-colors duration-300 p-1.5 hover:bg-blue-50 ">
+                <ShoppingCart className="h-4 w-4" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-orange-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">
+                  <span className="absolute -top-0.5 -right-0.5 bg-blue-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                     {cartCount > 99 ? '99+' : cartCount}
                   </span>
                 )}
               </Link>
               <div className="relative hidden sm:block" ref={langDropdownRef}>
                 <button
-                  className="flex items-center gap-2 text-slate-300 dark:text-slate-300 text-slate-600 hover:text-white dark:hover:text-white hover:text-slate-900 transition-colors duration-300 p-2 hover:bg-slate-800/50 dark:hover:bg-slate-800/50 hover:bg-slate-200/50 "
+                  className="flex items-center gap-1.5 text-gray-100 transition-colors duration-300 p-1.5 "
                   onClick={() => setLangDropdownOpen(!langDropdownOpen)}
                 >
-                  <span className="text-lg">{getCurrentLanguageFlag()}</span>
-                  <span className="text-sm font-medium hidden lg:inline">{language.toUpperCase()}</span>
-                  <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${langDropdownOpen ? 'rotate-180' : ''}`} />
-                </button>                {/* Enhanced Language Dropdown with Flags */}
+                  <span className="text-sm">{getCurrentLanguageFlag()}</span>
+                  <span className="text-xs font-semibold hidden lg:inline">{language.toUpperCase()}</span>
+                  <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${langDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>              
+                  {/* Enhanced Language Dropdown with Flags */}
                 {langDropdownOpen && (
-                  <div className="absolute right-0 mt-12 w-72 bg-slate-900/98 dark:bg-slate-900/98 bg-white/98 backdrop-blur-xl overflow-hidden shadow-2xl border border-slate-600/50 dark:border-slate-600/50 border-slate-300/50 transition-all duration-300 z-[99999] animate-in slide-in-from-top-2">
-                    <div className="p-3 border-b border-slate-700 dark:border-slate-700 border-slate-200 bg-gradient-to-r from-pink-500/10 to-orange-500/10">
-                      <p className="text-sm font-semibold text-white dark:text-white text-gray-900">{t('language.selectLanguage')}</p>
-                      <p className="text-xs text-slate-400 dark:text-slate-400 text-slate-500">{t('language.choosePreferred')}</p>
+                  <div className="absolute right-0 mt-8 w-56 bg-white border border-gray-300  overflow-hidden shadow-lg transition-all duration-300 z-[99999]">
+                    <div className="p-2 border-b border-gray-200 bg-gray-50">
+                      <p className="text-xs font-semibold text-gray-800">{t('language.selectLanguage')}</p>
+                      <p className="text-[10px] text-gray-600">{t('language.choosePreferred')}</p>
                     </div>
                     <div className="max-h-64 overflow-y-auto">
                       {enhancedLanguageOptions.map((lang) => (
                         <button
                           key={lang.code}
-                          className="flex items-center justify-between w-full px-4 py-3 text-sm text-slate-300 dark:text-slate-300 text-slate-600 hover:bg-slate-700/50 dark:hover:bg-slate-700/50 hover:bg-slate-100/50 transition-colors duration-300 hover:text-white dark:hover:text-white hover:text-slate-900"
+                          className="flex items-center justify-between w-full px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 transition-colors duration-300 hover:text-blue-600"
                           onClick={() => handleLanguageChange(lang.code)}
                         >
-                          <div className="flex items-center gap-3">
-                            <span className="text-xl">{lang.flag}</span>
-                            <span className="text-slate-500 dark:text-slate-500 text-slate-400 text-xs font-bold uppercase bg-slate-700 dark:bg-slate-700 bg-slate-200 px-2 py-1 rounded">{lang.code}</span>
-                            <span className="font-medium">{lang.name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm">{lang.flag}</span>
+                            <span className="text-blue-600 text-[10px] font-bold uppercase bg-blue-100 px-1.5 py-0.5 rounded">{lang.code}</span>
+                            <span className="font-semibold">{lang.name}</span>
                           </div>
-                          {language === lang.code && <Check className="h-4 w-4 text-pink-400" />}
+                          {language === lang.code && <Check className="h-3 w-3 text-blue-600" />}
                         </button>
                       ))}
                     </div>
                   </div>
                 )}
-              </div>              {/* Authentication Section */}
+              </div>           
+                 {/* Authentication Section */}
               {isAuthenticated && user ? (
                 // Enhanced User Profile (Bell icon removed)
                 <div className="relative" ref={userDropdownRef}>
                   <button
-                    className="flex items-center gap-3 text-slate-300 dark:text-slate-300 text-slate-600 hover:text-white dark:hover:text-white hover:text-slate-900 transition-colors duration-300 p-2 hover:bg-slate-800/50 dark:hover:bg-slate-800/50 hover:bg-slate-200/50"
+                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors duration-300 p-1.5 hover:bg-blue-50 "
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   >
                     {user.profilePicture ? (
-                      <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-slate-600 dark:border-slate-600 border-slate-300 group-hover:border-pink-400 transition-colors duration-300">
+                      <div className="relative w-7 h-7 rounded-full overflow-hidden border border-primary-300 group-hover:border-accent-400 transition-colors duration-300">
                         <Image
                           src={user.profilePicture}
                           alt={user.name}
@@ -466,23 +467,24 @@ export default function Navbar() {
                         />
                       </div>
                     ) : (
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center text-white text-xs font-bold shadow-sm">
                         {getUserInitials(user.name)}
                       </div>
                     )}                    <div className="hidden lg:block text-left">
-                      <p className="text-sm font-medium text-white dark:text-white text-gray-900">{user.name.split(' ')[0]}</p>
+                      <p className="text-xs font-semibold text-gray-800">{user.name.split(' ')[0]}</p>
                       {user.isPremium && (
-                        <p className="text-xs text-slate-400 dark:text-slate-400 text-slate-500">Premium</p>
+                        <p className="text-[10px] text-blue-600">Premium</p>
                       )}
                     </div>
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${userDropdownOpen ? 'rotate-180' : ''}`} />
-                  </button>                  {/* Enhanced User Dropdown */}
+                    <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${userDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>       
+                             {/* Enhanced User Dropdown */}
                   {userDropdownOpen && (
-                  <div className="absolute right-0 mt-11 w-72 bg-slate-900/98 dark:bg-slate-900/98 bg-white/98 backdrop-blur-xl overflow-hidden shadow-2xl border border-slate-600/50 dark:border-slate-600/50 border-slate-300/50 transition-all duration-300 z-[99999] animate-in slide-in-from-top-2">
-                      <div className="p-4 border-b border-slate-700 dark:border-slate-700 border-slate-200 bg-gradient-to-r from-pink-500/10 to-orange-500/10">
-                        <div className="flex items-center gap-3">
+                  <div className="absolute right-0 mt-8 w-60 bg-white border border-gray-300  overflow-hidden shadow-lg transition-all duration-300 z-[99999]">
+                      <div className="p-3 border-b border-gray-200 bg-gray-50">
+                        <div className="flex items-center gap-2">
                           {user.profilePicture ? (
-                            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-slate-600 dark:border-slate-600 border-slate-300">
+                            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-primary-300">
                               <Image
                                 src={user.profilePicture}
                                 alt={user.name}
@@ -491,14 +493,14 @@ export default function Navbar() {
                               />
                             </div>
                           ) : (
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center text-white font-bold text-xs">
                               {getUserInitials(user.name)}
                             </div>
                           )}                          <div>
-                            <p className="font-semibold text-white dark:text-white text-gray-900">{user.name}</p>
-                            <p className="text-sm text-slate-400 dark:text-slate-400 text-slate-500">{user.email}</p>
+                            <p className="font-semibold text-xs text-gray-800">{user.name}</p>
+                            <p className="text-[10px] text-gray-600">{user.email}</p>
                             {user.isPremium && (
-                              <span className="inline-block mt-1 px-2 py-0.5 bg-gradient-to-r from-pink-500 to-orange-500 text-white text-xs rounded-full">{t('user.premiumMember')}</span>
+                              <span className="inline-block mt-0.5 px-1.5 py-0.5 bg-blue-600 text-white text-[9px] rounded-full">{t('user.premiumMember')}</span>
                             )}
                           </div>
                         </div>
@@ -513,20 +515,20 @@ export default function Navbar() {
                           <Link
                             key={item.label}
                             href={item.href}
-                            className="flex items-center gap-3 px-3 py-2.5 text-slate-300 dark:text-slate-300 text-slate-600 hover:bg-slate-700/50 dark:hover:bg-slate-700/50 hover:bg-slate-100/50 transition-colors duration-300 hover:text-white dark:hover:text-white hover:text-slate-900"
+                            className="flex items-center gap-2 px-3 py-1.5 text-gray-700 hover:bg-blue-50 transition-colors duration-300 hover:text-blue-600"
                           >
-                            <item.icon className="w-4 h-4" />
-                            <span className="font-medium">{item.label}</span>
+                            <item.icon className="w-3 h-3" />
+                            <span className="font-semibold text-xs">{item.label}</span>
                           </Link>
                         ))}
 
-                        <div className="border-t border-slate-700 dark:border-slate-700 border-slate-200 mt-2 pt-2">
+                        <div className="border-t border-gray-200 mt-1 pt-1">
                           <button
                             onClick={handleLogout}
-                            className="flex items-center gap-3 px-3 py-2.5 text-red-400 hover:bg-red-500/10 w-full text-left transition-colors duration-300"
+                            className="flex items-center gap-2 px-3 py-1.5 text-red-600 hover:bg-red-50 w-full text-left transition-colors duration-300"
                           >
-                            <LogOut className="w-4 h-4" />
-                            <span className="font-medium">{t('user.signOut')}</span>
+                            <LogOut className="w-3 h-3" />
+                            <span className="font-semibold text-xs">{t('user.signOut')}</span>
                           </button>
                         </div>
                       </div>
@@ -536,22 +538,22 @@ export default function Navbar() {
               ) : (     
 
                   // Enhanced Auth Buttons with pink-orange gradient
-                <div className="hidden sm:flex items-center gap-3">
+                <div className="hidden sm:flex items-center gap-2">
                   <Link
                     href="/instructor"
-                    className="text-sm font-semibold px-5 py-2.5 border border-pink-500/50 text-pink-400 hover:bg-pink-500/10 hover:border-pink-400 transition-all duration-300 transform hover:scale-105"
+                    className="text-xs font-semibold px-3 py-1.5 border border-blue-300 text-gray-100 hover:border-blue-400 transition-all duration-300 rounded shadow-sm"
                   >
                     {t("Become Instructor")}
                   </Link>
                   <Link
                     href="/login"
-                    className="text-sm font-semibold px-5 py-2.5 bg-gray-700 dark:bg-gray-700 bg-gray-200 hover:bg-gray-600 dark:hover:bg-gray-600 hover:bg-gray-300 text-white dark:text-white text-gray-900 transition-colors transition-all duration-300"
+                    className="text-xs font-semibold px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all duration-300 rounded shadow-sm"
                   >
                     {t('login')}
                   </Link>
                   <Link
                     href="/signup"
-                    className="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white text-sm font-semibold px-6 py-2.5 shadow-lg hover:shadow-pink-500/25 transition-all duration-300 transform hover:scale-105"
+                    className="text-xs font-semibold px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 rounded shadow-sm"
                   >
                     {t('signup')}
                   </Link>
@@ -560,10 +562,10 @@ export default function Navbar() {
                 
                 {/* Mobile Menu Button */}
               <button
-                className="lg:hidden text-slate-300 dark:text-slate-300 text-slate-600 hover:text-white dark:hover:text-white hover:text-slate-900 transition-colors p-2 hover:bg-slate-800/50 dark:hover:bg-slate-800/50 hover:bg-slate-200/50"
+                className="lg:hidden text-gray-700 hover:text-blue-600 transition-colors p-1.5 hover:bg-blue-50 "
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
-                <Menu className="h-6 w-6" />
+                <Menu className="h-4 w-4" />
               </button>
             </div>
           </div>
@@ -707,33 +709,30 @@ export default function Navbar() {
           </div>
         )}
       </nav>      {/* Enhanced Secondary Navbar */}
-      <nav className={`w-full transition-all duration-300 z-40 relative ${scrolled
-          ? 'bg-slate-800/95 dark:bg-slate-800/95 bg-slate-100/95 backdrop-blur-lg shadow-xl'
-          : 'bg-slate-800/95 dark:bg-slate-800/95 bg-slate-100/95 backdrop-blur-lg shadow-xl'
-        }`}>
+      <nav className="w-full transition-all duration-300 z-40 relative bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-200 shadow-sm">
         <div className="max-w-[1500] mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Left scroll button */}
           <button
             onClick={() => scrollMenu('left')}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-slate-700/80 dark:bg-slate-700/80 bg-slate-200/80 backdrop-blur-sm shadow-lg rounded-full h-9 w-9 flex items-center justify-center border border-slate-600 dark:border-slate-600 border-slate-300 hover:bg-slate-600 dark:hover:bg-slate-600 hover:bg-slate-300 transition-all duration-300 hover:scale-105"
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm shadow-md rounded-full h-6 w-6 flex items-center justify-center border border-gray-300 hover:bg-blue-50 hover:border-blue-400 transition-all duration-300"
           >
-            <ChevronLeft className="h-4 w-4 text-slate-300 dark:text-slate-300 text-slate-600" />
+            <ChevronLeft className="h-3 w-3 text-gray-600 hover:text-blue-600" />
           </button>
 
-          <div className="flex items-center h-10 overflow-hidden">
+          <div className="flex items-center h-8 overflow-hidden">
             <div
               ref={scrollContainerRef}
-              className="flex items-center gap-8 overflow-x-auto py-3 hide-scrollbar w-full px-16 scrollbar-hide"
+              className="flex items-center gap-6 overflow-x-auto py-2 hide-scrollbar w-full px-12 scrollbar-hide"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >              {programmingLanguages.map((tech, index) => (
               <Link
                 key={index}
                 href={`/learn/${tech.toLowerCase().replace(/\s/g, '-').replace(/\./g, '').replace(/\+/g, 'plus').replace(/#/g, 'sharp')}`}
-                className="group relative whitespace-nowrap text-sm text-slate-400 dark:text-slate-400 text-slate-500 hover:text-white dark:hover:text-white hover:text-slate-900 transition-all duration-300 py-2 px-1 font-medium"
+                className="group relative whitespace-nowrap text-xs text-gray-700 hover:text-blue-700 transition-all duration-300 py-1.5 px-2 font-semibold  hover:bg-white/90  shadow-sm hover:shadow-md"
               >
                 <span className="relative z-10">{tech}</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0 transform scale-110"></div>
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-pink-500 to-orange-500 group-hover:w-full transition-all duration-300"></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0 "></div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 group-hover:w-full transition-all duration-300 rounded-full"></div>
               </Link>
             ))}
             </div>
@@ -742,9 +741,9 @@ export default function Navbar() {
           {/* Right scroll button */}
           <button
             onClick={() => scrollMenu('right')}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-slate-700/80 dark:bg-slate-700/80 bg-slate-200/80 backdrop-blur-sm shadow-lg rounded-full h-9 w-9 flex items-center justify-center border border-slate-600 dark:border-slate-600 border-slate-300 hover:bg-slate-600 dark:hover:bg-slate-600 hover:bg-slate-300 transition-all duration-300 hover:scale-105"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm shadow-md rounded-full h-6 w-6 flex items-center justify-center border border-gray-300 hover:bg-blue-50 hover:border-blue-400 transition-all duration-300"
           >
-            <ChevronRight className="h-4 w-4 text-slate-300 dark:text-slate-300 text-slate-600" />
+            <ChevronRight className="h-3 w-3 text-gray-600 hover:text-blue-600" />
           </button>
         </div>
       </nav>

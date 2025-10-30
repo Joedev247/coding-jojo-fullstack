@@ -265,8 +265,8 @@ export default function PaymentGateway({
     return (
       <div className="p-6 space-y-6">
         <div className="text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check className="h-8 w-8 text-green-600" />
+          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Check className="h-8 w-8 text-blue-600" />
           </div>
           <h3 className="text-xl font-semibold text-white mb-2">Payment Instructions</h3>
         </div>
@@ -425,8 +425,8 @@ export default function PaymentGateway({
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-white">Payment</h2>
           <div className="flex items-center space-x-1">
-            <Shield className="h-4 w-4 text-green-400" />
-            <span className="text-sm text-green-400">Secure</span>
+            <Shield className="h-4 w-4 text-blue-400" />
+            <span className="text-sm text-blue-400">Secure</span>
           </div>
         </div>
 

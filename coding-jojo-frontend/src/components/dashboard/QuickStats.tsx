@@ -25,12 +25,12 @@ const QuickStats: React.FC<QuickStatsProps> = ({ stats = {} }) => {
 
   if (isLoading || !dashboardData) {
     return (
-      <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-6">
+      <div className="bg-white/90 backdrop-blur-sm border border-blue-200  shadow-sm p-4">
         <div className="animate-pulse">
-          <div className="h-6 bg-gray-700 rounded w-1/4 mb-6"></div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="h-5 bg-gray-300 rounded w-1/4 mb-4"></div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-24 bg-gray-700 "></div>
+              <div key={i} className="h-20 bg-gray-300 "></div>
             ))}
           </div>
         </div>
@@ -45,18 +45,18 @@ const QuickStats: React.FC<QuickStatsProps> = ({ stats = {} }) => {
     {
       label: "Courses Enrolled",
       value: userStats.totalCourses?.toString() || "0",
-      icon: <BookOpen className="h-6 w-6 text-purple-400" />,
+      icon: <BookOpen className="h-5 w-5 text-purple-600" />,
       change:
         userStats.coursesInProgress > 0
           ? `+${userStats.coursesInProgress}`
           : "0",
       changeColor:
-        userStats.coursesInProgress > 0 ? "text-green-400" : "text-gray-400",
+        userStats.coursesInProgress > 0 ? "text-blue-600" : "text-gray-500",
     },
     {
       label: "Completed Courses",
       value: userStats.coursesCompleted?.toString() || "0",
-      icon: <Award className="h-6 w-6 text-yellow-400" />,
+      icon: <Award className="h-5 w-5 text-yellow-600" />,
       change:
         userStats.coursesCompleted > 0
           ? `${Math.round(
@@ -66,27 +66,27 @@ const QuickStats: React.FC<QuickStatsProps> = ({ stats = {} }) => {
             )}%`
           : "0%",
       changeColor:
-        userStats.coursesCompleted > 0 ? "text-green-400" : "text-gray-400",
+        userStats.coursesCompleted > 0 ? "text-blue-600" : "text-gray-500",
     },
     {
       label: "Learning Hours",
       value: userStats.totalHoursLearned?.toString() || "0",
-      icon: <Clock className="h-6 w-6 text-orange-400" />,
+      icon: <Clock className="h-5 w-5 text-orange-600" />,
       change: quickStats.weeklyProgress?.hoursLearned
         ? `+${quickStats.weeklyProgress.hoursLearned}h`
         : "0h",
       changeColor:
         quickStats.weeklyProgress?.hoursLearned > 0
-          ? "text-green-400"
-          : "text-gray-400",
+          ? "text-blue-600"
+          : "text-gray-500",
     },
     {
       label: "Certificates",
       value: userStats.certificatesEarned?.toString() || "0",
-      icon: <Award className="h-6 w-6 text-pink-400" />,
+      icon: <Award className="h-5 w-5 text-blue-600" />,
       change: userStats.certificatesEarned > 0 ? "Earned" : "None",
       changeColor:
-        userStats.certificatesEarned > 0 ? "text-green-400" : "text-gray-400",
+        userStats.certificatesEarned > 0 ? "text-blue-600" : "text-gray-500",
     },
     {
       label: "Avg. Progress",
@@ -96,43 +96,43 @@ const QuickStats: React.FC<QuickStatsProps> = ({ stats = {} }) => {
               (userStats.coursesCompleted / userStats.totalCourses) * 100
             )}%`
           : "0%",
-      icon: <Target className="h-6 w-6 text-blue-400" />,
+      icon: <Target className="h-5 w-5 text-blue-600" />,
       change: userStats.coursesInProgress > 0 ? "Active" : "Idle",
       changeColor:
-        userStats.coursesInProgress > 0 ? "text-green-400" : "text-gray-400",
+        userStats.coursesInProgress > 0 ? "text-blue-600" : "text-gray-500",
     },
     {
       label: "Current Streak",
       value: `${quickStats.weeklyProgress?.streakDays || 1} days`,
-      icon: <TrendingUp className="h-6 w-6 text-green-400" />,
+      icon: <TrendingUp className="h-5 w-5 text-blue-600" />,
       change: quickStats.weeklyProgress?.streakDays > 1 ? "Growing" : "Start",
       changeColor:
         quickStats.weeklyProgress?.streakDays > 1
-          ? "text-green-400"
-          : "text-gray-400",
+          ? "text-blue-600"
+          : "text-gray-500",
     },
   ];
 
   return (
-    <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-6">
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-          <TrendingUp className="h-5 w-5 text-pink-400" />
+    <div className="bg-white/90 backdrop-blur-sm border border-blue-200  shadow-sm p-4">
+      <div className="mb-4">
+        <h3 className="text-xs font-semibold text-gray-900 flex items-center gap-2">
+          <TrendingUp className="h-4 w-4 text-blue-600" />
           Platform Stats
         </h3>
-        <p className="text-gray-400 text-sm mt-1">
+        <p className="text-gray-600 text-sm mt-1">
           Real-time learning analytics
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {statItems.map((item, index) => (
           <div
             key={index}
-            className="bg-gray-800/60 backdrop-blur-sm border border-gray-700/50 p-4 hover:border-pink-500/30 transition-all duration-300 group"
+            className="bg-blue-50 border border-blue-200  p-3 hover:border-blue-300 transition-all duration-300 group"
           >
-            <div className="flex items-center justify-between mb-3">
-              <div className="p-2 bg-gray-700/50 group-hover:bg-gradient-to-br group-hover:from-pink-500/20 group-hover:to-orange-500/20 transition-all duration-300">
+            <div className="flex items-center justify-between mb-2">
+              <div className="p-2 bg-white  group-hover:bg-blue-100 transition-all duration-300">
                 {item.icon}
               </div>
               <div
@@ -144,8 +144,8 @@ const QuickStats: React.FC<QuickStatsProps> = ({ stats = {} }) => {
             </div>
 
             <div>
-              <p className="text-2xl font-bold text-white mb-1">{item.value}</p>
-              <p className="text-xs text-gray-400 leading-tight">
+              <p className="text-xl font-bold text-gray-900 mb-1">{item.value}</p>
+              <p className="text-xs text-gray-600 leading-tight">
                 {item.label}
               </p>
             </div>
@@ -153,10 +153,10 @@ const QuickStats: React.FC<QuickStatsProps> = ({ stats = {} }) => {
         ))}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-gray-700/50">
+      <div className="mt-4 pt-3 border-t border-blue-200">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-400">Last updated: Just now</span>
-          <button className="text-pink-400 hover:text-pink-300 transition-colors">
+          <span className="text-gray-600">Last updated: Just now</span>
+          <button className="text-blue-600 hover:text-blue-700 transition-colors">
             View detailed analytics →
           </button>
         </div>

@@ -16,6 +16,7 @@ import {
   Play,
   Eye,
   CheckCircle,
+  BookOpen,
 } from "lucide-react";
 import { useCart } from "../../contexts/CartContext";
 import { Course } from "../../types/courses";
@@ -30,6 +31,14 @@ import { useToast } from "../../hooks/useToast";
 import Navbar from "../../components/Navbar";
 import ProtectedRoute from "../../components/auth/ProtectedRoute";
 import { formatDuration } from "../../utils/helpers";
+
+// Time display component to handle duration calculation
+const calculateDuration = (lessons: number): string => {
+  const totalHours = lessons * 1.5;
+  const hours = Math.floor(totalHours);
+  const minutes = Math.round((totalHours - hours) * 60);
+  return `${hours}h ${minutes}m`;
+};
 
 // Related Course Card Component with same design as CourseCard
 interface RelatedCourseCardProps {
@@ -71,194 +80,166 @@ const RelatedCourseCard: React.FC<RelatedCourseCardProps> = ({
     [course, addToCart, isInCart, isAddingToCart]
   );
 
-  const renderStars = (rating: number) => {
+  const renderStars = (rating: number, ratingId: string) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
-        key={i}
+        key={`${ratingId}-star-${i}`}
         className={`w-3 h-3 ${
           i < Math.floor(rating)
-            ? "text-amber-400 fill-amber-400"
-            : "text-gray-600"
+            ? "text-yellow-400 fill-yellow-400"
+            : "text-gray-300"
         }`}
       />
     ));
   };
 
-  const calculateDiscount = (course: Course) => {
-    if (typeof course.price === "number" && course.originalPrice) {
-      return Math.round(
-        ((course.originalPrice - course.price) / course.originalPrice) * 100
-      );
-    }
-    return null;
-  };
-
   return (
-    <div className="group h-full flex flex-col overflow-hidden  bg-gray-900/70 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-pink-500/20 hover:translate-y-[-2px] hover:border-pink-500/30">
-      {/* Card Header/Image with gradient overlay */}
+    <div className="group h-full flex flex-col overflow-hidden bg-white border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:translate-y-[-1px] hover:border-blue-300">
+      {/* Course Image with Duration Badge */}
       <div className="relative aspect-video overflow-hidden">
         <Image
-          src={course.thumbnail || "/placeholder-course.jpg"}
-          alt={course.title}
+          src={
+            typeof course.thumbnail === 'string' && course.thumbnail.trim() !== ''
+              ? course.thumbnail
+              : "/placeholder-course.jpg"
+          }
+          alt={typeof course.title === 'string' ? course.title.trim() : "Course thumbnail"}
           width={400}
           height={225}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          onError={(e: any) => {
+            try {
+              e.currentTarget.src = '/placeholder-course.jpg';
+            } catch (err) {
+              // ignore
+            }
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-        {/* Tags and badges */}
-        <div className="absolute top-3 left-3 flex gap-2">
-          {course.isFeatured && (
-            <div className="bg-gradient-to-r from-pink-500 to-orange-500 text-white text-xs py-1 px-2 font-medium shadow-lg">
-              Featured
-            </div>
-          )}
-          {course.isNew && (
-            <div className="bg-green-500 text-white text-xs py-1 px-2 font-medium shadow-lg">
-              New
-            </div>
-          )}
+        
+        {/* Duration Badge */}
+        <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded font-medium">
+          {course.duration != null && typeof course.duration === 'object' && 'hours' in (course.duration as object)
+            ? `${(course.duration as any).hours}h ${(course.duration as any).minutes}m`
+            : String(course.duration ?? "")}
         </div>
-        {/* Level indicator */}
-        <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-xs py-1 px-2 rounded-full">
-          <Users className="w-3 h-3" />
-          <span>{course.level}</span>
-        </div>{" "}
-        {/* Duration badge */}
-        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-xs py-1 px-2 rounded-full">
+
+        {/* Course Time Badge */}
+        <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded flex items-center gap-1">
           <Clock className="w-3 h-3" />
-          <span>{formatDuration(course.duration)}</span>
+          <span>
+            {calculateDuration(Number((course as any).lessons) || Number((course as any).lessonCount) || 1)}
+          </span>
         </div>
-        {/* Play button overlay */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="w-12 h-12 rounded-full bg-pink-500/80 backdrop-blur-sm flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
-            <Play className="h-5 w-5 text-white" fill="white" />
-          </div>
-        </div>
+
         {/* Save button */}
         <button
           onClick={() => handleSaveCourse(course.id)}
-          className="absolute top-2 right-2 p-1.5   bg-gray-900/70 hover:bg-gray-800 rounded-full transition duration-200"
+          className="absolute top-2 right-2 w-7 h-7 bg-white/90 hover:bg-white rounded-full transition duration-200 shadow-sm flex items-center justify-center"
         >
           <Heart
-            className={`w-4 h-4 ${
+            className={`w-3.5 h-3.5 ${
               savedCourses.has(course.id)
-                ? "text-pink-500 fill-pink-500"
-                : "text-gray-300"
+                ? "text-red-500 fill-red-500"
+                : "text-gray-400"
             }`}
           />
         </button>
-        {course.progress !== undefined && (
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-700">
-            <div
-              className="h-1 bg-gradient-to-r from-pink-500 to-orange-500"
-              style={{ width: `${course.progress}%` }}
-            ></div>
-          </div>
-        )}
       </div>
 
-      {/* Card Body with improved layout */}
-      <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-white mb-2 line-clamp-2 group-hover:text-pink-500 transition-colors">
+      {/* Course Content */}
+      <div className="p-4">
+        {/* Rating and Level Row */}
+        <div className="flex items-center justify-between mb-2">
+          {/* Rating - Left */}
+          <div className="flex items-center gap-1">
+            {renderStars(course.rating, `related-${course.id}`)}
+            <span className="text-gray-600 text-xs ml-1">({course.ratingCount?.toLocaleString() || "0"})</span>
+          </div>
+          
+          {/* Level - Right */}
+          <div className="flex items-center gap-1">
+            <Star className="w-3 h-3 text-gray-600" />
+            <span className="text-gray-600 text-xs">{course.level}</span>
+          </div>
+        </div>
+
+        {/* Course Title */}
+        <h3 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
           {course.title}
         </h3>
 
-        <p className="text-xs text-gray-300 mb-2 flex items-center gap-1">
-          <Users className="w-3 h-3" />
-          {course.instructor.name}
-        </p>
-
-        <div className="flex items-center gap-1 mb-3">
-          {renderStars(course.rating)}
-          <span className="text-amber-400 font-bold text-xs ml-1">
-            {course.rating}
-          </span>
-          <span className="text-gray-400 text-xs">
-            ({course.ratingCount?.toLocaleString() || "0"})
-          </span>
+        {/* Course Stats */}
+        <div className="flex items-center justify-between text-gray-600 text-xs mb-3">
+          {/* Lessons - Left */}
+          <div className="flex items-center gap-1">
+            <BookOpen className="w-3 h-3" />
+            <span>Lesson {(course as any).lessons ?? (course as any).lessonCount ?? 0}</span>
+          </div>
+          
+          {/* Students - Right */}
+          <div className="flex items-center gap-1">
+            <Users className="w-3 h-3" />
+            <span>Students {(course as any).students || 0}+</span>
+          </div>
         </div>
 
-        {/* Course description - truncated */}
-        <p className="text-xs text-gray-400 mb-4 line-clamp-2">
-          {course.description}
-        </p>
-
-        {/* Progress Bar with gradient - Only shown if progress exists */}
-        {course.progress !== undefined && (
-          <div className="mb-3">
-            <div className="mb-1.5 flex justify-between items-center">
-              <span className="text-xs font-medium text-gray-300">
-                Course Progress
-              </span>
-              <span className="text-xs text-gray-300">{course.progress}%</span>
+        {/* Instructor and Price */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
+              <Users className="w-3 h-3 text-gray-600" />
             </div>
-            <div className="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-pink-500 to-orange-500"
-                style={{ width: `${course.progress}%` }}
-              ></div>
-            </div>
+            <span className="text-xs text-gray-700 font-medium">{course.instructor.name}</span>
           </div>
-        )}
-
-        {/* Price tag with improved styling */}
-        <div className="mt-auto">
-          <div className="flex items-baseline justify-between mb-3">
-            <div>
-              <span className="font-bold text-white">
-                {formatPrice(course.price)}
-              </span>
-              {course.originalPrice && (
-                <span className="text-gray-400 text-xs line-through ml-1">
-                  ${course.originalPrice.toFixed(2)}
-                </span>
-              )}
+          <div className="text-right">
+            <div className="text-blue-600 font-bold text-sm">
+              {formatPrice(course.price)}
             </div>
-            {calculateDiscount(course) && (
-              <span className="text-xs font-medium text-green-400">
-                {calculateDiscount(course)}% off
-              </span>
+            {course.originalPrice && (
+              <div className="text-gray-400 text-xs line-through">
+                ${course.originalPrice.toFixed(2)}
+              </div>
             )}
           </div>
+        </div>
 
-          {/* Added View Detail and Add to Cart buttons */}
-          <div className="grid grid-cols-2 gap-2">
-            <Link href={`/courses/${course.id}`}>
-              <button className="w-full py-2.5 px-3 bg-gray-700 hover:bg-gray-600 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap min-w-fit flex-shrink-0">
-                <Eye className="h-3.5 w-3.5 flex-shrink-0" />
-                <span>View Details</span>
-              </button>
-            </Link>
-            <button
-              onClick={handleAddToCart}
-              disabled={isInCart(course.id) || isAddingToCart}
-              className={`py-2.5 px-3 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1.5 shadow-lg whitespace-nowrap min-w-fit flex-shrink-0 ${
-                isInCart(course.id)
-                  ? "bg-green-600 hover:bg-green-700"
-                  : isAddingToCart
-                  ? "bg-pink-600 hover:bg-pink-700"
-                  : "bg-gradient-to-r from-pink-500 to-orange-500 hover:from-orange-500 hover:to-pink-500"
-              }`}
-            >
-              {" "}
-              {isInCart(course.id) ? (
-                <>
-                  <CheckCircle className="h-3.5 w-3.5 flex-shrink-0" />
-                  <span>Added to Cart</span>
-                </>
-              ) : isAddingToCart ? (
-                <>
-                  <LoadingSpinner size="xs" />
-                  <span>Adding...</span>
-                </>
-              ) : (
-                <>
-                  <ShoppingCart className="h-3.5 w-3.5 flex-shrink-0" />
-                  <span>Add to Cart</span>
-                </>
-              )}
+        {/* Action Buttons */}
+        <div className="grid grid-cols-2 gap-2">
+          <Link href={`/courses/${course.id}`}>
+            <button className="w-full py-1.5 px-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 hover:text-gray-800 text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded">
+              <Eye className="h-3 w-3" />
+              <span>View Detail</span>
             </button>
-          </div>
+          </Link>
+          
+          <button
+            onClick={handleAddToCart}
+            disabled={isInCart(course.id) || isAddingToCart}
+            className={`w-full py-1.5 px-2 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded ${
+              isInCart(course.id)
+                ? "bg-blue-600 hover:bg-blue-700"
+                : isAddingToCart
+                ? "bg-blue-700 hover:bg-blue-800"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            {isInCart(course.id) ? (
+              <>
+                <CheckCircle className="h-3 w-3 flex-shrink-0" />
+                <span>Added</span>
+              </>
+            ) : isAddingToCart ? (
+              <>
+                <LoadingSpinner size="xs" />
+                <span>Adding...</span>
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="h-3 w-3" />
+                <span>Add to Cart</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>
@@ -340,9 +321,11 @@ export default function CartPage() {
       .map((course: any) => ({
         ...course,
         id: course._id, // Map _id to id for compatibility
+        thumbnail: course.thumbnail || null, // Ensure empty strings are converted to null
         instructor: {
           ...course.instructor,
-          id: course.instructor._id,
+          id: course.instructor?._id,
+          name: course.instructor?.name || "Unknown Instructor",
         },
       }));
   };
@@ -382,7 +365,7 @@ export default function CartPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen text-white relative">
+      <div className="min-h-screen bg-white text-gray-900 relative">
         <Navbar />
         
         {/* <AnimatedBackground /> */}
@@ -390,88 +373,95 @@ export default function CartPage() {
         {/* <Breadcrumb items={breadcrumbItems} /> */}
 
         {/* Main Content Container */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-4 py-8">
-          <div className="max-w-[1400] mx-auto">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 py-6">
+          <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
-              <h1 className="text-2xl sm:text-3xl font-bold mb-4 md:mb-0">
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
+              <h1 className="text-xl sm:text-2xl font-bold mb-3 md:mb-0 text-gray-900">
                 Your Shopping Cart
               </h1>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <button
                   onClick={syncWithServer}
                   disabled={loading}
-                  className="flex items-center text-blue-400 hover:text-blue-300 transition-colors disabled:opacity-50"
+                  className="flex items-center text-blue-600 hover:text-blue-700 transition-colors disabled:opacity-50 text-sm"
                 >
                   {loading ? (
                     <LoadingSpinner size="xs" />
                   ) : (
-                    <ShoppingCart className="h-5 w-5 mr-2" />
+                    <ShoppingCart className="h-4 w-4 mr-1.5" />
                   )}
                   <span>{loading ? 'Syncing...' : 'Sync with Server'}</span>
                 </button>
                 <Link
                   href="/courses"
-                  className="flex items-center text-gray-400 hover:text-white transition-colors"
+                  className="flex items-center text-gray-600 hover:text-gray-900 transition-colors text-sm"
                 >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  <ShoppingCart className="h-4 w-4 mr-1.5" />
                   <span>Continue Shopping</span>
                 </Link>
               </div>
             </div>
             {cartItems.length === 0 ? (
-              <div className="text-center py-16   bg-gray-900/60">
-                <ShoppingCart className="h-16 w-16 mx-auto text-gray-600 mb-4" />
-                <h2 className="text-xl font-medium mb-2">Your cart is empty</h2>
-                <p className="text-gray-400 mb-6">
+              <div className="text-center py-12 bg-white  shadow-sm border border-blue-100">
+                <ShoppingCart className="h-12 w-12 mx-auto text-blue-400 mb-3" />
+                <h2 className="text-lg font-medium mb-2 text-gray-900">Your cart is empty</h2>
+                <p className="text-gray-600 mb-4 text-sm">
                   Looks like you haven't added any courses yet.
                 </p>
                 <Link
                   href="/courses"
-                  className="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-orange-500 hover:to-pink-500 text-white font-medium px-6 py-3  shadow-lg hover:shadow-pink-500/30 transition-all duration-300"
+                  className="inline-flex items-center bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-blue-800 text-white font-medium px-4 py-2  shadow-sm hover:shadow-md transition-all duration-300 text-sm"
                 >
                   Explore Courses
                 </Link>
               </div>
             ) : (
-              <div className="flex flex-col lg:flex-row gap-8">
+              <div className="flex flex-col lg:flex-row gap-6">
                 {/* Cart Items */}
                 <div className="flex-grow">
-                  <div className="  bg-gray-900/60 backdrop-blur-sm overflow-hidden">
-                    {" "}
-                    <div className="p-6">
-                      <h2 className="text-lg font-semibold mb-4">
+                  <div className="bg-white  shadow-sm border border-blue-100 overflow-hidden">
+                    <div className="p-4">
+                      <h2 className="text-xs font-semibold mb-3 text-gray-900">
                         {getTotalItems()} Items in Cart ({cartItems.length}{" "}
                         Courses)
                       </h2>
 
-                      <div className="divide-y divide-gray-800">
-                        {cartItems.map((cartItem) => (
+                      <div className="divide-y divide-gray-200">
+                        {cartItems.map((cartItem, index) => (
                           <div
-                            key={cartItem.course.id}
-                            className="py-6 flex flex-col sm:flex-row gap-4"
+                            key={`${cartItem.course.id}-${index}`}
+                            className="py-4 flex flex-col sm:flex-row gap-3"
                           >
-                            <div className="sm:w-32 h-20 overflow-hidden relative flex-shrink-0">
+                            <div className="sm:w-28 h-16 overflow-hidden relative flex-shrink-0 ">
                               <Image
                                 src={
-                                  cartItem.course.thumbnail ||
-                                  "/placeholder-course.jpg"
+                                  typeof cartItem.course.thumbnail === 'string' && cartItem.course.thumbnail.trim() !== ''
+                                    ? cartItem.course.thumbnail
+                                    : "/placeholder-course.jpg"
                                 }
-                                alt={cartItem.course.title}
+                                alt={typeof cartItem.course.title === 'string' ? cartItem.course.title.trim() : "Course thumbnail"}
                                 fill
                                 className="object-cover"
+                                onError={(e: any) => {
+                                  try {
+                                    e.currentTarget.src = '/placeholder-course.jpg';
+                                  } catch (err) {
+                                    // ignore
+                                  }
+                                }}
                               />
                             </div>
 
                             <div className="flex-grow">
-                              <h3 className="font-medium text-lg mb-1">
+                              <h3 className="font-medium text-xs mb-1 text-gray-900">
                                 {cartItem.course.title}
                               </h3>
-                              <p className="text-gray-400 text-sm mb-2">
+                              <p className="text-gray-600 text-sm mb-2">
                                 By {cartItem.course.instructor.name}
                               </p>
 
-                              <div className="flex items-center justify-between mt-4">
+                              <div className="flex items-center justify-between mt-3">
                                 <div className="flex items-center">
                                   <button
                                     onClick={() =>
@@ -480,12 +470,12 @@ export default function CartPage() {
                                         cartItem.quantity - 1
                                       )
                                     }
-                                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
+                                    className="w-7 h-7  border border-gray-300 flex items-center justify-center hover:bg-blue-50 hover:border-blue-300 transition-colors text-gray-600"
                                     disabled={cartItem.quantity <= 1}
                                   >
                                     <Minus className="h-3 w-3" />
                                   </button>
-                                  <span className="mx-3 min-w-[2rem] text-center">
+                                  <span className="mx-2 min-w-[1.5rem] text-center text-sm font-medium text-gray-900">
                                     {cartItem.quantity}
                                   </span>
                                   <button
@@ -495,19 +485,19 @@ export default function CartPage() {
                                         cartItem.quantity + 1
                                       )
                                     }
-                                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
+                                    className="w-7 h-7  border border-gray-300 flex items-center justify-center hover:bg-blue-50 hover:border-blue-300 transition-colors text-gray-600"
                                   >
                                     <Plus className="h-3 w-3" />
                                   </button>
                                 </div>
 
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-3">
                                   <div>
-                                    <div className="text-lg font-semibold">
+                                    <div className="text-xs font-semibold text-gray-900">
                                       {formatPrice(cartItem.course.price)}
                                     </div>
                                     {cartItem.quantity > 1 && (
-                                      <div className="text-sm text-gray-400">
+                                      <div className="text-xs text-gray-600">
                                         Total:{" "}
                                         {formatPrice(
                                           typeof cartItem.course.price ===
@@ -523,9 +513,9 @@ export default function CartPage() {
                                     onClick={() =>
                                       removeItem(cartItem.course.id)
                                     }
-                                    className="text-gray-400 hover:text-red-500 transition-colors"
+                                    className="text-gray-400 hover:text-red-500 transition-colors p-1"
                                   >
-                                    <X className="h-5 w-5" />
+                                    <X className="h-4 w-4" />
                                   </button>
                                 </div>
                               </div>
@@ -538,36 +528,36 @@ export default function CartPage() {
                 </div>
 
                 {/* Order Summary */}
-                <div className="lg:w-80 flex-shrink-0">
-                  <div className="  bg-gray-900/60 backdrop-blur-sm overflow-hidden sticky top-24">
-                    <div className="p-6">
-                      <h2 className="text-lg font-semibold mb-4">
+                <div className="lg:w-72 flex-shrink-0">
+                  <div className="bg-white  shadow-sm border border-blue-100 overflow-hidden sticky top-20">
+                    <div className="p-4">
+                      <h2 className="text-xs font-semibold mb-3 text-gray-900">
                         Order Summary
                       </h2>
 
-                      <div className="space-y-3 mb-6">
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Subtotal</span>
-                          <span>${subtotal.toFixed(2)}</span>
+                      <div className="space-y-2 mb-4">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Subtotal</span>
+                          <span className="text-gray-900">${subtotal.toFixed(2)}</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Tax (5%)</span>
-                          <span>${tax.toFixed(2)}</span>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Tax (5%)</span>
+                          <span className="text-gray-900">${tax.toFixed(2)}</span>
                         </div>
 
                         {discount > 0 && (
-                          <div className="flex justify-between text-green-500">
+                          <div className="flex justify-between text-blue-600 text-sm">
                             <span>Discount</span>
                             <span>-${discount.toFixed(2)}</span>
                           </div>
                         )}
 
-                        <div className="pt-3 border-t border-gray-800">
-                          <div className="flex justify-between font-semibold text-lg">
-                            <span>Total</span>
-                            <span>${total.toFixed(2)}</span>
+                        <div className="pt-2 border-t border-gray-200">
+                          <div className="flex justify-between font-semibold text-xs">
+                            <span className="text-gray-900">Total</span>
+                            <span className="text-gray-900">${total.toFixed(2)}</span>
                           </div>
-                          <div className="text-xs text-gray-400 mt-1">
+                          <div className="text-xs text-gray-600 mt-1">
                             <span>Lifetime access to all courses</span>
                           </div>
                         </div>
@@ -575,40 +565,40 @@ export default function CartPage() {
 
                       {/* Coupon Code */}
                       {!couponApplied ? (
-                        <div className="mb-6">
+                        <div className="mb-4">
                           <div className="flex gap-2">
                             <input
                               type="text"
                               value={couponCode}
                               onChange={(e) => setCouponCode(e.target.value)}
                               placeholder="Enter coupon code"
-                              className="flex-grow h-10 px-1 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 focus:border-pink-500/50 text-white placeholder-gray-400 outline-none duration-300 text-white text-sm outline-none transition-all"
+                              className="flex-grow h-8 px-3 border border-gray-300  focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 placeholder-gray-500 text-sm outline-none transition-all"
                             />
                             <button
                               onClick={applyCoupon}
-                              className="px-4 py-2  bg-gray-900 hover:bg-gray-700 border border-gray-700/50 text-white  transition-colors"
+                              className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white  text-sm font-medium transition-colors"
                             >
                             Apply
                             </button>
                           </div>
-                          <div className="text-xs text-gray-400 mt-2 flex items-center">
+                          <div className="text-xs text-gray-600 mt-1 flex items-center">
                             <Tag className="h-3 w-3 mr-1" />
                             <span>Try code: JOJO25 for 25% off</span>
                           </div>
                         </div>
                       ) : (
-                        <div className="mb-6 bg-green-500/10 p-3 flex justify-between items-center">
+                        <div className="mb-4 bg-blue-50 border border-blue-200  p-3 flex justify-between items-center">
                           <div>
-                            <span className="text-green-500 font-medium">
+                            <span className="text-blue-700 font-medium text-sm">
                               {couponCode}
                             </span>
-                            <p className="text-xs text-gray-400">
+                            <p className="text-xs text-blue-600">
                               25% discount applied
                             </p>
                           </div>
                           <button
                             onClick={clearCoupon}
-                            className="text-gray-400 hover:text-white"
+                            className="text-gray-400 hover:text-gray-600"
                           >
                             <X className="h-4 w-4" />
                           </button>
@@ -618,13 +608,13 @@ export default function CartPage() {
                       {/* Checkout Button */}
                       <Link
                         href="/checkout"
-                        className="w-full bg-gradient-to-r from-pink-500 to-orange-500 hover:from-orange-500 hover:to-pink-500 text-white font-medium px-6 py-3  shadow-lg hover:shadow-pink-500/30 transition-all duration-300 flex items-center justify-center"
+                        className="w-full bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-blue-800 text-white font-medium px-4 py-2.5  shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center text-sm"
                       >
                         <span>Proceed to Checkout</span>
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
 
-                      <div className="mt-4 text-xs text-center text-gray-400">
+                      <div className="mt-3 text-xs text-center text-gray-600">
                         Secure checkout. 30-day money-back guarantee.
                       </div>
                     </div>
@@ -634,14 +624,14 @@ export default function CartPage() {
             )}{" "}
             {/* Related Courses - Shown only when cart has items */}
             {cartItems.length > 0 && (
-              <div className="mt-12">
-                <h2 className="text-xl font-semibold mb-6">
+              <div className="mt-8">
+                <h2 className="text-lg font-semibold mb-4 text-gray-900">
                   You might also like
-                </h2>{" "}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {getRelatedCourses().map((course) => (
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {getRelatedCourses().map((course, index) => (
                     <RelatedCourseCard
-                      key={course.id}
+                      key={`related-${course.id}-${index}`}
                       course={course}
                       handleSaveCourse={handleSaveCourse}
                       savedCourses={savedCourses}

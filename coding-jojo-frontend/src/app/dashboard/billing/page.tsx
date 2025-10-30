@@ -1,638 +1,656 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import {
-  CreditCard,
-  Download,
-  Calendar,
-  DollarSign,
-  AlertCircle,
-  Plus,
-  Edit2,
-  Trash2,
+  Settings as SettingsIcon,
+  ChevronDown,
+  Bell,
   User,
-  Star,
-  Trophy,
+  CreditCard,
+  Mail,
+  AlertCircle,
+  Wallet,
+  Receipt,
+  Lock,
 } from "lucide-react";
 import { useAuth } from "../../../contexts/AuthContext";
+import LoadingSpinner from "../../../components/ui/LoadingSpinner";
+import Sidebar from "../../../components/dashboard/Sidebar";
+import { toast } from "sonner";
+import { billingService } from "../../../services/billingService";
+import { subscriptionService } from "../../../services/subscriptionService";
 
-// Define proper types
-interface PaymentMethod {
-  id: string;
-  type: "card" | "paypal";
-  last4?: string;
-  brand?: string;
-  expiryMonth?: number;
-  expiryYear?: number;
-  email?: string;
-  isDefault: boolean;
-}
+type SettingsTab = "general" | "user-profile" | "email-notification" | "subscription" | "payment" | "learning-reminder";
 
-interface SubscriptionData {
-  id: string;
-  plan: string;
-  status: "active" | "cancelled" | "past_due";
-  price: number;
-  billing_cycle: "monthly" | "yearly";
-  next_billing_date: string;
-  features: string[];
-}
+export default function BillingPage() {
+  const { user, isAuthenticated } = useAuth();
+  const [mounted, setMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState<SettingsTab>("email-notification");
+  const [isLoading, setIsLoading] = useState(true);
+  const [billingData, setBillingData] = useState<any>(null);
+  
+  // Notification settings state
+  const [notifications, setNotifications] = useState({
+    promotions: true,
+    noEmails: false,
+    announcements: true,
+    examinations: true,
+  });
 
-interface Transaction {
-  id: string;
-  description: string;
-  amount: number;
-  date: string;
-  status: "paid" | "pending" | "failed";
-  invoice_url?: string;
-}
+  useEffect(() => {
+    setMounted(true);
+    if (isAuthenticated) {
+      loadBillingData();
+    }
+  }, [isAuthenticated]);
 
-// Real user-based data generators
-const getUserPaymentMethods = (user: any): PaymentMethod[] => {
-  if (!user) return [];
+  const loadBillingData = async () => {
+    try {
+      setIsLoading(true);
+      const data = await billingService.getBillingData();
+      setBillingData(data);
+    } catch (error) {
+      console.error('Failed to load billing data:', error);
+      toast.error('Failed to load billing information');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  // If user has premium, they likely have at least one payment method
-  if (user.isPremium) {
-    return [
-      {
-        id: "1",
-        type: "card",
-        last4: "4242",
-        brand: "Visa",
-        expiryMonth: 12,
-        expiryYear: 2027,
-        isDefault: true,
-      },
-    ];
-  }
-
-  // Free users don't have payment methods
-  return [];
-};
-
-const getUserTransactions = (user: any): Transaction[] => {
-  if (!user) return [];
-
-  const transactions: Transaction[] = [];
-
-  // If user is premium, generate some subscription transactions
-  if (user.isPremium) {
-    const now = new Date();
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
-
-    // Generate last 3 months of subscription payments
-    for (let i = 0; i < 3; i++) {
-      const transactionDate = new Date(currentYear, currentMonth - i, 21);
-      transactions.push({
-        id: `sub_${i + 1}`,
-        description: "Premium Plan - Monthly Subscription",
-        amount: 10.0,
-        date: transactionDate.toISOString().split("T")[0],
-        status: "paid",
-        invoice_url: "#",
+  const toggleNotification = async (key: keyof typeof notifications) => {
+    try {
+      // Toggle optimistically
+      setNotifications(prev => ({
+        ...prev,
+        [key]: !prev[key],
+      }));
+      
+      // Update on backend
+      await billingService.updateNotificationSettings({
+        [key]: !notifications[key]
       });
+      
+      toast.success('Notification preferences updated');
+    } catch (error) {
+      // Revert on error
+      setNotifications(prev => ({
+        ...prev,
+        [key]: !prev[key],
+      }));
+      toast.error('Failed to update notification preferences');
     }
+  };
+
+  if (!mounted || isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <LoadingSpinner size="sm" />
+      </div>
+    );
   }
 
-  return transactions;
-};
-
-const getUserBillingStats = (user: any) => {
-  if (!user) {
-    return {
-      totalSpent: 0,
-      daysUntilNextBill: 0,
-      activePaymentMethods: 0,
-    };
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Please Login</h2>
+          <p className="text-gray-600">
+            You need to be logged in to access billing settings.
+          </p>
+        </div>
+      </div>
+    );
   }
 
-  const transactions = getUserTransactions(user);
-  const totalSpent = transactions.reduce(
-    (sum, transaction) => sum + transaction.amount,
-    0
-  );
-  const paymentMethods = getUserPaymentMethods(user);
-
-  // Calculate days until next bill
-  let daysUntilNextBill = 0;
-  if (user.isPremium) {
-    const nextBilling = new Date();
-    nextBilling.setDate(nextBilling.getDate() + 30); // 30 days from now
-    const today = new Date();
-    const timeDiff = nextBilling.getTime() - today.getTime();
-    daysUntilNextBill = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  if (!billingData && !isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Failed to Load Billing Data</h2>
+          <p className="text-gray-600 mb-4">
+            There was an error loading your billing information.
+          </p>
+          <button 
+            onClick={loadBillingData}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
 
-  return {
-    totalSpent,
-    daysUntilNextBill,
-    activePaymentMethods: paymentMethods.length,
-  };
-};
-
-const Billing: React.FC = () => {
-  const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<
-    "overview" | "payment-methods" | "transactions"
-  >("overview");
-
-  // Derive subscription data from user
-  const getUserSubscription = (): SubscriptionData => {
-    if (!user) {
-      return {
-        id: "free_plan",
-        plan: "Free",
-        status: "active",
-        price: 0,
-        billing_cycle: "monthly",
-        next_billing_date: "",
-        features: [
-          "Limited course access",
-          "Basic learning materials",
-          "Community forum access",
-        ],
-      };
-    }
-
-    // Check if user is premium
-    if (user.isPremium) {
-      return {
-        id: "premium_plan",
-        plan: "Premium",
-        status: "active",
-        price: 10.0,
-        billing_cycle: "monthly",
-        next_billing_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .split("T")[0], // 30 days from now
-        features: [
-          "Access to all courses",
-          "Premium learning materials",
-          "Priority support",
-          "Downloadable resources",
-          "Certificate of completion",
-          "Live sessions with instructors",
-        ],
-      };
-    } else {
-      return {
-        id: "free_plan",
-        plan: "Free",
-        status: "active",
-        price: 0,
-        billing_cycle: "monthly",
-        next_billing_date: "",
-        features: [
-          "Limited course access",
-          "Basic learning materials",
-          "Community forum access",
-        ],
-      };
-    }
-  };
-
-  const subscription = getUserSubscription();
-  const paymentMethods = getUserPaymentMethods(user);
-  const transactions = getUserTransactions(user);
-  const billingStats = getUserBillingStats(user);
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "active":
-      case "paid":
-        return "text-green-400 bg-green-400/10";
-      case "pending":
-        return "text-yellow-400 bg-yellow-400/10";
-      case "cancelled":
-      case "failed":
-        return "text-red-400 bg-red-400/10";
-      case "past_due":
-        return "text-orange-400 bg-orange-400/10";
-      default:
-        return "text-gray-400 bg-gray-400/10";
-    }
-  };
-
-  const getCardIcon = (brand: string) => {
-    // In a real app, you'd use actual card brand icons
-    return <CreditCard className="h-6 w-6" />;
-  };
+  const settingsTabs = [
+    {
+      id: "general" as SettingsTab,
+      label: "General",
+      icon: <SettingsIcon className="w-6 h-6" />,
+      color: "text-red-500",
+      bgColor: "bg-red-100",
+    },
+    {
+      id: "user-profile" as SettingsTab,
+      label: "User Profile",
+      icon: <User className="w-6 h-6" />,
+      color: "text-orange-500",
+      bgColor: "bg-orange-100",
+    },
+    {
+      id: "email-notification" as SettingsTab,
+      label: "Email Notification",
+      icon: <Mail className="w-6 h-6" />,
+      color: "text-white",
+      bgColor: "bg-gradient-to-br from-emerald-400 to-emerald-500",
+    },
+    {
+      id: "subscription" as SettingsTab,
+      label: "Subscription",
+      icon: <Wallet className="w-6 h-6" />,
+      color: "text-indigo-500",
+      bgColor: "bg-indigo-100",
+    },
+    {
+      id: "payment" as SettingsTab,
+      label: "Payment",
+      icon: <CreditCard className="w-6 h-6" />,
+      color: "text-cyan-500",
+      bgColor: "bg-cyan-100",
+    },
+    {
+      id: "learning-reminder" as SettingsTab,
+      label: "Learning Reminder",
+      icon: <Bell className="w-6 h-6" />,
+      color: "text-purple-500",
+      bgColor: "bg-purple-100",
+    },
+  ];
 
   return (
-    <>
-      <div className="space-y-12 p-8">
-        {/* User Welcome Section */}
-        <div className="relative mb-8 p-8   bg-gray-900/60 backdrop-blur-sm border border-gray-700/50  overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-orange-500/5"></div>
-          <div className="relative z-10">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="relative">
-                {user?.profilePicture &&
-                typeof user.profilePicture === "string" &&
-                user.profilePicture.trim() !== "" ? (
-                  <img
-                    src={user.profilePicture}
-                    alt={user.name || "User"}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-gray-700"
+    <div className="flex h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
+      <Sidebar />
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Settings Menu Sidebar */}
+        <div className="w-64 bg-transparent p-6 overflow-y-auto">
+          <div className="space-y-3">
+            {settingsTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`w-full flex flex-col items-center justify-center py-6 px-4  transition-all ${
+                  activeTab === tab.id
+                    ? "bg-gradient-to-br from-emerald-400 to-emerald-500 text-white shadow-lg"
+                    : `${tab.bgColor} ${tab.color} hover:shadow-md`
+                }`}
+              >
+                <div className="mb-2">
+                  {tab.icon}
+                </div>
+                <span className="text-xs font-semibold text-center">
+                  {tab.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-8">
+            {/* Top Header */}
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-gray-900">Settings</h2>
+
+              <div className="flex items-center space-x-4">
+                <button className="relative p-2 text-gray-600 hover:bg-white hover:bg-opacity-50  transition-colors">
+                  <Bell className="w-5 h-5" />
+                </button>
+                <div className="flex items-center space-x-3">
+                  <Image
+                    src={user?.profilePicture || "/testimonial-avatar.jpg"}
+                    alt={user?.name || "User"}
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
                   />
-                ) : (
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white font-bold text-xl border-2 border-gray-700">
-                    {(user?.name || user?.email || "User")
-                      .split(" ")
-                      .map((part) => part[0])
-                      .join("")
-                      .toUpperCase()
-                      .slice(0, 2)}
+                  <div className="flex items-center">
+                    <p className="text-sm font-semibold text-gray-900 mr-1">
+                      {user?.name || "Martin nel"}
+                    </p>
+                    <ChevronDown className="w-4 h-4 text-gray-500" />
                   </div>
-                )}
-                {user?.isPremium && (
-                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center">
-                    <Star className="w-3 h-3 text-white" />
-                  </div>
-                )}
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-white">
-                  Hello,{" "}
-                  <span className="bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
-                    {(user?.name || user?.email || "User").split(" ")[0]}
-                  </span>
-                  ! 💳
-                </h2>
-                <p className="text-gray-400">
-                  Manage your subscription and billing preferences
-                </p>
-                {user?.isPremium && (
-                  <div className="mt-2 flex items-center gap-2">
-                    <Trophy className="w-4 h-4 text-yellow-400" />
-                    <span className="text-yellow-400 text-sm font-medium">
-                      Premium Member
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Subscription Overview */}
-        <div className="  bg-gray-900/80 backdrop-blur-sm p-8">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-            <div>
-              <h2 className="text-2xl font-bold text-white mb-2">
-                Current Plan: {subscription.plan}
-              </h2>
-              <div className="flex items-center gap-4 mb-4">
-                {" "}
-                <span
-                  className={`px-3 py-1 text-sm font-medium ${getStatusColor(
-                    subscription.status
-                  )}`}
-                >
-                  {subscription.status.toUpperCase()}
-                </span>
-                {subscription.next_billing_date && (
-                  <span className="text-gray-400 text-sm">
-                    Next billing:{" "}
-                    {new Date(
-                      subscription.next_billing_date
-                    ).toLocaleDateString()}
-                  </span>
-                )}
-              </div>
-              <p className="text-3xl font-bold text-white">
-                ${subscription.price}
-                <span className="text-lg text-gray-400 font-normal">
-                  /{subscription.billing_cycle}
-                </span>
-              </p>
-            </div>
-
-            <div className="flex gap-4">
-              <button className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white font-medium transition-colors">
-                Change Plan
-              </button>
-              <button className="px-6 py-3 bg-gradient-to-r from-pink-600 to-orange-600 hover:from-pink-600 hover:to-purple-600 text-white font-medium transition-all duration-300">
-                Upgrade Plan
-              </button>
-            </div>
-          </div>
-        </div>{" "}
-        {/* Billing Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50  p-6 text-center hover:border-green-500/30 transition-all duration-300">
-            <div className="flex items-center justify-center mb-4">
-              <DollarSign className="h-8 w-8 text-green-400" />
-            </div>{" "}
-            <h4 className="text-gray-400 text-sm font-medium mb-2">
-              Total Spent
-            </h4>
-            <p className="text-3xl font-bold text-green-400">
-              ${billingStats.totalSpent.toFixed(2)}
-            </p>
-          </div>
-
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50  p-6 text-center hover:border-blue-500/30 transition-all duration-300">
-            <div className="flex items-center justify-center mb-4">
-              <Calendar className="h-8 w-8 text-blue-400" />
-            </div>{" "}
-            <h4 className="text-gray-400 text-sm font-medium mb-2">
-              Days Until Next Bill
-            </h4>
-            <p className="text-3xl font-bold text-blue-400">
-              {billingStats.daysUntilNextBill}
-            </p>
-          </div>
-
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50  p-6 text-center hover:border-purple-500/30 transition-all duration-300">
-            <div className="flex items-center justify-center mb-4">
-              <CreditCard className="h-8 w-8 text-purple-400" />
-            </div>{" "}
-            <h4 className="text-gray-400 text-sm font-medium mb-2">
-              Active Payment Methods
-            </h4>
-            <p className="text-3xl font-bold text-purple-400">
-              {billingStats.activePaymentMethods}
-            </p>
-          </div>
-        </div>
-        {/* Tabs */}
-        <div className="  bg-gray-900/80 backdrop-blur-sm">
-          <div className="flex">
-            <button
-              onClick={() => setActiveTab("overview")}
-              className={`px-8 py-4 text-sm font-medium transition-colors ${
-                activeTab === "overview"
-                  ? "bg-pink-600 text-white"
-                  : "text-gray-400 hover:text-white hover:bg-gray-700"
-              }`}
-            >
-              Plan Details
-            </button>
-            <button
-              onClick={() => setActiveTab("payment-methods")}
-              className={`px-8 py-4 text-sm font-medium transition-colors ${
-                activeTab === "payment-methods"
-                  ? "bg-pink-600 text-white"
-                  : "text-gray-400 hover:text-white hover:bg-gray-700"
-              }`}
-            >
-              Payment Methods
-            </button>
-            <button
-              onClick={() => setActiveTab("transactions")}
-              className={`px-8 py-4 text-sm font-medium transition-colors ${
-                activeTab === "transactions"
-                  ? "bg-pink-600 text-white"
-                  : "text-gray-400 hover:text-white hover:bg-gray-700"
-              }`}
-            >
-              Transaction History
-            </button>
-          </div>
-        </div>
-        {/* Plan Details Tab */}
-        {activeTab === "overview" && (
-          <div className="space-y-8">
-            <div className="  bg-gray-900/80 backdrop-blur-sm p-8">
-              <h3 className="text-xl font-bold text-white mb-6">
-                Plan Features
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {subscription.features.map((feature, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-gradient-to-r from-purple-600 to-pink-600"></div>
-                    <span className="text-gray-300">{feature}</span>
-                  </div>
-                ))}
+                </div>
               </div>
             </div>
 
-            <div className="  bg-gray-900/80 backdrop-blur-sm p-8">
-              <h3 className="text-xl font-bold text-white mb-6">
-                Billing Information
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Settings Content */}
+            <div className="bg-white  shadow-sm p-8 max-w-4xl">
+              {activeTab === "email-notification" && (
                 <div>
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">
-                    Current Period
-                  </h4>
-                  <p className="text-white">May 21, 2025 - June 21, 2025</p>
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">
-                    Next Billing Date
-                  </h4>
-                  <p className="text-white">
-                    {new Date(
-                      subscription.next_billing_date
-                    ).toLocaleDateString()}
-                  </p>
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">
-                    Amount
-                  </h4>
-                  <p className="text-white">${subscription.price}</p>
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">
-                    Billing Cycle
-                  </h4>
-                  <p className="text-white capitalize">
-                    {subscription.billing_cycle}
-                  </p>
-                </div>
-              </div>
-            </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Email Notification
+                  </h3>
+                  <p className="text-sm text-gray-400 mb-8">When email me:</p>
 
-            <div className="bg-red-500/10 p-6">
-              <div className="flex items-start gap-4">
-                <AlertCircle className="h-6 w-6 text-red-400 mt-1" />
-                <div>
-                  <h4 className="text-red-400 font-medium mb-2">
-                    Cancel Subscription
-                  </h4>
-                  <p className="text-gray-400 text-sm mb-4">
-                    You can cancel your subscription at any time. You'll
-                    continue to have access until the end of your current
-                    billing period.
-                  </p>
-                  <button className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium transition-colors">
-                    Cancel Subscription
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {/* Payment Methods Tab */}
-        {activeTab === "payment-methods" && (
-          <div className="space-y-8">
-            <div className="flex justify-between items-center">
-              <h3 className="text-xl font-bold text-white">Payment Methods</h3>
-              <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-600 to-orange-600 hover:from-pink-600 hover:to-purple-600 text-white font-medium transition-all duration-300">
-                <Plus className="h-4 w-4" />
-                Add Payment Method
-              </button>
-            </div>{" "}
-            <div className="space-y-6">
-              {paymentMethods.length === 0 ? (
-                <div className="  bg-gray-900/80 backdrop-blur-sm p-8 text-center">
-                  <CreditCard className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-                  <h4 className="text-white font-medium mb-2">
-                    No Payment Methods
-                  </h4>
-                  <p className="text-gray-400 text-sm mb-6">
-                    {user?.isPremium
-                      ? "Add a payment method to manage your subscription payments."
-                      : "Upgrade to Premium to add payment methods and access premium features."}
-                  </p>
-                  <button className="px-6 py-3 bg-gradient-to-r from-Pink-600 to-orange-600 hover:from-pink-600 hover:to-purple-600 text-white font-medium transition-all duration-300">
-                    {user?.isPremium
-                      ? "Add Payment Method"
-                      : "Upgrade to Premium"}
-                  </button>
-                </div>
-              ) : (
-                paymentMethods.map((method: PaymentMethod) => (
-                  <div
-                    key={method.id}
-                    className="  bg-gray-900/80 backdrop-blur-sm p-8 flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-6">
-                      <div className="p-3 bg-gray-700">
-                        {method.type === "card" ? (
-                          getCardIcon(method.brand || "")
-                        ) : (
-                          <div className="h-6 w-6 bg-pink-600 text-white text-xs flex items-center justify-center font-bold">
-                            PP
-                          </div>
-                        )}
-                      </div>
-
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between py-4">
                       <div>
-                        {method.type === "card" ? (
-                          <>
-                            <h4 className="text-white font-medium">
-                              {method.brand} ending in {method.last4}
-                            </h4>
-                            <p className="text-gray-400 text-sm">
-                              Expires {method.expiryMonth}/{method.expiryYear}
-                            </p>
-                          </>
-                        ) : (
-                          <>
-                            <h4 className="text-white font-medium">PayPal</h4>
-                            <p className="text-gray-400 text-sm">
-                              {method.email}
-                            </p>
-                          </>
-                        )}
-                        {method.isDefault && (
-                          <span className="inline-block mt-2 px-2 py-1 bg-green-500/20 text-green-400 text-xs">
-                            Default
-                          </span>
-                        )}
+                        <h4 className="text-sm font-medium text-gray-900">
+                          Promotion, course recommendations
+                        </h4>
+                        <p className="text-xs text-gray-500 mt-1">
+                          Receive updates about new courses and special offers
+                        </p>
                       </div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <button className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
-                        <Edit2 className="h-4 w-4" />
-                      </button>
-                      <button className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 transition-colors">
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        )}
-        {/* Transactions Tab */}
-        {activeTab === "transactions" && (
-          <div className="space-y-8">
-            <h3 className="text-xl font-bold text-white">
-              Transaction History
-            </h3>{" "}
-            <div className="  bg-gray-900/80 backdrop-blur-sm">
-              {transactions.length === 0 ? (
-                <div className="p-8 text-center">
-                  <DollarSign className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-                  <h4 className="text-white font-medium mb-2">
-                    No Transactions
-                  </h4>
-                  <p className="text-gray-400 text-sm mb-6">
-                    {user?.isPremium
-                      ? "Your transaction history will appear here."
-                      : "Upgrade to Premium to start making transactions and access premium features."}
-                  </p>
-                  {!user?.isPremium && (
-                    <button className="px-6 py-3 bg-gradient-to-r from-pink-600 to-orange-600 hover:from-pink-600 hover:to-purple-600 text-white font-medium transition-all duration-300">
-                      Upgrade to Premium
-                    </button>
-                  )}
-                </div>
-              ) : (
-                <div className="space-y-0">
-                  {transactions.map(
-                    (transaction: Transaction, index: number) => (
-                      <div
-                        key={transaction.id}
-                        className={`p-8 flex items-center justify-between ${
-                          index !== transactions.length - 1
-                            ? "border-b border-gray-700"
-                            : ""
+                      <button
+                        onClick={() => toggleNotification("promotions")}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                          notifications.promotions
+                            ? "bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
+                            : "bg-gray-300"
                         }`}
                       >
-                        <div className="flex items-center gap-6">
-                          <div className="p-3 bg-gray-700">
-                            <DollarSign className="h-6 w-6 text-green-400" />
-                          </div>
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            notifications.promotions
+                              ? "translate-x-6"
+                              : "translate-x-1"
+                          }`}
+                        />
+                      </button>
+                    </div>
 
-                          <div>
-                            <h4 className="text-white font-medium">
-                              {transaction.description}
-                            </h4>
-                            <p className="text-gray-400 text-sm">
-                              {new Date(transaction.date).toLocaleDateString()}
-                            </p>
-                          </div>
-                        </div>
+                    <div className="flex items-center justify-between py-4">
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900">
+                          Don't send any propositional emails
+                        </h4>
+                        <p className="text-xs text-gray-500 mt-1">
+                          Opt out of all marketing communications
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => toggleNotification("noEmails")}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                          notifications.noEmails
+                            ? "bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
+                            : "bg-gray-300"
+                        }`}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            notifications.noEmails
+                              ? "translate-x-6"
+                              : "translate-x-1"
+                          }`}
+                        />
+                      </button>
+                    </div>
 
-                        <div className="flex items-center gap-6">
-                          <span
-                            className={`px-3 py-1 text-sm font-medium ${getStatusColor(
-                              transaction.status
-                            )}`}
-                          >
-                            {transaction.status.toUpperCase()}
-                          </span>
+                    <div className="flex items-center justify-between py-4">
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900">
+                          Announcement from instructors whose course
+                        </h4>
+                        <p className="text-xs text-gray-500 mt-1">
+                          Get important updates from your course instructors
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => toggleNotification("announcements")}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                          notifications.announcements
+                            ? "bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
+                            : "bg-gray-300"
+                        }`}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            notifications.announcements
+                              ? "translate-x-6"
+                              : "translate-x-1"
+                          }`}
+                        />
+                      </button>
+                    </div>
 
-                          <span className="text-white font-bold">
-                            ${transaction.amount.toFixed(2)}
-                          </span>
+                    <div className="flex items-center justify-between py-4">
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900">
+                          Examination notice
+                        </h4>
+                        <p className="text-xs text-gray-500 mt-1">
+                          Receive notifications about upcoming exams and assessments
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => toggleNotification("examinations")}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                          notifications.examinations
+                            ? "bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
+                            : "bg-gray-300"
+                        }`}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            notifications.examinations
+                              ? "translate-x-6"
+                              : "translate-x-1"
+                          }`}
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
-                          {transaction.invoice_url && (
-                            <button className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white text-sm font-medium transition-colors">
-                              <Download className="h-4 w-4" />
-                              Invoice
+              {activeTab === "general" && (
+                <div className="space-y-6">
+                  <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
+                    <h3 className="text-xl font-bold text-gray-900 mb-6">
+                      General Settings
+                    </h3>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900 mb-2">Account Security</h4>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                              <p className="text-sm font-medium text-gray-900">Two-Factor Authentication</p>
+                              <p className="text-xs text-gray-500 mt-1">Add an extra layer of security to your account</p>
+                            </div>
+                            <button className="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors">
+                              Enable
                             </button>
-                          )}
+                          </div>
+                          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                              <p className="text-sm font-medium text-gray-900">Password</p>
+                              <p className="text-xs text-gray-500 mt-1">Last changed 3 months ago</p>
+                            </div>
+                            <button className="px-4 py-2 border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-50 transition-colors">
+                              Change
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    )
+                      <div className="pt-6 border-t border-gray-100">
+                        <h4 className="text-sm font-medium text-gray-900 mb-2">Preferences</h4>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                              <p className="text-sm font-medium text-gray-900">Language</p>
+                              <p className="text-xs text-gray-500 mt-1">Choose your preferred language</p>
+                            </div>
+                            <select className="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                              <option>English</option>
+                              <option>French</option>
+                              <option>Spanish</option>
+                            </select>
+                          </div>
+                          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                              <p className="text-sm font-medium text-gray-900">Time Zone</p>
+                              <p className="text-xs text-gray-500 mt-1">Set your local time zone</p>
+                            </div>
+                            <select className="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                              <option>UTC</option>
+                              <option>GMT</option>
+                              <option>EST</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "user-profile" && (
+                <div className="space-y-6">
+                  <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
+                    <h3 className="text-xl font-bold text-gray-900 mb-6">Profile Information</h3>
+                    <div className="space-y-6">
+                      <div className="flex items-center space-x-6">
+                        <div className="relative">
+                          <Image
+                            src={user?.profilePicture || "/testimonial-avatar.jpg"}
+                            alt={user?.name || "Profile"}
+                            width={100}
+                            height={100}
+                            className="rounded-full object-cover"
+                          />
+                          <button className="absolute bottom-0 right-0 p-1 bg-white rounded-full shadow-lg border border-gray-200">
+                            <User className="w-4 h-4 text-gray-600" />
+                          </button>
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-medium text-gray-900">{user?.name}</h4>
+                          <p className="text-sm text-gray-500">{user?.email}</p>
+                          <button className="mt-2 px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
+                            Change Profile Picture
+                          </button>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Full Name
+                          </label>
+                          <input
+                            type="text"
+                            value={user?.name}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                            placeholder="Enter your full name"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            value={user?.email}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                            placeholder="Enter your email"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Phone Number
+                          </label>
+                          <input
+                            type="tel"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                            placeholder="Enter your phone number"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Location
+                          </label>
+                          <input
+                            type="text"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                            placeholder="Enter your location"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex justify-end">
+                        <button className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                          Save Changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "subscription" && (
+                <div className="space-y-6">
+                  <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Current Subscription</h3>
+                    {billingData?.subscription ? (
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="text-sm font-medium text-gray-900">{billingData.subscription.plan}</p>
+                            <p className="text-sm text-gray-500">{billingData.subscription.status}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-lg font-bold text-gray-900">
+                              ${billingData.subscription.amount}/{billingData.subscription.billingCycle}
+                            </p>
+                            {billingData.subscription.nextBillingDate && (
+                              <p className="text-sm text-gray-500">
+                                Next billing: {new Date(billingData.subscription.nextBillingDate).toLocaleDateString()}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="pt-4 border-t border-gray-100">
+                          <h4 className="text-sm font-medium text-gray-900 mb-2">Subscription Features</h4>
+                          <ul className="space-y-2">
+                            {billingData.subscription.features?.map((feature: string, index: number) => (
+                              <li key={index} className="flex items-center text-sm text-gray-600">
+                                <span className="mr-2">✓</span> {feature}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="flex justify-end space-x-3">
+                          {billingData.subscription.status === 'active' && (
+                            <button
+                              onClick={() => billingService.cancelSubscription(billingData.subscription.id)}
+                              className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            >
+                              Cancel Subscription
+                            </button>
+                          )}
+                          <button
+                            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                          >
+                            Manage Subscription
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <Wallet className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                        <h4 className="text-lg font-medium text-gray-900 mb-2">No Active Subscription</h4>
+                        <p className="text-gray-500 mb-4">Subscribe to access premium features</p>
+                        <button
+                          className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                        >
+                          View Plans
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "payment" && (
+                <div className="space-y-6">
+                  <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
+                    <div className="flex justify-between items-center mb-6">
+                      <h3 className="text-lg font-semibold text-gray-900">Payment Methods</h3>
+                      <button
+                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                      >
+                        Add Payment Method
+                      </button>
+                    </div>
+                    
+                    {billingData?.paymentMethods?.length > 0 ? (
+                      <div className="space-y-4">
+                        {billingData.paymentMethods.map((method: any) => (
+                          <div key={method.id} className="flex justify-between items-center p-4 border rounded-lg">
+                            <div className="flex items-center">
+                              <CreditCard className="w-6 h-6 text-gray-400 mr-3" />
+                              <div>
+                                <p className="text-sm font-medium text-gray-900">
+                                  {method.brand} •••• {method.last4}
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                  Expires {method.expMonth}/{method.expYear}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              {method.isDefault && (
+                                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                                  Default
+                                </span>
+                              )}
+                              <button
+                                onClick={() => billingService.deletePaymentMethod(method.id)}
+                                className="text-red-600 hover:text-red-700"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <CreditCard className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                        <h4 className="text-lg font-medium text-gray-900 mb-2">No Payment Methods</h4>
+                        <p className="text-gray-500">Add a payment method to manage your subscription</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {billingData?.transactions?.length > 0 && (
+                    <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-6">Recent Transactions</h3>
+                      <div className="space-y-4">
+                        {billingData.transactions.map((transaction: any) => (
+                          <div key={transaction.id} className="flex justify-between items-center p-4 border rounded-lg">
+                            <div>
+                              <p className="text-sm font-medium text-gray-900">{transaction.description}</p>
+                              <p className="text-xs text-gray-500">
+                                {new Date(transaction.date).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-sm font-medium text-gray-900">
+                                ${transaction.amount}
+                              </p>
+                              <p className={`text-xs ${
+                                transaction.status === 'succeeded' ? 'text-green-600' : 'text-orange-600'
+                              }`}>
+                                {transaction.status}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   )}
+                </div>
+              )}
+
+              {activeTab === "learning-reminder" && (
+                <div className="flex items-center justify-center h-96">
+                  <div className="text-center">
+                    <div className="text-purple-500 mb-4">
+                      <Bell className="w-16 h-16 mx-auto" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Learning Reminder</h3>
+                    <p className="text-gray-500">Learning reminder settings coming soon...</p>
+                  </div>
                 </div>
               )}
             </div>
           </div>
-        )}
+        </div>
       </div>
-    </>
+    </div>
   );
-};
-
-export default Billing;
+}

@@ -120,7 +120,7 @@ const CommunityContent: React.FC<CommunityContentProps> = ({
                             ? "bg-purple-500/20 text-purple-400"
                             : post.type === "question"
                             ? "bg-orange-500/20 text-orange-400"
-                            : "bg-green-500/20 text-green-400"
+                            : "bg-blue-500/20 text-blue-400"
                         }`}
                       >
                         {post.type

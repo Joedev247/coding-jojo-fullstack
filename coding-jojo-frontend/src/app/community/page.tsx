@@ -268,15 +268,15 @@ export default function CommunityPage() {
           count: cat.postCount,
           icon:
             cat._id === "questions" ? (
-              <HelpCircle className="w-4 h-4 text-blue-500" />
+              <HelpCircle className="w-3 h-3 text-blue-600" />
             ) : cat._id === "discussions" ? (
-              <MessageCircle className="w-4 h-4 text-pink-500" />
+              <MessageCircle className="w-3 h-3 text-blue-600" />
             ) : cat._id === "announcements" ? (
-              <Bell className="w-4 h-4 text-yellow-500" />
+              <Bell className="w-3 h-3 text-blue-600" />
             ) : cat._id === "showcase" ? (
-              <Award className="w-4 h-4 text-purple-500" />
+              <Award className="w-3 h-3 text-blue-600" />
             ) : (
-              <BookOpen className="w-4 h-4 text-green-500" />
+              <BookOpen className="w-3 h-3 text-blue-600" />
             ),
         }));
   const compatibleMembers = members.map((member) => ({
@@ -327,15 +327,15 @@ export default function CommunityPage() {
               activeUsers: cat.activeUsers || 0,
               icon:
                 cat.slug === "questions" ? (
-                  <HelpCircle className="w-4 h-4 text-blue-500" />
+                  <HelpCircle className="w-3 h-3 text-blue-600" />
                 ) : cat.slug === "discussions" ? (
-                  <MessageCircle className="w-4 h-4 text-pink-500" />
+                  <MessageCircle className="w-3 h-3 text-blue-600" />
                 ) : cat.slug === "announcements" ? (
-                  <Bell className="w-4 h-4 text-yellow-500" />
+                  <Bell className="w-3 h-3 text-blue-600" />
                 ) : cat.slug === "showcase" ? (
-                  <Award className="w-4 h-4 text-purple-500" />
+                  <Award className="w-3 h-3 text-blue-600" />
                 ) : (
-                  <BookOpen className="w-4 h-4 text-green-500" />
+                  <BookOpen className="w-3 h-3 text-blue-600" />
                 ),
             })),
           ]);
@@ -364,17 +364,17 @@ export default function CommunityPage() {
             count: cat.postCount,
             icon:
               cat.slug === "all" ? (
-                <Globe className="w-4 h-4 text-gray-500" />
+                <Globe className="w-3 h-3 text-gray-500" />
               ) : cat.slug === "questions" ? (
-                <HelpCircle className="w-4 h-4 text-blue-500" />
+                <HelpCircle className="w-3 h-3 text-blue-600" />
               ) : cat.slug === "discussions" ? (
-                <MessageCircle className="w-4 h-4 text-pink-500" />
+                <MessageCircle className="w-3 h-3 text-blue-600" />
               ) : cat.slug === "announcements" ? (
-                <Bell className="w-4 h-4 text-yellow-500" />
+                <Bell className="w-3 h-3 text-blue-600" />
               ) : cat.slug === "showcase" ? (
-                <Award className="w-4 h-4 text-purple-500" />
+                <Award className="w-3 h-3 text-blue-600" />
               ) : (
-                <BookOpen className="w-4 h-4 text-green-500" />
+                <BookOpen className="w-4 h-4 text-blue-500" />
               ),
           }))
         );
@@ -591,7 +591,7 @@ export default function CommunityPage() {
   // Show loading while authentication is being checked
   if (authLoading) {
     return (
-      <div className="min-h-screen text-white flex items-center justify-center">
+      <div className="min-h-screen bg-white text-gray-800 flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
@@ -600,77 +600,83 @@ export default function CommunityPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen text-white relative">
-        {/* Header - Sticky */}
-        <Header />
-        {/* Online Users Bar - Sticky */}
-        <EnhancedOnlineUsersBar 
-          users={onlineUsers.length > 0 ? onlineUsers : members} 
-          totalOnline={onlineUsers.length}
-        />
+      <div className="min-h-screen bg-white text-gray-800 relative">
+        {/* Header - Sticky - Only show when not in chat view */}
+        {currentView !== "chat" && <Header />}
+        {/* Online Users Bar - Sticky - Only show when not in chat view */}
+        {currentView !== "chat" && (
+          <EnhancedOnlineUsersBar 
+            users={onlineUsers.length > 0 ? onlineUsers : members} 
+            totalOnline={onlineUsers.length}
+          />
+        )}
         {/* Main Content Container */}
-        <div className="max-w-[1400px] mx-auto px-4 py-6 relative z-10">
-          <div className="flex flex-col text-white lg:flex-row gap-6">
-            {/* Left Sidebar - Sticky */}
-            <LeftSidebar
-              categories={displayCategories}
-              trendingTopics={mockTrendingTopics}
-              featuredMembers={compatibleMembers}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-            />
+        <div className="max-w-7xl mx-auto px-4 py-4 relative z-10">
+          <div className="flex flex-col text-gray-800 lg:flex-row gap-4">
+            {/* Left Sidebar - Sticky - Only show when not in chat view */}
+            {currentView !== "chat" && (
+              <LeftSidebar
+                categories={displayCategories}
+                trendingTopics={mockTrendingTopics}
+                featuredMembers={compatibleMembers}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+              />
+            )}
             {/* Main Content */}
             <div className="flex-1">
-              {/* View Mode Selector */}
-              <div className="mb-6">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <button
-                    onClick={() => setCurrentView("posts")}
-                    className={`flex items-center space-x-2 px-4 py-2 font-medium transition duration-200 ${
-                      currentView === "posts"
-                        ? "bg-gradient-to-r from-pink-500 to-orange-500 text-white"
-                        : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                    }`}
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Posts</span>
-                  </button>
-
-                  {/* Create Post/Event Button */}
-                  {user && currentView === "posts" && (
+              {/* View Mode Selector - Only show when not in chat view */}
+              {currentView !== "chat" && (
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-2 mb-3">
                     <button
-                      onClick={() => setShowCreateModal(true)}
-                      className="w-full md:w-auto flex items-center justify-center space-x-2 text-pink-400 border border-gray-700/50 bg-pink-900/10 hover:bg-gray-700 px-6 py-3 font-medium transition duration-200"
+                      onClick={() => setCurrentView("posts")}
+                      className={`flex items-center space-x-1.5 px-3 py-2  font-medium text-sm transition duration-200 ${
+                        currentView === "posts"
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
                     >
-                      <Plus className="w-5 h-5" />
-                      <span>Create Post</span>
+                      <MessageCircle className="w-4 h-4" />
+                      <span>Posts</span>
                     </button>
-                  )}
 
-                  <button
-                    onClick={() => setCurrentView("events")}
-                    className={`flex items-center space-x-2 px-4 py-2 font-medium transition duration-200 ${
-                      currentView === "events"
-                        ? "bg-gradient-to-r from-pink-500 to-orange-500 text-white"
-                        : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                    }`}
-                  >
-                    <Calendar className="w-4 h-4" />
-                    <span>Events</span>
-                  </button>
-                  <button
-                    onClick={() => setCurrentView("chat")}
-                    className={`flex items-center space-x-2 px-4 py-2 font-medium transition duration-200 ${
-                      currentView === "chat"
-                        ? "bg-gradient-to-r from-pink-500 to-orange-500 text-white"
-                        : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                    }`}
-                  >
-                    <Users className="w-4 h-4" />
-                    <span>Chat</span>
-                  </button>
+                    {/* Create Post/Event Button */}
+                    {user && currentView === "posts" && (
+                      <button
+                        onClick={() => setShowCreateModal(true)}
+                        className="w-full md:w-auto flex items-center justify-center space-x-1.5 text-blue-600 border border-blue-200 bg-blue-50 hover:bg-blue-100 px-4 py-2  font-medium text-sm transition duration-200"
+                      >
+                        <Plus className="w-4 h-4" />
+                        <span>Create Post</span>
+                      </button>
+                    )}
+
+                    <button
+                      onClick={() => setCurrentView("events")}
+                      className={`flex items-center space-x-1.5 px-3 py-2  font-medium text-sm transition duration-200 ${
+                        currentView === "events"
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                    >
+                      <Calendar className="w-4 h-4" />
+                      <span>Events</span>
+                    </button>
+                    <button
+                      onClick={() => setCurrentView("chat" as const)}
+                      className={`flex items-center space-x-1.5 px-3 py-2  font-medium text-sm transition duration-200 ${
+                        (currentView as string) === "chat"
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                    >
+                      <Users className="w-4 h-4" />
+                      <span>Chat</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
               {/* Posts View */}
               {currentView === "posts" && (
                 <>
@@ -696,7 +702,7 @@ export default function CommunityPage() {
               {currentView === "events" && <EventsSection isAdmin={isAdmin} />}
               {/* Chat View */}
               {currentView === "chat" && (
-                <div className="h-screen">
+                <div className="h-[calc(100vh-120px)]">
                   <ProfessionalCommunityChat />
                 </div>
               )}
@@ -708,8 +714,8 @@ export default function CommunityPage() {
                     </div>
                   )}
                   {error && (
-                    <div className="bg-red-900/20 border border-red-500/20 text-red-400 p-4 flex items-center justify-between">
-                      <div>
+                    <div className="bg-red-50 border border-red-200 text-red-600 p-3  flex items-center justify-between">
+                      <div className="text-sm">
                         <strong>Error:</strong> {error}
                       </div>
                       <button
@@ -726,19 +732,19 @@ export default function CommunityPage() {
                             filters.search = debouncedSearchQuery;
                           fetchPosts(filters);
                         }}
-                        className="px-3 py-1 bg-red-600 hover:bg-red-500 text-white rounded text-sm"
+                        className="px-2.5 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-xs"
                       >
                         Retry
                       </button>
                     </div>
                   )}
                   {posts.length === 0 && !loading && (
-                    <div className="text-center py-12">
-                      <MessageCircle className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                      <h3 className="text-xl font-semibold text-gray-400 mb-2">
+                    <div className="text-center py-8">
+                      <MessageCircle className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                      <h3 className="text-lg font-semibold text-gray-600 mb-2">
                         No posts found
                       </h3>
-                      <p className="text-gray-500">
+                      <p className="text-gray-500 text-sm">
                         {searchQuery
                           ? "Try adjusting your search terms or filters."
                           : "Be the first to start a discussion!"}
@@ -772,8 +778,8 @@ export default function CommunityPage() {
               )}
               {/* Pagination - Only for posts */}
               {currentView === "posts" && pagination.total > 1 && (
-                <div className="flex justify-center mt-8">
-                  <div className="flex space-x-2">
+                <div className="flex justify-center mt-6">
+                  <div className="flex space-x-1">
                     {Array.from(
                       { length: Math.min(pagination.total, 5) },
                       (_, i) => (
@@ -792,10 +798,10 @@ export default function CommunityPage() {
                               console.error("Error loading page:", err);
                             }
                           }}
-                          className={`px-4 py-2 transition duration-200 ${
+                          className={`px-3 py-1.5  text-sm transition duration-200 ${
                             pagination.current === i + 1
-                              ? "bg-gradient-to-r from-pink-500 to-orange-500 text-white"
-                              : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                              ? "bg-blue-600 text-white"
+                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                           }`}
                         >
                           {i + 1}
@@ -807,8 +813,8 @@ export default function CommunityPage() {
               )}
             </div>
 
-            {/* Right Sidebar - Sticky */}
-            <RightSidebar />
+            {/* Right Sidebar - Sticky - Only show when not in chat view */}
+            {currentView !== "chat" && <RightSidebar />}
           </div>
         </div>
         {/* Create/Edit Post Modal */}

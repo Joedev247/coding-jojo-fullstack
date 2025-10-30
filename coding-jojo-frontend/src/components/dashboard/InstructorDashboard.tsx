@@ -170,7 +170,7 @@ export default function InstructorDashboard({
           message: 'John Doe completed "React Fundamentals"',
           timestamp: new Date().toISOString(),
           icon: CheckCircle,
-          color: 'text-green-400'
+          color: 'text-blue-400'
         },
         {
           id: '2',
@@ -178,7 +178,7 @@ export default function InstructorDashboard({
           message: 'New payment received: 15,000 XAF',
           timestamp: new Date(Date.now() - 3600000).toISOString(),
           icon: DollarSign,
-          color: 'text-green-400'
+          color: 'text-blue-400'
         },
         {
           id: '3',
@@ -235,7 +235,7 @@ export default function InstructorDashboard({
       title: 'Schedule Live Session',
       description: 'Plan a live session with students',
       icon: <Calendar className="h-6 w-6" />,
-      color: 'from-green-500 to-teal-500',
+      color: 'from-blue-500 to-teal-500',
       action: () => setActiveTab('live')
     },
     {
@@ -271,8 +271,8 @@ export default function InstructorDashboard({
             <p className="text-gray-400 text-sm font-medium">Total Students</p>
             <p className="text-3xl font-bold text-white mb-2">{stats.totalStudents.toLocaleString()}</p>
             <div className="flex items-center space-x-1">
-              <ArrowUp className="h-4 w-4 text-green-400" />
-              <span className="text-green-400 text-sm font-medium">+{stats.monthlyGrowth.students}% this month</span>
+              <ArrowUp className="h-4 w-4 text-blue-400" />
+              <span className="text-blue-400 text-sm font-medium">+{stats.monthlyGrowth.students}% this month</span>
             </div>
           </div>
           <div className="p-3 bg-blue-500/20 rounded-full">
@@ -287,12 +287,12 @@ export default function InstructorDashboard({
             <p className="text-gray-400 text-sm font-medium">Total Revenue</p>
             <p className="text-3xl font-bold text-white mb-2">{stats.totalRevenue.toLocaleString()} XAF</p>
             <div className="flex items-center space-x-1">
-              <ArrowUp className="h-4 w-4 text-green-400" />
-              <span className="text-green-400 text-sm font-medium">+{stats.monthlyGrowth.revenue}% this month</span>
+              <ArrowUp className="h-4 w-4 text-blue-400" />
+              <span className="text-blue-400 text-sm font-medium">+{stats.monthlyGrowth.revenue}% this month</span>
             </div>
           </div>
-          <div className="p-3 bg-green-500/20 rounded-full">
-            <DollarSign className="h-8 w-8 text-green-400" />
+          <div className="p-3 bg-blue-500/20 rounded-full">
+            <DollarSign className="h-8 w-8 text-blue-400" />
           </div>
         </div>
       </div>
@@ -531,7 +531,7 @@ export default function InstructorDashboard({
                         </h3>
                         <span className={`ml-3 px-3 py-1 rounded-full text-xs font-medium ${
                           course.status === 'published' 
-                            ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                            ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                             : course.status === 'draft'
                             ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
                             : 'bg-gray-500/20 text-gray-400 border border-gray-500/30'
@@ -659,7 +659,6 @@ export default function InstructorDashboard({
   if (isLoading) {
     return (
       <div className="min-h-screen text-white relative">
-        <AnimatedBackground />
         <div className="relative z-10 min-h-screen flex items-center justify-center">
           <div className="text-center">
             <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">

@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // Test configuration
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://codingjojo-backend.onrender.com/api';
 
 // Test user credentials (use an existing test instructor)
 const testInstructor = {

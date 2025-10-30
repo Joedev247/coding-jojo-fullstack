@@ -58,7 +58,7 @@ export default function EnrolledCoursesList({
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "bg-green-500/20 text-green-400";
+        return "bg-blue-500/20 text-blue-400";
       case "paused":
         return "bg-yellow-500/20 text-yellow-400";
       case "enrolled":

@@ -78,7 +78,7 @@ export default function AuthTest() {
         <div className="flex gap-1 flex-wrap">
           <button
             onClick={testLogin}
-            className="px-2 py-1 bg-green-500 hover:bg-green-600 rounded text-xs"
+            className="px-2 py-1 bg-blue-500 hover:bg-blue-600 rounded text-xs"
             disabled={isLoading}
           >
             Test Login

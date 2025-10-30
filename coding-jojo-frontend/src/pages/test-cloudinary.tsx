@@ -178,7 +178,7 @@ const TestCloudinaryPage: React.FC = () => {
           <h2 className="text-xl font-semibold mb-4">Troubleshooting Guide</h2>
           <div className="space-y-3 text-sm">
             <div>
-              <h3 className="font-medium text-green-400">✅ Images not loading? Check:</h3>
+              <h3 className="font-medium text-blue-400">✅ Images not loading? Check:</h3>
               <ul className="list-disc list-inside pl-4 text-gray-300">
                 <li>Backend uses <code>req.file.secure_url</code> (not <code>req.file.path</code>)</li>
                 <li>Database saves <code>thumbnailUrl</code> field with Cloudinary secure_url</li>
@@ -187,7 +187,7 @@ const TestCloudinaryPage: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-medium text-green-400">✅ Videos not playing? Check:</h3>
+              <h3 className="font-medium text-blue-400">✅ Videos not playing? Check:</h3>
               <ul className="list-disc list-inside pl-4 text-gray-300">
                 <li>Video URLs use Cloudinary secure_url</li>
                 <li>Video format is supported (MP4 recommended)</li>

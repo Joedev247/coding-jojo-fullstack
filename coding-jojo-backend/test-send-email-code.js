@@ -11,7 +11,7 @@ async function testSendEmailCode() {
     console.log('Making request to send email verification code...');
     
     const response = await axios.post(
-      'http://localhost:5000/api/teacher/verification/email/send-code',
+      'https://codingjojo-backend.onrender.com/api/teacher/verification/email/send-code',
       {}, // Empty body as no data is required
       {
         headers: {
@@ -50,7 +50,7 @@ async function testVerificationStatus() {
   
   try {
     const response = await axios.get(
-      'http://localhost:5000/api/teacher/verification/status',
+      'https://codingjojo-backend.onrender.com/api/teacher/verification/status',
       {
         headers: {
           'Authorization': `Bearer ${TOKEN}`,

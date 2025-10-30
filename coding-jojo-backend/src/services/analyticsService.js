@@ -77,13 +77,27 @@ const RevenueAnalytics = mongoose.model('RevenueAnalytics', RevenueAnalyticsSche
 class AnalyticsService {
   constructor() {
     this.redis = null;
-    this.initializeRedis();
+    this.redisEnabled = process.env.REDIS_ENABLED === 'true';
+    
+    if (this.redisEnabled) {
+      console.log('✓ Redis enabled for analytics service');
+      this.initializeRedis();
+    } else {
+      console.log('✓ Redis disabled for analytics service');
+      // Create a no-op redis mock to prevent any connection attempts
+      this.redis = {
+        hincrby: async () => {},
+        expire: async () => {},
+        hgetall: async () => ({}),
+        connect: async () => {},
+        disconnect: async () => {},
+        on: () => {}
+      };
+    }
   }
 
   async initializeRedis() {
-    // Only initialize Redis if enabled
-    if (process.env.REDIS_ENABLED === 'false') {
-      console.log('Redis disabled for analytics service');
+    if (!this.redisEnabled) {
       return;
     }
 
@@ -97,15 +111,17 @@ class AnalyticsService {
       });
       
       this.redis.on('error', (err) => {
-        console.error('Analytics Redis connection failed:', err.message);
+        console.log('⚠️ Analytics Redis connection failed, falling back to MongoDB only');
+        this.redisEnabled = false;
         this.redis = null;
       });
 
       await this.redis.connect();
-      console.log('Analytics Redis connected');
+      console.log('✓ Analytics Redis connected');
     } catch (error) {
-      console.error('Analytics Redis connection failed:', error.message);
+      console.log('⚠️ Analytics Redis connection failed, falling back to MongoDB only');
       this.redis = null;
+      this.redisEnabled = false;
     }
   }
 
@@ -126,7 +142,7 @@ class AnalyticsService {
       await activity.save();
 
       // Update real-time metrics in Redis
-      if (this.redis) {
+      if (this.redis && this.redisEnabled) {
         const key = `activity:${new Date().toISOString().split('T')[0]}`;
         await this.redis.hincrby(key, action, 1);
         await this.redis.expire(key, 7 * 24 * 60 * 60); // Expire after 7 days
@@ -174,7 +190,7 @@ class AnalyticsService {
       }
 
       // Update Redis cache
-      if (this.redis) {
+      if (this.redis && this.redisEnabled) {
         const key = `course_analytics:${courseId}:${date}`;
         await this.redis.hincrby(key, metric, value);
         await this.redis.expire(key, 30 * 24 * 60 * 60); // Expire after 30 days
@@ -314,7 +330,7 @@ class AnalyticsService {
 
       // Get real-time stats from Redis
       let realTimeStats = {};
-      if (this.redis) {
+      if (this.redis && this.redisEnabled) {
         const todayKey = `activity:${new Date().toISOString().split('T')[0]}`;
         realTimeStats = await this.redis.hgetall(todayKey) || {};
       }

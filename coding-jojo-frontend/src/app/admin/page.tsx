@@ -179,7 +179,7 @@ const AdminDashboard: React.FC = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/verify-token",
+        "https://codingjojo-backend.onrender.com/api/auth/verify-token",
         {
           method: "GET",
           headers: {
@@ -587,7 +587,7 @@ const AdminDashboard: React.FC = () => {
   const handleBulkPublishCourses = React.useCallback(async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/admin/courses/bulk-publish",
+        "https://codingjojo-backend.onrender.com/api/admin/courses/bulk-publish",
         {
           method: "POST",
           headers: {
@@ -629,7 +629,7 @@ const AdminDashboard: React.FC = () => {
   const handleDebugCourses = React.useCallback(async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/admin/courses/debug",
+        "https://codingjojo-backend.onrender.com/api/admin/courses/debug",
         {
           method: "GET",
           headers: {
@@ -701,7 +701,7 @@ const AdminDashboard: React.FC = () => {
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={handleBulkPublishCourses}
-                  className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white  transition-colors"
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white  transition-colors"
                 >
                   Publish All Courses
                 </button>
@@ -768,7 +768,6 @@ const AdminDashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <AnimatedBackground />
 
         <LoadingSpinner size="sm" />
       </div>
@@ -1079,7 +1078,7 @@ const AdminDashboard: React.FC = () => {
         <div className="fixed bottom-4 right-4 z-50">
           <button
             onClick={handleBulkPublishCourses}
-            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4  shadow-md transition-all duration-300 mr-2"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4  shadow-md transition-all duration-300 mr-2"
           >
             Bulk Publish Courses
           </button>

@@ -31,7 +31,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
       case "pro":
         return "from-purple-500 to-blue-500";
       case "team":
-        return "from-green-500 to-teal-500";
+        return "from-blue-500 to-teal-500";
       default:
         return "from-gray-500 to-gray-600";
     }
@@ -51,7 +51,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
-        return "text-green-400 bg-green-400/10";
+        return "text-blue-400 bg-blue-400/10";
       case "expired":
       case "canceled":
         return "text-red-400 bg-red-400/10";
@@ -142,7 +142,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
                 {subscription.plan === "free" ? (
                   <X className="h-4 w-4 text-red-400 flex-shrink-0" />
                 ) : (
-                  <Check className="h-4 w-4 text-green-400 flex-shrink-0" />
+                  <Check className="h-4 w-4 text-blue-400 flex-shrink-0" />
                 )}
                 <span className="text-gray-300">{feature}</span>
               </div>

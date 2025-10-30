@@ -5,14 +5,17 @@ class SearchService {
   constructor() {
     this.client = null;
     this.isConnected = false;
-    this.initializeClient();
+    this.elasticsearchEnabled = process.env.ELASTICSEARCH_ENABLED !== 'false' && process.env.ELASTICSEARCH_ENABLED !== false;
+    if (this.elasticsearchEnabled) {
+      this.initializeClient();
+    } else {
+      console.log('✓ Elasticsearch disabled, using MongoDB search fallback');
+    }
   }
 
   async initializeClient() {
     // Only initialize Elasticsearch if enabled
-    if (process.env.ELASTICSEARCH_ENABLED === 'false') {
-      console.log('Elasticsearch disabled, using MongoDB search fallback');
-      this.isConnected = false;
+    if (!this.elasticsearchEnabled) {
       return;
     }
 
@@ -30,15 +33,15 @@ class SearchService {
 
       // Test connection with shorter timeout
       const health = await this.client.cluster.health();
-      console.log('Elasticsearch connected:', health.cluster_name);
+      console.log('✓ Elasticsearch connected:', health.cluster_name);
       this.isConnected = true;
 
       // Initialize indices
       await this.initializeIndices();
     } catch (error) {
-      console.error('Elasticsearch connection failed:', error.message);
-      console.log('Falling back to MongoDB search');
+      console.log('⚠️ Elasticsearch connection failed, disabling for this session');
       this.isConnected = false;
+      this.elasticsearchEnabled = false;
       this.client = null;
     }
   }

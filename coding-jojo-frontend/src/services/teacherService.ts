@@ -1,9 +1,9 @@
 // Enhanced Teacher API Service with Advanced Features
 class TeacherService {
-  private baseURL = 'http://localhost:5000/api/teacher';
-  private aiURL = 'http://localhost:5000/api/ai';
-  private analyticsURL = 'http://localhost:5000/api/analytics';
-  private communicationURL = 'http://localhost:5000/api/communication';
+  private baseURL = 'https://codingjojo-backend.onrender.com/api/teacher';
+  private aiURL = 'https://codingjojo-backend.onrender.com/api/ai';
+  private analyticsURL = 'https://codingjojo-backend.onrender.com/api/analytics';
+  private communicationURL = 'https://codingjojo-backend.onrender.com/api/communication';
 
   private getAuthHeaders() {
     const token = localStorage.getItem('teacher_token') || sessionStorage.getItem('teacher_token');

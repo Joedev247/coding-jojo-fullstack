@@ -26,16 +26,16 @@ export default function LiveSessionsPage() {
   return (
     <>
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 backdrop-blur-sm border border-gray-700/50  p-8 mb-8">
+      <div className="bg-gradient-to-r from-blue-50 to-white backdrop-blur-sm border border-gray-200  shadow-sm p-4 mb-6">
         <div className="flex items-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mr-6">
-            <Video className="h-8 w-8 text-white" />
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-4">
+            <Video className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">
+            <h1 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent mb-1">
               Live Sessions
             </h1>
-            <p className="text-gray-300 text-lg">Schedule and manage your live teaching sessions</p>
+            <p className="text-gray-600 text-sm">Schedule and manage your live teaching sessions</p>
           </div>
         </div>
       </div>

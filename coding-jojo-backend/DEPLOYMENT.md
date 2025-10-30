@@ -168,7 +168,7 @@ sudo systemctl reload nginx
 npm run health-check
 
 # Check specific services
-curl http://localhost:5000/api/health
+curl https://codingjojo-backend.onrender.com/api/health
 
 # Docker health status
 docker-compose ps

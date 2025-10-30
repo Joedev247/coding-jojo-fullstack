@@ -8,6 +8,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'images.unsplash.com', // Unsplash images
+      },
+      {
+        protocol: 'https',
         hostname: '**',
       },
       {
@@ -24,7 +28,7 @@ const nextConfig = {
       },
     ],
     // Add domains for older Next.js versions (fallback)
-    domains: ['res.cloudinary.com'],
+    domains: ['res.cloudinary.com', 'images.unsplash.com'],
     // Disable image optimization for external placeholder images
     unoptimized: process.env.NODE_ENV === 'development',
   },

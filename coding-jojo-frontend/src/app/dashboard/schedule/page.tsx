@@ -1,400 +1,551 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import {
+  BookOpen,
+  Calendar as CalendarIcon,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
-  Calendar,
   Clock,
-  Video,
-  FileText,
-  Users,
+  Home,
+  LayoutDashboard,
+  MessageSquare,
+  Search,
+  Settings,
+  Bell,
+  MoreVertical,
+  User,
+  Award,
   Plus,
-  Star,
-  CalendarDays,
-  AlertCircle,
-  Target,
-  Loader,
 } from "lucide-react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { scheduleService, ScheduleEvent, ScheduleData } from "../../../lib/scheduleService";
+import LoadingSpinner from "../../../components/ui/LoadingSpinner";
+import Sidebar from "../../../components/dashboard/Sidebar";
+import { scheduleService, ScheduleEvent, ScheduleReminder } from "../../../services/scheduleService";
 
-// Define proper types - keeping the interface for compatibility
-interface Event {
-  id: string;
-  title: string;
-  type: "live-session" | "assignment" | "quiz" | "deadline" | "meeting";
-  date: string;
-  time: string;
-  duration?: string;
-  course: string;
-  instructor?: string;
-  isImportant: boolean;
-  status: "upcoming" | "ongoing" | "completed";
-}
+// Data will be loaded from backend via scheduleService
 
-// Helper function to get user initials
-const getUserInitials = (name: string): string => {
-  return name
-    .split(" ")
-    .map((word) => word.charAt(0))
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-};
-
-const Schedule: React.FC = () => {
-  const { user } = useAuth();
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewMode, setViewMode] = useState<"week" | "month">("week");
-  const [scheduleData, setScheduleData] = useState<ScheduleData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function SchedulePage() {
+  const { user, isAuthenticated } = useAuth();
+  const [mounted, setMounted] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date(2020, 6, 17)); // July 17, 2020
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [viewMonth, setViewMonth] = useState(new Date()); // used by mini calendar
+  const [weekStart, setWeekStart] = useState<Date>(() => {
+    const d = new Date();
+    const start = new Date(d);
+    start.setDate(d.getDate() - d.getDay()); // Sunday
+    start.setHours(0, 0, 0, 0);
+    return start;
+  });
+  const [events, setEvents] = useState<ScheduleEvent[]>([]);
+  const [reminders, setReminders] = useState<ScheduleReminder[]>([]);
+  const [loadingEvents, setLoadingEvents] = useState(false);
+  const [scheduleError, setScheduleError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchScheduleData = async () => {
+    setMounted(true);
+  }, []);
+
+  // Fetch schedule events from backend when authenticated
+  useEffect(() => {
+    let mounted = true;
+    const fetchSchedule = async () => {
+      if (!isAuthenticated) return;
+      setLoadingEvents(true);
+      setScheduleError(null);
+
       try {
-        setLoading(true);
-        const response = await scheduleService.getScheduleData();
-        
-        if (response.success && response.data) {
-          setScheduleData(response.data);
-          setError(null);
-        } else {
-          setError('Failed to load schedule data');
-        }
+        // Try getting this week's events first
+        const weekEvents = await scheduleService.getWeekEvents();
+        if (!mounted) return;
+        setEvents(Array.isArray(weekEvents) ? weekEvents : []);
+
+        // Derive reminders: collect reminders attached to events or events of type 'reminder'
+        const derivedReminders: ScheduleReminder[] = [];
+        (Array.isArray(weekEvents) ? weekEvents : []).forEach((e: any) => {
+          if (Array.isArray(e.reminders)) {
+            e.reminders.forEach((r: ScheduleReminder) => derivedReminders.push(r));
+          }
+          if (e.type === 'reminder') {
+            derivedReminders.push({
+              id: `${e.id}-rem`,
+              type: 'email',
+              triggerMinutes: 10,
+              isEnabled: true,
+            });
+          }
+        });
+
+        setReminders(derivedReminders.slice(0, 10));
       } catch (err) {
-        setError('Error loading schedule data');
-        console.error('Schedule fetch error:', err);
+        console.error('Failed to load schedule events:', err);
+        setScheduleError(err instanceof Error ? err.message : String(err));
       } finally {
-        setLoading(false);
+        if (mounted) setLoadingEvents(false);
       }
     };
 
-    fetchScheduleData();
-  }, []);
+    fetchSchedule();
 
-  const getEventIcon = (type: string) => {
-    switch (type) {
-      case "live-session":
-        return <Video className="h-5 w-5 text-blue-400" />;
-      case "assignment":
-        return <FileText className="h-5 w-5 text-yellow-400" />;
-      case "quiz":
-        return <FileText className="h-5 w-5 text-pink-400" />;
-      case "meeting":
-        return <Users className="h-5 w-5 text-green-400" />;
-      default:
-        return <Calendar className="h-5 w-5 text-gray-400" />;
+    return () => {
+      mounted = false;
+    };
+  }, [isAuthenticated]);
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const hours = [
+    "10:00", "11:00", "12:00", "13:00", "14:00", 
+    "15:00", "16:00", "17:00", "18:00"
+  ];
+
+  // Get week days starting from the selected date
+  const getWeekDays = (start: Date) => {
+    const days: Date[] = [];
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(start);
+      day.setDate(start.getDate() + i);
+      days.push(day);
+    }
+    return days;
+  };
+
+  const weekDays = getWeekDays(weekStart);
+
+  // Mini calendar functions
+  const getDaysInMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+
+    return { daysInMonth, startingDayOfWeek };
+  };
+
+  const { daysInMonth, startingDayOfWeek } = getDaysInMonth(viewMonth);
+
+  // Helpers to parse event times (support multiple backend shapes)
+  const parseEventStart = (ev: any): Date | null => {
+    try {
+      if (ev.startDate) return new Date(ev.startDate);
+      if (ev.date && ev.time) return new Date(`${ev.date}T${ev.time}`);
+      if (ev.date) return new Date(ev.date);
+      return null;
+    } catch (e) {
+      return null;
     }
   };
 
-  const getEventTypeColor = (type: string) => {
-    switch (type) {
-      case "live-session":
-        return "bg-blue-500/20 text-blue-400";
-      case "assignment":
-        return "bg-yellow-500/20 text-yellow-400";
-      case "quiz":
-        return "bg-pink-500/20 text-pink-400";
-      case "meeting":
-        return "bg-green-500/20 text-green-400";
-      default:
-        return "bg-gray-500/20 text-gray-400";
-    }
-  };
-
-  const navigateDate = (direction: "prev" | "next") => {
-    const newDate = new Date(currentDate);
-    if (viewMode === "week") {
-      newDate.setDate(currentDate.getDate() + (direction === "next" ? 7 : -7));
-    } else {
-      newDate.setMonth(
-        currentDate.getMonth() + (direction === "next" ? 1 : -1)
-      );
-    }
-    setCurrentDate(newDate);
-  };
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+  const eventsForDayHour = (day: Date, hourLabel: string) => {
+    // hourLabel like "10:00"
+    return events.filter((ev) => {
+      const start = parseEventStart(ev);
+      if (!start) return false;
+      const evDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+      const dayDate = new Date(day.getFullYear(), day.getMonth(), day.getDate());
+      if (evDate.getTime() !== dayDate.getTime()) return false;
+      const hh = start.getHours().toString().padStart(2, '0');
+      const mm = start.getMinutes().toString().padStart(2, '0');
+      return `${hh}:${mm}` === hourLabel;
     });
   };
 
-  if (loading) {
+  const goPrevWeek = () => {
+    const prev = new Date(weekStart);
+    prev.setDate(prev.getDate() - 7);
+    setWeekStart(prev);
+  };
+
+  const goNextWeek = () => {
+    const next = new Date(weekStart);
+    next.setDate(next.getDate() + 7);
+    setWeekStart(next);
+  };
+
+  const refreshEvents = async () => {
+    setLoadingEvents(true);
+    setScheduleError(null);
+    try {
+      const weekEvents = await scheduleService.getWeekEvents();
+      setEvents(Array.isArray(weekEvents) ? weekEvents : []);
+    } catch (err) {
+      console.error('Failed to refresh events:', err);
+      setScheduleError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setLoadingEvents(false);
+    }
+  };
+
+  // Initial fetch
+  useEffect(() => {
+    if (isAuthenticated) refreshEvents();
+  }, [isAuthenticated, weekStart]);
+
+  if (!mounted) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="flex flex-col items-center gap-4">
-          <Loader className="h-8 w-8 animate-spin text-pink-400" />
-          <p className="text-gray-400">Loading schedule...</p>
-        </div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <LoadingSpinner size="sm" />
       </div>
     );
   }
 
-  if (error || !scheduleData) {
+  if (!isAuthenticated) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-400 mb-2">{error || 'Failed to load schedule'}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="text-pink-400 hover:text-pink-300 underline"
-          >
-            Try again
-          </button>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Please Login</h2>
+          <p className="text-gray-600">
+            You need to be logged in to access your schedule.
+          </p>
         </div>
       </div>
     );
   }
-
-  const events = scheduleData.events;
-  const stats = scheduleData.stats;
 
   return (
-    <>
-      <div className="space-y-8 p-8">
-        {/* User Welcome Section */}
-        <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-8">
-          <div className="flex items-center gap-6 mb-6">
-            <div className="relative">
-              {user?.profilePicture &&
-              typeof user.profilePicture === "string" &&
-              user.profilePicture.trim() !== "" ? (
-                <img
-                  src={user.profilePicture}
-                  alt={user.name || "User"}
-                  className="w-16 h-16 rounded-full object-cover border-2 border-gradient-to-r from-pink-500 to-orange-500"
+    <div className="flex h-screen bg-gray-50 overflow-hidden">
+      <Sidebar />
+
+      {/* Main Content */}
+      <div className="flex-1 overflow-auto">
+        {/* Top Header */}
+        <div className="bg-white border-b border-gray-200 px-8 py-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-900">Schedule</h2>
+
+            <div className="flex items-center space-x-4">
+              <button className="relative p-2 text-gray-600 hover:bg-gray-100 ">
+                <Bell className="w-5 h-5" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+              <div className="flex items-center space-x-3">
+                <Image
+                  src={user?.profilePicture || "/testimonial-avatar.jpg"}
+                  alt={user?.name || "User"}
+                  width={40}
+                  height={40}
+                  className="rounded-full object-cover"
                 />
-              ) : (
-                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center text-white font-semibold text-lg">
-                  {getUserInitials(user?.name || "User")}
+                <div>
+                  <p className="text-sm font-semibold text-gray-900">
+                    {user?.name || "Martin nel"}
+                  </p>
+                  <ChevronDown className="w-4 h-4 text-gray-500 inline" />
                 </div>
-              )}
-              {user?.isPremium && (
-                <div className="absolute -top-1 -right-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-1">
-                  <Star className="h-4 w-4 text-white fill-white" />
-                </div>
-              )}
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-white mb-1">
-                Your schedule, {user?.name || "Student"}! 📅
-              </h2>
-              <p className="text-gray-400">
-                Stay organized with your learning timeline and upcoming events
-                {user?.isPremium && (
-                  <span className="ml-2 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-semibold">
-                    Premium Member
-                  </span>
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Schedule Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-6 hover:border-pink-500/30 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <CalendarDays className="h-8 w-8 text-pink-400" />
-              <span className="text-2xl font-bold text-white">{stats.thisWeek}</span>
-            </div>
-            <h4 className="text-gray-400 text-sm font-medium mb-1">
-              This Week
-            </h4>
-            <p className="text-xs text-gray-500">Scheduled events</p>
-          </div>
-
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-6 hover:border-blue-500/30 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <Video className="h-8 w-8 text-blue-400" />
-              <span className="text-2xl font-bold text-blue-400">{stats.liveSessions}</span>
-            </div>
-            <h4 className="text-gray-400 text-sm font-medium mb-1">
-              Live Sessions
-            </h4>
-            <p className="text-xs text-gray-500">This month</p>
-          </div>
-
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-6 hover:border-orange-500/30 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <AlertCircle className="h-8 w-8 text-orange-400" />
-              <span className="text-2xl font-bold text-orange-400">{stats.deadlines}</span>
-            </div>
-            <h4 className="text-gray-400 text-sm font-medium mb-1">
-              Deadlines
-            </h4>
-            <p className="text-xs text-gray-500">Coming up</p>
-          </div>
-
-          <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-6 hover:border-green-500/30 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <Target className="h-8 w-8 text-green-400" />
-              <span className="text-2xl font-bold text-green-400">{stats.attendance}%</span>
-            </div>
-            <h4 className="text-gray-400 text-sm font-medium mb-1">
-              Attendance
-            </h4>
-            <p className="text-xs text-gray-500">This semester</p>
-          </div>
-        </div>
-
-        {/* Calendar Controls */}
-        <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-6">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-            <div className="flex items-center gap-6">
-              <button
-                onClick={() => navigateDate("prev")}
-                className="p-3  bg-gray-900/50 border border-gray-700/50 hover:bg-gray-700/50 text-gray-300 hover:text-white transition-all duration-300"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-
-              <h2 className="text-xl font-bold text-white min-w-[200px] text-center">
-                {formatDate(currentDate)}
-              </h2>
-
-              <button
-                onClick={() => navigateDate("next")}
-                className="p-3  bg-gray-900/50 border border-gray-700/50 hover:bg-gray-700/50 text-gray-300 hover:text-white transition-all duration-300"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="flex  bg-gray-900/50 border border-gray-700/50 overflow-hidden">
-                <button
-                  onClick={() => setViewMode("week")}
-                  className={`px-6 py-3 text-sm font-medium transition-all duration-300 ${
-                    viewMode === "week"
-                      ? "bg-gradient-to-r from-pink-500 to-orange-500 text-white"
-                      : "text-gray-400 hover:text-white hover:bg-gray-700/50"
-                  }`}
-                >
-                  Week
-                </button>
-                <button
-                  onClick={() => setViewMode("month")}
-                  className={`px-6 py-3 text-sm font-medium transition-all duration-300 ${
-                    viewMode === "month"
-                      ? "bg-gradient-to-r from-pink-500 to-orange-500 text-white"
-                      : "text-gray-400 hover:text-white hover:bg-gray-700/50"
-                  }`}
-                >
-                  Month
-                </button>
               </div>
-
-              <button className="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white px-6 py-3 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/20">
-                <Plus className="h-4 w-4" />
-                Add Event
-              </button>
             </div>
           </div>
         </div>
 
-        {/* Upcoming Events */}
-        <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-8">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-xl font-bold text-white">Upcoming Events</h3>
-            <p className="text-gray-400 text-sm">
-              {events.length} events scheduled
-            </p>
-          </div>
-
-          {events.length === 0 ? (
-            <div className="text-center py-12">
-              <Calendar className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-400 text-lg mb-2">No upcoming events</p>
-              <p className="text-gray-500 text-sm">
-                Enroll in courses to see upcoming sessions and assignments
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {events.map((event) => (
-                <div
-                  key={event.id}
-                  className={`p-6  bg-gray-900 border border-gray-700/30 hover:border-pink-500/30 hover:bg-gray-700/30 transition-all duration-300 group ${
-                    event.isImportant
-                      ? "border-orange-500/50 bg-orange-500/5"
-                      : ""
-                  }`}
-                >
-                  <div className="flex items-start gap-6">
-                    <div className="p-3 bg-gray-700/50 border border-gray-600/50 group-hover:border-pink-500/30 transition-all duration-300">
-                      {getEventIcon(event.type)}
-                    </div>
-
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                        <div>
-                          <h4 className="text-lg font-semibold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pink-400 group-hover:to-orange-400 transition-all duration-300">
-                            {event.title}
-                          </h4>
-                          <p className="text-gray-400 mb-4">{event.course}</p>
-
-                          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400">
-                            <div className="flex items-center gap-2">
-                              <Calendar className="h-4 w-4" />
-                              <span>
-                                {new Date(event.date).toLocaleDateString()}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Clock className="h-4 w-4" />
-                              <span>{event.time}</span>
-                            </div>
-                            {event.duration && (
-                              <span className="text-gray-500">
-                                ({event.duration})
-                              </span>
-                            )}
-                            {event.instructor && (
-                              <div className="flex items-center gap-2">
-                                <Users className="h-4 w-4" />
-                                <span>{event.instructor}</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="flex flex-col items-end gap-4">
-                          <span
-                            className={`px-4 py-2 text-xs font-medium ${getEventTypeColor(
-                              event.type
-                            )}`}
-                          >
-                            {event.type.replace("-", " ").toUpperCase()}
-                          </span>
-
-                          <div className="flex gap-3">
-                            <button className="px-6 py-2 bg-gray-700/50 hover:bg-gray-600/50 border border-gray-600/50 hover:border-gray-500/50 text-gray-300 hover:text-white text-sm font-medium transition-all duration-300">
-                              View Details
-                            </button>
-                            {event.type === "live-session" && (
-                              <button className="px-6 py-2 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/20">
-                                Join Session
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+        {/* Schedule Content */}
+        <div className="p-8">
+          <div className="grid grid-cols-12 gap-6">
+            {/* Left Column - Calendar */}
+            <div className="col-span-8">
+              <div className="bg-white  border border-gray-200 p-6">
+                {/* Month / Week Navigation */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center space-x-4">
+                    <h3 className="text-xl font-bold text-gray-900">
+                      {months[weekStart.getMonth()]} <span className="text-gray-400">{weekStart.getFullYear()}</span>
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <button onClick={goPrevWeek} className="p-1 hover:bg-gray-100 rounded">
+                        <ChevronLeft className="w-5 h-5 text-gray-400" />
+                      </button>
+                      <button onClick={goNextWeek} className="p-1 hover:bg-gray-100 rounded">
+                        <ChevronRight className="w-5 h-5 text-gray-400" />
+                      </button>
+                      <button onClick={refreshEvents} title="Refresh" className="p-1 hover:bg-gray-100 rounded text-sm text-gray-600">Refresh</button>
                     </div>
                   </div>
                 </div>
-              ))}
+
+                {/* Month Tabs (visual only - unchanged) */}
+                <div className="flex items-center space-x-4 mb-6 border-b border-gray-200 pb-4">
+                  {months.map((month) => (
+                    <button key={month} className={`text-sm font-medium px-3 py-1 rounded transition-colors ${month === months[weekStart.getMonth()] ? "text-indigo-600" : "text-gray-500 hover:text-gray-700"}`}>
+                      {month}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Week View */}
+                <div className="mb-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <button className="p-1 hover:bg-gray-100 rounded">
+                      <ChevronLeft className="w-5 h-5 text-gray-400" />
+                    </button>
+                    <div className="flex items-center space-x-4">
+                      {weekDays.map((day, index) => {
+                        const dayNum = day.getDate();
+                        const dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][day.getDay()];
+                        const isSelected = dayNum === 17;
+
+                        return (
+                          <div
+                            key={index}
+                            className={`flex flex-col items-center justify-center w-16 h-20  transition-colors ${
+                              isSelected
+                                ? "bg-indigo-600 text-white"
+                                : "text-gray-600 hover:bg-gray-50"
+                            }`}
+                          >
+                            <span className="text-2xl font-bold">{dayNum}</span>
+                            <span className="text-xs">{dayName}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <button className="p-1 hover:bg-gray-100 rounded">
+                      <ChevronRight className="w-5 h-5 text-gray-400" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Time Schedule */}
+                  <div className="space-y-2">
+                    {hours.map((hour, index) => (
+                      <div key={hour} className="flex items-start space-x-4">
+                        <div className="w-16 text-sm text-gray-500">{hour}</div>
+                        <div className="flex-1 border-b border-gray-100 pb-4 min-h-[60px] relative">
+                          {/* Render any events that match this day/hour for the selected week. We'll show the first event for each of the seven days in this hour slot (stacked by day). */}
+                          {weekDays.map((day, dIndex) => {
+                            const matched = eventsForDayHour(day, hour);
+                            if (!matched || matched.length === 0) return null;
+                            // Render the first matching event for that day in this hour slot
+                            const ev = matched[0];
+                            const bgClasses = ev.type === 'live-session'
+                              ? 'bg-emerald-100 border-l-4 border-emerald-400'
+                              : ev.type === 'meeting'
+                              ? 'bg-orange-100 border-l-4 border-orange-400'
+                              : 'bg-indigo-100 border-l-4 border-indigo-400';
+
+                            const topOffset = dIndex * 6; // small vertical offset to avoid exact overlap visually
+                            return (
+                              <div key={`${hour}-${dIndex}`} className="absolute left-0 right-0" style={{ top: `${topOffset}px` }}>
+                                <div className={`${bgClasses} p-3`}>
+                                  <h4 className="text-sm font-semibold text-gray-900 mb-1">{ev.title}</h4>
+                                  <div className="flex items-center text-xs text-gray-600">
+                                    <Clock className="w-3 h-3 mr-1" />
+                                    <span>{(() => {
+                                      const s = parseEventStart(ev);
+                                      return s ? s.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : (ev.time || '')
+                                    })()}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+
+                          {/* If no backend events present, keep original static visuals for the three demo slots */}
+                          {events.length === 0 && index === 2 && (
+                            <div className="absolute left-0 right-0">
+                              <div className="bg-emerald-100 border-l-4 border-emerald-400  p-3">
+                                <h4 className="text-sm font-semibold text-gray-900 mb-1">Figma Prototype Class</h4>
+                                <div className="flex items-center text-xs text-gray-600">
+                                  <Clock className="w-3 h-3 mr-1" />
+                                  <span>07:00 - 08:00 AM</span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {events.length === 0 && index === 5 && (
+                            <div className="absolute left-0 right-0">
+                              <div className="bg-orange-100 border-l-4 border-orange-400  p-3">
+                                <h4 className="text-sm font-semibold text-gray-900 mb-1">Figma Prototype Class</h4>
+                                <div className="flex items-center text-xs text-gray-600">
+                                  <Clock className="w-3 h-3 mr-1" />
+                                  <span>07:00 - 08:00 AM</span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {events.length === 0 && index === 7 && (
+                            <div className="absolute left-0 right-0">
+                              <div className="bg-indigo-100 border-l-4 border-indigo-400  p-3">
+                                <h4 className="text-sm font-semibold text-gray-900 mb-1">Sketch learning</h4>
+                                <div className="flex items-center text-xs text-gray-600">
+                                  <Clock className="w-3 h-3 mr-1" />
+                                  <span>07:00 - 08:00 AM</span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+              </div>
             </div>
-          )}
+
+            {/* Right Column */}
+            <div className="col-span-4 space-y-6">
+              {/* Mini Calendar */}
+              <div className="bg-white  border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-bold text-gray-900">
+                    June 28 <span className="text-base font-normal text-gray-500">Monday</span>
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => {
+                        const newMonth = new Date(viewMonth);
+                        newMonth.setMonth(viewMonth.getMonth() - 1);
+                        setViewMonth(newMonth);
+                      }}
+                      className="p-1 hover:bg-gray-100 rounded"
+                    >
+                      <ChevronLeft className="w-4 h-4 text-gray-400" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        const newMonth = new Date(viewMonth);
+                        newMonth.setMonth(viewMonth.getMonth() + 1);
+                        setViewMonth(newMonth);
+                      }}
+                      className="p-1 hover:bg-gray-100 rounded"
+                    >
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Calendar Grid */}
+                <div className="grid grid-cols-7 gap-1">
+                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                    <div
+                      key={day}
+                      className="text-center text-xs font-medium text-gray-500 py-2"
+                    >
+                      {day}
+                    </div>
+                  ))}
+
+                  {Array.from({ length: startingDayOfWeek }).map((_, index) => (
+                    <div key={`empty-${index}`} className="aspect-square"></div>
+                  ))}
+
+                  {Array.from({ length: daysInMonth }).map((_, index) => {
+                    const day = index + 1;
+                    const isToday = day === 28;
+                    const isSelected = day === 21;
+
+                    return (
+                      <button
+                        key={day}
+                        className={`aspect-square flex items-center justify-center text-sm  transition-colors ${
+                          isSelected
+                            ? "bg-indigo-600 text-white font-bold"
+                            : isToday
+                            ? "bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white font-semibold"
+                            : "text-gray-700 hover:bg-gray-100"
+                        }`}
+                      >
+                        {day}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Add New Task Button */}
+                  <button onClick={async () => {
+                    // Lightweight Add Task flow: prompt for title/time/date and create via service
+                    const title = window.prompt('Task title');
+                    if (!title) return;
+                    const dateInput = window.prompt('Date (YYYY-MM-DD)', weekStart.toISOString().split('T')[0]);
+                    if (!dateInput) return;
+                    const timeInput = window.prompt('Time (HH:MM, 24h)', '10:00');
+                    if (!timeInput) return;
+                    try {
+                      setLoadingEvents(true);
+                      const newEvent = await scheduleService.createEvent({
+                        title,
+                        description: '',
+                        startDate: `${dateInput}T${timeInput}:00.000Z`,
+                        endDate: `${dateInput}T${timeInput}:00.000Z`,
+                        type: 'lesson',
+                        status: 'scheduled',
+                        location: '',
+                        isOnline: false,
+                        meetingUrl: undefined,
+                        instructorId: undefined,
+                        courseId: undefined,
+                        attendees: [],
+                        reminders: [],
+                        priority: 'medium',
+                        tags: []
+                      } as any);
+                      // Refresh events after creating
+                      await refreshEvents();
+                      window.alert('Event created');
+                    } catch (e) {
+                      console.error('Create event failed', e);
+                      window.alert('Failed to create event');
+                    } finally {
+                      setLoadingEvents(false);
+                    }
+                  }} className="w-full mt-6 py-3 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white  font-semibold hover:from-emerald-500 hover:to-cyan-600 transition-all flex items-center justify-center space-x-2">
+                    <Plus className="w-5 h-5" />
+                    <span>Add New Task</span>
+                  </button>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white  border border-gray-200 p-4 text-center">
+                  <p className="text-3xl font-bold text-indigo-600 mb-1">{Array.from(new Set(events.filter(e => e.status !== 'completed').map(e => e.courseId))).length}</p>
+                  <p className="text-xs text-gray-500">Course in progress</p>
+                </div>
+                <div className="bg-white  border border-gray-200 p-4 text-center">
+                  <p className="text-3xl font-bold text-emerald-600 mb-1">{Array.from(new Set(events.filter(e => e.status === 'completed').map(e => e.courseId))).length}</p>
+                  <p className="text-xs text-gray-500">Course Complete</p>
+                </div>
+              </div>
+
+              {/* Reminders */}
+                <div className="bg-white  border border-gray-200 p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Reminders</h3>
+                <div className="space-y-3">
+                  {reminders.length === 0 ? (
+                    <div className="text-sm text-gray-500">No reminders</div>
+                  ) : (
+                    reminders.map((reminder) => (
+                      <div
+                        key={reminder.id}
+                        className="flex items-center justify-between p-3 bg-gray-50  hover:bg-gray-100 transition-colors group"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className={`w-10 h-10 bg-gray-100 flex items-center justify-center text-xl`}>
+                            {reminder.type === 'email' ? '📧' : reminder.type === 'sms' ? '📱' : '🔔'}
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-semibold text-gray-900">Reminder</h4>
+                            <p className="text-xs text-gray-500">Triggers {reminder.triggerMinutes} minutes before</p>
+                          </div>
+                        </div>
+                        <button className="opacity-0 group-hover:opacity-100 transition-opacity">
+                          <MoreVertical className="w-4 h-4 text-gray-400" />
+                        </button>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
-};
-
-export default Schedule;
+}

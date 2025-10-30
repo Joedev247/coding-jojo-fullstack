@@ -8,7 +8,7 @@ async function testForgotPassword() {
     const testEmail = "test@example.com";
 
     const response = await axios.post(
-      "http://localhost:5000
+      "https://codingjojo-backend.onrender.com
 /api/auth/forgot-password",
       {
         email: testEmail,

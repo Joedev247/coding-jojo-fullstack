@@ -313,51 +313,51 @@ const Breadcrumb: React.FC = () => {
   }
 
   return (
-    <div className="sticky top-0 z-30   bg-gray-900/70 backdrop-blur-sm  border-b border-gray-800/50">
-      <div className=" mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-3 md:py-4">
+    <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-blue-200">
+      <div className="mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-between py-2 md:py-3">
           {/* Left side - Interactive Brand and Breadcrumbs */}
           <div className="flex items-center">
             <div className="flex flex-col items-center space-x-1">
               <div className="flex items-center">
-                <span className="text-white font-bold text-xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="text-gray-800 font-bold text-xs bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
                   WELCOME
                 </span>
-                <Zap className="w-4 h-4 text-yellow-400 animate-pulse" />
-                <span className="text-white font-bold text-xl bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent">
+                <Zap className="w-3 h-3 text-blue-600 animate-pulse" />
+                <span className="text-gray-800 font-bold text-xs bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
                   HOME
                 </span>
               </div>
               <div className="flex items-center space-x-1 mt-1">
-                <Star className="w-3 h-3 text-yellow-400" />
-                <span className="text-xs text-gray-400 font-medium tracking-wider">
+                <Star className="w-2 h-2 text-blue-600" />
+                <span className="text-xs text-gray-600 font-medium tracking-wider">
                   LEARN • BUILD • GROW
                 </span>
-                <Star className="w-3 h-3 text-yellow-400" />
+                <Star className="w-2 h-2 text-blue-600" />
               </div>
             </div>
           </div>
           {/* Live Date & Time Display */}
-          <div className="hidden lg:flex items-center space-x-3 px-3 py-2  bg-gray-900/40 border border-gray-700/50">
-            <div className="flex items-center space-x-2">
-              <Calendar className="w-4 h-4 text-purple-400" />
-              <span className="text-gray-300 text-sm font-medium">
+          <div className="hidden lg:flex items-center space-x-2 px-3 py-1 bg-blue-50/50 border border-blue-200 ">
+            <div className="flex items-center space-x-1">
+              <Calendar className="w-3 h-3 text-blue-600" />
+              <span className="text-gray-700 text-xs font-medium">
                 {formatDate(currentTime)}
               </span>
             </div>
-            <div className="w-px h-4 bg-gray-600"></div>
-            <div className="flex items-center space-x-2">
-              <Clock className="w-4 h-4 text-pink-400" />
-              <span className="text-gray-300 text-sm font-medium font-mono">
+            <div className="w-px h-3 bg-blue-300"></div>
+            <div className="flex items-center space-x-1">
+              <Clock className="w-3 h-3 text-blue-600" />
+              <span className="text-gray-700 text-xs font-medium font-mono">
                 {formatTime(currentTime)}
               </span>
             </div>
           </div>
 
           {/* Mobile Date/Time */}
-          <div className="lg:hidden flex items-center space-x-1 px-2 py-1  bg-gray-900/40 rounded border border-gray-700/50">
-            <Clock className="w-3 h-3 text-purple-400" />
-            <span className="text-gray-300 text-xs font-mono">
+          <div className="lg:hidden flex items-center space-x-1 px-2 py-1 bg-blue-50/50 rounded border border-blue-200">
+            <Clock className="w-3 h-3 text-blue-600" />
+            <span className="text-gray-700 text-xs font-mono">
               {formatTime(currentTime)}
             </span>
           </div>
@@ -367,7 +367,7 @@ const Breadcrumb: React.FC = () => {
             {/* Search Bar */}
             <div className="relative" ref={searchRef}>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-500" />
                 <input
                   type="text"
                   placeholder="Search..."
@@ -376,7 +376,7 @@ const Breadcrumb: React.FC = () => {
                     setSearchQuery(e.target.value);
                     setShowSearchResults(e.target.value.trim().length > 0);
                   }}
-                  className="w-32 md:w-64  bg-gray-900/60 border border-gray-700/50 pl-10 pr-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-200"
+                  className="w-24 md:w-48 bg-white border border-gray-300  pl-8 pr-4 py-2 text-xs text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200"
                 />
                 {searchQuery && (
                   <button
@@ -384,32 +384,32 @@ const Breadcrumb: React.FC = () => {
                       setSearchQuery("");
                       setShowSearchResults(false);
                     }}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-800"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-3 h-3" />
                   </button>
                 )}
               </div>
 
               {/* Search Results Dropdown */}
               {showSearchResults && filteredSearchResults.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-2  bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 shadow-xl z-50">
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white/95 backdrop-blur-sm border border-blue-200  shadow-xl z-50">
                   {filteredSearchResults.map((result, index) => (
                     <button
                       key={index}
                       onClick={() => handleSearch(result)}
-                      className="w-full text-left px-4 py-3 hover:bg-gray-700/50 transition-colors duration-200 border-b border-gray-700/30 last:border-b-0"
+                      className="w-full text-left px-3 py-2 hover:bg-blue-50 transition-colors duration-200 border-b border-gray-200/50 last:border-b-0 first:rounded-t-lg last:rounded-b-lg"
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-white text-sm font-medium">
+                          <p className="text-gray-800 text-xs font-medium">
                             {result.title}
                           </p>
-                          <p className="text-gray-400 text-xs">
+                          <p className="text-gray-600 text-xs">
                             {result.description}
                           </p>
                         </div>
-                        <span className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded capitalize">
+                        <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full capitalize">
                           {result.type}
                         </span>
                       </div>
@@ -423,11 +423,11 @@ const Breadcrumb: React.FC = () => {
             <div className="relative" ref={notificationRef}>
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-2 text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all duration-200"
+                className="relative p-2 text-gray-600 hover:text-gray-800 hover:bg-blue-50  transition-all duration-200"
               >
-                <Bell className="w-5 h-5" />
+                <Bell className="w-4 h-4" />
                 {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
                     {unreadCount}
                   </span>
                 )}
@@ -435,39 +435,39 @@ const Breadcrumb: React.FC = () => {
 
               {/* Notifications Dropdown */}
               {showNotifications && (
-                <div className="absolute top-full right-0 mt-2 w-80  bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 shadow-xl z-50">
-                  <div className="p-4 border-b border-gray-700/50">
-                    <h3 className="text-white font-medium">Notifications</h3>
+                <div className="absolute top-full right-0 mt-1 w-72 bg-white/95 backdrop-blur-sm border border-blue-200  shadow-xl z-50">
+                  <div className="p-3 border-b border-blue-200">
+                    <h3 className="text-gray-800 font-medium text-sm">Notifications</h3>
                   </div>
-                  <div className="max-h-64 overflow-y-auto">
+                  <div className="max-h-48 overflow-y-auto">
                     {notifications.map((notification) => (
                       <div
                         key={notification.id}
-                        className={`p-4 border-b border-gray-700/30 last:border-b-0 hover:bg-gray-700/30 transition-colors ${
-                          !notification.read ? "bg-blue-500/10" : ""
+                        className={`p-3 border-b border-gray-200/50 last:border-b-0 hover:bg-blue-50 transition-colors ${
+                          !notification.read ? "bg-blue-50/50" : ""
                         }`}
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
-                            <p className="text-white text-sm font-medium">
+                            <p className="text-gray-800 text-xs font-medium">
                               {notification.title}
                             </p>
-                            <p className="text-gray-400 text-xs mt-1">
+                            <p className="text-gray-600 text-xs mt-1">
                               {notification.message}
                             </p>
-                            <p className="text-gray-500 text-xs mt-2">
+                            <p className="text-gray-500 text-xs mt-1">
                               {notification.time}
                             </p>
                           </div>
                           {!notification.read && (
-                            <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0 mt-1"></div>
+                            <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1"></div>
                           )}
                         </div>
                       </div>
                     ))}
                   </div>
-                  <div className="p-4 border-t border-gray-700/50">
-                    <button className="text-purple-400 hover:text-purple-300 text-sm transition-colors">
+                  <div className="p-3 border-t border-blue-200">
+                    <button className="text-blue-600 hover:text-blue-700 text-xs transition-colors">
                       View all notifications
                     </button>
                   </div>
@@ -479,59 +479,59 @@ const Breadcrumb: React.FC = () => {
             <div className="relative" ref={userMenuRef}>
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="flex items-center space-x-2 p-1 hover:bg-gray-800/50 transition-all duration-200"
+                className="flex items-center space-x-2 p-1 hover:bg-blue-50  transition-all duration-200"
               >
                 <div className="relative">
                   {user?.profilePicture ? (
                     <img
                       src={user.profilePicture}
                       alt={user.name || "User"}
-                      className="w-8 h-8 rounded-full object-cover border-2 border-gray-600"
+                      className="w-7 h-7 rounded-full object-cover border-2 border-blue-300"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white font-bold text-sm border-2 border-gray-600">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold text-xs border-2 border-blue-300">
                       {getUserInitials()}
                     </div>
                   )}
                   {user?.isPremium && (
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center">
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center">
                       <span className="text-white text-xs">★</span>
                     </div>
                   )}
                 </div>
                 <div className="hidden md:block text-left">
-                  <p className="text-white text-sm font-medium">
+                  <p className="text-gray-800 text-xs font-medium">
                     {user?.name || "User"}
                   </p>
-                  <p className="text-gray-400 text-xs">{user?.email}</p>
+                  <p className="text-gray-600 text-xs">{user?.email}</p>
                 </div>
               </button>
 
               {/* User Menu Dropdown */}
               {showUserMenu && (
-                <div className="absolute top-full right-0 mt-2 w-64  bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 shadow-xl z-50">
-                  <div className="p-4 border-b border-gray-700/50">
+                <div className="absolute top-full right-0 mt-2 w-56 bg-white/95 backdrop-blur-sm border border-blue-200/50  shadow-xl z-50">
+                  <div className="p-3 border-b border-blue-200/50">
                     <div className="flex items-center space-x-3">
                       <div className="relative">
                         {user?.profilePicture ? (
                           <img
                             src={user.profilePicture}
                             alt={user.name || "User"}
-                            className="w-12 h-12 rounded-full object-cover border-2 border-gray-600"
+                            className="w-10 h-10 rounded-full object-cover border-2 border-blue-300"
                           />
                         ) : (
-                          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg border-2 border-gray-600">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold text-sm border-2 border-blue-300">
                             {getUserInitials()}
                           </div>
                         )}
                       </div>
                       <div>
-                        <p className="text-white font-medium">
+                        <p className="text-gray-800 font-medium text-sm">
                           {user?.name || "User"}
                         </p>
-                        <p className="text-gray-400 text-sm">{user?.email}</p>
+                        <p className="text-gray-600 text-xs">{user?.email}</p>
                         {user?.isPremium && (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gradient-to-r from-pink-500 to-orange-500 text-white mt-1">
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gradient-to-r from-yellow-500 to-orange-500 text-white mt-1">
                             ★ Premium
                           </span>
                         )}
@@ -541,21 +541,21 @@ const Breadcrumb: React.FC = () => {
                   <div className="py-2">
                     <Link
                       href="/dashboard/settings"
-                      className="flex items-center space-x-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors"
+                      className="flex items-center space-x-3 px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-blue-50 transition-colors "
                       onClick={() => setShowUserMenu(false)}
                     >
-                      <Settings className="w-4 h-4" />
-                      <span>Settings</span>
+                      <Settings className="w-3 h-3" />
+                      <span className="text-sm">Settings</span>
                     </Link>
                     <button
                       onClick={() => {
                         logout();
                         setShowUserMenu(false);
                       }}
-                      className="w-full flex items-center space-x-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors"
+                      className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors "
                     >
-                      <LogOut className="w-4 h-4" />
-                      <span>Sign Out</span>
+                      <LogOut className="w-3 h-3" />
+                      <span className="text-sm">Sign Out</span>
                     </button>
                   </div>
                 </div>

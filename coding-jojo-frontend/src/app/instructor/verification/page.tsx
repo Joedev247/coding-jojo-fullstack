@@ -27,7 +27,7 @@ import {
   X,
   Menu
 } from 'lucide-react';
-import AnimatedBackground from '../../../components/ui/AnimatedBackground';
+
 import LoadingSpinner from '../../../components/ui/LoadingSpinner';
 import InstructorNavbar from '../../../components/InstructorNavbar';
 import { useToast } from '../../../hooks/useToast';
@@ -67,7 +67,7 @@ interface VerificationData {
   lastUpdated?: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://codingjojo-backend.onrender.com/api';
 
 export default function InstructorVerificationPage() {
   const [mounted, setMounted] = useState(false);
@@ -601,7 +601,7 @@ export default function InstructorVerificationPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'approved':
-        return 'text-green-500';
+        return 'text-blue-500';
       case 'rejected':
         return 'text-red-500';
       case 'under_review':
@@ -628,8 +628,7 @@ export default function InstructorVerificationPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen text-white relative flex items-center justify-center">
-        <AnimatedBackground />
+      <div className="min-h-screen bg-white text-gray-900 relative flex items-center justify-center">
         <div className="z-10 flex flex-col items-center">
           <LoadingSpinner size="sm" />
         </div>
@@ -639,29 +638,28 @@ export default function InstructorVerificationPage() {
 
   if (!verificationData?.isInitialized) {
     return (
-      <div className="min-h-screen text-white">
-        <AnimatedBackground />
+      <div className="min-h-screen bg-white text-gray-900">
         <InstructorNavbar />
         
-        <div className="relative z-10 max-w-2xl mx-auto p-6 pt-20">
-          <div className="bg-gradient-to-r from-pink-500/10 to-orange-500/10 backdrop-blur-sm border border-gray-700/50  p-8 text-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Shield className="h-10 w-10 text-white" />
+        <div className="relative z-10 max-w-xl mx-auto p-4 pt-20">
+          <div className="bg-white/80 backdrop-blur-sm border border-gray-200  shadow-lg p-6 text-center">
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Shield className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-4">
+            <h1 className="text-xl font-bold text-gray-900 mb-3">
               Instructor Verification
             </h1>
-            <p className="text-gray-300 mb-8 text-lg">
+            <p className="text-gray-600 mb-6 text-sm">
               Complete our verification process to start teaching on Coding Jojo. This ensures trust and safety for all our students.
             </p>
             
-            <div className="space-y-4 mb-8">
+            <div className="space-y-3 mb-6">
               <div className="flex items-center space-x-2">
-                <span className="text-gray-300">Country Code:</span>
+                <span className="text-gray-700 text-sm">Country Code:</span>
                 <select
                   value={countryCode}
                   onChange={(e) => setCountryCode(e.target.value)}
-                  className="px-3 py-2 bg-gray-700 border border-gray-600  text-white"
+                  className="px-2 py-1.5 bg-white border border-gray-300 rounded text-gray-800 text-xs focus:ring-1 focus:ring-blue-500"
                 >
                   <option value="+237">🇨🇲 Cameroon (+237)</option>
                   <option value="+33">🇫🇷 France (+33)</option>
@@ -674,22 +672,22 @@ export default function InstructorVerificationPage() {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="Enter your phone number"
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
             
             <button
               onClick={initializeVerification}
               disabled={loading}
-              className="w-full px-6 py-3 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white  font-medium transition-all duration-200 disabled:opacity-50"
+              className="w-full px-4 py-2 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-blue-800 text-white rounded font-medium text-sm transition-all duration-200 disabled:opacity-50"
             >
               {loading ? 'Initializing...' : 'Start Verification Process'}
             </button>
             
-            <div className="mt-6">
+            <div className="mt-4">
               <Link
                 href="/instructor/instructor-courses"
-                className="text-gray-400 hover:text-gray-300 text-sm underline"
+                className="text-gray-600 hover:text-gray-700 text-xs underline"
               >
                 Skip for now (verification required for payments)
               </Link>
@@ -701,24 +699,23 @@ export default function InstructorVerificationPage() {
   }
 
   return (
-    <div className="min-h-screen text-white">
-      <AnimatedBackground />
+    <div className="min-h-screen bg-white text-gray-900">
       <InstructorNavbar />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20">
         {/* Header with status */}
-        <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50  p-4 sm:p-6 mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+        <div className="bg-white/80 backdrop-blur-sm border border-gray-200  shadow-lg p-4 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
             <div className="flex-1">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
                 Instructor Verification
               </h1>
-              <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
                 <span className={`flex items-center space-x-2 ${getStatusColor(verificationData.verificationStatus)}`}>
-                  {React.createElement(getStatusIcon(verificationData.verificationStatus), { className: "h-5 w-5" })}
-                  <span className="capitalize font-medium">{verificationData.verificationStatus.replace('_', ' ')}</span>
+                  {React.createElement(getStatusIcon(verificationData.verificationStatus), { className: "h-4 w-4" })}
+                  <span className="capitalize font-medium text-sm">{verificationData.verificationStatus.replace('_', ' ')}</span>
                 </span>
-                <div className="text-gray-300 text-sm">
+                <div className="text-gray-600 text-sm">
                   Progress: <span className="font-medium">{verificationData.progressPercentage}%</span>
                 </div>
               </div>
@@ -726,12 +723,12 @@ export default function InstructorVerificationPage() {
             
             <div className="text-left sm:text-right">
               {verificationData.submittedAt && (
-                <div className="text-gray-400 text-sm">
+                <div className="text-gray-500 text-xs">
                   Submitted: {new Date(verificationData.submittedAt).toLocaleDateString()}
                 </div>
               )}
               {verificationData.adminReview?.reviewedAt && (
-                <div className="text-gray-400 text-sm">
+                <div className="text-gray-500 text-xs">
                   Reviewed: {new Date(verificationData.adminReview.reviewedAt).toLocaleDateString()}
                 </div>
               )}
@@ -739,10 +736,10 @@ export default function InstructorVerificationPage() {
           </div>
 
           {/* Progress bar */}
-          <div className="mt-6">
-            <div className="w-full bg-gray-700 rounded-full h-2">
+          <div className="mt-4">
+            <div className="w-full bg-gray-200 rounded-full h-1.5">
               <div 
-                className="bg-gradient-to-r from-pink-500 to-orange-500 h-2 rounded-full transition-all duration-500"
+                className="bg-gradient-to-r from-blue-600 to-emerald-600 h-1.5 rounded-full transition-all duration-500"
                 style={{ width: `${verificationData.progressPercentage}%` }}
               />
             </div>
@@ -750,7 +747,7 @@ export default function InstructorVerificationPage() {
         </div>
 
         {/* Steps navigation */}
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50  p-4 sm:p-6 mb-8">
+        <div className="bg-white/80 backdrop-blur-sm border border-gray-200  shadow-sm p-4 mb-6">
           <div className="flex items-center justify-between w-full">
             {steps.map((step, index) => {
               const Icon = step.icon;
@@ -761,33 +758,33 @@ export default function InstructorVerificationPage() {
                 <div key={step.id} className="flex items-center flex-1">
                   <div className="flex flex-col items-center w-full">
                     <div className={`
-                      flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full border-2 transition-all duration-200
+                      flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full border-2 transition-all duration-200
                       ${isCompleted 
-                        ? 'bg-green-500 border-green-500 text-white' 
+                        ? 'bg-blue-500 border-blue-500 text-white' 
                         : isCurrent 
-                          ? 'bg-pink-500 border-pink-500 text-white' 
-                          : 'bg-gray-700 border-gray-600 text-gray-400'
+                          ? 'bg-blue-600 border-blue-600 text-white' 
+                          : 'bg-gray-100 border-gray-300 text-gray-400'
                       }
                     `}>
                       {isCompleted ? (
-                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5" />
+                        <CheckCircle className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 lg:h-4 lg:w-4" />
                       ) : (
-                        <Icon className="h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5" />
+                        <Icon className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 lg:h-4 lg:w-4" />
                       )}
                     </div>
-                    <div className="mt-1 sm:mt-2 text-center px-1">
-                      <div className={`text-xs sm:text-sm lg:text-base font-medium leading-tight ${isCompleted || isCurrent ? 'text-white' : 'text-gray-400'}`}>
+                    <div className="mt-1 text-center px-1">
+                      <div className={`text-xs sm:text-sm font-medium leading-tight ${isCompleted || isCurrent ? 'text-gray-900' : 'text-gray-500'}`}>
                         {step.title}
                       </div>
-                      <div className="text-xs text-gray-500 hidden md:block mt-1 leading-tight">
+                      <div className="text-xs text-gray-500 hidden md:block mt-0.5 leading-tight">
                         {step.description}
                       </div>
                     </div>
                   </div>
                   {index < steps.length - 1 && (
                     <div className={`
-                      w-4 sm:w-6 lg:w-8 h-0.5 transition-all duration-200 mx-1 sm:mx-2
-                      ${step.completed ? 'bg-green-500' : 'bg-gray-600'}
+                      w-3 sm:w-4 lg:w-6 h-0.5 transition-all duration-200 mx-1 sm:mx-2
+                      ${step.completed ? 'bg-blue-500' : 'bg-gray-300'}
                     `} />
                   )}
                 </div>
@@ -799,18 +796,18 @@ export default function InstructorVerificationPage() {
         {/* Admin feedback */}
         {verificationData.adminReview?.feedback && (
           <div className={`
-            mb-8 p-6  border
+            mb-6 p-4  border
             ${verificationData.adminReview.status === 'approved' 
-              ? 'bg-green-500/10 border-green-500/30' 
+              ? 'bg-blue-50 border-blue-200' 
               : verificationData.adminReview.status === 'rejected'
-                ? 'bg-red-500/10 border-red-500/30'
-                : 'bg-yellow-500/10 border-yellow-500/30'
+                ? 'bg-red-50 border-red-200'
+                : 'bg-yellow-50 border-yellow-200'
             }
           `}>
-            <h3 className="text-lg font-semibold text-white mb-2">
+            <h3 className="text-sm font-semibold text-gray-900 mb-2">
               Admin Feedback
             </h3>
-            <p className="text-gray-300">
+            <p className="text-gray-700 text-sm">
               {verificationData.adminReview.feedback}
             </p>
           </div>
@@ -824,37 +821,37 @@ export default function InstructorVerificationPage() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50  p-8"
+            className="bg-white/80 backdrop-blur-sm border border-gray-200  shadow-sm p-6"
           >
             {currentStep === 0 && !verificationData.completedSteps.email && (
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Email Verification</h2>
-                <p className="text-gray-300 mb-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">Email Verification</h2>
+                <p className="text-gray-600 mb-4 text-sm">
                   We'll send a verification code to your email address. Please enter the code to verify your email.
                 </p>
                 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <button
                     onClick={sendEmailCode}
                     disabled={loading}
-                    className="w-full px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white  font-medium transition-colors disabled:opacity-50"
+                    className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50"
                   >
                     {loading ? 'Sending...' : 'Send Verification Code'}
                   </button>
                   
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-3">
                     <input
                       type="text"
                       value={emailCode}
                       onChange={(e) => setEmailCode(e.target.value)}
                       placeholder="Enter 6-digit code"
-                      className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                      className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                       maxLength={6}
                     />
                     <button
                       onClick={verifyEmailCode}
                       disabled={submitting || !emailCode.trim()}
-                      className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white  font-medium transition-colors disabled:opacity-50"
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50"
                     >
                       {submitting ? 'Verifying...' : 'Verify'}
                     </button>
@@ -865,33 +862,33 @@ export default function InstructorVerificationPage() {
 
             {currentStep === 1 && !verificationData.completedSteps.phone && (
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Phone Verification</h2>
-                <p className="text-gray-300 mb-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">Phone Verification</h2>
+                <p className="text-gray-600 mb-4 text-sm">
                   We'll send an SMS verification code to your phone number: {countryCode} {phoneNumber}
                 </p>
                 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <button
                     onClick={sendPhoneCode}
                     disabled={loading}
-                    className="w-full px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white  font-medium transition-colors disabled:opacity-50"
+                    className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50"
                   >
                     {loading ? 'Sending...' : 'Send SMS Code'}
                   </button>
                   
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-3">
                     <input
                       type="text"
                       value={phoneCode}
                       onChange={(e) => setPhoneCode(e.target.value)}
                       placeholder="Enter 6-digit code"
-                      className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                      className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                       maxLength={6}
                     />
                     <button
                       onClick={verifyPhoneCode}
                       disabled={submitting || !phoneCode.trim()}
-                      className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white  font-medium transition-colors disabled:opacity-50"
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50"
                     >
                       {submitting ? 'Verifying...' : 'Verify'}
                     </button>
@@ -902,59 +899,59 @@ export default function InstructorVerificationPage() {
 
             {currentStep === 2 && !verificationData.completedSteps.personalInfo && (
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Personal Information</h2>
-                <p className="text-gray-300 mb-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">Personal Information</h2>
+                <p className="text-gray-600 mb-4 text-sm">
                   Please provide your personal details. This information will be used to verify your identity.
                 </p>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
                       First Name *
                     </label>
                     <input
                       type="text"
                       value={personalInfo.firstName}
                       onChange={(e) => setPersonalInfo(prev => ({ ...prev, firstName: e.target.value }))}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
                       Last Name *
                     </label>
                     <input
                       type="text"
                       value={personalInfo.lastName}
                       onChange={(e) => setPersonalInfo(prev => ({ ...prev, lastName: e.target.value }))}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
                       Date of Birth *
                     </label>
                     <input
                       type="date"
                       value={personalInfo.dateOfBirth}
                       onChange={(e) => setPersonalInfo(prev => ({ ...prev, dateOfBirth: e.target.value }))}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white focus:outline-none focus:ring-2 focus:ring-pink-500"
+                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                       required
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
                       Gender
                     </label>
                     <select
                       value={personalInfo.gender}
                       onChange={(e) => setPersonalInfo(prev => ({ ...prev, gender: e.target.value }))}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white focus:outline-none focus:ring-2 focus:ring-pink-500"
+                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                     >
                       <option value="">Select Gender</option>
                       <option value="male">Male</option>
@@ -965,23 +962,23 @@ export default function InstructorVerificationPage() {
                   </div>
                   
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
                       Nationality
                     </label>
                     <input
                       type="text"
                       value={personalInfo.nationality}
                       onChange={(e) => setPersonalInfo(prev => ({ ...prev, nationality: e.target.value }))}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                       placeholder="e.g., Cameroonian"
                     />
                   </div>
                   
                   <div className="md:col-span-2">
-                    <h3 className="text-lg font-semibold text-white mb-4">Address (Optional)</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-3">Address (Optional)</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                           City
                         </label>
                         <input
@@ -991,12 +988,12 @@ export default function InstructorVerificationPage() {
                             ...prev, 
                             address: { ...prev.address, city: e.target.value }
                           }))}
-                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                         />
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
                           Country
                         </label>
                         <input
@@ -1006,18 +1003,18 @@ export default function InstructorVerificationPage() {
                             ...prev, 
                             address: { ...prev.address, country: e.target.value }
                           }))}
-                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-800 placeholder-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="mt-8 flex justify-end">
+                <div className="mt-6 flex justify-end">
                   <button
                     onClick={submitPersonalInfo}
                     disabled={submitting}
-                    className="px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white  font-medium transition-colors disabled:opacity-50"
+                    className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50"
                   >
                     {submitting ? 'Saving...' : 'Continue'}
                   </button>
@@ -1027,8 +1024,8 @@ export default function InstructorVerificationPage() {
 
             {currentStep === 3 && !verificationData.completedSteps.idDocument && (
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">ID Document Upload</h2>
-                <p className="text-gray-300 mb-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">ID Document Upload</h2>
+                <p className="text-gray-600 mb-4 text-sm">
                   Please upload clear photos of your government-issued ID document. Both front and back are required for most documents.
                 </p>
                 
@@ -1048,13 +1045,13 @@ export default function InstructorVerificationPage() {
                     </select>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className="block text-xs font-medium text-gray-600 mb-2">
                         Front of ID *
                       </label>
-                      <div className="border-2 border-dashed border-gray-600  p-6 text-center hover:border-pink-500 transition-colors">
-                        <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                      <div className="border-2 border-dashed border-blue-300 rounded p-4 text-center hover:border-blue-500 transition-colors">
+                        <Upload className="h-5 w-5 text-blue-400 mx-auto mb-2" />
                         <input
                           type="file"
                           accept="image/*"
@@ -1063,7 +1060,7 @@ export default function InstructorVerificationPage() {
                           id="frontImage"
                         />
                         <label htmlFor="frontImage" className="cursor-pointer">
-                          <span className="text-gray-300">
+                          <span className="text-gray-600 text-xs">
                             {idDocuments.frontImage ? idDocuments.frontImage.name : 'Click to upload front image'}
                           </span>
                         </label>
@@ -1071,11 +1068,11 @@ export default function InstructorVerificationPage() {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className="block text-xs font-medium text-gray-600 mb-2">
                         Back of ID {idDocuments.documentType === 'passport' ? '(Optional)' : '*'}
                       </label>
-                      <div className="border-2 border-dashed border-gray-600  p-6 text-center hover:border-pink-500 transition-colors">
-                        <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                      <div className="border-2 border-dashed border-blue-300 rounded p-4 text-center hover:border-blue-500 transition-colors">
+                        <Upload className="h-5 w-5 text-blue-400 mx-auto mb-2" />
                         <input
                           type="file"
                           accept="image/*"
@@ -1084,7 +1081,7 @@ export default function InstructorVerificationPage() {
                           id="backImage"
                         />
                         <label htmlFor="backImage" className="cursor-pointer">
-                          <span className="text-gray-300">
+                          <span className="text-gray-600 text-xs">
                             {idDocuments.backImage ? idDocuments.backImage.name : 'Click to upload back image'}
                           </span>
                         </label>
@@ -1092,12 +1089,12 @@ export default function InstructorVerificationPage() {
                     </div>
                   </div>
                   
-                  <div className="bg-blue-500/10 border border-blue-500/30  p-4">
+                  <div className="bg-blue-50 border border-blue-200 rounded p-3">
                     <div className="flex items-start space-x-2">
-                      <AlertCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                      <div className="text-blue-300">
-                        <p className="font-medium mb-1">Tips for better verification:</p>
-                        <ul className="text-sm space-y-1">
+                      <AlertCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div className="text-blue-700">
+                        <p className="font-medium mb-1 text-xs">Tips for better verification:</p>
+                        <ul className="text-xs space-y-1">
                           <li>• Ensure the document is well-lit and all text is readable</li>
                           <li>• Take photos directly above the document (avoid angles)</li>
                           <li>• Make sure all four corners of the document are visible</li>
@@ -1108,11 +1105,11 @@ export default function InstructorVerificationPage() {
                   </div>
                 </div>
                 
-                <div className="mt-8 flex justify-end">
+                <div className="mt-6 flex justify-end">
                   <button
                     onClick={uploadIdDocuments}
                     disabled={submitting || (!idDocuments.frontImage && !idDocuments.backImage)}
-                    className="px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white  font-medium transition-colors disabled:opacity-50"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50"
                   >
                     {submitting ? 'Uploading...' : 'Upload Documents'}
                   </button>
@@ -1122,14 +1119,14 @@ export default function InstructorVerificationPage() {
 
             {currentStep === 4 && !verificationData.completedSteps.selfie && (
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Selfie Verification</h2>
-                <p className="text-gray-300 mb-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">Selfie Verification</h2>
+                <p className="text-gray-600 mb-4 text-sm">
                   Take a clear selfie to verify your identity. This helps us match you with your ID document.
                 </p>
                 
                 <div className="max-w-md mx-auto">
-                  <div className="border-2 border-dashed border-gray-600  p-8 text-center hover:border-pink-500 transition-colors">
-                    <Camera className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <div className="border-2 border-dashed border-blue-300 rounded p-6 text-center hover:border-blue-500 transition-colors">
+                    <Camera className="h-8 w-8 text-blue-400 mx-auto mb-3" />
                     <input
                       type="file"
                       accept="image/*"
@@ -1139,21 +1136,21 @@ export default function InstructorVerificationPage() {
                       id="selfieImage"
                     />
                     <label htmlFor="selfieImage" className="cursor-pointer">
-                      <span className="text-gray-300 block mb-2">
+                      <span className="text-gray-600 block mb-2 text-sm">
                         {selfieImage ? selfieImage.name : 'Click to take or upload selfie'}
                       </span>
-                      <span className="text-sm text-gray-400">
+                      <span className="text-xs text-gray-500">
                         Use your device's camera or upload an existing photo
                       </span>
                     </label>
                   </div>
                   
-                  <div className="mt-6 bg-yellow-500/10 border border-yellow-500/30  p-4">
+                  <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded p-3">
                     <div className="flex items-start space-x-2">
-                      <AlertCircle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                      <div className="text-yellow-300">
-                        <p className="font-medium mb-1">Selfie Guidelines:</p>
-                        <ul className="text-sm space-y-1">
+                      <AlertCircle className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                      <div className="text-yellow-700">
+                        <p className="font-medium mb-1 text-xs">Selfie Guidelines:</p>
+                        <ul className="text-xs space-y-1">
                           <li>• Look directly at the camera</li>
                           <li>• Ensure your face is well-lit</li>
                           <li>• Remove glasses or hats if possible</li>
@@ -1165,11 +1162,11 @@ export default function InstructorVerificationPage() {
                   </div>
                 </div>
                 
-                <div className="mt-8 flex justify-center">
+                <div className="mt-6 flex justify-center">
                   <button
                     onClick={uploadSelfie}
                     disabled={submitting || !selfieImage}
-                    className="px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white  font-medium transition-colors disabled:opacity-50"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50"
                   >
                     {submitting ? 'Uploading...' : 'Upload Selfie'}
                   </button>
@@ -1179,22 +1176,22 @@ export default function InstructorVerificationPage() {
 
             {currentStep === 5 && !verificationData.completedSteps.educationCertificate && (
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">Education Certificate</h2>
-                <p className="text-gray-300 mb-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">Education Certificate</h2>
+                <p className="text-gray-600 mb-4 text-sm">
                   Upload your highest level of education certificate as proof of your qualifications to teach.
                 </p>
                 
-                <div className="max-w-2xl mx-auto space-y-6">
+                <div className="max-w-2xl mx-auto space-y-4">
                   {/* Education Details Form */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className="block text-xs font-medium text-gray-600 mb-2">
                         Certificate Type *
                       </label>
                       <select
                         value={educationDetails.certificateType}
                         onChange={(e) => setEducationDetails(prev => ({ ...prev, certificateType: e.target.value }))}
-                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"
+                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="high_school_diploma">High School Diploma</option>
                         <option value="associate_degree">Associate Degree</option>
@@ -1212,7 +1209,7 @@ export default function InstructorVerificationPage() {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className="block text-xs font-medium text-gray-600 mb-2">
                         Institution Name *
                       </label>
                       <input
@@ -1220,13 +1217,13 @@ export default function InstructorVerificationPage() {
                         value={educationDetails.institutionName}
                         onChange={(e) => setEducationDetails(prev => ({ ...prev, institutionName: e.target.value }))}
                         placeholder="e.g., University of Cameroon"
-                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className="block text-xs font-medium text-gray-600 mb-2">
                         Field of Study *
                       </label>
                       <input
@@ -1234,13 +1231,13 @@ export default function InstructorVerificationPage() {
                         value={educationDetails.fieldOfStudy}
                         onChange={(e) => setEducationDetails(prev => ({ ...prev, fieldOfStudy: e.target.value }))}
                         placeholder="e.g., Computer Science"
-                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className="block text-xs font-medium text-gray-600 mb-2">
                         Graduation Year *
                       </label>
                       <input
@@ -1249,13 +1246,13 @@ export default function InstructorVerificationPage() {
                         onChange={(e) => setEducationDetails(prev => ({ ...prev, graduationYear: parseInt(e.target.value) || new Date().getFullYear() }))}
                         min="1950"
                         max={new Date().getFullYear() + 10}
-                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"
+                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
                       />
                     </div>
                     
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className="block text-xs font-medium text-gray-600 mb-2">
                         GPA/Grade (Optional)
                       </label>
                       <input
@@ -1263,14 +1260,14 @@ export default function InstructorVerificationPage() {
                         value={educationDetails.gpa}
                         onChange={(e) => setEducationDetails(prev => ({ ...prev, gpa: e.target.value }))}
                         placeholder="e.g., 3.8/4.0 or First Class"
-                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
                   
                   {/* File Upload */}
-                  <div className="border-2 border-dashed border-gray-600 p-8 text-center hover:border-pink-500 transition-colors">
-                    <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <div className="border-2 border-dashed border-blue-300 rounded p-6 text-center hover:border-blue-500 transition-colors">
+                    <FileText className="h-8 w-8 text-blue-400 mx-auto mb-3" />
                     <input
                       type="file"
                       accept="image/*,.pdf,.doc,.docx"
@@ -1279,21 +1276,21 @@ export default function InstructorVerificationPage() {
                       id="educationCertificate"
                     />
                     <label htmlFor="educationCertificate" className="cursor-pointer">
-                      <span className="text-gray-300 block mb-2">
+                      <span className="text-gray-600 block mb-2 text-sm">
                         {educationCertificate ? educationCertificate.name : 'Click to upload certificate'}
                       </span>
-                      <span className="text-sm text-gray-400">
+                      <span className="text-xs text-gray-500">
                         Upload your degree, diploma, or certificate
                       </span>
                     </label>
                   </div>
                   
-                  <div className="bg-blue-500/10 border border-blue-500/30 p-4">
+                  <div className="bg-blue-50 border border-blue-200 rounded p-3">
                     <div className="flex items-start space-x-2">
-                      <AlertCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                      <div className="text-blue-300">
-                        <p className="font-medium mb-1">Certificate Guidelines:</p>
-                        <ul className="text-sm space-y-1">
+                      <AlertCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div className="text-blue-700">
+                        <p className="font-medium mb-1 text-xs">Certificate Guidelines:</p>
+                        <ul className="text-xs space-y-1">
                           <li>• Upload your highest level of education</li>
                           <li>• Ensure the document is clear and readable</li>
                           <li>• Accepted formats: PDF, JPG, PNG, DOC, DOCX</li>
@@ -1305,11 +1302,11 @@ export default function InstructorVerificationPage() {
                   </div>
                 </div>
                 
-                <div className="mt-8 flex justify-center">
+                <div className="mt-6 flex justify-center">
                   <button
                     onClick={uploadEducationCertificate}
                     disabled={submitting || !educationCertificate || !educationDetails.institutionName.trim() || !educationDetails.fieldOfStudy.trim()}
-                    className="px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white font-medium transition-colors disabled:opacity-50"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50"
                   >
                     {submitting ? 'Uploading...' : 'Upload Certificate'}
                   </button>
@@ -1319,31 +1316,31 @@ export default function InstructorVerificationPage() {
 
             {currentStep >= 6 && Object.values(verificationData.completedSteps).every(step => step) && (
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Award className="h-10 w-10 text-white" />
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Award className="h-6 w-6 text-white" />
                 </div>
                 
-                <h2 className="text-3xl font-bold text-white mb-4">
+                <h2 className="text-lg font-bold text-gray-900 mb-3">
                   Verification Complete!
                 </h2>
                 
                 {verificationData.verificationStatus === 'approved' ? (
                   <div>
-                    <p className="text-gray-300 mb-6 text-lg">
+                    <p className="text-gray-600 mb-4 text-sm">
                       🎉 Congratulations! Your instructor verification has been approved. You can now start creating and publishing courses on Coding Jojo.
                     </p>
                     
-                    <div className="flex justify-center space-x-4">
+                    <div className="flex justify-center space-x-3">
                       <button
                         onClick={() => router.push('/instructor/instructor-courses')}
-                        className="px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white  font-medium transition-all duration-200"
+                        className="px-4 py-2 bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 text-white rounded font-medium text-sm transition-all duration-200"
                       >
                         Go to Dashboard
                       </button>
                       
                       <button
                         onClick={() => router.push('/instructor/courses/create')}
-                        className="px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white  font-medium transition-colors"
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors"
                       >
                         Create Your First Course
                       </button>
@@ -1351,13 +1348,13 @@ export default function InstructorVerificationPage() {
                   </div>
                 ) : verificationData.verificationStatus === 'under_review' ? (
                   <div>
-                    <p className="text-gray-300 mb-6 text-lg">
+                    <p className="text-gray-600 mb-4 text-sm">
                       Your verification is now under admin review. This typically takes 1-3 business days. You'll receive an email notification once the review is complete.
                     </p>
                     
-                    <div className="bg-blue-500/10 border border-blue-500/30  p-6 mb-6">
-                      <h3 className="text-lg font-semibold text-white mb-2">What happens next?</h3>
-                      <ul className="text-gray-300 space-y-2 text-left">
+                    <div className="bg-blue-50 border border-blue-200 rounded p-4 mb-4">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-2">What happens next?</h3>
+                      <ul className="text-gray-600 space-y-1 text-left text-xs">
                         <li>• Our team will review your submitted documents</li>
                         <li>• We'll verify your identity and information</li>
                         <li>• You'll receive an email with the decision</li>
@@ -1367,21 +1364,21 @@ export default function InstructorVerificationPage() {
                     
                     <button
                       onClick={() => router.push('/instructor/instructor-courses')}
-                      className="px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white  font-medium transition-colors"
+                      className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded font-medium text-sm transition-colors"
                     >
                       Return to Dashboard
                     </button>
                   </div>
                 ) : (
                   <div>
-                    <p className="text-gray-300 mb-6 text-lg">
+                    <p className="text-gray-600 mb-4 text-sm">
                       All verification steps are complete! Please submit your application for admin review.
                     </p>
                     
                     <button
                       onClick={submitForReview}
                       disabled={submitting}
-                      className="px-8 py-3 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white  font-medium transition-all duration-200 disabled:opacity-50"
+                      className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded font-medium text-sm transition-all duration-200 disabled:opacity-50"
                     >
                       {submitting ? 'Submitting...' : 'Submit for Review'}
                     </button>
@@ -1394,23 +1391,23 @@ export default function InstructorVerificationPage() {
 
         {/* Navigation buttons */}
         {currentStep < 6 && verificationData.verificationStatus !== 'approved' && (
-          <div className="flex justify-between mt-8">
+          <div className="flex justify-between mt-6">
             <button
               onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
               disabled={currentStep === 0}
-              className="flex items-center space-x-2 px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white  font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center space-x-2 px-4 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-3 w-3" />
               <span>Previous</span>
             </button>
             
             <button
               onClick={() => setCurrentStep(Math.min(steps.length - 1, currentStep + 1))}
               disabled={currentStep === (steps.length - 1) || !steps[currentStep]?.completed}
-              className="flex items-center space-x-2 px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white  font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <span>Next</span>
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-3 w-3" />
             </button>
           </div>
         )}

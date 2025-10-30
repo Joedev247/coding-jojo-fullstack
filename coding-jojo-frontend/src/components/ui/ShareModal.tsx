@@ -78,7 +78,7 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
     {
       name: 'Facebook',
       icon: Facebook,
-      color: 'bg-pink-600 hover:bg-pink-700',
+      color: 'bg-blue-600 hover:bg-blue-700',
       url: shareLinks.facebook,
       platform: 'facebook'
     },
@@ -99,7 +99,7 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
     {
       name: 'WhatsApp',
       icon: MessageCircle,
-      color: 'bg-green-600 hover:bg-green-700',
+      color: 'bg-blue-600 hover:bg-blue-700',
       url: shareLinks.whatsapp,
       platform: 'whatsapp'
     },
@@ -115,53 +115,53 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-900  border border-gray-700 max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white  border border-gray-200 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <h3 className="text-lg font-semibold text-white">Share Post</h3>
+        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <h3 className="text-xs font-semibold text-gray-900">Share Post</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors p-1  hover:bg-gray-800"
+            className="text-gray-500 hover:text-gray-700 transition-colors p-1 rounded hover:bg-gray-100"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Post Preview */}
-        <div className="p-4 border-b border-gray-700">
-          <div className="bg-gray-800/50  p-3">
+        <div className="p-4 border-b border-gray-200">
+          <div className="bg-gray-50 rounded p-3">
             <div className="flex items-center space-x-2 mb-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">
+              <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs font-medium">
                   {post.author.name.charAt(0).toUpperCase()}
                 </span>
               </div>
               <div>
-                <p className="text-sm font-medium text-white">{post.author.name}</p>
-                <p className="text-xs text-gray-400">CodingJojo Community</p>
+                <p className="text-sm font-medium text-gray-900">{post.author.name}</p>
+                <p className="text-xs text-gray-600">CodingJojo Community</p>
               </div>
             </div>
-            <h4 className="text-white font-medium text-sm mb-1 line-clamp-2">
+            <h4 className="text-gray-900 font-medium text-sm mb-1 line-clamp-2">
               {post.title}
             </h4>
-            <p className="text-gray-400 text-xs line-clamp-2">
+            <p className="text-gray-600 text-xs line-clamp-2">
               {shareDescription}
             </p>
           </div>
         </div>
 
         {/* Copy Link Section */}
-        <div className="p-4 border-b border-gray-700">
+        <div className="p-4 border-b border-gray-200">
           <div className="flex items-center space-x-2">
-            <div className="flex-1 bg-gray-800  p-3 border border-gray-700">
-              <p className="text-sm text-gray-300 truncate">{postUrl}</p>
+            <div className="flex-1 bg-gray-100 rounded p-2 border border-gray-300">
+              <p className="text-sm text-gray-700 truncate">{postUrl}</p>
             </div>
             <button
               onClick={copyToClipboard}
-              className={`flex items-center space-x-2 px-4 py-3  transition-all duration-200 ${
+              className={`flex items-center space-x-2 px-3 py-2 rounded transition-all duration-200 ${
                 copied 
-                  ? 'bg-green-600 text-white' 
-                  : 'bg-pink-600 hover:bg-pink-700 text-white'
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-blue-600 hover:bg-blue-700 text-white'
               }`}
             >
               {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
@@ -174,7 +174,7 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
 
         {/* Social Media Options */}
         <div className="p-4">
-          <h4 className="text-sm font-medium text-gray-300 mb-3">Share to social media</h4>
+          <h4 className="text-sm font-medium text-gray-700 mb-3">Share to social media</h4>
           <div className="grid grid-cols-2 gap-3">
             {shareOptions.map((option) => {
               const IconComponent = option.icon;
@@ -190,7 +190,7 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
                       openShareWindow(option.url, option.platform);
                     }
                   }}
-                  className={`flex items-center space-x-3 p-3  ${option.color} text-white transition-all duration-200 hover:scale-105 active:scale-95`}
+                  className={`flex items-center space-x-2 p-2 rounded ${option.color} text-white transition-all duration-200 hover:scale-105 active:scale-95`}
                 >
                   <IconComponent className="w-5 h-5" />
                   <span className="font-medium">{option.name}</span>
@@ -200,25 +200,25 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
           </div>
 
           {/* Additional Share Options */}
-          <div className="mt-4 pt-4 border-t border-gray-700">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => {
                   openShareWindow(shareLinks.reddit, 'reddit');
                 }}
-                className="flex items-center justify-center space-x-2 p-3  bg-orange-600 hover:bg-orange-700 text-white transition-all duration-200"
+                className="flex items-center justify-center space-x-2 p-2 rounded bg-orange-600 hover:bg-orange-700 text-white transition-all duration-200"
               >
-                <div className="w-5 h-5 bg-white rounded text-orange-600 flex items-center justify-center text-xs font-bold">
+                <div className="w-4 h-4 bg-white rounded text-orange-600 flex items-center justify-center text-xs font-bold">
                   r
                 </div>
-                <span className="font-medium">Reddit</span>
+                <span className="font-medium text-sm">Reddit</span>
               </button>
               
               <button
                 onClick={() => {
                   openShareWindow(shareLinks.telegram, 'telegram');
                 }}
-                className="flex items-center justify-center space-x-2 p-3  bg-blue-500 hover:bg-pink-600 text-white transition-all duration-200"
+                className="flex items-center justify-center space-x-2 p-2 rounded bg-blue-500 hover:bg-blue-600 text-white transition-all duration-200"
               >
                 <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
                   <span className="text-blue-500 text-xs font-bold">T</span>
@@ -230,7 +230,7 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
 
           {/* Native Share (Mobile) */}
           {shareUtils.supportsNativeShare() && (
-            <div className="mt-4 pt-4 border-t border-gray-700">
+            <div className="mt-4 pt-4 border-t border-gray-200">
               <button
                 onClick={async () => {
                   const success = await shareUtils.nativeShare({
@@ -244,7 +244,7 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
                     ShareAnalyticsService.trackShare(post._id, 'native');
                   }
                 }}
-                className="w-full flex items-center justify-center space-x-2 p-3  bg-gradient-to-r from-pink-600 to-orange-600 hover:from-orange-600 hover:to-pink-600 text-white transition-all duration-200"
+                className="w-full flex items-center justify-center space-x-2 p-2 rounded bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200"
               >
                 <Link className="w-5 h-5" />
                 <span className="font-medium">More sharing options</span>
@@ -253,10 +253,10 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
           )}
 
           {/* QR Code Section */}
-          <div className="mt-4 pt-4 border-t border-gray-700">
+          <div className="mt-4 pt-4 border-t border-gray-200">
             <button
               onClick={() => setShowQR(!showQR)}
-              className="w-full flex items-center justify-center space-x-2 p-2  text-gray-300 hover:text-white hover:bg-gray-800 transition-all duration-200"
+              className="w-full flex items-center justify-center space-x-2 p-2 rounded text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-all duration-200"
             >
               <QrCode className="w-4 h-4" />
               <span className="text-sm">{showQR ? 'Hide' : 'Show'} QR Code</span>
@@ -267,9 +267,9 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
                 <Image 
                   src={shareUtils.generateQRCode(postUrl)}
                   alt="QR Code for post"
-                  width={128}
-                  height={128}
-                  className="border border-gray-700 "
+                  width={100}
+                  height={100}
+                  className="border border-gray-300 rounded"
                 />
                 <p className="text-xs text-gray-400 text-center">
                   Scan with camera to open post
@@ -281,10 +281,10 @@ export default function ShareModal({ isOpen, onClose, post }: ShareModalProps) {
 
         {/* Analytics Info */}
         <div className="px-4 pb-4">
-          <div className="bg-gray-800/30  p-3">
-            <div className="flex items-center justify-between text-xs text-gray-400">
+          <div className="bg-gray-50 rounded p-2">
+            <div className="flex items-center justify-between text-xs text-gray-600">
               <span>Post engagement</span>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
                 <span>{post.likeCount} likes</span>
                 <span>{post.commentCount} comments</span>
                 <span>{post.views} views</span>

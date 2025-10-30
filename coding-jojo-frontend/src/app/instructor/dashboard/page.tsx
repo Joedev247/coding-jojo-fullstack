@@ -15,6 +15,7 @@ import {
   ArrowUp,
   Zap
 } from 'lucide-react';
+import Header from '../../../components/dashboard/Header';
 import teacherService from '../../../services/teacherService';
 import { useToast } from '../../../hooks/useToast';
 
@@ -105,9 +106,9 @@ export default function InstructorDashboardPage() {
   const getActivityColor = (type: string) => {
     switch (type) {
       case 'course_completion':
-        return 'text-green-400';
+        return 'text-blue-400';
       case 'payment':
-        return 'text-green-400';
+        return 'text-blue-400';
       case 'enrollment':
         return 'text-blue-400';
       default:
@@ -129,7 +130,7 @@ export default function InstructorDashboardPage() {
       title: 'Schedule Live Session',
       description: 'Plan a live session with students',
       icon: <Calendar className="h-6 w-6" />,
-      color: 'from-green-500 to-teal-500',
+      color: 'from-blue-500 to-teal-500',
       href: '/instructor/live-sessions'
     },
     {
@@ -151,126 +152,112 @@ export default function InstructorDashboardPage() {
   ];
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-pink-500/10 to-orange-500/10 backdrop-blur-sm border border-gray-700/50  p-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center mr-6">
-              <BarChart3 className="h-8 w-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent mb-2">
-                Dashboard
-              </h1>
-              <p className="text-gray-300 text-lg">Welcome back! Here's your teaching overview</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
+      <div className="space-y-6">
+        <Header title="Dashboard" subtitle="Welcome back! Here's your teaching overview" />
 
-      {loading ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
-        </div>
-      ) : stats ? (
+        {loading ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          </div>
+        ) : stats ? (
         <>
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 backdrop-blur-sm border border-gray-700/50  p-6 hover:bg-gradient-to-br hover:from-blue-500/20 hover:to-cyan-500/20 transition-all duration-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm font-medium">Total Students</p>
-                  <p className="text-3xl font-bold text-white mb-2">{stats.totalStudents}</p>
+                  <p className="text-gray-600 text-xs font-medium">Total Students</p>
+                  <p className="text-xl font-bold text-gray-900 mb-1">{stats.totalStudents}</p>
                   <div className="flex items-center space-x-1">
-                    <ArrowUp className="h-4 w-4 text-green-400" />
-                    <span className="text-green-400 text-sm">+{stats.monthlyGrowth.students}% this month</span>
+                    <ArrowUp className="h-3 w-3 text-blue-600" />
+                    <span className="text-blue-600 text-xs">+{stats.monthlyGrowth.students}% this month</span>
                   </div>
                 </div>
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500  flex items-center justify-center">
-                  <Users className="h-6 w-6 text-white" />
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center">
+                  <Users className="h-4 w-4 text-white" />
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 backdrop-blur-sm border border-gray-700/50  p-6 hover:bg-gradient-to-br hover:from-green-500/20 hover:to-emerald-500/20 transition-all duration-200">
+            <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm font-medium">Total Revenue</p>
-                  <p className="text-3xl font-bold text-white mb-2">{stats.totalRevenue.toLocaleString()} XAF</p>
+                  <p className="text-gray-600 text-xs font-medium">Total Revenue</p>
+                  <p className="text-xl font-bold text-gray-900 mb-1">{stats.totalRevenue.toLocaleString()} XAF</p>
                   <div className="flex items-center space-x-1">
-                    <ArrowUp className="h-4 w-4 text-green-400" />
-                    <span className="text-green-400 text-sm">+{stats.monthlyGrowth.revenue}% this month</span>
+                    <ArrowUp className="h-3 w-3 text-blue-600" />
+                    <span className="text-blue-600 text-xs">+{stats.monthlyGrowth.revenue}% this month</span>
                   </div>
                 </div>
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500  flex items-center justify-center">
-                  <DollarSign className="h-6 w-6 text-white" />
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center">
+                  <DollarSign className="h-4 w-4 text-white" />
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-gray-700/50  p-6 hover:bg-gradient-to-br hover:from-purple-500/20 hover:to-pink-500/20 transition-all duration-200">
+            <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm font-medium">Total Courses</p>
-                  <p className="text-3xl font-bold text-white mb-2">{stats.totalCourses}</p>
+                  <p className="text-gray-600 text-xs font-medium">Total Courses</p>
+                  <p className="text-xl font-bold text-gray-900 mb-1">{stats.totalCourses}</p>
                   <div className="flex items-center space-x-1">
-                    <ArrowUp className="h-4 w-4 text-green-400" />
-                    <span className="text-green-400 text-sm">+{stats.monthlyGrowth.courses} this month</span>
+                    <ArrowUp className="h-3 w-3 text-blue-600" />
+                    <span className="text-blue-600 text-xs">+{stats.monthlyGrowth.courses} this month</span>
                   </div>
                 </div>
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500  flex items-center justify-center">
-                  <BookOpen className="h-6 w-6 text-white" />
+                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded flex items-center justify-center">
+                  <BookOpen className="h-4 w-4 text-white" />
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 backdrop-blur-sm border border-gray-700/50  p-6 hover:bg-gradient-to-br hover:from-yellow-500/20 hover:to-orange-500/20 transition-all duration-200">
+            <div className="bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm font-medium">Average Rating</p>
-                  <div className="flex items-center space-x-2 mb-2">
-                    <p className="text-3xl font-bold text-white">{stats.avgRating.toFixed(1)}</p>
+                  <p className="text-gray-600 text-xs font-medium">Average Rating</p>
+                  <div className="flex items-center space-x-2 mb-1">
+                    <p className="text-xl font-bold text-gray-900">{stats.avgRating.toFixed(1)}</p>
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`h-4 w-4 ${
-                            i < Math.floor(stats.avgRating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'
+                          className={`h-3 w-3 ${
+                            i < Math.floor(stats.avgRating) ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'
                           }`}
                         />
                       ))}
                     </div>
                   </div>
                 </div>
-                <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500  flex items-center justify-center">
-                  <Star className="h-6 w-6 text-white" />
+                <div className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded flex items-center justify-center">
+                  <Star className="h-4 w-4 text-white" />
                 </div>
               </div>
             </div>
           </div>
 
           {/* Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Recent Activity */}
-            <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50  p-6">
-              <h3 className="text-lg font-semibold text-white mb-6 flex items-center">
-                <Clock className="h-5 w-5 mr-2 text-pink-400" />
+            <div className="bg-white border border-gray-200  shadow-sm p-4">
+              <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <Clock className="h-4 w-4 mr-2 text-blue-600" />
                 Recent Activity
               </h3>
               
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {recentActivity.length > 0 ? (
                   recentActivity.map((activity) => {
                     const IconComponent = activity.icon;
                     return (
-                      <div key={activity.id} className="flex items-start space-x-3 p-4 bg-gray-800/50  border border-gray-700/50 hover:bg-gray-800/70 transition-all duration-200">
-                        <div className="p-2 bg-gray-700/50 rounded-full">
-                          <IconComponent className={`h-5 w-5 ${activity.color}`} />
+                      <div key={activity.id} className="flex items-start space-x-3 p-3 bg-gray-50 border border-gray-100 rounded hover:bg-gray-100 transition-all duration-200">
+                        <div className="p-1.5 bg-blue-100 rounded-full">
+                          <IconComponent className="h-3 w-3 text-blue-600" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-white text-sm font-medium">{activity.message}</p>
-                          <p className="text-gray-400 text-xs mt-1">
+                          <p className="text-gray-900 text-xs font-medium">{activity.message}</p>
+                          <p className="text-gray-500 text-xs mt-1">
                             {new Date(activity.timestamp).toLocaleString()}
                           </p>
                         </div>
@@ -278,35 +265,37 @@ export default function InstructorDashboardPage() {
                     );
                   })
                 ) : (
-                  <div className="text-center py-8 text-gray-400">
-                    <Clock className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>No recent activity</p>
+                  <div className="text-center py-6 text-gray-500">
+                    <Clock className="h-8 w-8 mx-auto mb-3 opacity-50" />
+                    <p className="text-xs">No recent activity</p>
                   </div>
                 )}
               </div>
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50  p-6">
-              <h3 className="text-lg font-semibold text-white mb-6 flex items-center">
-                <Zap className="h-5 w-5 mr-2 text-orange-400" />
+            <div className="bg-white border border-gray-200  shadow-sm p-4">
+              <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <Zap className="h-4 w-4 mr-2 text-blue-600" />
                 Quick Actions
               </h3>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {quickActions.map((action) => (
                   <a
                     key={action.id}
                     href={action.href}
-                    className={`group p-4  bg-gradient-to-r ${action.color} hover:shadow-lg hover:shadow-pink-500/20 transition-all duration-300 text-left border border-white/10 hover:scale-105 block`}
+                    className="group p-3 bg-gray-50 border border-gray-200 rounded hover:shadow-md hover:bg-gray-100 transition-all duration-300 text-left hover:scale-105 block"
                   >
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-white/20  group-hover:bg-white/30 transition-colors">
-                        {action.icon}
+                    <div className="flex items-center space-x-2">
+                      <div className="p-1.5 bg-blue-100 rounded group-hover:bg-blue-200 transition-colors">
+                        <div className="text-blue-600">
+                          {React.cloneElement(action.icon, { className: "h-3 w-3" })}
+                        </div>
                       </div>
                       <div>
-                        <h4 className="text-white font-semibold">{action.title}</h4>
-                        <p className="text-white/80 text-sm">{action.description}</p>
+                        <h4 className="text-gray-900 font-semibold text-xs">{action.title}</h4>
+                        <p className="text-gray-600 text-xs">{action.description}</p>
                       </div>
                     </div>
                   </a>
@@ -315,12 +304,13 @@ export default function InstructorDashboardPage() {
             </div>
           </div>
         </>
-      ) : (
-        <div className="text-center py-12 text-gray-400">
-          <BarChart3 className="h-16 w-16 mx-auto mb-4 opacity-50" />
-          <p>Failed to load dashboard data</p>
-        </div>
-      )}
+        ) : (
+          <div className="text-center py-8 text-gray-500">
+            <BarChart3 className="h-12 w-12 mx-auto mb-3 opacity-50" />
+            <p className="text-sm">Failed to load dashboard data</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

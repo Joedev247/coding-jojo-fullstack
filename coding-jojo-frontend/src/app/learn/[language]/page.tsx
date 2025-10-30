@@ -102,7 +102,7 @@ export default function LanguagePage() {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "beginner":
-        return "text-green-400 bg-green-500/10";
+        return "text-blue-400 bg-blue-500/10";
       case "intermediate":
         return "text-yellow-400 bg-yellow-500/10";
       case "advanced":
@@ -195,7 +195,7 @@ export default function LanguagePage() {
                                 </div>
                               </div>
                               {originalIndex <= currentTopicIndex && (
-                                <CheckCircle className="h-4 w-4 text-green-400 ml-2" />
+                                <CheckCircle className="h-4 w-4 text-blue-400 ml-2" />
                               )}
                             </div>
                           </button>

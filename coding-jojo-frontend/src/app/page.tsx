@@ -27,9 +27,11 @@ export const metadata: Metadata = generateSEO({
   canonical: "/",
 });
 
-function page() {
-  return <HomePageWrapper />;
+
+export default function HomePage() {
+  return (
+    <>
+      <HomePageWrapper />
+    </>
+  );
 }
-
-
-export default page

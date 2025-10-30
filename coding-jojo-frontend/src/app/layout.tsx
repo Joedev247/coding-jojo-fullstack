@@ -1,5 +1,4 @@
 import Providers from "../components/Providers";
-import AnimatedBackground from "../components/ui/AnimatedBackground";
 import CookieConsent from "../components/ui/CookieConsent";
 import { Toaster } from "sonner";
 import { ToastContainer } from "react-toastify";
@@ -277,22 +276,26 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="font-montserrat antialiased relative min-h-screen">
-        <AnimatedBackground />
-        {/* Sonner Toaster for notifications */}
+      <body className="font-montserrat antialiased bg-white text-primary-900 min-h-screen relative">
+        {/* Clean background */}
+        <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 bg-white" />
+        </div>
+
         <Toaster
           position="top-right"
           richColors
           closeButton
           expand
-          theme="dark"
+          theme="light"
           toastOptions={{
             style: {
-              background: "rgba(255, 255, 255, 0.95)",
-              border: "1px solid rgba(209, 213, 219, 0.3)",
-              color: "#111827",
+              background: "rgba(255, 255, 255, 0.98)",
+              border: "1px solid rgba(226, 232, 240, 0.8)",
+              color: "#0f172a",
               backdropFilter: "blur(8px)",
               fontSize: "14px",
+              fontWeight: "500",
             },
           }}
         />

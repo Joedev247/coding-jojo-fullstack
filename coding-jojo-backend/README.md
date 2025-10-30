@@ -63,7 +63,7 @@ src/
    npm run dev
    ```
 
-The server will start on http://localhost:5000
+The server will start on https://codingjojo-backend.onrender.com
 
 
 ## 📡 API Endpoints
@@ -122,7 +122,7 @@ The backend is designed to work seamlessly with or without a database connection
 
 - **With Database**: Full functionality with MongoDB
 - **Without Database**: Uses mock data for development
-- **Frontend Integration**: CORS configured for http://localhost:3000
+- **Frontend Integration**: CORS configured for https://codingjojo.vercel.app
 
 ## 🤝 Frontend Integration
 
@@ -159,11 +159,11 @@ This backend is specifically designed to work with the Coding JoJo Next.js front
    ```
 
 3. **Test the API**
-   - Visit http://localhost:5000
+   - Visit https://codingjojo-backend.onrender.com
 /health
-   - Register a new user: POST http://localhost:5000
+   - Register a new user: POST https://codingjojo-backend.onrender.com
 /api/auth/register
-   - Login: POST http://localhost:5000
+   - Login: POST https://codingjojo-backend.onrender.com
 /api/auth/login
 
 ## 💻 Perfect for Frontend Development

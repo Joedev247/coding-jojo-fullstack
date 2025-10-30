@@ -6,7 +6,7 @@ async function testLogin() {
   
   try {
     // Replace with your actual credentials
-    const response = await axios.post('http://localhost:5000/api/teacher/login', {
+    const response = await axios.post('https://codingjojo-backend.onrender.com/api/teacher/login', {
       email: 'joedev247@gmail.com',  // Replace with actual email
       password: 'your_password'       // Replace with actual password
     });
@@ -36,7 +36,7 @@ async function testSendEmailCodeWithToken(token) {
   
   try {
     const response = await axios.post(
-      'http://localhost:5000/api/teacher/verification/email/send-code',
+      'https://codingjojo-backend.onrender.com/api/teacher/verification/email/send-code',
       {},
       {
         headers: {

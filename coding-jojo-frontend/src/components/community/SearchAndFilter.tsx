@@ -31,26 +31,26 @@ export default function SearchAndFilter({
   };
 
   return (
-    <div className="  bg-gray-900/50 backdrop-blur-sm shadow-xl p-5 mb-6 hover:shadow-purple-900/20 transition duration-300">
+    <div className="bg-white border border-gray-200  shadow-sm p-4 mb-4 hover:shadow-md transition duration-300">
       <div className="flex flex-col md:flex-row md:items-center gap-4">
         <div className="flex-1 relative">
           <input
             type="text"
             placeholder="Search discussions..."
-                  className="w-full h-11 pl-12 pr-4 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 p-5 backdrop-blur-sm shadow-lg focus:border-pink-500/50 focus:ring-2 focus:ring-pink-500/20 text-white dark:text-white text-gray-900 text-sm outline-none transition-all duration-300 focus:shadow-lg focus:shadow-pink-500/10 placeholder-slate-400 dark:placeholder-slate-400 placeholder-slate-500"
+            className="w-full bg-gray-50 border border-gray-300  pl-10 pr-4 py-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Search className="absolute left-3 top-3 text-gray-500 w-5 h-5" />
+          <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-3 text-gray-500 hover:text-gray-300"
+              className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="14"
+                height="14"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -68,9 +68,9 @@ export default function SearchAndFilter({
           <div className="md:hidden">
             <button
               onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="bg-gray-800 px-4 py-2.5 flex items-center text-gray-300 hover:bg-gray-700 transition duration-200"
+              className="bg-gray-100 px-3 py-2  flex items-center text-gray-700 hover:bg-gray-200 transition duration-200"
             >
-              <Filter className="w-4 h-4 mr-2 text-pink-400" />
+              <Filter className="w-4 h-4 mr-2 text-blue-600" />
               Filters
               <ChevronDown
                 className={`w-4 h-4 ml-2 transition-transform duration-200 ${
@@ -80,9 +80,9 @@ export default function SearchAndFilter({
             </button>
           </div>
           <div className="hidden md:flex items-center space-x-2">
-            <span className="text-gray-400">Sort by:</span>{" "}
+            <span className="text-gray-600 text-sm">Sort by:</span>{" "}
             <select
-              className="bg-gray-800 px-3 py-2 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500 cursor-pointer"
+              className="bg-gray-50 border border-gray-300  px-2.5 py-1.5 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
               value={sortOrder}
               onChange={(e) =>
                 setSortOrder(
@@ -101,14 +101,14 @@ export default function SearchAndFilter({
 
       {/* Mobile filters */}
       {showMobileFilters && (
-        <div className="mt-4 md:hidden border-t border-gray-700 pt-4">
+        <div className="mt-3 md:hidden border-t border-gray-200 pt-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">
+              <label className="block text-sm text-gray-600 mb-1">
                 Categories
               </label>
               <select
-                className="w-full  bg-gray-900 px-3 py-2.5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full bg-gray-50 border border-gray-300  px-2.5 py-2 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={activeTab}
                 onChange={(e) => setActiveTab(e.target.value)}
               >
@@ -126,11 +126,11 @@ export default function SearchAndFilter({
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">
+              <label className="block text-sm text-gray-600 mb-1">
                 Sort by
               </label>{" "}
               <select
-                className="w-full  bg-gray-900 px-3 py-2.5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full bg-gray-50 border border-gray-300  px-2.5 py-2 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={sortOrder}
                 onChange={(e) =>
                   setSortOrder(
@@ -149,10 +149,10 @@ export default function SearchAndFilter({
               </select>
             </div>
           </div>
-          <div className="mt-3 flex justify-end">
+          <div className="mt-2 flex justify-end">
             <button
               onClick={handleClearFilters}
-              className="text-pink-400 hover:text-pink-300 text-sm font-medium"
+              className="text-blue-600 hover:text-blue-700 text-xs font-medium"
             >
               Clear filters
             </button>

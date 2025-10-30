@@ -203,7 +203,7 @@ const CourseUploadForm: React.FC<CourseUploadFormProps> = ({ onCourseCreated }) 
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-900 rounded-lg">
+    <div className="max-w-4xl mx-auto p-6 bg-gray-900 ">
       <h2 className="text-2xl font-bold text-white mb-6">Create New Course</h2>
       
       <form onSubmit={handleCreateCourse} className="space-y-6">
@@ -217,7 +217,7 @@ const CourseUploadForm: React.FC<CourseUploadFormProps> = ({ onCourseCreated }) 
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white"
+              className="w-full px-3 py-2 bg-gray-800 border border-gray-700  text-white"
               required
             />
           </div>
@@ -229,7 +229,7 @@ const CourseUploadForm: React.FC<CourseUploadFormProps> = ({ onCourseCreated }) 
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white"
+              className="w-full px-3 py-2 bg-gray-800 border border-gray-700  text-white"
               required
             >
               <option value="">Select Category</option>
@@ -248,7 +248,7 @@ const CourseUploadForm: React.FC<CourseUploadFormProps> = ({ onCourseCreated }) 
           <textarea
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white"
+            className="w-full px-3 py-2 bg-gray-800 border border-gray-700  text-white"
             rows={4}
             required
           />
@@ -261,7 +261,7 @@ const CourseUploadForm: React.FC<CourseUploadFormProps> = ({ onCourseCreated }) 
             <label className="block text-sm font-medium text-gray-300 mb-2">
               Course Thumbnail
             </label>
-            <div className="border-2 border-dashed border-gray-700 rounded-lg p-6 text-center">
+            <div className="border-2 border-dashed border-gray-700  p-6 text-center">
               {thumbnailPreview ? (
                 <div className="relative">
                   <img src={thumbnailPreview} alt="Preview" className="w-full h-32 object-cover rounded" />
@@ -296,10 +296,10 @@ const CourseUploadForm: React.FC<CourseUploadFormProps> = ({ onCourseCreated }) 
             <label className="block text-sm font-medium text-gray-300 mb-2">
               Course Video
             </label>
-            <div className="border-2 border-dashed border-gray-700 rounded-lg p-6 text-center">
+            <div className="border-2 border-dashed border-gray-700  p-6 text-center">
               {videoFile ? (
                 <div className="flex items-center justify-center space-x-2">
-                  <FileVideo className="w-8 h-8 text-green-400" />
+                  <FileVideo className="w-8 h-8 text-blue-400" />
                   <span className="text-white">{videoFile.name}</span>
                   <button
                     type="button"
@@ -331,7 +331,7 @@ const CourseUploadForm: React.FC<CourseUploadFormProps> = ({ onCourseCreated }) 
             type="button"
             onClick={handleUploadFiles}
             disabled={!thumbnailFile || !videoFile || isUploading}
-            className="bg-pink-600 hover:bg-pink-700 disabled:bg-gray-600 text-white px-6 py-2 rounded-md flex items-center space-x-2"
+            className="bg-pink-600 hover:bg-pink-700 disabled:bg-gray-600 text-white px-6 py-2  flex items-center space-x-2"
           >
             <Upload className="w-4 h-4" />
             <span>{isUploading ? 'Uploading...' : 'Upload Files'}</span>
@@ -343,7 +343,7 @@ const CourseUploadForm: React.FC<CourseUploadFormProps> = ({ onCourseCreated }) 
           <button
             type="submit"
             disabled={!uploadedThumbnail || !uploadedVideo || isCreating}
-            className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white px-8 py-3 rounded-md text-lg"
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-8 py-3  text-lg"
           >
             {isCreating ? 'Creating Course...' : 'Create Course'}
           </button>

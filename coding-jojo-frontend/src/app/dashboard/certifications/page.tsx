@@ -46,16 +46,19 @@ const Certifications: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <Loader className="h-8 w-8 animate-spin" />
+      <div className="flex items-center justify-center h-48 p-4">
+        <div className="flex flex-col items-center gap-3">
+          <Loader className="h-6 w-6 animate-spin text-blue-600" />
+          <p className="text-gray-600 text-sm">Loading certifications...</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-8">
-        <p className="text-red-500">{error}</p>
+      <div className="text-center py-6 p-4">
+        <p className="text-red-600 text-sm">{error}</p>
       </div>
     );
   }
@@ -65,63 +68,63 @@ const Certifications: React.FC = () => {
 
   return (
     <>
-      <div className="space-y-8">
+      <div className="space-y-4 p-4">
         {/* Header */}
-        <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-8">
+        <div className="bg-white/90 backdrop-blur-sm border border-blue-200  p-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-lg font-bold text-gray-800">
               Certifications & Badges
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">
+            <p className="text-gray-600 mt-1 text-sm">
               Track your achievements and earned certifications
             </p>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white/90 backdrop-blur-sm border border-blue-200  p-4">
             <div className="flex items-center">
-              <div className="p-3 bg-blue-100 dark:bg-blue-900/20 ">
-                <Award className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+              <div className="p-2 bg-blue-100 ">
+                <Award className="h-4 w-4 text-blue-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="ml-3">
+                <p className="text-xs font-medium text-gray-600">
                   Total Certificates
                 </p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                <p className="text-xl font-bold text-blue-600">
                   {certificates.length}
                 </p>
               </div>
             </div>
           </div>
 
-        <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-8">
+        <div className="bg-white/90 backdrop-blur-sm border border-blue-200  p-4">
             <div className="flex items-center">
-              <div className="p-3 bg-yellow-100 dark:bg-yellow-900/20 ">
-                <Trophy className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+              <div className="p-2 bg-blue-100 ">
+                <Trophy className="h-4 w-4 text-blue-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="ml-3">
+                <p className="text-xs font-medium text-gray-600">
                   Badges Earned
                 </p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                <p className="text-xl font-bold text-blue-600">
                   {badges.length}
                 </p>
               </div>
             </div>
           </div>
 
-        <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-8">
+        <div className="bg-white/90 backdrop-blur-sm border border-blue-200  p-4">
             <div className="flex items-center">
-              <div className="p-3 bg-green-100 dark:bg-green-900/20 ">
-                <Star className="h-6 w-6 text-green-600 dark:text-green-400" />
+              <div className="p-2 bg-blue-100 ">
+                <Star className="h-4 w-4 text-blue-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="ml-3">
+                <p className="text-xs font-medium text-gray-600">
                   Skills Earned
                 </p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                <p className="text-xl font-bold text-blue-600">
                   {certificationData?.stats.earned || 0}
                 </p>
               </div>
@@ -130,24 +133,24 @@ const Certifications: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 p-8">
-          <nav className="flex space-x-8">
+        <div className="bg-white/90 backdrop-blur-sm border border-blue-200  p-4">
+          <nav className="flex space-x-6">
             <button
               onClick={() => setActiveTab("certificates")}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              className={`py-2 px-3  font-medium text-xs transition-all duration-300 ${
                 activeTab === "certificates"
-                  ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                  : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                  ? "bg-gradient-to-r from-blue-600 to-emerald-600 text-white"
+                  : "text-gray-600 hover:text-gray-800 hover:bg-gray-100"
               }`}
             >
               Certificates ({certificates.length})
             </button>
             <button
               onClick={() => setActiveTab("badges")}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              className={`py-2 px-3  font-medium text-xs transition-all duration-300 ${
                 activeTab === "badges"
-                  ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                  : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                  ? "bg-gradient-to-r from-blue-600 to-emerald-600 text-white"
+                  : "text-gray-600 hover:text-gray-800 hover:bg-gray-100"
               }`}
             >
               Badges ({badges.length})
@@ -157,11 +160,11 @@ const Certifications: React.FC = () => {
 
         {/* Certificates Tab */}
         {activeTab === "certificates" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {certificates.length === 0 ? (
-              <div className="col-span-full text-center py-12">
-                <Award className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400 text-lg mb-2">No certificates yet</p>
+              <div className="col-span-full text-center py-8">
+                <Award className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+                <p className="text-gray-600 text-xs mb-2">No certificates yet</p>
                 <p className="text-gray-500 text-sm">
                   Complete courses to earn certificates
                 </p>
@@ -169,36 +172,36 @@ const Certifications: React.FC = () => {
             ) : (
               certificates.map((certificate) => (
                 <div key={certificate.id} className="group relative">
-                  <div className="bg-white dark:bg-gray-800  p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300">
+                  <div className="bg-white/90 backdrop-blur-sm border border-blue-200  p-4 hover:border-blue-300 hover:shadow-lg transition-all duration-300">
                     <div className="text-center">
-                      <div className="mb-4">
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full">
-                          <Award className="h-8 w-8 text-white" />
+                      <div className="mb-3">
+                        <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full">
+                          <Award className="h-6 w-6 text-white" />
                         </div>
                       </div>
-                      <h3 className="font-semibold text-lg mb-2 dark:text-white">
+                      <h3 className="font-semibold text-sm mb-2 text-gray-800">
                         {certificate.course}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
+                      <p className="text-gray-600 text-xs mb-3">
                         Course Certificate
                       </p>
-                      <div className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
-                        <div className="flex items-center justify-center gap-2">
-                          <Calendar className="h-4 w-4" />
+                      <div className="space-y-1 text-xs text-gray-500">
+                        <div className="flex items-center justify-center gap-1">
+                          <Calendar className="h-3 w-3" />
                           <span>{new Date(certificate.issueDate).toLocaleDateString()}</span>
                         </div>
-                        <div className="flex items-center justify-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500" />
+                        <div className="flex items-center justify-center gap-1">
+                          <CheckCircle className="h-3 w-3 text-blue-600" />
                           <span>Grade: {certificate.grade}</span>
                         </div>
                       </div>
-                      <div className="mt-4 flex gap-2 justify-center">
-                        <button className="flex items-center gap-2 px-3 py-2 bg-pink-600 hover:bg-pink-700 text-white text-sm  transition-colors">
-                          <Download className="h-4 w-4" />
+                      <div className="mt-3 flex gap-2 justify-center">
+                        <button className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-blue-800 text-white text-xs rounded transition-colors">
+                          <Download className="h-3 w-3" />
                           Download
                         </button>
-                        <button className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm  transition-colors">
-                          <Share2 className="h-4 w-4" />
+                        <button className="flex items-center gap-1 px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded transition-colors">
+                          <Share2 className="h-3 w-3" />
                           Share
                         </button>
                       </div>
@@ -212,11 +215,11 @@ const Certifications: React.FC = () => {
 
         {/* Badges Tab */}
         {activeTab === "badges" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {badges.length === 0 ? (
-              <div className="col-span-full text-center py-12">
-                <Trophy className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400 text-lg mb-2">No badges earned yet</p>
+              <div className="col-span-full text-center py-8">
+                <Trophy className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+                <p className="text-gray-600 text-xs mb-2">No badges earned yet</p>
                 <p className="text-gray-500 text-sm">
                   Complete courses and achievements to earn badges
                 </p>
@@ -224,20 +227,20 @@ const Certifications: React.FC = () => {
             ) : (
               badges.map((badge) => (
                 <div key={badge.id} className="group relative">
-                  <div className="bg-white dark:bg-gray-800  p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300">
+                  <div className="bg-white/90 backdrop-blur-sm border border-blue-200  p-4 hover:border-blue-300 hover:shadow-lg transition-all duration-300">
                     <div className="text-center">
-                      <div className="mb-4">
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full">
-                          <Trophy className="h-8 w-8 text-white" />
+                      <div className="mb-3">
+                        <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full">
+                          <Trophy className="h-6 w-6 text-white" />
                         </div>
                       </div>
-                      <h3 className="font-semibold text-lg mb-2 dark:text-white">
+                      <h3 className="font-semibold text-sm mb-2 text-gray-800">
                         {badge.name}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
+                      <p className="text-gray-600 text-xs mb-3">
                         {badge.description}
                       </p>
-                      <span className="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs font-medium rounded-full">
+                      <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">
                         Earned {new Date(badge.earnedDate).toLocaleDateString()}
                       </span>
                     </div>

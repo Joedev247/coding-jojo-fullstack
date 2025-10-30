@@ -36,6 +36,8 @@ export default function CoursesPage() {
   const [showMobileFilters, setShowMobileFilters] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<string>("popular");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const PAGE_SIZE = 9; // show up to 9 courses per page
 
   // Fetch courses from API
   useEffect(() => {
@@ -111,7 +113,7 @@ export default function CoursesPage() {
         icon = <Code className="w-4 h-4 text-blue-400" />;
         break;
       case "data science":
-        icon = <Database className="w-4 h-4 text-green-400" />;
+        icon = <Database className="w-4 h-4 text-blue-400" />;
         break;
       case "mobile":
         icon = <Smartphone className="w-4 h-4 text-orange-400" />;
@@ -184,6 +186,14 @@ export default function CoursesPage() {
 
     return filtered;
   })();
+
+  // Reset page when filters change so user sees first page of results
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, activeLevel, searchQuery, sortOrder]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredCourses.length / PAGE_SIZE));
+  const paginatedCourses = filteredCourses.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   const handleSaveCourse = (courseId: string) => {
     setCourses((prevCourses) =>
       prevCourses.map((course) => {
@@ -208,13 +218,13 @@ export default function CoursesPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen text-white relative">
+      <div className="min-h-screen bg-white text-gray-800 relative">
         {/* <HeaderSection /> */}
         <FeaturedCourseBanner />
 
         {/* Main Content Container */}
-        <div className="max-w-[1400px] mx-auto px-4 py-6 relative z-10">
-          <div className="flex flex-col text-white lg:flex-row gap-6">
+        <div className="max-w-7xl mx-auto px-4 py-4 relative z-10">
+          <div className="flex flex-col text-gray-800 lg:flex-row gap-4">
             <CategorySidebar
               categories={categoriesWithIcons}
               activeCategory={activeCategory}
@@ -244,10 +254,10 @@ export default function CoursesPage() {
                 categories={categoriesWithIcons}
               />
               {/* Results Info */}
-              <div className="flex items-center justify-between mb-6 px-1">
-                <div className="text-gray-300">
+              <div className="flex items-center justify-between mb-4 px-1">
+                <div className="text-gray-600 text-sm">
                   Showing{" "}
-                  <span className="font-medium text-white">
+                  <span className="font-medium text-gray-800">
                     {courses.length}
                   </span>{" "}
                   courses
@@ -255,7 +265,7 @@ export default function CoursesPage() {
                     <span>
                       {" "}
                       in{" "}
-                      <span className="text-pink-400 font-medium capitalize">
+                      <span className="text-blue-600 font-medium capitalize">
                         {activeCategory}
                       </span>
                     </span>
@@ -264,7 +274,7 @@ export default function CoursesPage() {
                       <span>
                         {" "}
                         •{" "}
-                        <span className="text-pink-400 font-medium capitalize">
+                        <span className="text-blue-600 font-medium capitalize">
                           {activeLevel} level
                         </span>
                       </span>
@@ -276,20 +286,20 @@ export default function CoursesPage() {
                     searchQuery) && (
                     <button
                       onClick={handleClearFilters}
-                      className="text-sm text-pink-400 hover:text-pink-300 font-medium flex items-center"
+                      className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center"
                     >
                       Clear filters
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
+                        width="14"
+                        height="14"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="ml-1.5"
+                        className="ml-1"
                       >
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -300,20 +310,20 @@ export default function CoursesPage() {
               </div>{" "}
               {/* No Results */}
               {filteredCourses.length === 0 && !loading && (
-                <div className="  bg-gray-900/50 backdrop-blur-sm p-10 text-center">
-                  <div className="flex justify-center mb-4">
-                    <Search className="w-12 h-12 text-gray-500" />
+                <div className="bg-white border border-gray-200  shadow-sm p-8 text-center">
+                  <div className="flex justify-center mb-3">
+                    <Search className="w-10 h-10 text-gray-400" />
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
                     No courses found
                   </h3>
-                  <p className="text-gray-400 mb-6">
+                  <p className="text-gray-600 mb-4 text-sm">
                     We couldn&apos;t find any courses matching your current
                     filters.
                   </p>
                   <button
                     onClick={handleClearFilters}
-                    className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2.5 font-medium transition duration-200"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm font-medium  transition duration-200"
                   >
                     Clear all filters
                   </button>
@@ -321,11 +331,11 @@ export default function CoursesPage() {
               )}
               {/* Loading State */}
               {loading && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                   {[...Array(6)].map((_, i) => (
                     <div
                       key={i}
-                      className="h-96  bg-gray-900  animate-pulse"
+                      className="h-80 bg-gray-200  animate-pulse"
                     ></div>
                   ))}
                 </div>
@@ -335,8 +345,8 @@ export default function CoursesPage() {
                 <>
                   {" "}
                   {viewMode === "grid" ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                      {filteredCourses.map((course) => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                      {paginatedCourses.map((course) => (
                         <CourseCard
                           key={course.id}
                           course={course}
@@ -345,8 +355,8 @@ export default function CoursesPage() {
                       ))}
                     </div>
                   ) : (
-                    <div className="space-y-5">
-                      {filteredCourses.map((course) => (
+                    <div className="space-y-3">
+                      {paginatedCourses.map((course) => (
                         <CourseListItem
                           key={course.id}
                           course={course}
@@ -358,7 +368,9 @@ export default function CoursesPage() {
                 </>
               )}
               {/* Pagination */}
-              {courses.length > 0 && <Pagination />}
+              {filteredCourses.length > 0 && (
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+              )}
             </div>
           </div>
         </div>

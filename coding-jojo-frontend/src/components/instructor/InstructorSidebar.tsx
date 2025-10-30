@@ -13,8 +13,10 @@ import {
   Plus,
   Menu,
   X,
-  Zap,
-  Star,
+  ChevronLeft,
+  ChevronRight,
+  Home,
+  Code2,
 } from "lucide-react";
 
 interface NavItem {
@@ -34,11 +36,23 @@ interface InstructorData {
   avatar?: string;
 }
 
-const InstructorSidebar: React.FC = () => {
+interface InstructorSidebarProps {
+  onCollapseChange?: (isCollapsed: boolean) => void;
+}
+
+const InstructorSidebar: React.FC<InstructorSidebarProps> = ({ onCollapseChange }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [instructor, setInstructor] = useState<InstructorData | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Notify parent component about collapse state changes
+  useEffect(() => {
+    if (onCollapseChange) {
+      onCollapseChange(isCollapsed);
+    }
+  }, [isCollapsed, onCollapseChange]);
 
   useEffect(() => {
     // Get instructor data from localStorage/sessionStorage
@@ -67,37 +81,37 @@ const InstructorSidebar: React.FC = () => {
     {
       name: "Dashboard",
       href: "/instructor/dashboard",
-      icon: <BarChart3 className="w-5 h-5" />,
+      icon: <BarChart3 className="w-3.5 h-3.5" />,
     },
     {
       name: "Courses",
       href: "/instructor/courses",
-      icon: <BookOpen className="w-5 h-5" />,
+      icon: <BookOpen className="w-3.5 h-3.5" />,
     },
     {
       name: "New Course",
       href: "/instructor/courses/new",
-      icon: <Plus className="w-5 h-5" />,
+      icon: <Plus className="w-3.5 h-3.5" />,
     },
     {
       name: "Live Sessions",
       href: "/instructor/live-sessions",
-      icon: <Video className="w-5 h-5" />,
+      icon: <Video className="w-3.5 h-3.5" />,
     },
     {
       name: "Certificates",
       href: "/instructor/certificates",
-      icon: <Award className="w-5 h-5" />,
+      icon: <Award className="w-3.5 h-3.5" />,
     },
     {
       name: "Students",
       href: "/instructor/students",
-      icon: <Users className="w-5 h-5" />,
+      icon: <Users className="w-3.5 h-3.5" />,
     },
     {
       name: "Settings",
       href: "/instructor/settings",
-      icon: <Settings className="w-5 h-5" />,
+      icon: <Settings className="w-3.5 h-3.5" />,
     },
   ];
 
@@ -108,55 +122,48 @@ const InstructorSidebar: React.FC = () => {
   return (
     <>
       {/* Mobile menu button */}
-      <div className="fixed top-4 left-4 z-50 md:hidden">
+      <div className="fixed top-3 left-3 z-50 md:hidden">
         <button
           onClick={toggleMobileMenu}
-          className="p-2  bg-gray-900/80 backdrop-blur-sm"
+          className="p-2  bg-blue-600/90 backdrop-blur-sm shadow-sm hover:bg-blue-700 transition-colors"
         >
           {isMobileMenuOpen ? (
-            <X className="w-6 h-6 text-gray-300" />
+            <X className="w-5 h-5 text-white" />
           ) : (
-            <Menu className="w-6 h-6 text-gray-300" />
+            <Menu className="w-5 h-5 text-white" />
           )}
         </button>
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-        <div className="flex flex-col flex-grow rounded-r-lg bg-gray-900/70 backdrop-blur-sm overflow-y-auto">
-          <div className="flex items-center mt-5 mb-10 justify-center flex-shrink-0 px-4">
-            <div className="flex flex-col items-center justify-center group cursor-pointer transition-all duration-300 hover:scale-105">
-              <div className="flex items-center space-x-4">
-                {/* Interactive Logo */}
-                <Link
-                  href="/"
-                  className="group flex items-center space-x-2 hover:scale-105 transition-all duration-300"
-                  title="Instructor Dashboard"
-                >
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-orange-600 blur opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative transition-colors duration-300">
-                      <img
-                        src="/loading-spinner.png"
-                        className="w-10 h-10 text-pink-400 group-hover:text-pink-300 transition-colors duration-300"
-                        alt="#"
-                      />
-                    </div>
+      <div className="hidden md:flex md:flex-col md:fixed md:inset-y-0 z-40">
+        <div className={`flex flex-col flex-grow bg-gradient-to-br from-blue-600 to-blue-800 border-r border-blue-500/30 shadow-lg overflow-y-auto transition-all duration-300 ease-in-out ${
+          isCollapsed ? 'md:w-14' : 'md:w-56'
+        }`}>
+          <div className={`flex items-center ${isCollapsed ? 'justify-center px-2' : 'justify-between px-3'} h-12 border-b border-blue-500/30 flex-shrink-0`}>
+            {!isCollapsed && (
+              <Link href="/instructor/dashboard">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 bg-white/10  flex items-center justify-center">
+                    <Code2 className="w-3.5 h-3.5 text-white" />
                   </div>
-                  <div className="hidden md:flex flex-col">
-                    <span className="text-white font-bold text-lg bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent group-hover:from-pink-300 group-hover:to-orange-300 transition-all duration-300">
-                      CODING JOJO
-                    </span>
-                    <span className="text-xs text-gray-400 font-medium tracking-wide">
-                      Instructor
-                    </span>
-                  </div>
-                </Link>
-              </div>
-            </div>
+                  <span className="font-semibold text-sm text-white">Coding Jojo</span>
+                </div>
+              </Link>
+            )}
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className={`p-1  hover:bg-blue-700/50 text-blue-200 hover:text-white transition-all duration-200 ${isCollapsed ? 'mx-auto' : ''}`}
+            >
+              {isCollapsed ? (
+                <ChevronRight className="w-3.5 h-3.5 transition-transform duration-300" />
+              ) : (
+                <ChevronLeft className="w-3.5 h-3.5 transition-transform duration-300" />
+              )}
+            </button>
           </div>
-          <div className="mt-2 flex-1 flex flex-col">
-            <nav className="flex-1 px-2 space-y-1">
+          <div className="mt-1 flex-1 flex flex-col">
+            <nav className="flex-1 px-2 space-y-0.5">
               {navigation.map((item) => {
                 const isActive = pathname === item.href;
                 const isParentActive =
@@ -167,38 +174,40 @@ const InstructorSidebar: React.FC = () => {
                   <Link
                     key={item.name}
                     href={item.href}
+                    title={isCollapsed ? item.name : undefined}
                     className={`
-                      group flex items-center px-4 py-3 text-sm font-medium 
-                      transition-all duration-300 ease-in-out transform
+                      group flex items-center  transition-all duration-200 ease-in-out relative
+                      ${isCollapsed ? 'px-2 py-2 justify-center' : 'px-3 py-2'}
                       ${
                         activeState
-                          ? "bg-gradient-to-r from-pink-600/40 to-orange-600/40 text-white shadow-lg scale-105 border-l-4 border-pink-400"
-                          : "text-gray-300 hover:bg-gray-800/60 hover:text-white hover:scale-102 hover:shadow-md"
+                          ? "bg-white/10 text-white shadow-sm border-l-2 border-white/50"
+                          : "text-blue-100 hover:bg-white/5 hover:text-white"
                       }
                     `}
                   >
                     <span
-                      className={`mr-3 transition-all duration-300 ${
+                      className={`transition-all duration-200 ${isCollapsed ? 'transform hover:scale-110' : ''} ${
                         activeState
-                          ? "text-pink-300 scale-110"
-                          : "text-gray-400 group-hover:text-pink-400"
+                          ? "text-white"
+                          : "text-blue-200 group-hover:text-white"
                       }`}
                     >
                       {item.icon}
                     </span>
-                    <span
-                      className={`transition-all duration-300 ${
-                        activeState
-                          ? "font-semibold"
-                          : "group-hover:font-medium"
-                      }`}
-                    >
-                      {item.name}
-                    </span>
-                    {activeState && (
-                      <div className="ml-auto flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse" />
-                        <div className="w-1.5 h-8 bg-gradient-to-b from-pink-400 to-orange-500 rounded-full shadow-lg" />
+                    {!isCollapsed && (
+                      <span
+                        className={`ml-3 text-sm transition-all duration-200 ${
+                          activeState
+                            ? "font-medium text-white"
+                            : "group-hover:font-medium"
+                        }`}
+                      >
+                        {item.name}
+                      </span>
+                    )}
+                    {activeState && !isCollapsed && (
+                      <div className="ml-auto">
+                        <div className="w-1.5 h-1.5 bg-white rounded-full" />
                       </div>
                     )}
                   </Link>
@@ -206,42 +215,43 @@ const InstructorSidebar: React.FC = () => {
               })}
             </nav>
           </div>
-          <div className="flex-shrink-0 flex rounded-bl-lg bg-gray-900 p-4">
-            <div className="flex items-center">
-              <div className="relative">
-                {(instructor?.profilePicture || instructor?.avatar) ? (
-                  <img
-                    className="inline-block rounded-full h-9 w-9 object-cover border-2 border-gray-600"
-                    src={instructor.profilePicture || instructor.avatar}
-                    alt={instructor?.name || instructor?.firstName || "Instructor Avatar"}
-                  />
-                ) : (
-                  <div className="inline-block rounded-full h-9 w-9 bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white font-bold text-sm border-2 border-gray-600">
-                    {getUserInitials(
-                      instructor?.name || 
-                      (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
-                      instructor?.email || 
-                      "Instructor"
-                    )}
+          {!isCollapsed && (
+            <div className="flex-shrink-0 border-t border-blue-500/30 bg-blue-700/30 p-3">
+              <div className="flex items-center">
+                <div className="relative">
+                  {(instructor?.profilePicture || instructor?.avatar) ? (
+                    <img
+                      className="inline-block rounded-full h-8 w-8 object-cover border-2 border-white/20"
+                      src={instructor.profilePicture || instructor.avatar}
+                      alt={instructor?.name || instructor?.firstName || "Instructor Avatar"}
+                    />
+                  ) : (
+                    <div className="inline-block rounded-full h-8 w-8 bg-white/20 flex items-center justify-center text-white font-medium text-xs border-2 border-white/20">
+                      {getUserInitials(
+                        instructor?.name || 
+                        (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
+                        instructor?.email || 
+                        "Instructor"
+                      )}
+                    </div>
+                  )}
+                  <div className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-blue-400 rounded-full border border-blue-700">
                   </div>
-                )}
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs">⭐</span>
+                </div>
+                <div className="ml-2 min-w-0">
+                  <p className="text-xs font-medium text-white truncate">
+                    {instructor?.name || 
+                     (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
+                     instructor?.email || 
+                     "Instructor"}
+                  </p>
+                  <p className="text-xs text-blue-200">
+                    Instructor
+                  </p>
                 </div>
               </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-300">
-                  {instructor?.name || 
-                   (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
-                   instructor?.email || 
-                   "Instructor"}
-                </p>
-                <p className="text-xs font-medium text-gray-500">
-                  Instructor Panel
-                </p>
-              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -253,48 +263,35 @@ const InstructorSidebar: React.FC = () => {
             onClick={toggleMobileMenu}
           ></div>
 
-          <div className="relative flex-1 flex flex-col max-w-xs w-full rounded-r-lg bg-gray-900/90 backdrop-blur-sm">
+          <div className="relative flex-1 flex flex-col max-w-xs w-full rounded-r-lg bg-gradient-to-br from-blue-600 to-blue-800 backdrop-blur-sm">
             <div className="absolute top-0 right-0 -mr-12 pt-2">
               <button
-                className="ml-1 flex items-center justify-center h-10 w-10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                className="ml-1 flex items-center justify-center h-8 w-8  bg-blue-600/80 hover:bg-blue-700 text-white transition-colors"
                 onClick={toggleMobileMenu}
               >
-                <span className="sr-only">Close sidebar</span>
+                <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="flex-1 h-0 pt-5 overflow-y-auto">
-              <div className="flex items-center justify-center flex-shrink-0 px-4 mb-8">
-                <div className="flex flex-col items-center justify-center group cursor-pointer transition-all duration-300">
-                  <div className="flex items-center space-x-4">
-                    {/* Interactive Logo */}
-                    <Link
-                      href="/"
-                      className="group flex items-center space-x-2 hover:scale-105 transition-all duration-300"
-                      title="Instructor Dashboard"
-                    >
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-orange-600 blur opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="relative transition-colors duration-300">
-                          <img
-                            src="/loading-spinner.png"
-                            className="w-10 h-10 text-pink-400 group-hover:text-pink-300 transition-colors duration-300"
-                            alt="#"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-white font-bold text-lg bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent group-hover:from-pink-300 group-hover:to-orange-300 transition-all duration-300">
-                          CODING JOJO
-                        </span>
-                        <span className="text-xs text-gray-400 font-medium tracking-wide">
-                          Instructor
-                        </span>
-                      </div>
-                    </Link>
+            <div className="flex-1 h-0 pt-4 overflow-y-auto">
+              <div className="flex items-center justify-center flex-shrink-0 px-4 mb-6">
+                <Link
+                  href="/instructor/dashboard"
+                  className="flex items-center space-x-2"
+                >
+                  <div className="w-8 h-8 bg-white/10  flex items-center justify-center">
+                    <Code2 className="w-5 h-5 text-white" />
                   </div>
-                </div>
+                  <div className="flex flex-col">
+                    <span className="text-white font-semibold text-xs">
+                      Coding Jojo
+                    </span>
+                    <span className="text-xs text-blue-200 font-medium">
+                      Instructor
+                    </span>
+                  </div>
+                </Link>
               </div>
-              <nav className="mt-2 px-2 space-y-1">
+              <nav className="mt-1 px-2 space-y-0.5">
                 {navigation.map((item) => {
                   const isActive = pathname === item.href;
                   const isParentActive =
@@ -307,53 +304,53 @@ const InstructorSidebar: React.FC = () => {
                       key={item.name}
                       href={item.href}
                       className={`
-                        group flex items-center px-4 py-3 text-sm font-medium 
-                        transition-all duration-300 ease-in-out transform
+                        group flex items-center px-3 py-2 text-sm font-medium 
+                        transition-all duration-200 ease-in-out
                         ${
                           activeState
-                            ? "bg-gradient-to-r from-pink-600/40 to-orange-600/40 text-white shadow-lg scale-105 border-l-4 border-pink-400"
-                            : "text-gray-300 hover:bg-gray-800/60 hover:text-white hover:scale-102"
+                            ? "bg-white/10 text-white shadow-sm border-l-2 border-white/50"
+                            : "text-blue-100 hover:bg-white/5 hover:text-white"
                         }
                       `}
                       onClick={toggleMobileMenu}
                     >
                       <span
-                        className={`mr-3 transition-all duration-300 ${
+                        className={`mr-3 transition-all duration-200 ${
                           activeState
-                            ? "text-pink-300 scale-110"
-                            : "text-gray-400 group-hover:text-pink-400"
+                            ? "text-white"
+                            : "text-blue-200 group-hover:text-white"
                         }`}
                       >
                         {item.icon}
                       </span>
                       <span
-                        className={`transition-all duration-300 ${
+                        className={`transition-all duration-200 ${
                           activeState
-                            ? "font-semibold"
+                            ? "font-medium text-white"
                             : "group-hover:font-medium"
                         }`}
                       >
                         {item.name}
                       </span>
                       {activeState && (
-                        <div className="ml-auto w-2 h-2 bg-pink-400 rounded-full animate-pulse" />
+                        <div className="ml-auto w-1.5 h-1.5 bg-white rounded-full" />
                       )}
                     </Link>
                   );
                 })}
               </nav>
             </div>
-            <div className="flex-shrink-0 flex rounded-bl-lg bg-gray-900 p-4">
+            <div className="flex-shrink-0 border-t border-blue-500/30 bg-blue-700/30 p-3">
               <div className="flex items-center">
                 <div className="relative">
                   {(instructor?.profilePicture || instructor?.avatar) ? (
                     <img
-                      className="inline-block rounded-full h-9 w-9 object-cover border-2 border-gray-600"
+                      className="inline-block rounded-full h-8 w-8 object-cover border-2 border-white/20"
                       src={instructor.profilePicture || instructor.avatar}
                       alt={instructor?.name || instructor?.firstName || "Instructor Avatar"}
                     />
                   ) : (
-                    <div className="inline-block rounded-full h-9 w-9 bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white font-bold text-sm border-2 border-gray-600">
+                    <div className="inline-block rounded-full h-8 w-8 bg-white/20 flex items-center justify-center text-white font-medium text-xs border-2 border-white/20">
                       {getUserInitials(
                         instructor?.name || 
                         (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
@@ -362,19 +359,18 @@ const InstructorSidebar: React.FC = () => {
                       )}
                     </div>
                   )}
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs">⭐</span>
+                  <div className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-blue-400 rounded-full border border-blue-700">
                   </div>
                 </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-300">
+                <div className="ml-2 min-w-0">
+                  <p className="text-sm font-medium text-white truncate">
                     {instructor?.name || 
                      (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
                      instructor?.email || 
                      "Instructor"}
                   </p>
-                  <p className="text-xs font-medium text-gray-500">
-                    Instructor Panel
+                  <p className="text-xs text-blue-200">
+                    Instructor
                   </p>
                 </div>
               </div>

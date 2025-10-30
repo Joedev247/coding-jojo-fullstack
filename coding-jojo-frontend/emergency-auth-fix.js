@@ -26,7 +26,7 @@
     
     try {
       // Try to get fresh token using existing session
-      const response = await fetch('http://localhost:5000/api/auth/me', {
+      const response = await fetch('https://codingjojo-backend.onrender.com/api/auth/me', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -41,7 +41,7 @@
         
         // If we have user data but no token, this indicates a session-based auth
         // Let's try to refresh the token
-        const refreshResponse = await fetch('http://localhost:5000/api/auth/refresh-token', {
+        const refreshResponse = await fetch('https://codingjojo-backend.onrender.com/api/auth/refresh-token', {
           method: 'POST',
           credentials: 'include',
           headers: {
@@ -76,7 +76,7 @@
     console.log("🚨 Emergency login attempt...");
     
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('https://codingjojo-backend.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -123,7 +123,7 @@
     }
     
     try {
-      const response = await fetch('http://localhost:5000/api/auth/me', {
+      const response = await fetch('https://codingjojo-backend.onrender.com/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

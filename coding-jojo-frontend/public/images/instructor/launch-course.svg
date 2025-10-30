@@ -1,0 +1,148 @@
+<svg width="100%" height="100%" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="400" height="225" fill="url(#bg-gradient)" rx="8"/>
+  
+  <!-- Globe/World -->
+  <g transform="translate(200, 90)">
+    <circle cx="0" cy="0" r="40" fill="url(#blue-gradient)" opacity="0.1"/>
+    <circle cx="0" cy="0" r="36" fill="none" stroke="url(#blue-gradient)" stroke-width="2.5"/>
+    
+    <!-- Continents (simplified) -->
+    <path d="M-16,-24 Q-8,-20 0,-24 Q8,-20 16,-24 Q12,-16 8,-8 Q0,-4 -8,-8 Q-12,-16 -16,-24" fill="url(#blue-gradient)" opacity="0.8"/>
+    <path d="M-28,8 Q-20,12 -12,8 Q-8,16 -16,24 Q-24,20 -28,8" fill="url(#blue-gradient)" opacity="0.8"/>
+    <path d="M12,4 Q20,8 28,4 Q24,12 20,20 Q12,16 12,4" fill="url(#blue-gradient)" opacity="0.8"/>
+    
+    <!-- Grid lines -->
+    <line x1="-36" y1="0" x2="36" y2="0" stroke="url(#blue-gradient)" stroke-width="1" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="36" ry="18" fill="none" stroke="url(#blue-gradient)" stroke-width="1" opacity="0.5"/>
+    <ellipse cx="0" cy="0" rx="36" ry="25" fill="none" stroke="url(#blue-gradient)" stroke-width="1" opacity="0.5"/>
+  </g>
+  
+  <!-- Rocket launch -->
+  <g transform="translate(60, 60)">
+    <path d="M8,0 L16,0 L14.5,32 L9.5,32 Z" fill="url(#purple-gradient)"/>
+    <polygon points="8,0 12,4 16,0 12,-6" fill="#fbbf24"/>
+    <rect x="9.5" y="12" width="5" height="6" fill="#1e40af" rx="1"/>
+    
+    <!-- Rocket flames -->
+    <path d="M9.5,32 Q12,38 14.5,32 Q12,36 9.5,32" fill="#ef4444"/>
+    <path d="M10.5,32 Q12,37 13.5,32 Q12,34 10.5,32" fill="#fbbf24"/>
+    
+    <!-- Trajectory -->
+    <path d="M20,20 Q32,12 48,8 Q64,6 80,12" stroke="#3b82f6" stroke-width="2" fill="none" stroke-dasharray="3,1.5"/>
+  </g>
+  
+  <!-- Students/Users around the globe -->
+  <g transform="translate(120, 80)">
+    <!-- Student 1 -->
+    <circle cx="0" cy="0" r="8" fill="#fbbf24"/>
+    <circle cx="0" cy="-3" r="4" fill="#f59e0b"/>
+    <rect x="-3" y="3" width="6" height="8" fill="url(#blue-gradient)" rx="2"/>
+  </g>
+  
+  <g transform="translate(280, 100)">
+    <!-- Student 2 -->
+    <circle cx="0" cy="0" r="8" fill="#22c55e"/>
+    <circle cx="0" cy="-3" r="4" fill="#16a34a"/>
+    <rect x="-3" y="3" width="6" height="8" fill="url(#purple-gradient)" rx="2"/>
+  </g>
+  
+  <g transform="translate(160, 200)">
+    <!-- Student 3 -->
+    <circle cx="0" cy="0" r="8" fill="#ef4444"/>
+    <circle cx="0" cy="-3" r="4" fill="#dc2626"/>
+    <rect x="-3" y="3" width="6" height="8" fill="url(#blue-gradient)" rx="2"/>
+  </g>
+  
+  <g transform="translate(300, 180)">
+    <!-- Student 4 -->
+    <circle cx="0" cy="0" r="8" fill="#8b5cf6"/>
+    <circle cx="0" cy="-3" r="4" fill="#7c3aed"/>
+    <rect x="-3" y="3" width="6" height="8" fill="url(#blue-gradient)" rx="2"/>
+  </g>
+  
+  <!-- Growth chart -->
+  <g transform="translate(50, 180)">
+    <rect x="0" y="0" width="100" height="60" fill="white" stroke="#e5e7eb" stroke-width="2" rx="6"/>
+    
+    <!-- Chart bars -->
+    <rect x="15" y="45" width="10" height="8" fill="url(#blue-gradient)"/>
+    <rect x="28" y="40" width="10" height="13" fill="url(#blue-gradient)"/>
+    <rect x="41" y="35" width="10" height="18" fill="url(#blue-gradient)"/>
+    <rect x="54" y="28" width="10" height="25" fill="url(#blue-gradient)"/>
+    <rect x="67" y="20" width="10" height="33" fill="url(#blue-gradient)"/>
+    
+    <!-- Growth arrow -->
+    <path d="M80,25 L85,20 L85,23 L90,18 L90,21 L95,16" stroke="#22c55e" stroke-width="2" fill="none"/>
+    <polygon points="93,14 97,16 95,18" fill="#22c55e"/>
+    
+    <!-- Chart title -->
+    <text x="50" y="12" fill="#374151" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" font-weight="600">Course Growth</text>
+  </g>
+  
+  <!-- Revenue/Money indicators -->
+  <g transform="translate(320, 50)">
+    <circle cx="0" cy="0" r="15" fill="url(#blue-gradient)"/>
+    <text x="0" y="3" fill="white" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold">$</text>
+    
+    <!-- Money floating -->
+    <circle cx="-20" cy="-10" r="8" fill="#22c55e" opacity="0.7"/>
+    <text x="-20" y="-7" fill="white" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" font-weight="bold">$</text>
+    
+    <circle cx="20" cy="-15" r="6" fill="#22c55e" opacity="0.5"/>
+    <text x="20" y="-12" fill="white" font-family="Arial, sans-serif" font-size="6" text-anchor="middle" font-weight="bold">$</text>
+  </g>
+  
+  <!-- Star ratings -->
+  <g transform="translate(50, 50)">
+    <polygon points="0,-8 2,-2 8,-2 4,1 6,7 0,4 -6,7 -4,1 -8,-2 -2,-2" fill="#fbbf24"/>
+    <polygon points="15,-6 17,-2 21,-2 18,0 19,4 15,2 11,4 12,0 9,-2 13,-2" fill="#fbbf24" opacity="0.8"/>
+    <polygon points="30,-4 31,-2 33,-2 32,0 32,2 30,1 28,2 28,0 27,-2 29,-2" fill="#fbbf24" opacity="0.6"/>
+  </g>
+  
+  <!-- Social media/sharing icons -->
+  <g transform="translate(300, 230)">
+    <circle cx="0" cy="0" r="12" fill="url(#blue-gradient)"/>
+    <path d="M-6,-2 L6,-2 L6,2 L-6,2 Z M-4,0 L4,0" stroke="white" stroke-width="2" fill="none"/>
+    
+    <circle cx="20" cy="0" r="10" fill="#22c55e"/>
+    <path d="M-3,-3 L3,0 L-3,3 Z" transform="translate(20,0)" fill="white"/>
+    
+    <circle cx="-20" cy="0" r="10" fill="#ef4444"/>
+    <polygon points="-23,-2 -17,-2 -20,2" fill="white"/>
+  </g>
+  
+  <!-- Network connections -->
+  <g opacity="0.4">
+    <line x1="120" y1="88" x2="280" y2="108" stroke="url(#blue-gradient)" stroke-width="1"/>
+    <line x1="160" y1="208" x2="300" y2="188" stroke="url(#blue-gradient)" stroke-width="1"/>
+    <line x1="200" y1="170" x2="120" y2="88" stroke="url(#purple-gradient)" stroke-width="1"/>
+    <line x1="200" y1="170" x2="280" y2="108" stroke="url(#blue-gradient)" stroke-width="1"/>
+  </g>
+  
+  <!-- Success metrics box -->
+  <g transform="translate(270, 260)">
+    <rect x="0" y="0" width="80" height="30" fill="rgba(34, 197, 94, 0.1)" stroke="#22c55e" stroke-width="1" rx="4"/>
+    <text x="40" y="12" fill="#16a34a" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" font-weight="600">1000+ Students</text>
+    <text x="40" y="22" fill="#16a34a" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">⭐ 4.9 Rating</text>
+  </g>
+</svg>

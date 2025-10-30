@@ -58,7 +58,6 @@ export default function AdminSetupPage() {
   if (!mounted) {
     return (
       <div className="min-h-screen bg-black text-white relative flex items-center justify-center">
-        <AnimatedBackground />
         <div className="z-10 flex flex-col items-center">
           <LoadingSpinner size="sm"  />
         </div>
@@ -89,7 +88,7 @@ export default function AdminSetupPage() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"}/auth/setup-admin`,
+        `${process.env.NEXT_PUBLIC_API_URL || "https://codingjojo-backend.onrender.com/api"}/auth/setup-admin`,
         {
           method: "POST",
           headers: {
@@ -239,7 +238,7 @@ export default function AdminSetupPage() {
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div
                       className={`flex items-center gap-2 ${
-                        passwordValidation.minLength ? "text-green-400" : "text-gray-400"
+                        passwordValidation.minLength ? "text-blue-400" : "text-gray-400"
                       }`}
                     >
                       {passwordValidation.minLength ? (
@@ -251,7 +250,7 @@ export default function AdminSetupPage() {
                     </div>
                     <div
                       className={`flex items-center gap-2 ${
-                        passwordValidation.hasUpper ? "text-green-400" : "text-gray-400"
+                        passwordValidation.hasUpper ? "text-blue-400" : "text-gray-400"
                       }`}
                     >
                       {passwordValidation.hasUpper ? (
@@ -263,7 +262,7 @@ export default function AdminSetupPage() {
                     </div>
                     <div
                       className={`flex items-center gap-2 ${
-                        passwordValidation.hasLower ? "text-green-400" : "text-gray-400"
+                        passwordValidation.hasLower ? "text-blue-400" : "text-gray-400"
                       }`}
                     >
                       {passwordValidation.hasLower ? (
@@ -275,7 +274,7 @@ export default function AdminSetupPage() {
                     </div>
                     <div
                       className={`flex items-center gap-2 ${
-                        passwordValidation.hasNumber ? "text-green-400" : "text-gray-400"
+                        passwordValidation.hasNumber ? "text-blue-400" : "text-gray-400"
                       }`}
                     >
                       {passwordValidation.hasNumber ? (
@@ -341,7 +340,7 @@ export default function AdminSetupPage() {
               {/* Password Match Indicator */}
               {confirmPassword && (
                 <div className={`flex items-center gap-2 text-xs ${
-                  password === confirmPassword ? "text-green-400" : "text-red-400"
+                  password === confirmPassword ? "text-blue-400" : "text-red-400"
                 }`}>
                   {password === confirmPassword ? (
                     <CheckCircle className="h-3 w-3" />

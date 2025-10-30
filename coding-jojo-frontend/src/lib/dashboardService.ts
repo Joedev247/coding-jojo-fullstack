@@ -1,5 +1,27 @@
 import { apiClient, ApiResponse } from './api';
 
+export interface LearningTimeStats {
+  reading: number;
+  writing: number;
+  video: number;
+  assignment: number;
+  total: string;
+}
+
+export interface ActivityStats {
+  day: string;
+  value: number;
+}
+
+export interface DashboardStats {
+  learningTime: LearningTimeStats;
+  activity: ActivityStats[];
+  courses: CourseProgress[];
+  upcomingTasks: any[];
+  paymentHistory: any[];
+  completedLessons: number;
+}
+
 // Dashboard interfaces
 export interface DashboardUser {
   id: string;
@@ -130,8 +152,35 @@ export interface Analytics {
   };
 }
 
+interface GetStatsParams {
+  timeFilter?: 'Today' | 'Week' | 'Month';
+  activityFilter?: 'Weekly' | 'Monthly' | 'Yearly';
+  courseFilter?: 'All' | 'Ongoing' | 'Complete';
+}
+
 class DashboardService {
-  
+  /**
+   * Get dashboard statistics including learning time, activity, courses, tasks, and payments
+   */
+  async getStats({ 
+    timeFilter = 'Today',
+    activityFilter = 'Weekly',
+    courseFilter = 'All'
+  }: GetStatsParams = {}): Promise<ApiResponse<DashboardStats>> {
+    try {
+      const response = await apiClient.get<DashboardStats>('/dashboard/stats', {
+        params: { timeFilter, activityFilter, courseFilter }
+      });
+      return response;
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch dashboard stats'
+      };
+    }
+  }
+
   /**
    * Get comprehensive dashboard data for the authenticated user
    */
@@ -169,7 +218,14 @@ class DashboardService {
    */
   async getUserCourses(): Promise<ApiResponse<EnrolledCourse[]>> {
     try {
+      console.debug('DashboardService: Fetching enrolled courses...');
       const dashboardResponse = await this.getDashboardData();
+      console.debug('DashboardService: getDashboardData response:', {
+        success: dashboardResponse.success,
+        hasData: !!dashboardResponse.data,
+        enrolledCourses: dashboardResponse.data?.enrolledCourses?.length || 0,
+        error: dashboardResponse.error
+      });
       
       if (dashboardResponse.success && dashboardResponse.data) {
         return {

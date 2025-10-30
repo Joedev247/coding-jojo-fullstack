@@ -1,9 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import InstructorSidebar from '../../components/instructor/InstructorSidebar';
-import AnimatedBackground from '../../components/ui/AnimatedBackground';
 import InstructorBreadcrumb from '../../components/instructor/InstructorBreadcrumb';
 import InstructorProtectedRoute from '../../components/auth/InstructorProtectedRoute';
 
@@ -13,6 +12,7 @@ interface InstructorLayoutProps {
 
 export default function InstructorLayout({ children }: InstructorLayoutProps) {
   const pathname = usePathname();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   // Pages that should not have sidebar (landing pages)
   const noSidebarPages = [
@@ -33,9 +33,10 @@ export default function InstructorLayout({ children }: InstructorLayoutProps) {
   return (
     <InstructorProtectedRoute>
       <div className="min-h-screen text-white">
-        <AnimatedBackground />      
-        <InstructorSidebar />
-        <div className="md:pl-64">
+        <InstructorSidebar onCollapseChange={setIsSidebarCollapsed} />
+        <div className={`transition-all duration-300 ease-in-out ${
+          isSidebarCollapsed ? 'md:pl-14' : 'md:pl-56'
+        }`}>
           {/* Breadcrumb Navigation */}
           <InstructorBreadcrumb />
           

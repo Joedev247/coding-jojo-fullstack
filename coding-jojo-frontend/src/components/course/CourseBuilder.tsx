@@ -338,7 +338,7 @@ export default function CourseBuilder({
       const formData = new FormData();
       formData.append('image', file);
 
-      const response = await fetch('http://localhost:5000/api/teacher/upload/image', {
+      const response = await fetch('https://codingjojo-backend.onrender.com/api/teacher/upload/image', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('teacher_token')}`,
@@ -525,7 +525,7 @@ export default function CourseBuilder({
         return (
           <div className="space-y-4">
             {lesson.content.video?.video ? (
-              <div className="aspect-video bg-gray-800  overflow-hidden">
+              <div className="aspect-video bg-gray-100 rounded overflow-hidden border border-gray-300">
                 <CustomVideoPlayer 
                   video={lesson.content.video.video}
                   controls={true}
@@ -533,17 +533,17 @@ export default function CourseBuilder({
                 />
               </div>
             ) : (
-              <div className="aspect-video bg-gray-800  border-2 border-dashed border-gray-600 flex items-center justify-center">
+              <div className="aspect-video bg-gray-50 rounded border-2 border-dashed border-gray-300 flex items-center justify-center">
                 <div className="text-center">
-                  <Video className="h-12 w-12 text-gray-500 mx-auto mb-2" />
-                  <p className="text-gray-400 mb-4">Upload a video for this lesson</p>
+                  <Video className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                  <p className="text-gray-500 text-sm mb-3">Upload a video for this lesson</p>
                   <button
                     onClick={() => {
                       setUploadContext('lesson');
                       fileInputRef.current?.click();
                     }}
                     disabled={isUploading}
-                    className="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white  disabled:opacity-50"
+                    className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded disabled:opacity-50"
                   >
                     {isUploading ? `Uploading... ${uploadProgress.toFixed(1)}%` : 'Upload Video'}
                   </button>
@@ -553,14 +553,14 @@ export default function CourseBuilder({
             
             {/* Video upload progress */}
             {isUploading && (
-              <div className="bg-gray-800 p-4 ">
+              <div className="bg-blue-50 p-3 rounded border">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-300">Uploading video...</span>
-                  <span className="text-sm text-gray-300">{uploadProgress.toFixed(1)}%</span>
+                  <span className="text-xs text-gray-600">Uploading video...</span>
+                  <span className="text-xs text-gray-600">{uploadProgress.toFixed(1)}%</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-1.5">
                   <div 
-                    className="bg-pink-500 h-2 rounded-full transition-all duration-300"
+                    className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
                     style={{ width: `${uploadProgress}%` }}
                   />
                 </div>
@@ -569,7 +569,7 @@ export default function CourseBuilder({
 
             {/* Video transcript */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-xs font-medium text-gray-600 mb-2">
                 Video Transcript (Optional)
               </label>
               <textarea
@@ -589,8 +589,8 @@ export default function CourseBuilder({
                   }
                 }}
                 placeholder="Add video transcript for accessibility..."
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600  text-white"
-                rows={6}
+                className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm"
+                rows={4}
               />
             </div>
           </div>
@@ -598,59 +598,59 @@ export default function CourseBuilder({
 
       case 'text':
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Rich Text Toolbar */}
-            <div className="bg-gray-800 p-3  border border-gray-700">
-              <div className="flex items-center space-x-2 mb-3">
+            <div className="bg-gray-50 p-2 rounded border border-gray-200">
+              <div className="flex items-center space-x-1 mb-2">
                 <button
                   onClick={() => handleRichTextCommand('bold')}
-                  className="p-2 hover:bg-gray-700 rounded"
+                  className="p-1.5 hover:bg-gray-200 rounded"
                 >
-                  <Bold className="h-4 w-4 text-gray-300" />
+                  <Bold className="h-3.5 w-3.5 text-gray-600" />
                 </button>
                 <button
                   onClick={() => handleRichTextCommand('italic')}
-                  className="p-2 hover:bg-gray-700 rounded"
+                  className="p-1.5 hover:bg-gray-200 rounded"
                 >
-                  <Italic className="h-4 w-4 text-gray-300" />
+                  <Italic className="h-3.5 w-3.5 text-gray-600" />
                 </button>
                 <button
                   onClick={() => handleRichTextCommand('underline')}
-                  className="p-2 hover:bg-gray-700 rounded"
+                  className="p-1.5 hover:bg-gray-200 rounded"
                 >
-                  <Underline className="h-4 w-4 text-gray-300" />
+                  <Underline className="h-3.5 w-3.5 text-gray-600" />
                 </button>
-                <div className="border-l border-gray-600 h-6 mx-2" />
+                <div className="border-l border-gray-300 h-4 mx-1" />
                 <button
                   onClick={() => handleRichTextCommand('justifyLeft')}
-                  className="p-2 hover:bg-gray-700 rounded"
+                  className="p-1.5 hover:bg-gray-200 rounded"
                 >
-                  <AlignLeft className="h-4 w-4 text-gray-300" />
+                  <AlignLeft className="h-3.5 w-3.5 text-gray-600" />
                 </button>
                 <button
                   onClick={() => handleRichTextCommand('justifyCenter')}
-                  className="p-2 hover:bg-gray-700 rounded"
+                  className="p-1.5 hover:bg-gray-200 rounded"
                 >
-                  <AlignCenter className="h-4 w-4 text-gray-300" />
+                  <AlignCenter className="h-3.5 w-3.5 text-gray-600" />
                 </button>
                 <button
                   onClick={() => handleRichTextCommand('justifyRight')}
-                  className="p-2 hover:bg-gray-700 rounded"
+                  className="p-1.5 hover:bg-gray-200 rounded"
                 >
-                  <AlignRight className="h-4 w-4 text-gray-300" />
+                  <AlignRight className="h-3.5 w-3.5 text-gray-600" />
                 </button>
-                <div className="border-l border-gray-600 h-6 mx-2" />
+                <div className="border-l border-gray-300 h-4 mx-1" />
                 <button
                   onClick={() => handleRichTextCommand('insertUnorderedList')}
-                  className="p-2 hover:bg-gray-700 rounded"
+                  className="p-1.5 hover:bg-gray-200 rounded"
                 >
-                  <List className="h-4 w-4 text-gray-300" />
+                  <List className="h-3.5 w-3.5 text-gray-600" />
                 </button>
                 <button
                   onClick={() => handleRichTextCommand('insertOrderedList')}
-                  className="p-2 hover:bg-gray-700 rounded"
+                  className="p-1.5 hover:bg-gray-200 rounded"
                 >
-                  <ListOrdered className="h-4 w-4 text-gray-300" />
+                  <ListOrdered className="h-3.5 w-3.5 text-gray-600" />
                 </button>
               </div>
               
@@ -658,7 +658,7 @@ export default function CourseBuilder({
               <div
                 ref={editorRef}
                 contentEditable
-                className="min-h-[300px] p-4 bg-gray-900 border border-gray-600  text-white focus:outline-none focus:border-pink-500"
+                className="min-h-[200px] p-3 bg-white border border-gray-300 rounded text-gray-900 focus:outline-none focus:border-blue-500 text-sm"
                 style={{ whiteSpace: 'pre-wrap' }}
                 onInput={(e) => {
                   const content = (e.target as HTMLDivElement).innerHTML;
@@ -794,7 +794,7 @@ export default function CourseBuilder({
                           {question.options?.map((option, optIndex) => (
                             <div key={optIndex} className={`p-2 rounded text-sm ${
                               option === question.correctAnswer 
-                                ? 'bg-green-600/20 text-green-300' 
+                                ? 'bg-blue-600/20 text-blue-300' 
                                 : 'bg-gray-600 text-gray-300'
                             }`}>
                               {String.fromCharCode(65 + optIndex)}. {option}
@@ -953,179 +953,180 @@ export default function CourseBuilder({
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-pink-500/10 to-orange-500/10 backdrop-blur-sm border border-gray-700/50  p-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center mr-6">
-              <BookOpen className="h-8 w-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
+      <div className="max-w-7xl mx-auto p-4 space-y-4">
+        {/* Header */}
+        <div className="bg-white border border-gray-200  shadow-sm p-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-4">
+                <BookOpen className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent mb-1">
+                  {isEditing ? 'Edit Course' : 'Create Course'}
+                </h1>
+                <p className="text-gray-600 text-sm">
+                  Build engaging courses with videos, quizzes, and assignments
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent mb-2">
-                {isEditing ? 'Edit Course' : 'Create Course'}
-              </h1>
-              <p className="text-gray-300 text-lg">
-                Build engaging courses with videos, quizzes, and assignments
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={saveCourse}
-              className="flex items-center space-x-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white  transition-colors"
-            >
-              <Save className="h-5 w-5" />
-              <span>Save Draft</span>
-            </button>
             
-            <button
-              onClick={publishCourse}
-              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white  transition-all duration-200"
-            >
-              <Eye className="h-5 w-5" />
-              <span>Publish Course</span>
-            </button>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={saveCourse}
+                className="flex items-center space-x-2 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded text-sm transition-colors"
+              >
+                <Save className="h-4 w-4" />
+                <span>Save Draft</span>
+              </button>
+              
+              <button
+                onClick={publishCourse}
+                className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded text-sm transition-all duration-200"
+              >
+                <Eye className="h-4 w-4" />
+                <span>Publish Course</span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Course Information Form */}
-      <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50  p-6">
-        <div className="flex items-center mb-6">
-          <Settings className="h-6 w-6 text-pink-400 mr-3" />
-          <h2 className="text-xl font-semibold text-white">Course Information</h2>
-        </div>
+        {/* Course Information Form */}
+        <div className="bg-white border border-gray-200  shadow-sm p-4">
+          <div className="flex items-center mb-4">
+            <Settings className="h-4 w-4 text-blue-600 mr-2" />
+            <h2 className="text-sm font-semibold text-gray-900">Course Information</h2>
+          </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Column */}
-          <div className="space-y-6">
-            {/* Course Title */}
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Course Title *
-              </label>
-              <input
-                type="text"
-                value={courseData.title}
-                onChange={(e) => setCourseData(prev => ({ ...prev, title: e.target.value }))}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                placeholder="Enter your course title..."
-                required
-              />
-            </div>
-
-            {/* Short Description */}
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Short Description *
-              </label>
-              <textarea
-                value={courseData.shortDescription}
-                onChange={(e) => setCourseData(prev => ({ ...prev, shortDescription: e.target.value }))}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                placeholder="Brief description of your course..."
-                rows={3}
-                required
-              />
-            </div>
-
-            {/* Category and Level */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Left Column */}
+            <div className="space-y-4">
+              {/* Course Title */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Category *
-                </label>
-                <select
-                  value={courseData.category}
-                  onChange={(e) => setCourseData(prev => ({ ...prev, category: e.target.value }))}
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                  required
-                >
-                  <option value="">Select Category</option>
-                  <option value="programming">Programming</option>
-                  <option value="design">Design</option>
-                  <option value="business">Business</option>
-                  <option value="marketing">Marketing</option>
-                  <option value="data-science">Data Science</option>
-                  <option value="mobile-development">Mobile Development</option>
-                  <option value="web-development">Web Development</option>
-                  <option value="artificial-intelligence">Artificial Intelligence</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Level *
-                </label>
-                <select
-                  value={courseData.level}
-                  onChange={(e) => setCourseData(prev => ({ ...prev, level: e.target.value as Course['level'] }))}
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                  required
-                >
-                  <option value="beginner">Beginner</option>
-                  <option value="intermediate">Intermediate</option>
-                  <option value="advanced">Advanced</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Price and Language */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Price (XAF) *
+                <label className="block text-xs font-medium text-gray-600 mb-2">
+                  Course Title *
                 </label>
                 <input
-                  type="number"
-                  value={courseData.price}
-                  onChange={(e) => setCourseData(prev => ({ ...prev, price: parseInt(e.target.value) || 0 }))}
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                  placeholder="0"
-                  min="0"
+                  type="text"
+                  value={courseData.title}
+                  onChange={(e) => setCourseData(prev => ({ ...prev, title: e.target.value }))}
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter your course title..."
                   required
                 />
               </div>
 
+              {/* Short Description */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Language
+                <label className="block text-xs font-medium text-gray-600 mb-2">
+                  Short Description *
                 </label>
-                <select
-                  value={courseData.language}
-                  onChange={(e) => setCourseData(prev => ({ ...prev, language: e.target.value }))}
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                >
-                  <option value="en">English</option>
-                  <option value="fr">French</option>
-                  <option value="es">Spanish</option>
-                </select>
+                <textarea
+                  value={courseData.shortDescription}
+                  onChange={(e) => setCourseData(prev => ({ ...prev, shortDescription: e.target.value }))}
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Brief description of your course..."
+                  rows={3}
+                  required
+                />
               </div>
-            </div>
+
+              {/* Category and Level */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-2">
+                    Category *
+                  </label>
+                  <select
+                    value={courseData.category}
+                    onChange={(e) => setCourseData(prev => ({ ...prev, category: e.target.value }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                  >
+                    <option value="">Select Category</option>
+                    <option value="programming">Programming</option>
+                    <option value="design">Design</option>
+                    <option value="business">Business</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="data-science">Data Science</option>
+                    <option value="mobile-development">Mobile Development</option>
+                    <option value="web-development">Web Development</option>
+                    <option value="artificial-intelligence">Artificial Intelligence</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-2">
+                    Level *
+                  </label>
+                  <select
+                    value={courseData.level}
+                    onChange={(e) => setCourseData(prev => ({ ...prev, level: e.target.value as Course['level'] }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                  >
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Price and Language */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-2">
+                    Price (XAF) *
+                  </label>
+                  <input
+                    type="number"
+                    value={courseData.price}
+                    onChange={(e) => setCourseData(prev => ({ ...prev, price: parseInt(e.target.value) || 0 }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="0"
+                    min="0"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-2">
+                    Language
+                  </label>
+                  <select
+                    value={courseData.language}
+                    onChange={(e) => setCourseData(prev => ({ ...prev, language: e.target.value }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="en">English</option>
+                    <option value="fr">French</option>
+                    <option value="es">Spanish</option>
+                  </select>
+                </div>
+              </div>
           </div>
 
           {/* Right Column */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* Full Description */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-xs font-medium text-gray-600 mb-2">
                 Course Description *
               </label>
               <textarea
                 value={courseData.description}
                 onChange={(e) => setCourseData(prev => ({ ...prev, description: e.target.value }))}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Detailed description of what students will learn..."
-                rows={6}
+                rows={4}
                 required
               />
             </div>
 
             {/* Tags */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-xs font-medium text-gray-600 mb-2">
                 Tags (comma separated)
               </label>
               <input
@@ -1135,33 +1136,33 @@ export default function CourseBuilder({
                   ...prev, 
                   tags: e.target.value.split(',').map(tag => tag.trim()).filter(tag => tag)
                 }))}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="React, JavaScript, Frontend, etc."
               />
             </div>
 
             {/* Course Features */}
-            <div className="space-y-3">
-              <label className="block text-sm font-medium text-gray-300">
+            <div className="space-y-2">
+              <label className="block text-xs font-medium text-gray-600">
                 Course Features
               </label>
               
-              <label className="flex items-center space-x-3">
+              <label className="flex items-center space-x-2">
                 <input
                   type="checkbox"
                   checked={courseData.isFeatured}
                   onChange={(e) => setCourseData(prev => ({ ...prev, isFeatured: e.target.checked }))}
-                  className="rounded bg-gray-700 border-gray-600 text-pink-600 focus:ring-pink-500"
+                  className="w-4 h-4 rounded bg-white border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <span className="text-gray-300">Featured Course</span>
+                <span className="text-gray-700 text-sm">Featured Course</span>
               </label>
             </div>
           </div>
         </div>
 
         {/* Learning Outcomes */}
-        <div className="mt-8">
-          <label className="block text-sm font-medium text-gray-300 mb-3">
+        <div className="mt-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Learning Outcomes (What students will achieve)
           </label>
           <div className="space-y-2">
@@ -1175,7 +1176,7 @@ export default function CourseBuilder({
                     newOutcomes[index] = e.target.value;
                     setCourseData(prev => ({ ...prev, learningOutcomes: newOutcomes }));
                   }}
-                  className="flex-1 px-4 py-2 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Students will be able to..."
                 />
                 <button
@@ -1183,9 +1184,9 @@ export default function CourseBuilder({
                     const newOutcomes = courseData.learningOutcomes.filter((_, i) => i !== index);
                     setCourseData(prev => ({ ...prev, learningOutcomes: newOutcomes }));
                   }}
-                  className="p-2 text-red-400 hover:text-red-300 hover:bg-red-900/20  transition-colors"
+                  className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="h-3.5 w-3.5" />
                 </button>
               </div>
             ))}
@@ -1196,17 +1197,17 @@ export default function CourseBuilder({
                   learningOutcomes: [...prev.learningOutcomes, ''] 
                 }));
               }}
-              className="flex items-center space-x-2 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white  transition-colors"
+              className="flex items-center space-x-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-3.5 w-3.5" />
               <span>Add Learning Outcome</span>
             </button>
           </div>
         </div>
 
         {/* Requirements */}
-        <div className="mt-8">
-          <label className="block text-sm font-medium text-gray-300 mb-3">
+        <div className="mt-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Course Requirements (Prerequisites)
           </label>
           <div className="space-y-2">
@@ -1220,7 +1221,7 @@ export default function CourseBuilder({
                     newRequirements[index] = e.target.value;
                     setCourseData(prev => ({ ...prev, requirements: newRequirements }));
                   }}
-                  className="flex-1 px-4 py-2 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Basic knowledge of..."
                 />
                 <button
@@ -1228,9 +1229,9 @@ export default function CourseBuilder({
                     const newRequirements = courseData.requirements.filter((_, i) => i !== index);
                     setCourseData(prev => ({ ...prev, requirements: newRequirements }));
                   }}
-                  className="p-2 text-red-400 hover:text-red-300 hover:bg-red-900/20  transition-colors"
+                  className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="h-3.5 w-3.5" />
                 </button>
               </div>
             ))}
@@ -1241,9 +1242,9 @@ export default function CourseBuilder({
                   requirements: [...prev.requirements, ''] 
                 }));
               }}
-              className="flex items-center space-x-2 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white  transition-colors"
+              className="flex items-center space-x-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-3.5 w-3.5" />
               <span>Add Requirement</span>
             </button>
           </div>
@@ -1251,21 +1252,21 @@ export default function CourseBuilder({
       </div>
 
       {/* Course Preview Video/Image */}
-      <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50  p-6">
-        <div className="flex items-center mb-6">
-          <Video className="h-6 w-6 text-pink-400 mr-3" />
-          <h2 className="text-xl font-semibold text-white">Course Preview</h2>
+      <div className="bg-white  shadow-md border border-gray-200 p-4">
+        <div className="flex items-center mb-4">
+          <Video className="h-4 w-4 text-blue-600 mr-2" />
+          <h2 className="text-lg font-semibold text-gray-800">Course Preview</h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Video Upload/Link */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-3">
+            <label className="block text-xs font-medium text-gray-600 mb-2">
               Preview Video (Optional)
             </label>
             
             {courseData.previewVideo ? (
-              <div className="aspect-video bg-gray-800  overflow-hidden border border-gray-600">
+              <div className="aspect-video bg-gray-100 rounded overflow-hidden border border-gray-300">
                 <CustomVideoPlayer 
                   video={courseData.previewVideo}
                   controls={true}
@@ -1273,28 +1274,28 @@ export default function CourseBuilder({
                 />
               </div>
             ) : (
-              <div className="aspect-video bg-gray-800  border-2 border-dashed border-gray-600 flex items-center justify-center">
+              <div className="aspect-video bg-gray-50 rounded border-2 border-dashed border-gray-300 flex items-center justify-center">
                 <div className="text-center">
-                  <Video className="h-12 w-12 text-gray-500 mx-auto mb-3" />
-                  <p className="text-gray-400 mb-4">Upload a preview video or add a video link</p>
-                  <div className="space-y-3">
+                  <Video className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                  <p className="text-gray-500 text-sm mb-3">Upload a preview video or add a video link</p>
+                  <div className="space-y-2">
                     <button
                       onClick={() => {
                         setUploadContext('preview');
                         fileInputRef.current?.click();
                       }}
                       disabled={isUploading}
-                      className="block w-full px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white  transition-colors disabled:opacity-50"
+                      className="block w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors disabled:opacity-50"
                     >
                       {isUploading ? `Uploading... ${uploadProgress.toFixed(1)}%` : 'Upload Video'}
                     </button>
                     
-                    <div className="text-gray-500">or</div>
+                    <div className="text-gray-400 text-xs">or</div>
                     
                     <input
                       type="url"
                       placeholder="Paste YouTube/Vimeo URL"
-                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       onBlur={(e) => {
                         if (e.target.value) {
                           setCourseData(prev => ({ 
@@ -1311,14 +1312,14 @@ export default function CourseBuilder({
 
             {/* Video upload progress */}
             {isUploading && (
-              <div className="mt-4 bg-gray-800 p-4 ">
+              <div className="mt-3 bg-blue-50 p-3 rounded border">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-300">Uploading preview video...</span>
-                  <span className="text-sm text-gray-300">{uploadProgress.toFixed(1)}%</span>
+                  <span className="text-xs text-gray-600">Uploading preview video...</span>
+                  <span className="text-xs text-gray-600">{uploadProgress.toFixed(1)}%</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-1.5">
                   <div 
-                    className="bg-pink-500 h-2 rounded-full transition-all duration-300"
+                    className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
                     style={{ width: `${uploadProgress}%` }}
                   />
                 </div>
@@ -1328,12 +1329,12 @@ export default function CourseBuilder({
 
           {/* Course Thumbnail */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-3">
+            <label className="block text-xs font-medium text-gray-600 mb-2">
               Course Thumbnail
             </label>
             
             {courseData.thumbnail ? (
-              <div className="aspect-video bg-gray-800  overflow-hidden border border-gray-600 relative">
+              <div className="aspect-video bg-gray-100 rounded overflow-hidden border border-gray-300 relative">
                 <img 
                   src={courseData.thumbnail} 
                   alt="Course thumbnail"
@@ -1344,23 +1345,23 @@ export default function CourseBuilder({
                     setUploadContext('thumbnail');
                     thumbnailInputRef.current?.click();
                   }}
-                  className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center text-white"
+                  className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm"
                 >
                   Change Image
                 </button>
               </div>
             ) : (
-              <div className="aspect-video bg-gray-800  border-2 border-dashed border-gray-600 flex items-center justify-center">
+              <div className="aspect-video bg-gray-50 rounded border-2 border-dashed border-gray-300 flex items-center justify-center">
                 <div className="text-center">
-                  <ImageIcon className="h-12 w-12 text-gray-500 mx-auto mb-3" />
-                  <p className="text-gray-400 mb-4">Upload course thumbnail</p>
+                  <ImageIcon className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                  <p className="text-gray-500 text-sm mb-3">Upload course thumbnail</p>
                   <button 
                     onClick={() => {
                       setUploadContext('thumbnail');
                       thumbnailInputRef.current?.click();
                     }}
                     disabled={isUploading}
-                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white  transition-colors disabled:opacity-50"
+                    className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors disabled:opacity-50"
                   >
                     {isUploading && uploadContext === 'thumbnail' ? 'Uploading...' : 'Upload Image'}
                   </button>
@@ -1372,40 +1373,40 @@ export default function CourseBuilder({
       </div>
 
       {/* Course Post/Announcement */}
-      <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50  p-6">
-        <div className="flex items-center mb-6">
-          <FileText className="h-6 w-6 text-pink-400 mr-3" />
-          <h2 className="text-xl font-semibold text-white">Course Announcement</h2>
+      <div className="bg-white  shadow-md border border-gray-200 p-4">
+        <div className="flex items-center mb-4">
+          <FileText className="h-4 w-4 text-blue-600 mr-2" />
+          <h2 className="text-lg font-semibold text-gray-800">Course Announcement</h2>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-3">
+          <label className="block text-xs font-medium text-gray-600 mb-2">
             Course Launch Post (Optional)
           </label>
-          <p className="text-sm text-gray-400 mb-4">
+          <p className="text-xs text-gray-500 mb-3">
             This will be posted to the community feed when you publish the course.
           </p>
           
-          <div className="bg-gray-800  border border-gray-700">
-            <div className="p-4 border-b border-gray-700">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-semibold text-sm">
+          <div className="bg-gray-50 rounded border border-gray-200">
+            <div className="p-3 border-b border-gray-200">
+              <div className="flex items-center space-x-2 mb-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                  <span className="text-white font-medium text-xs">
                     {courseData.instructor?.name?.[0] || 'I'}
                   </span>
                 </div>
                 <div>
-                  <p className="text-white font-medium">{courseData.instructor?.name || 'Instructor'}</p>
-                  <p className="text-gray-400 text-sm">Course Instructor</p>
+                  <p className="text-gray-800 font-medium text-sm">{courseData.instructor?.name || 'Instructor'}</p>
+                  <p className="text-gray-500 text-xs">Course Instructor</p>
                 </div>
               </div>
               
               <textarea
                 value={courseData.launchPost || ''}
                 onChange={(e) => setCourseData(prev => ({ ...prev, launchPost: e.target.value }))}
-                className="w-full bg-transparent text-white placeholder-gray-400 border-none outline-none resize-none"
+                className="w-full bg-transparent text-gray-800 text-sm placeholder-gray-400 border-none outline-none resize-none"
                 placeholder={`🎉 Excited to announce my new course: "${courseData.title || 'Your Course Title'}"!\n\n${courseData.shortDescription || 'Brief description of what students will learn...'}\n\n#CodingJojo #${courseData.category || 'Programming'}`}
-                rows={6}
+                rows={5}
               />
             </div>
             
@@ -1441,64 +1442,64 @@ export default function CourseBuilder({
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Course Structure */}
-        <div className="lg:col-span-1 space-y-4">
-          <div className="bg-gray-800 p-4 ">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white">Course Structure</h2>
+        <div className="lg:col-span-1 space-y-3">
+          <div className="bg-white  shadow-md border border-gray-200 p-3">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-semibold text-gray-800">Course Structure</h2>
               <button
                 onClick={addSection}
-                className="p-2 bg-pink-600 hover:bg-pink-700 text-white "
+                className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded"
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-3.5 w-3.5" />
               </button>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
               {courseData.sections.map((section, sectionIndex) => (
-                <div key={section.id} className="bg-gray-700 ">
-                  <div className="p-3">
+                <div key={section.id} className="bg-gray-50 rounded border border-gray-200">
+                  <div className="p-2">
                     <div className="flex items-center justify-between">
                       <input
                         type="text"
                         value={section.title}
                         onChange={(e) => updateSection(section.id, { title: e.target.value })}
-                        className="flex-1 bg-transparent text-white font-medium focus:outline-none"
+                        className="flex-1 bg-transparent text-gray-800 text-sm font-medium focus:outline-none"
                       />
                       
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-1">
                         <button
                           onClick={() => setActiveSection(
                             activeSection === section.id ? null : section.id
                           )}
-                          className="p-1 text-gray-400 hover:text-white"
+                          className="p-1 text-gray-500 hover:text-gray-700"
                         >
                           {activeSection === section.id ? (
-                            <ChevronUp className="h-4 w-4" />
+                            <ChevronUp className="h-3.5 w-3.5" />
                           ) : (
-                            <ChevronDown className="h-4 w-4" />
+                            <ChevronDown className="h-3.5 w-3.5" />
                           )}
                         </button>
                         
                         <button
                           onClick={() => deleteSection(section.id)}
-                          className="p-1 text-red-400 hover:text-red-300"
+                          className="p-1 text-red-500 hover:text-red-700"
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 className="h-3.5 w-3.5" />
                         </button>
                       </div>
                     </div>
 
                     {activeSection === section.id && (
-                      <div className="mt-3 space-y-2">
+                      <div className="mt-2 space-y-1.5">
                         {section.lessons.map((lesson) => (
-                          <div key={lesson.id} className="flex items-center justify-between p-2 bg-gray-600 rounded">
+                          <div key={lesson.id} className="flex items-center justify-between p-2 bg-white rounded border">
                             <div className="flex items-center space-x-2">
-                              {lesson.type === 'video' && <Video className="h-4 w-4 text-pink-400" />}
-                              {lesson.type === 'text' && <FileText className="h-4 w-4 text-blue-400" />}
-                              {lesson.type === 'quiz' && <HelpCircle className="h-4 w-4 text-green-400" />}
-                              {lesson.type === 'assignment' && <Award className="h-4 w-4 text-yellow-400" />}
+                              {lesson.type === 'video' && <Video className="h-3.5 w-3.5 text-blue-500" />}
+                              {lesson.type === 'text' && <FileText className="h-3.5 w-3.5 text-blue-500" />}
+                              {lesson.type === 'quiz' && <HelpCircle className="h-3.5 w-3.5 text-blue-500" />}
+                              {lesson.type === 'assignment' && <Award className="h-3.5 w-3.5 text-yellow-500" />}
                               
-                              <span className="text-sm text-white truncate">{lesson.title}</span>
+                              <span className="text-xs text-gray-700 truncate">{lesson.title}</span>
                             </div>
                             
                             <div className="flex items-center space-x-1">
@@ -1508,14 +1509,14 @@ export default function CourseBuilder({
                                   setCurrentLessonType(lesson.type);
                                   setShowLessonEditor(true);
                                 }}
-                                className="p-1 text-gray-400 hover:text-white"
+                                className="p-1 text-gray-500 hover:text-gray-700"
                               >
                                 <Edit3 className="h-3 w-3" />
                               </button>
                               
                               <button
                                 onClick={() => deleteLesson(section.id, lesson.id)}
-                                className="p-1 text-red-400 hover:text-red-300"
+                                className="p-1 text-red-500 hover:text-red-700"
                               >
                                 <Trash2 className="h-3 w-3" />
                               </button>
@@ -1527,7 +1528,7 @@ export default function CourseBuilder({
                         <div className="flex flex-wrap gap-1 mt-2">
                           <button
                             onClick={() => addLesson(section.id, 'video')}
-                            className="flex items-center space-x-1 px-2 py-1 bg-pink-600 hover:bg-pink-700 text-xs text-white rounded"
+                            className="flex items-center space-x-1 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-xs text-white rounded"
                           >
                             <Video className="h-3 w-3" />
                             <span>Video</span>
@@ -1543,7 +1544,7 @@ export default function CourseBuilder({
                           
                           <button
                             onClick={() => addLesson(section.id, 'quiz')}
-                            className="flex items-center space-x-1 px-2 py-1 bg-green-600 hover:bg-green-700 text-xs text-white rounded"
+                            className="flex items-center space-x-1 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-xs text-white rounded"
                           >
                             <HelpCircle className="h-3 w-3" />
                             <span>Quiz</span>
@@ -1569,28 +1570,28 @@ export default function CourseBuilder({
         {/* Content Editor */}
         <div className="lg:col-span-2">
           {showLessonEditor && activeLesson ? (
-            <div className="bg-gray-800 p-6 ">
-              <div className="flex items-center justify-between mb-6">
+            <div className="bg-white  shadow-md border border-gray-200 p-4">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h2 className="text-xl font-semibold text-white">
+                  <h2 className="text-lg font-semibold text-gray-800">
                     Edit {currentLessonType.charAt(0).toUpperCase() + currentLessonType.slice(1)} Lesson
                   </h2>
-                  <p className="text-gray-400">
+                  <p className="text-sm text-gray-600">
                     Create engaging content for your students
                   </p>
                 </div>
                 
                 <button
                   onClick={() => setShowLessonEditor(false)}
-                  className="p-2 text-gray-400 hover:text-white"
+                  className="p-1.5 text-gray-500 hover:text-gray-700"
                 >
                   ✕
                 </button>
               </div>
 
               {/* Lesson Title */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+              <div className="mb-4">
+                <label className="block text-xs font-medium text-gray-600 mb-2">
                   Lesson Title
                 </label>
                 <input
@@ -1604,7 +1605,7 @@ export default function CourseBuilder({
                       updateLesson(sectionId, activeLesson, { title: e.target.value });
                     }
                   }}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600  text-white"
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-gray-900 text-sm"
                   placeholder="Enter lesson title..."
                 />
               </div>
@@ -1619,17 +1620,17 @@ export default function CourseBuilder({
               </div>
             </div>
           ) : (
-            <div className="bg-gray-800 p-8  text-center">
-              <BookOpen className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-white mb-2">
+            <div className="bg-white  shadow-md border border-gray-200 p-6 text-center">
+              <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+              <h2 className="text-lg font-semibold text-gray-800 mb-2">
                 Welcome to Course Builder
               </h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-sm text-gray-600 mb-4">
                 Start by adding sections and lessons to structure your course content.
               </p>
               <button
                 onClick={addSection}
-                className="px-6 py-3 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white "
+                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm rounded"
               >
                 Add Your First Section
               </button>
@@ -1637,6 +1638,7 @@ export default function CourseBuilder({
           )}
         </div>
       </div>
+    </div>
 
       {/* Hidden file input for video upload */}
       <input

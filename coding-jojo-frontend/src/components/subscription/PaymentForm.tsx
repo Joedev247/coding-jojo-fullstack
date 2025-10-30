@@ -8,7 +8,7 @@ import {
   EyeOff,
   Smartphone,
 } from "lucide-react";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 interface PaymentFormProps {
   paymentMethod: "card" | "momo";
@@ -149,13 +149,13 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
 
   if (isEnterprisePlan) {
     return (
-      <div className="text-center py-6">
-        <div className="bg-pink-500/10 border border-pink-500/20 p-4 max-w-xs mx-auto ">
-          <h3 className="text-lg font-bold text-white mb-2">Enterprise Plan</h3>
-          <p className="text-gray-300 mb-3 text-sm">
+      <div className="text-center py-4">
+        <div className="bg-blue-50 border border-blue-200  p-4 max-w-xs mx-auto">
+          <h3 className="text-xs font-bold text-gray-800 mb-2">Enterprise Plan</h3>
+          <p className="text-gray-600 mb-3 text-sm">
             Contact our sales team for custom pricing.
           </p>
-          <button className="w-full py-2 px-3 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-orange-500 hover:to-pink-500 text-white font-medium transition-all duration-300 text-sm">
+          <button className="w-full py-2 px-3 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-blue-800 text-white font-medium transition-all duration-200 text-sm ">
             Contact Sales Team
           </button>
         </div>
@@ -166,13 +166,13 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4   bg-gray-900/70 p-4 shadow-xl border border-pink-500/10 mx-auto"
+      className="space-y-3 bg-white p-3 shadow-lg border border-blue-200  mx-auto"
       style={{ maxWidth: 450, minWidth: 0, width: "100%" }}
     >
       {/* Personal Information */}
       <div>
-        <h3 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
-          <User className="w-4 h-4 text-pink-500" />
+        <h3 className="text-sm font-semibold text-gray-800 mb-2 flex items-center gap-2">
+          <User className="w-3 h-3 text-blue-600" />
           Personal Info
         </h3>
         <div className="space-y-2">
@@ -183,8 +183,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
               value={formData.firstName}
               autoComplete="given-name"
               onChange={handleInputChange}
-              className={`w-full px-2 py-3  bg-gray-900 border text-white focus:outline-none focus:ring-1 focus:ring-pink-500 text-xs ${
-                errors.firstName ? "border-red-500" : "border-gray-700"
+              className={`w-full px-2 py-2 bg-white border text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-600 text-xs  ${
+                errors.firstName ? "border-red-500" : "border-gray-300"
               }`}
               placeholder="First Name"
             />
@@ -194,8 +194,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
               value={formData.lastName}
               autoComplete="family-name"
               onChange={handleInputChange}
-              className={`w-full px-2 py-3  bg-gray-900 border text-white focus:outline-none focus:ring-1 focus:ring-pink-500 text-xs ${
-                errors.lastName ? "border-red-500" : "border-gray-700"
+              className={`w-full px-2 py-2 bg-white border text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-600 text-xs  ${
+                errors.lastName ? "border-red-500" : "border-gray-300"
               }`}
               placeholder="Last Name"
             />
@@ -222,8 +222,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
             value={formData.email}
             autoComplete="email"
             onChange={handleInputChange}
-            className={`w-full px-2 py-3  bg-gray-900 border text-white focus:outline-none focus:ring-1 focus:ring-pink-500 text-xs ${
-              errors.email ? "border-red-500" : "border-gray-700"
+            className={`w-full px-2 py-2 bg-white border text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-600 text-xs  ${
+              errors.email ? "border-red-500" : "border-gray-300"
             }`}
             placeholder="Email Address"
           />
@@ -238,11 +238,11 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
 
       {/* Payment Details */}
       <div>
-        <h3 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-gray-800 mb-2 flex items-center gap-2">
           {paymentMethod === "card" ? (
-            <CreditCard className="w-4 h-4 text-pink-500" />
+            <CreditCard className="w-3 h-3 text-blue-600" />
           ) : (
-            <Smartphone className="w-4 h-4 text-yellow-500" />
+            <Smartphone className="w-3 h-3 text-yellow-600" />
           )}
           {paymentMethod === "card" ? "Card Details" : "MoMo Details"}
         </h3>
@@ -254,8 +254,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
               value={formData.cardName}
               autoComplete="cc-name"
               onChange={handleInputChange}
-              className={`w-full px-2 py-3  bg-gray-900 border text-white focus:outline-none focus:ring-1 focus:ring-pink-500 text-xs ${
-                errors.cardName ? "border-red-500" : "border-gray-700"
+              className={`w-full px-2 py-2 bg-white border text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-600 text-xs  ${
+                errors.cardName ? "border-red-500" : "border-gray-300"
               }`}
               placeholder="Cardholder Name"
             />
@@ -266,8 +266,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
               onChange={handleCardNumberChange}
               autoComplete="cc-number"
               maxLength={19}
-              className={`w-full px-2 py-3  bg-gray-900 border text-white focus:outline-none focus:ring-1 focus:ring-pink-500 text-xs ${
-                errors.cardNumber ? "border-red-500" : "border-gray-700"
+              className={`w-full px-2 py-2 bg-white border text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-600 text-xs  ${
+                errors.cardNumber ? "border-red-500" : "border-gray-300"
               }`}
               placeholder="1234 5678 9012 3456"
             />
@@ -279,8 +279,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
                 onChange={handleExpiryChange}
                 maxLength={5}
                 autoComplete="cc-exp"
-                className={`w-full px-2 py-3  bg-gray-900 border text-white focus:outline-none focus:ring-1 focus:ring-pink-500 text-xs ${
-                  errors.expiryDate ? "border-red-500" : "border-gray-700"
+                className={`w-full px-2 py-2 bg-white border text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-600 text-xs  ${
+                  errors.expiryDate ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="MM/YY"
               />
@@ -292,15 +292,15 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
                   onChange={handleInputChange}
                   maxLength={4}
                   autoComplete="cc-csc"
-                  className={`w-full px-2 py-3  bg-gray-900 border text-white focus:outline-none focus:ring-1 focus:ring-pink-500 pr-6 text-xs ${
-                    errors.cvv ? "border-red-500" : "border-gray-700"
+                  className={`w-full px-2 py-2 bg-white border text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-600 pr-6 text-xs  ${
+                    errors.cvv ? "border-red-500" : "border-gray-300"
                   }`}
                   placeholder="CVV"
                 />
                 <button
                   type="button"
                   onClick={() => setShowCvv(!showCvv)}
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
                   tabIndex={-1}
                 >
                   {showCvv ? (
@@ -314,8 +314,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
           </div>
         ) : (
           <div className="space-y-2">
-            <div className="flex">
-              <span className="inline-flex items-center px-2 bg-yellow-500/20 border border-r-0 border-yellow-500/30 text-yellow-600 text-xs font-semibold">
+            <div className="flex  overflow-hidden">
+              <span className="inline-flex items-center px-2 bg-yellow-100 border border-r-0 border-yellow-300 text-yellow-700 text-xs font-semibold">
                 +237
               </span>
               <input
@@ -325,7 +325,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
                 onChange={handlePhoneChange}
                 inputMode="numeric"
                 maxLength={11}
-                className={`flex-1 px-2 py-3  bg-gray-900 border text-white focus:outline-none focus:ring-1 focus:ring-yellow-500 border-yellow-500/30 text-xs`}
+                className="flex-1 px-2 py-2 bg-white border text-gray-800 focus:outline-none focus:ring-1 focus:ring-yellow-500 border-yellow-300 text-xs"
                 placeholder="6XX XXX XXX"
               />
             </div>
@@ -337,8 +337,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
                 onChange={handleInputChange}
                 maxLength={5}
                 inputMode="numeric"
-                className={`w-full px-2 py-3  bg-gray-900 border text-white focus:outline-none focus:ring-1 focus:ring-yellow-400 pr-6 text-xs ${
-                  errors.momoPin ? "border-red-500" : "border-gray-700"
+                className={`w-full px-2 py-2 bg-white border text-gray-800 focus:outline-none focus:ring-1 focus:ring-yellow-500 pr-6 text-xs  ${
+                  errors.momoPin ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="MoMo PIN"
                 autoComplete="off"
@@ -346,7 +346,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
               <button
                 type="button"
                 onClick={() => setShowPin(!showPin)}
-                className="absolute right-1 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-yellow-500"
+                className="absolute right-1 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-yellow-600"
                 tabIndex={-1}
               >
                 {showPin ? (
@@ -356,7 +356,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
                 )}
               </button>
             </div>
-            <div className="bg-yellow-50/90 border border-yellow-300/30 p-1.5 text-xs text-yellow-700">
+            <div className="bg-yellow-50 border border-yellow-200  p-2 text-xs text-yellow-700">
               <span className="font-bold">Note:</span> SMS confirmation
               required.
             </div>
@@ -372,15 +372,15 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
             name="agreeToTerms"
             checked={formData.agreeToTerms}
             onChange={handleInputChange}
-            className="mt-0.5 w-3 h-3 text-pink-500  bg-gray-900 border-gray-600 focus:ring-pink-500 rounded"
+            className="mt-0.5 w-3 h-3 text-blue-600 bg-white border-gray-300 focus:ring-blue-500 rounded"
           />
-          <span className="text-xs text-gray-300">
+          <span className="text-xs text-gray-700">
             I agree to the{" "}
-            <a href="/terms" className="text-pink-400 hover:underline">
+            <a href="/terms" className="text-blue-600 hover:underline">
               Terms
             </a>{" "}
             and{" "}
-            <a href="/privacy" className="text-pink-400 hover:underline">
+            <a href="/privacy" className="text-blue-600 hover:underline">
               Privacy Policy
             </a>
           </span>
@@ -397,15 +397,14 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
       <button
         type="submit"
         disabled={isProcessing}
-        className={`w-full py-2.5 px-4 font-semibold text-white text-sm transition-all duration-300 shadow-lg ${
+        className={`w-full py-2 px-4 font-semibold text-white text-sm transition-all duration-200 shadow-lg  ${
           isProcessing
-            ? "bg-gray-600 cursor-not-allowed"
+            ? "bg-gray-400 cursor-not-allowed"
             : paymentMethod === "momo"
-            ? "bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700"
-            : "bg-gradient-to-r from-pink-500 to-orange-500 hover:from-orange-500 hover:to-pink-500"
+            ? "bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700"
+            : "bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-blue-800"
         }`}
       >
-        {" "}
         {isProcessing ? (
           <div className="flex items-center justify-center gap-2">
             <LoadingSpinner size="xs" />
@@ -413,7 +412,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
           </div>
         ) : (
           <div className="flex items-center justify-center gap-2">
-            <Lock className="w-4 h-4" />
+            <Lock className="w-3 h-3" />
             Pay ${pricing.totalPrice.toFixed(2)}
           </div>
         )}

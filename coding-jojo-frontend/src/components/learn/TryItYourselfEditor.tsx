@@ -208,7 +208,7 @@ export default function TryItYourselfEditor({
           <button
             onClick={runCode}
             disabled={isRunning}
-            className="flex items-center gap-2 px-3 py-1.5 bg-green-600 hover:bg-green-700 disabled:bg-green-800 text-white rounded transition-colors text-sm"
+            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white rounded transition-colors text-sm"
           >
             <Play className="h-4 w-4" />
             {isRunning ? "Running..." : "Run"}

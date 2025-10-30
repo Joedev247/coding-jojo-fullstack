@@ -35,21 +35,21 @@ const Filters: React.FC<FiltersProps> = ({
   categories,
 }) => {
   return (
-    <div className="  bg-gray-900/50 backdrop-blur-sm shadow-xl p-5 mb-6 hover:shadow-purple-900/20 transition duration-300">
+    <div className="bg-white border border-gray-200  shadow-sm p-4 mb-4 hover:shadow-md transition duration-300">
       <div className="flex flex-col md:flex-row md:items-center gap-4">
         <div className="flex-1 relative">
           <input
             type="text"
             placeholder="Search for courses..."
-            className="w-full  bg-gray-900/70 pl-10 pr-4 py-2.5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition duration-200"
+            className="w-full bg-gray-50 border border-gray-300  pl-10 pr-4 py-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Search className="absolute left-3 top-3 text-gray-500 w-5 h-5" />
+          <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-3 text-gray-500 hover:text-gray-300"
+              className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,9 +72,9 @@ const Filters: React.FC<FiltersProps> = ({
           <div className="md:hidden">
             <button
               onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="bg-gray-800 px-4 py-2.5 flex items-center text-gray-300 hover:bg-gray-700 transition duration-200"
+              className="bg-gray-100 px-3 py-2  flex items-center text-gray-700 hover:bg-gray-200 transition duration-200"
             >
-              <Filter className="w-4 h-4 mr-2 text-pink-400" />
+              <Filter className="w-4 h-4 mr-2 text-blue-600" />
               Filters
               <ChevronDown
                 className={`w-4 h-4 ml-2 transition-transform duration-200 ${
@@ -84,9 +84,9 @@ const Filters: React.FC<FiltersProps> = ({
             </button>
           </div>
           <div className="hidden md:flex items-center space-x-2">
-            <span className="text-gray-400">Sort by:</span>
+            <span className="text-gray-600 text-sm">Sort by:</span>
             <select
-              className="bg-gray-800 px-3 py-2 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500 cursor-pointer"
+              className="bg-gray-50 border border-gray-300  px-2.5 py-1.5 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
             >
@@ -95,26 +95,26 @@ const Filters: React.FC<FiltersProps> = ({
               <option value="newest">Newest</option>
             </select>
           </div>
-          <div className="hidden md:flex items-center space-x-2 border-l border-gray-700 pl-4">
+          <div className="hidden md:flex items-center space-x-1 border-l border-gray-300 pl-3">
             <button
               onClick={() => setViewMode("grid")}
               className={`p-1.5 rounded ${
                 viewMode === "grid"
-                  ? "bg-gray-700 text-pink-400"
-                  : "text-gray-400 hover:text-gray-200"
+                  ? "bg-blue-100 text-blue-600"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              <Grid className="w-5 h-5" />
+              <Grid className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode("list")}
               className={`p-1.5 rounded ${
                 viewMode === "list"
-                  ? "bg-gray-700 text-pink-400"
-                  : "text-gray-400 hover:text-gray-200"
+                  ? "bg-blue-100 text-blue-600"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              <List className="w-5 h-5" />
+              <List className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -122,14 +122,14 @@ const Filters: React.FC<FiltersProps> = ({
 
       {/* Mobile filters */}
       {showMobileFilters && (
-        <div className="mt-4 md:hidden border-t border-gray-700 pt-4">
+        <div className="mt-3 md:hidden border-t border-gray-200 pt-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">
+              <label className="block text-sm text-gray-600 mb-1">
                 Categories
               </label>
               <select
-                className="w-full  bg-gray-900 px-3 py-2.5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full bg-gray-50 border border-gray-300  px-2.5 py-2 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={activeCategory}
                 onChange={(e) => setActiveCategory(e.target.value)}
               >
@@ -147,11 +147,11 @@ const Filters: React.FC<FiltersProps> = ({
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">
+              <label className="block text-sm text-gray-600 mb-1">
                 Level
               </label>
               <select
-                className="w-full  bg-gray-900 px-3 py-2.5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full bg-gray-50 border border-gray-300  px-2.5 py-2 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={activeLevel}
                 onChange={(e) => setActiveLevel(e.target.value)}
               >
@@ -162,11 +162,11 @@ const Filters: React.FC<FiltersProps> = ({
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">
+              <label className="block text-sm text-gray-600 mb-1">
                 Sort by
               </label>
               <select
-                className="w-full  bg-gray-900 px-3 py-2.5 text-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full bg-gray-50 border border-gray-300  px-2.5 py-2 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value)}
               >
@@ -176,37 +176,37 @@ const Filters: React.FC<FiltersProps> = ({
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">View</label>
-              <div className="flex  bg-gray-900 overflow-hidden">
+              <label className="block text-sm text-gray-600 mb-1">View</label>
+              <div className="flex bg-gray-50 border border-gray-300  overflow-hidden">
                 <button
                   onClick={() => setViewMode("grid")}
-                  className={`flex-1 py-2.5 flex items-center justify-center ${
+                  className={`flex-1 py-2 flex items-center justify-center text-sm ${
                     viewMode === "grid"
-                      ? "bg-gray-700 text-pink-400"
-                      : "text-gray-400"
+                      ? "bg-blue-100 text-blue-600"
+                      : "text-gray-600 hover:bg-gray-100"
                   }`}
                 >
-                  <Grid className="w-5 h-5 mr-2" />
+                  <Grid className="w-4 h-4 mr-1.5" />
                   Grid
                 </button>
                 <button
                   onClick={() => setViewMode("list")}
-                  className={`flex-1 py-2.5 flex items-center justify-center ${
+                  className={`flex-1 py-2 flex items-center justify-center text-sm ${
                     viewMode === "list"
-                      ? "bg-gray-700 text-pink-400"
-                      : "text-gray-400"
+                      ? "bg-blue-100 text-blue-600"
+                      : "text-gray-600 hover:bg-gray-100"
                   }`}
                 >
-                  <List className="w-5 h-5 mr-2" />
+                  <List className="w-4 h-4 mr-1.5" />
                   List
                 </button>
               </div>
             </div>
           </div>
-          <div className="mt-3 flex justify-end">
+          <div className="mt-2 flex justify-end">
             <button
               onClick={handleClearFilters}
-              className="text-pink-400 hover:text-pink-300 text-sm font-medium"
+              className="text-blue-600 hover:text-blue-700 text-xs font-medium"
             >
               Clear all filters
             </button>

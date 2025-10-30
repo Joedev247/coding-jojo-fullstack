@@ -120,34 +120,34 @@ export default function FAQSection() {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "Beginner":
-        return "text-green-400 bg-green-500/10 border-green-500/20";
+        return "text-blue-600 bg-blue-500/10 border-blue-500/20";
       case "Intermediate":
-        return "text-yellow-400 bg-yellow-500/10 border-yellow-500/20";
+        return "text-yellow-600 bg-yellow-500/10 border-yellow-500/20";
       case "Advanced":
-        return "text-orange-400 bg-orange-500/10 border-orange-500/20";
+        return "text-blue-600 bg-blue-500/10 border-blue-500/20";
       case "Career":
-        return "text-purple-400 bg-purple-500/10 border-purple-500/20";
+        return "text-indigo-600 bg-indigo-500/10 border-indigo-500/20";
       default:
-        return "text-blue-400 bg-blue-500/10 border-blue-500/20";
+        return "text-gray-600 bg-gray-500/10 border-gray-500/20";
     }
   };
 
   // Loading skeleton
   if (!mounted) {
     return (
-      <section className="relative overflow-hidden py-16 md:py-24">
+      <section className="relative overflow-hidden py-12 md:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="mb-12 max-w-3xl mx-auto text-center">
-            <div className="h-8  bg-gray-900 rounded animate-pulse mb-4 mx-auto w-48"></div>
-            <div className="h-12  bg-gray-900 rounded animate-pulse mb-4 mx-auto max-w-2xl"></div>
+          <div className="mb-10 max-w-3xl mx-auto text-center">
+            <div className="h-6 bg-gray-200 rounded animate-pulse mb-3 mx-auto w-48"></div>
+            <div className="h-8 bg-gray-200 rounded animate-pulse mb-3 mx-auto max-w-2xl"></div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div className="lg:col-span-4">
-              <div className="h-96  bg-gray-900 animate-pulse"></div>
+              <div className="h-80 bg-gray-200 animate-pulse "></div>
             </div>
-            <div className="lg:col-span-8 space-y-4">
+            <div className="lg:col-span-8 space-y-3">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-16  bg-gray-900 animate-pulse"></div>
+                <div key={i} className="h-12 bg-gray-200 animate-pulse rounded"></div>
               ))}
             </div>
           </div>
@@ -156,29 +156,29 @@ export default function FAQSection() {
     );
   }
   return (
-    <section className="relative py-16 md:py-24 font-['Inter',sans-serif]">
+    <section className="relative py-12 md:py-16 font-['Inter',sans-serif]">
       {/* <AnimatedBackground /> */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Enhanced Section Header for CODING JOJO */}
-        <div className="mb-12 md:mb-16 max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded-full text-sm font-semibold backdrop-blur-sm shadow-lg mb-6 border border-pink-500/20">
-            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center">
-              <HelpCircle className="h-3 w-3 text-white" />
+        <div className="mb-10 md:mb-12 max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-full text-xs font-semibold backdrop-blur-sm shadow-lg mb-4 border border-blue-500/20">
+            <div className="h-5 w-5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
+              <HelpCircle className="h-2.5 w-2.5 text-white" />
             </div>
-            <span className="bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent font-bold">
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent font-bold">
               Everything You Need to Know
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-extrabold leading-tight tracking-tight text-white mb-4">
-            <span className="text-white">Frequently Asked </span>
-            <span className="bg-gradient-to-r from-pink-500 via-orange-500 to-pink-500 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient">
+          <h2 className="text-2xl md:text-3xl font-extrabold leading-tight tracking-tight text-gray-800 mb-3">
+            <span className="text-gray-800">Frequently Asked </span>
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient">
               Questions
             </span>
           </h2>
 
-          <p className="max-w-2xl mx-auto text-gray-300 text-lg">
+          <p className="max-w-2xl mx-auto text-gray-600 text-xs">
             Get instant answers about CODING JOJO's AI-powered learning
             platform, courses, mentorship, and how we help you master coding
             skills faster than ever
@@ -208,31 +208,31 @@ export default function FAQSection() {
                   />
 
                   {/* Overlay Content */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <div className="  bg-gray-900/80 backdrop-blur-sm p-4 ">
-                      <h3 className="text-white font-bold mb-2">
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <div className="bg-white/90 backdrop-blur-sm p-3 rounded border border-gray-200">
+                      <h3 className="text-gray-800 font-bold mb-2 text-sm">
                         Learn with CODING JOJO
                       </h3>
-                      <p className="text-gray-300 text-sm">
+                      <p className="text-gray-600 text-xs">
                         AI-powered learning that adapts to your pace
                       </p>
-                      <div className="flex items-center mt-3 gap-2">
-                        <div className="flex -space-x-2">
+                      <div className="flex items-center mt-2 gap-2">
+                        <div className="flex -space-x-1">
                           {[...Array(3)].map((_, i) => (
                             <div
                               key={i}
-                              className={`w-6 h-6 rounded-full border-2 border-gray-900 bg-gradient-to-r ${
+                              className={`w-5 h-5 rounded-full border-2 border-white bg-gradient-to-r ${
                                 i === 0
-                                  ? "from-pink-500 to-orange-500"
+                                  ? "from-blue-600 to-indigo-600"
                                   : i === 1
-                                  ? "from-blue-500 to-purple-500"
-                                  : "from-green-500 to-teal-500"
+                                  ? "from-indigo-500 to-blue-500"
+                                  : "from-blue-500 to-cyan-500"
                               }`}
                             ></div>
                           ))}
                         </div>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-gray-600">
                           50K+ students
                         </span>
                       </div>
@@ -242,18 +242,18 @@ export default function FAQSection() {
               </div>
 
               {/* Quick Stats */}
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="  bg-gray-900/60 backdrop-blur-sm p-4  text-center">
-                  <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="bg-white border border-gray-200 backdrop-blur-sm p-3 text-center rounded">
+                  <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                     24/7
                   </div>
-                  <div className="text-xs text-gray-400">AI Support</div>
+                  <div className="text-xs text-gray-600">AI Support</div>
                 </div>
-                <div className="  bg-gray-900/60 backdrop-blur-sm p-4  text-center">
-                  <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+                <div className="bg-white border border-gray-200 backdrop-blur-sm p-3 text-center rounded">
+                  <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                     95%
                   </div>
-                  <div className="text-xs text-gray-400">Success Rate</div>
+                  <div className="text-xs text-gray-600">Success Rate</div>
                 </div>
               </div>
             </div>
@@ -262,16 +262,16 @@ export default function FAQSection() {
           {/* Compact FAQ Section - Right Side (8 columns) - SAME HEIGHT AS LEFT */}
           <div className="lg:col-span-8">
             {/* Compact Container with same height as left section */}
-            <div className="  bg-gray-900/60 backdrop-blur-sm h-full max-h-[600px] overflow-hidden">
+            <div className="bg-white border border-gray-200 backdrop-blur-sm h-full max-h-[600px] overflow-hidden ">
               {/* Compact Search Bar */}
-              <div className="p-4 border-b border-gray-800">
+              <div className="p-3 border-b border-gray-200">
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Search className="h-4 w-4 text-gray-400 group-focus-within:text-pink-400 transition-colors" />
+                    <Search className="h-4 w-4 text-gray-500 group-focus-within:text-blue-600 transition-colors" />
                   </div>
                   <input
                     type="text"
-                    className="w-full pl-10 pr-3 py-2.5 backdrop-blur-sm bg-gradient-to-r from-pink-500/10 to-orange-500/10 focus:border-pink-500/50 text-white placeholder-gray-400 outline-none transition-all duration-300 text-sm"
+                    className="w-full pl-10 pr-3 py-2 backdrop-blur-sm bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-gray-300 focus:border-blue-500/50 text-gray-800 placeholder-gray-500 outline-none transition-all duration-300 text-sm rounded"
                     placeholder="Search FAQs..."
                     value={searchTerm}
                     onChange={handleSearchChange}
@@ -280,16 +280,16 @@ export default function FAQSection() {
               </div>
 
               {/* Compact Category Filters */}
-              <div className="px-4 py-3 border-b border-gray-800">
+              <div className="px-3 py-2 border-b border-gray-200">
                 <div className="flex flex-wrap gap-2">
                   {categories.slice(0, 4).map((category, index) => (
                     <button
                       key={index}
                       onClick={() => handleCategoryChange(category)}
-                      className={`px-3 py-1.5 text-xs font-medium transition-all duration-300 ${
+                      className={`px-3 py-1.5 text-xs font-medium transition-all duration-300 rounded ${
                         activeCategory === category
-                          ? "bg-gradient-to-r from-pink-500 to-orange-500 text-white shadow-md"
-                          : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                          ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
                       }`}
                     >
                       {category}
@@ -299,38 +299,38 @@ export default function FAQSection() {
               </div>
 
               {/* Compact FAQ List with Scroll */}
-              <div className="h-[400px] overflow-y-auto p-4 space-y-3 custom-scrollbar">
+              <div className="h-[400px] overflow-y-auto p-3 space-y-2 custom-scrollbar">
                 {filteredFAQs.length > 0 ? (
                   filteredFAQs.map((faq, index) => (
                     <div
                       key={index}
-                      className="group  bg-gray-900/40 backdrop-blur-sm transition-all duration-300 hover:border-pink-500/30 hover:bg-gray-800/60"
+                      className="group bg-gray-50 border border-gray-200 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/30 hover:bg-blue-50/60 rounded"
                     >
                       <button
-                        className="w-full px-4 py-3 flex justify-between items-center text-left"
+                        className="w-full px-3 py-2.5 flex justify-between items-center text-left"
                         onClick={() => toggleFAQ(index)}
                         aria-expanded={openIndex === index}
                       >
-                        <div className="flex items-center gap-3 flex-1">
+                        <div className="flex items-center gap-2.5 flex-1">
                           {/* Compact Icon */}
                           <div
-                            className={`flex-shrink-0 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-300 ${
+                            className={`flex-shrink-0 rounded-full w-7 h-7 flex items-center justify-center transition-all duration-300 ${
                               openIndex === index
-                                ? "bg-gradient-to-r from-pink-500 to-orange-500"
-                                : "bg-gray-700 group-hover:bg-gray-600"
+                                ? "bg-gradient-to-r from-blue-600 to-indigo-600"
+                                : "bg-gray-200 group-hover:bg-gray-300"
                             }`}
                           >
                             {openIndex === index ? (
-                              <Code2 className="w-3.5 h-3.5 text-white" />
+                              <Code2 className="w-3 h-3 text-white" />
                             ) : (
                               React.cloneElement(faq.icon, {
-                                className: "w-3.5 h-3.5 text-gray-300",
+                                className: "w-3 h-3 text-gray-600",
                               })
                             )}
                           </div>
 
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-white text-sm group-hover:text-pink-400 transition-colors duration-300 truncate">
+                            <h3 className="font-semibold text-gray-800 text-xs group-hover:text-blue-600 transition-colors duration-300 truncate">
                               {faq.question}
                             </h3>
                             <div className="flex items-center gap-2 mt-1">
@@ -347,16 +347,16 @@ export default function FAQSection() {
 
                         {/* Compact Toggle */}
                         <div
-                          className={`flex-shrink-0 ml-2 p-1.5 rounded-full transition-all duration-300 ${
+                          className={`flex-shrink-0 ml-2 p-1 rounded-full transition-all duration-300 ${
                             openIndex === index
-                              ? "bg-gradient-to-r from-pink-500 to-orange-500"
-                              : "bg-gray-700 group-hover:bg-gray-600"
+                              ? "bg-gradient-to-r from-blue-600 to-indigo-600"
+                              : "bg-gray-200 group-hover:bg-gray-300"
                           }`}
                         >
                           {openIndex === index ? (
-                            <ChevronUp className="h-3.5 w-3.5 text-white" />
+                            <ChevronUp className="h-3 w-3 text-white" />
                           ) : (
-                            <ChevronDown className="h-3.5 w-3.5 text-gray-300" />
+                            <ChevronDown className="h-3 w-3 text-gray-600" />
                           )}
                         </div>
                       </button>
@@ -369,20 +369,20 @@ export default function FAQSection() {
                             : "max-h-0 opacity-0"
                         }`}
                       >
-                        <div className="px-4 pb-3">
-                          <div className="bg-gray-700/30 p-3 border border-gray-600/50">
-                            <p className="text-gray-300 text-sm leading-relaxed">
+                        <div className="px-3 pb-2.5">
+                          <div className="bg-blue-50/50 p-2.5 border border-blue-200/50 rounded">
+                            <p className="text-gray-700 text-xs leading-relaxed">
                               {faq.answer}
                             </p>
-                            <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-600/30">
-                              <div className="flex items-center gap-2">
-                                <span className="text-xs text-gray-500">
+                            <div className="flex items-center justify-between mt-2 pt-2 border-t border-blue-200/30">
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-xs text-gray-600">
                                   Helpful?
                                 </span>
-                                <button className="px-2 py-1 bg-green-500/10 border border-green-500/30 rounded text-xs text-green-400 hover:bg-green-500/20 transition-colors">
+                                <button className="px-1.5 py-0.5 bg-blue-500/10 border border-blue-500/30 rounded text-xs text-blue-600 hover:bg-blue-500/20 transition-colors">
                                   👍
                                 </button>
-                                <button className="px-2 py-1 bg-red-500/10 border border-red-500/30 rounded text-xs text-red-400 hover:bg-red-500/20 transition-colors">
+                                <button className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/30 rounded text-xs text-red-600 hover:bg-red-500/20 transition-colors">
                                   👎
                                 </button>
                               </div>
@@ -393,14 +393,14 @@ export default function FAQSection() {
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-8">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-pink-500/20 to-orange-500/20 border border-pink-500/30 flex items-center justify-center mx-auto mb-3">
-                      <HelpCircle className="h-6 w-6 text-gray-500" />
+                  <div className="text-center py-6">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-500/30 flex items-center justify-center mx-auto mb-2">
+                      <HelpCircle className="h-5 w-5 text-gray-600" />
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">
+                    <h3 className="text-xs font-semibold text-gray-800 mb-2">
                       No questions found
                     </h3>
-                    <p className="text-gray-400 text-sm mb-4">
+                    <p className="text-gray-600 text-xs mb-3">
                       Try different search terms or categories
                     </p>
                     <button
@@ -408,7 +408,7 @@ export default function FAQSection() {
                         setSearchTerm("");
                         setActiveCategory("All");
                       }}
-                      className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white text-sm font-medium hover:shadow-lg transition-all duration-300"
+                      className="px-3 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-medium hover:shadow-lg transition-all duration-300 rounded"
                     >
                       Show All FAQs
                     </button>
@@ -417,17 +417,17 @@ export default function FAQSection() {
               </div>
 
               {/* Compact Footer */}
-              <div className="p-4 border-t border-gray-800 bg-gradient-to-r from-pink-500/5 to-orange-500/5">
+              <div className="p-3 border-t border-gray-200 bg-gradient-to-r from-blue-500/5 to-indigo-500/5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-white font-semibold text-sm">
+                    <h4 className="text-gray-800 font-semibold text-xs">
                       Need more help?
                     </h4>
-                    <p className="text-gray-400 text-xs">
+                    <p className="text-gray-600 text-xs">
                       24/7 AI mentor available
                     </p>
                   </div>
-                  <button className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white text-sm font-medium hover:shadow-lg transition-all duration-300">
+                  <button className="px-3 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-medium hover:shadow-lg transition-all duration-300 rounded">
                     💬 Chat Now
                   </button>
                 </div>
@@ -456,7 +456,7 @@ export default function FAQSection() {
 
         .custom-scrollbar {
           scrollbar-width: thin;
-          scrollbar-color: #6366f1 #1f2937;
+          scrollbar-color: #2563eb #f3f4f6;
         }
 
         .custom-scrollbar::-webkit-scrollbar {
@@ -464,17 +464,17 @@ export default function FAQSection() {
         }
 
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #1f2937;
+          background: #f3f4f6;
           border-radius: 3px;
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: linear-gradient(to bottom, #ec4899, #f97316);
+          background: linear-gradient(to bottom, #2563eb, #4f46e5);
           border-radius: 3px;
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(to bottom, #db2777, #ea580c);
+          background: linear-gradient(to bottom, #1d4ed8, #4338ca);
         }
       `}</style>
     </section>

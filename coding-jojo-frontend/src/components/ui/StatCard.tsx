@@ -19,7 +19,7 @@ const StatCard: React.FC<StatCardProps> = ({
   const getBgForIcon = (title: string) => {
     const bgClasses: Record<string, string> = {
       "Total Students": "bg-purple-500/20 text-purple-400",
-      "Total Revenue": "bg-green-500/20 text-green-400",
+      "Total Revenue": "bg-blue-500/20 text-blue-400",
       "New Users": "bg-blue-500/20 text-blue-400",
       "Monthly Revenue": "bg-pink-500/20 text-pink-400",
       "Completion Rate": "bg-amber-500/20 text-amber-400",
@@ -41,7 +41,7 @@ const StatCard: React.FC<StatCardProps> = ({
           {change !== null && (
             <div
               className={`flex items-center mt-2 ${
-                change >= 0 ? "text-green-400" : "text-red-400"
+                change >= 0 ? "text-blue-400" : "text-red-400"
               }`}
             >
               <span className="text-xs font-medium flex items-center">

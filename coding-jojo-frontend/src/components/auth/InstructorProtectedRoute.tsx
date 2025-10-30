@@ -72,7 +72,6 @@ const InstructorProtectedRoute: React.FC<InstructorProtectedRouteProps> = ({
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <AnimatedBackground />
         <div className="z-10">
           <LoadingSpinner size="sm" text="Verifying instructor access..." />
         </div>
@@ -83,7 +82,6 @@ const InstructorProtectedRoute: React.FC<InstructorProtectedRouteProps> = ({
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <AnimatedBackground />
         <div className="z-10 text-center">
           <LoadingSpinner size="sm" text="Redirecting to instructor login..." />
         </div>

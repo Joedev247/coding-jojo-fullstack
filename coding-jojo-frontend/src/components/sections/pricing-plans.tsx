@@ -39,70 +39,70 @@ const PricingCard = ({
   };
 
   return (
-    <div className={`relative bg-gray-900/60 backdrop-blur-sm shadow-xl border  hover:shadow-2xl hover:shadow-pink-500/10 transition-all duration-500 flex flex-col h-full group ${isActive ? 'scale-[1.02] z-10' : 'scale-100 z-0'}`}>
+    <div className={`relative bg-white backdrop-blur-sm shadow-xl border border-gray-200 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 flex flex-col h-full group  ${isActive ? 'scale-[1.02] z-10' : 'scale-100 z-0'}`}>
       {plan.popular && (
-        <div className="absolute -top-4 inset-x-0 mx-auto w-fit px-4 py-1 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full text-xs font-bold text-white shadow-lg animate-pulse">
+        <div className="absolute -top-3 inset-x-0 mx-auto w-fit px-3 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full text-xs font-bold text-white shadow-lg animate-pulse">
           Most Popular
         </div>
       )}
       
       {/* Card Header */}
-      <div className={`p-8 border-b ${plan.popular ? 'border-pink-500/20' : 'border-gray-800'} rounded-t-lg relative overflow-hidden`}>
+      <div className={`p-6 border-b ${plan.popular ? 'border-blue-500/20' : 'border-gray-200'} rounded-t-lg relative overflow-hidden`}>
         {/* Background gradient effect */}
-        <div className={`absolute inset-0 opacity-10 ${plan.gradient || 'bg-gradient-to-br from-pink-500 to-orange-500'}`}></div>
+        <div className={`absolute inset-0 opacity-10 ${plan.gradient || 'bg-gradient-to-br from-blue-500 to-indigo-500'}`}></div>
         
         {/* Icon */}
-        <div className={`inline-flex items-center justify-center p-3 bg-gradient-to-r from-pink-500/10 to-orange-500/10 mb-4 transition-transform duration-300 group-hover:scale-110 ${plan.popular ? 'from-pink-500/20 to-orange-500/20' : ''}`}>
-          {plan.icon || <Crown className="w-6 h-6 text-pink-500" />}
+        <div className={`inline-flex items-center justify-center p-2.5 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-full mb-3 transition-transform duration-300 group-hover:scale-110 ${plan.popular ? 'from-blue-500/20 to-indigo-500/20' : ''}`}>
+          {plan.icon || <Crown className="w-5 h-5 text-blue-600" />}
         </div>
         
-        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-pink-500 transition-colors duration-300">{plan.title}</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors duration-300">{plan.title}</h3>
         <div className="flex items-center gap-2">
-          <p className="text-sm text-gray-300">{plan.forText}</p>
-          <div className="flex items-center bg-pink-500/10 px-2 py-1 rounded-full border border-pink-500/20">
-            <Users className="w-4 h-4 text-pink-500 mr-1" />
-            <span className="text-xs text-pink-500">{plan.userCount}</span>
+          <p className="text-xs text-gray-600">{plan.forText}</p>
+          <div className="flex items-center bg-blue-500/10 px-2 py-1 rounded-full border border-blue-500/20">
+            <Users className="w-3.5 h-3.5 text-blue-600 mr-1" />
+            <span className="text-xs text-blue-600">{plan.userCount}</span>
           </div>
         </div>
       </div>
 
       {/* Pricing */}
-      <div className="p-8 text-center">
+      <div className="p-6 text-center">
         {plan.price ? (
           <>
             <div className="flex justify-center items-baseline mb-2">
-              <span className="text-5xl font-bold bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">{plan.price}</span>
-              <span className="text-sm text-gray-300 ml-1">{plan.period}</span>
+              <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{plan.price}</span>
+              <span className="text-sm text-gray-600 ml-1">{plan.period}</span>
             </div>
-            <p className="text-xs text-gray-400">{plan.billingInfo}</p>
+            <p className="text-xs text-gray-500">{plan.billingInfo}</p>
           </>
         ) : (
-          <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">{plan.priceText}</div>
+          <div className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{plan.priceText}</div>
         )}
       </div>      {/* CTA Button */}
-      <div className="px-8 pb-8 text-center">
+      <div className="px-6 pb-6 text-center">
         <button 
           onClick={handlePlanSelect}
-          className={`w-full py-3.5 px-4 ${
+          className={`w-full py-3 px-4 ${
             plan.popular 
-            ? 'bg-gradient-to-r from-pink-500 to-orange-500 hover:from-orange-500 hover:to-pink-500 text-white'
-            : 'bg-gray-800 hover:bg-gray-700 text-white'
-            } font-medium flex items-center justify-center transition-all duration-300 group shadow-lg ${plan.popular ? 'shadow-pink-500/20' : ''} hover:transform hover:-translate-y-1`}
+            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-indigo-600 hover:to-blue-600 text-white'
+            : 'bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300'
+            } font-medium flex items-center justify-center transition-all duration-300 group shadow-lg ${plan.popular ? 'shadow-blue-500/20' : ''} hover:transform hover:-translate-y-0.5 rounded text-sm`}
         >
           {plan.buttonText}
-          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-1 transition-transform" />
         </button>
       </div>
 
       {/* Features List */}
-      <div className="px-8 py-6 flex-grow">
-        <ul className="space-y-4">
+      <div className="px-6 py-4 flex-grow">
+        <ul className="space-y-3">
           {plan.features.map((feature, index) => (
             <li key={index} className="flex items-start animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
               <div className="mt-0.5">
-                <Check className={`w-4 h-4 ${plan.popular ? 'text-pink-500' : 'text-green-500'} mr-3 flex-shrink-0`} />
+                <Check className={`w-3.5 h-3.5 ${plan.popular ? 'text-blue-600' : 'text-blue-600'} mr-2.5 flex-shrink-0`} />
               </div>
-              <span className="text-sm text-gray-300">{feature}</span>
+              <span className="text-xs text-gray-700">{feature}</span>
             </li>
           ))}
         </ul>
@@ -146,8 +146,8 @@ const PricingPlans = () => {
       billingInfo: isAnnual ? "Billed annually. Save 20%" : "Billed monthly. Cancel anytime.",
       buttonText: "Try it free",
       planId: "personal",
-      icon: <Rocket className="w-6 h-6 text-pink-500" />,
-      gradient: "bg-gradient-to-br from-blue-500 to-purple-500",
+      icon: <Rocket className="w-5 h-5 text-blue-600" />,
+      gradient: "bg-gradient-to-br from-blue-500 to-indigo-500",
       features: [
         "Access to 12,000+ top courses",
         "Certification prep",
@@ -167,8 +167,8 @@ const PricingPlans = () => {
       buttonText: "Try it free",
       planId: "team",
       popular: true,
-      icon: <Users className="w-6 h-6 text-orange-500" />,
-      gradient: "bg-gradient-to-br from-purple-500 to-pink-500",
+      icon: <Users className="w-5 h-5 text-indigo-600" />,
+      gradient: "bg-gradient-to-br from-indigo-500 to-blue-500",
       features: [
         "Access to 12,000+ top courses",
         "Certification prep",
@@ -187,8 +187,8 @@ const PricingPlans = () => {
       priceText: "Contact sales for pricing",
       buttonText: "Request a demo",
       planId: "enterprise",
-      icon: <Diamond className="w-6 h-6 text-pink-500" />,
-      gradient: "bg-gradient-to-br from-purple-500 to-pink-500",
+      icon: <Diamond className="w-5 h-5 text-blue-600" />,
+      gradient: "bg-gradient-to-br from-blue-500 to-indigo-500",
       features: [
         "Access to 27,000+ top courses",
         "Certification prep",
@@ -207,16 +207,16 @@ const PricingPlans = () => {
   // Loading skeleton
   if (!mounted) {
     return (
-      <section className="relative overflow-hidden py-24 md:py-32">
+      <section className="relative overflow-hidden py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 max-w-7xl relative z-10">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <div className="h-8 bg-gray-800 rounded animate-pulse mb-5 mx-auto w-48"></div>
-            <div className="h-16 bg-gray-800 rounded animate-pulse mb-6 mx-auto max-w-2xl"></div>
-            <div className="h-8 bg-gray-800 rounded animate-pulse mx-auto max-w-xl"></div>
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <div className="h-6 bg-gray-200 rounded animate-pulse mb-4 mx-auto w-48"></div>
+            <div className="h-12 bg-gray-200 rounded animate-pulse mb-4 mx-auto max-w-2xl"></div>
+            <div className="h-6 bg-gray-200 rounded animate-pulse mx-auto max-w-xl"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-96 bg-gray-800 animate-pulse"></div>
+              <div key={i} className="h-80 bg-gray-200 animate-pulse "></div>
             ))}
           </div>
         </div>
@@ -224,43 +224,43 @@ const PricingPlans = () => {
     );
   }
   return (
-    <section className="relative py-16 md:py-24 font-['Montserrat',sans-serif]">
+    <section className="relative py-12 md:py-16 font-['Montserrat',sans-serif]">
       {/* <AnimatedBackground /> */}
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded-full text-sm font-medium border border-pink-500/20 backdrop-blur-sm shadow-lg mb-5">
-            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center">
-              <Sparkles className="h-3 w-3 text-white" />
+        <div className="text-center mb-12 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-full text-xs font-medium border border-blue-500/20 backdrop-blur-sm shadow-lg mb-4">
+            <div className="h-5 w-5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
+              <Sparkles className="h-2.5 w-2.5 text-white" />
             </div>
-            <span className="bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent font-bold">
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent font-bold">
               Simple pricing
             </span>
           </div>
           
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
-            <span className="text-white">Accelerate </span>
-            <span className="bg-gradient-to-r from-pink-500 via-orange-500 to-pink-500 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient">growth</span>
+          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-4 leading-tight">
+            <span className="text-gray-800">Accelerate </span>
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient">growth</span>
           </h2>
-          <p className="text-gray-300 text-lg mx-auto mb-8">
+          <p className="text-gray-600 text-xs mx-auto mb-6">
             Reach goals faster with one of our plans or programs. Try one free today or contact sales to learn more.
           </p>
           
           {/* Billing toggle */}
-          <div className="inline-flex items-center p-1 bg-gray-900 mb-8">
+          <div className="inline-flex items-center p-1 bg-gray-100 rounded mb-6">
             <button 
-              className={`px-4 py-2 text-sm font-medium transition-all duration-300 ${!isAnnual ? 'bg-gradient-to-r from-pink-500 to-orange-500 text-white shadow-lg' : 'text-gray-400 hover:text-gray-300'}`}
+              className={`px-3 py-2 text-xs font-medium transition-all duration-300 rounded ${!isAnnual ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg' : 'text-gray-600 hover:text-gray-800'}`}
               onClick={() => toggleBilling(false)}
             >
               Monthly
             </button>
             <button 
-              className={`px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-2 ${isAnnual ? 'bg-gradient-to-r from-pink-500 to-orange-500 text-white shadow-lg' : 'text-gray-400 hover:text-gray-300'}`}
+              className={`px-3 py-2 text-xs font-medium transition-all duration-300 flex items-center gap-1.5 rounded ${isAnnual ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg' : 'text-gray-600 hover:text-gray-800'}`}
               onClick={() => toggleBilling(true)}
             >
               Annual
-              <span className="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded">Save 20%</span>
+              <span className="bg-blue-500/20 text-blue-600 text-[10px] px-1.5 py-0.5 rounded">Save 20%</span>
             </button>
           </div>
         </div>        {/* Pricing Cards Grid */}
@@ -282,17 +282,17 @@ const PricingPlans = () => {
         </div>
 
         {/* Additional Info */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-pink-500/10 to-orange-500/10 backdrop-blur-sm p-8 shadow-lg">
-            <h3 className="text-2xl font-bold text-white mb-4">Need help choosing?</h3>
-            <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+        <div className="mt-12 text-center">
+          <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 backdrop-blur-sm p-6 shadow-lg  border border-blue-200">
+            <h3 className="text-xl font-bold text-gray-800 mb-3">Need help choosing?</h3>
+            <p className="text-gray-600 mb-4 max-w-2xl mx-auto text-sm">
               Not sure which plan is right for you? Our team is here to help you find the perfect solution for your learning goals.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-6 py-3 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-orange-500 hover:to-pink-500 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-pink-500/30 hover:transform hover:-translate-y-1">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-indigo-600 hover:to-blue-600 text-white font-medium transition-all duration-300 shadow-lg hover:shadow-blue-500/30 hover:transform hover:-translate-y-0.5 rounded text-sm">
                 Schedule a call
               </button>
-              <button className="bg-pink-500/10 px-6 py-3 text-white font-medium hover:bg-pink-500/10 transition-all duration-300">
+              <button className="bg-blue-500/10 px-5 py-2.5 text-gray-800 font-medium hover:bg-blue-500/20 transition-all duration-300 border border-blue-200 rounded text-sm">
                 Compare all plans
               </button>
             </div>

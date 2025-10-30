@@ -184,14 +184,14 @@ const NewPasswordModal: React.FC<NewPasswordModalProps> = ({
                       <div
                         className={`flex items-center gap-1 ${
                           passwordValidation.minLength
-                            ? "text-green-400"
+                            ? "text-blue-400"
                             : "text-gray-400"
                         }`}
                       >
                         <div
                           className={`w-2 h-2 rounded-full ${
                             passwordValidation.minLength
-                              ? "bg-green-400"
+                              ? "bg-blue-400"
                               : "bg-gray-400"
                           }`}
                         />
@@ -200,14 +200,14 @@ const NewPasswordModal: React.FC<NewPasswordModalProps> = ({
                       <div
                         className={`flex items-center gap-1 ${
                           passwordValidation.hasUpper
-                            ? "text-green-400"
+                            ? "text-blue-400"
                             : "text-gray-400"
                         }`}
                       >
                         <div
                           className={`w-2 h-2 rounded-full ${
                             passwordValidation.hasUpper
-                              ? "bg-green-400"
+                              ? "bg-blue-400"
                               : "bg-gray-400"
                           }`}
                         />
@@ -216,14 +216,14 @@ const NewPasswordModal: React.FC<NewPasswordModalProps> = ({
                       <div
                         className={`flex items-center gap-1 ${
                           passwordValidation.hasLower
-                            ? "text-green-400"
+                            ? "text-blue-400"
                             : "text-gray-400"
                         }`}
                       >
                         <div
                           className={`w-2 h-2 rounded-full ${
                             passwordValidation.hasLower
-                              ? "bg-green-400"
+                              ? "bg-blue-400"
                               : "bg-gray-400"
                           }`}
                         />
@@ -232,14 +232,14 @@ const NewPasswordModal: React.FC<NewPasswordModalProps> = ({
                       <div
                         className={`flex items-center gap-1 ${
                           passwordValidation.hasNumber
-                            ? "text-green-400"
+                            ? "text-blue-400"
                             : "text-gray-400"
                         }`}
                       >
                         <div
                           className={`w-2 h-2 rounded-full ${
                             passwordValidation.hasNumber
-                              ? "bg-green-400"
+                              ? "bg-blue-400"
                               : "bg-gray-400"
                           }`}
                         />
@@ -248,14 +248,14 @@ const NewPasswordModal: React.FC<NewPasswordModalProps> = ({
                       <div
                         className={`flex items-center gap-1 ${
                           passwordValidation.hasSpecial
-                            ? "text-green-400"
+                            ? "text-blue-400"
                             : "text-gray-400"
                         }`}
                       >
                         <div
                           className={`w-2 h-2 rounded-full ${
                             passwordValidation.hasSpecial
-                              ? "bg-green-400"
+                              ? "bg-blue-400"
                               : "bg-gray-400"
                           }`}
                         />
@@ -342,8 +342,8 @@ const NewPasswordModal: React.FC<NewPasswordModalProps> = ({
           ) : (
             // Success State
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="h-8 w-8 text-green-500" />
+              <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="h-8 w-8 text-blue-500" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
                 Password Updated Successfully!

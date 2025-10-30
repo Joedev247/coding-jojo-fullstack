@@ -44,7 +44,7 @@ export default function CertificatePage() {
                 <p className="text-gray-400 text-sm">Download as PDF file</p>
               </div>
               <div className="bg-gray-800/50 p-4 ">
-                <Share2 className="h-8 w-8 text-green-400 mx-auto mb-2" />
+                <Share2 className="h-8 w-8 text-blue-400 mx-auto mb-2" />
                 <h4 className="text-white font-medium mb-1">Share Achievement</h4>
                 <p className="text-gray-400 text-sm">Share on social media</p>
               </div>

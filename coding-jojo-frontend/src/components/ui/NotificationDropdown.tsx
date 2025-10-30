@@ -34,7 +34,7 @@ export default function NotificationDropdown({
   const getIcon = (type: string) => {
     switch (type) {
       case "success":
-        return <CheckCircle className="h-4 w-4 text-green-400" />;
+        return <CheckCircle className="h-4 w-4 text-blue-400" />;
       case "warning":
         return <AlertCircle className="h-4 w-4 text-yellow-400" />;
       case "error":

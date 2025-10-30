@@ -4,7 +4,7 @@ const axios = require('axios');
 
 async function testFeaturedCoursesImageDisplay() {
   try {
-    const baseURL = 'http://localhost:5000';
+    const baseURL = 'https://codingjojo-backend.onrender.com';
     
     console.log('🎯 Testing featured courses image display...');
     
@@ -78,7 +78,7 @@ async function testFeaturedCoursesImageDisplay() {
 async function testAdminCoursesImageDisplay() {
   try {
     console.log('\n🔧 Testing admin courses API (without authentication)...');
-    const baseURL = 'http://localhost:5000';
+    const baseURL = 'https://codingjojo-backend.onrender.com';
     
     const response = await axios.get(`${baseURL}/api/admin/courses/debug`);
     

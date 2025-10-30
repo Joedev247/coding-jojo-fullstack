@@ -1,0 +1,149 @@
+<svg width="100%" height="100%" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="hero-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f1f5f9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="400" height="225" fill="url(#hero-bg)" rx="12"/>
+  
+  <!-- Main instructor figure -->
+  <g transform="translate(80, 60)">
+    <!-- Instructor silhouette -->
+    <circle cx="40" cy="30" r="18" fill="url(#blue-gradient)"/>
+    <rect x="25" y="45" width="30" height="40" fill="url(#blue-gradient)" rx="15"/>
+    
+    <!-- Professional attire details -->
+    <rect x="30" y="50" width="20" height="25" fill="#1e40af" rx="2"/>
+    <circle cx="40" cy="57" r="2" fill="white"/>
+    <circle cx="40" cy="62" r="2" fill="white"/>
+    
+    <!-- Arms gesturing -->
+    <ellipse cx="20" cy="65" rx="8" ry="15" fill="url(#blue-gradient)" transform="rotate(-20 20 65)"/>
+    <ellipse cx="60" cy="65" rx="8" ry="15" fill="url(#blue-gradient)" transform="rotate(20 60 65)"/>
+  </g>
+  
+  <!-- Teaching content around instructor -->
+  
+  <!-- Laptop/Computer -->
+  <g transform="translate(40, 130)">
+    <rect x="0" y="0" width="50" height="30" fill="#374151" rx="4"/>
+    <rect x="3" y="3" width="44" height="24" fill="#1f2937" rx="2"/>
+    <rect x="20" y="28" width="10" height="8" fill="#6b7280"/>
+    <rect x="15" y="35" width="20" height="3" fill="#4b5563" rx="1"/>
+    
+    <!-- Screen content -->
+    <rect x="6" y="6" width="38" height="18" fill="#111827"/>
+    <rect x="8" y="8" width="34" height="2" fill="url(#blue-gradient)"/>
+    <rect x="8" y="12" width="28" height="2" fill="url(#blue-gradient)"/>
+    <rect x="8" y="16" width="32" height="2" fill="url(#purple-gradient)"/>
+    <rect x="8" y="20" width="24" height="2" fill="#fbbf24"/>
+  </g>
+  
+  <!-- Books/Knowledge stack -->
+  <g transform="translate(280, 140)">
+    <rect x="0" y="10" width="35" height="6" fill="#ef4444" rx="1"/>
+    <rect x="2" y="6" width="35" height="6" fill="url(#blue-gradient)" rx="1"/>
+    <rect x="1" y="2" width="35" height="6" fill="url(#blue-gradient)" rx="1"/>
+    <rect x="3" y="-2" width="35" height="6" fill="url(#purple-gradient)" rx="1"/>
+    
+    <!-- Book spines -->
+    <line x1="0" y1="4" x2="0" y2="16" stroke="white" stroke-width="0.5"/>
+    <line x1="12" y1="2" x2="12" y2="16" stroke="white" stroke-width="0.5"/>
+    <line x1="24" y1="-2" x2="24" y2="16" stroke="white" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Student icons -->
+  <g transform="translate(300, 50)">
+    <!-- Student 1 -->
+    <circle cx="0" cy="0" r="8" fill="#fbbf24"/>
+    <circle cx="0" cy="-2" r="4" fill="#f59e0b"/>
+    <rect x="-3" y="3" width="6" height="8" fill="url(#blue-gradient)" rx="2"/>
+    
+    <!-- Connection line -->
+    <line x1="-8" y1="5" x2="-40" y2="35" stroke="url(#blue-gradient)" stroke-width="1" opacity="0.6"/>
+  </g>
+  
+  <g transform="translate(320, 80)">
+    <!-- Student 2 -->
+    <circle cx="0" cy="0" r="8" fill="#22c55e"/>
+    <circle cx="0" cy="-2" r="4" fill="#16a34a"/>
+    <rect x="-3" y="3" width="6" height="8" fill="url(#purple-gradient)" rx="2"/>
+    
+    <!-- Connection line -->
+    <line x1="-8" y1="5" x2="-45" y2="20" stroke="url(#blue-gradient)" stroke-width="1" opacity="0.6"/>
+  </g>
+  
+  <!-- Floating knowledge elements -->
+  <g transform="translate(50, 40)">
+    <!-- Graduation cap -->
+    <rect x="0" y="8" width="20" height="3" fill="#1f2937"/>
+    <path d="M10,0 L0,8 L20,8 Z" fill="url(#blue-gradient)"/>
+    <rect x="18" y="5" width="2" height="8" fill="#fbbf24"/>
+    <circle cx="19" cy="13" r="1" fill="#f59e0b"/>
+  </g>
+  
+  <!-- Success metrics -->
+  <g transform="translate(270, 100)">
+    <rect x="0" y="0" width="50" height="25" fill="rgba(34, 197, 94, 0.1)" stroke="#22c55e" stroke-width="1" rx="4"/>
+    <text x="25" y="10" fill="#16a34a" font-family="Arial, sans-serif" font-size="7" text-anchor="middle" font-weight="600">Success Rate</text>
+    <text x="25" y="18" fill="#16a34a" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" font-weight="bold">98%</text>
+  </g>
+  
+  <!-- Course creation tools -->
+  <g transform="translate(30, 180)">
+    <!-- Video icon -->
+    <rect x="0" y="0" width="16" height="12" fill="url(#purple-gradient)" rx="2"/>
+    <circle cx="8" cy="6" r="3" fill="white"/>
+    <polygon points="6,4 6,8 10,6" fill="url(#purple-gradient)"/>
+    
+    <!-- Document icon -->
+    <rect x="20" y="0" width="12" height="16" fill="white" stroke="url(#blue-gradient)" stroke-width="1" rx="2"/>
+    <rect x="22" y="3" width="8" height="1" fill="url(#blue-gradient)"/>
+    <rect x="22" y="6" width="6" height="1" fill="url(#blue-gradient)"/>
+    <rect x="22" y="9" width="8" height="1" fill="url(#blue-gradient)"/>
+    
+    <!-- Quiz icon -->
+    <circle cx="42" cy="8" r="8" fill="url(#blue-gradient)"/>
+    <text x="42" y="11" fill="white" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" font-weight="bold">?</text>
+  </g>
+  
+  <!-- Global reach -->
+  <g transform="translate(340, 160)">
+    <circle cx="0" cy="0" r="12" fill="url(#blue-gradient)" opacity="0.2"/>
+    <circle cx="0" cy="0" r="10" fill="none" stroke="url(#blue-gradient)" stroke-width="1.5"/>
+    
+    <!-- Simple continents -->
+    <path d="M-4,-6 Q-2,-4 0,-6 Q2,-4 4,-6 Q3,-2 2,2 Q0,3 -2,2 Q-3,-2 -4,-6" fill="url(#blue-gradient)" opacity="0.8"/>
+    <path d="M-8,2 Q-6,4 -4,2 Q-3,6 -5,8 Q-7,6 -8,2" fill="url(#blue-gradient)" opacity="0.8"/>
+  </g>
+  
+  <!-- Floating decorative elements -->
+  <circle cx="350" cy="40" r="3" fill="#3b82f6" opacity="0.4"/>
+  <circle cx="60" cy="200" r="2" fill="#22c55e" opacity="0.6"/>
+  <circle cx="320" cy="200" r="2.5" fill="#8b5cf6" opacity="0.5"/>
+  <circle cx="30" cy="80" r="1.5" fill="#fbbf24" opacity="0.7"/>
+  
+  <!-- Professional badge -->
+  <g transform="translate(200, 30)">
+    <circle cx="0" cy="0" r="15" fill="url(#blue-gradient)"/>
+    <circle cx="0" cy="0" r="12" fill="white"/>
+    <circle cx="0" cy="0" r="9" fill="url(#blue-gradient)"/>
+    <polygon points="-4,-2 -1,2 4,-3 1,-6" fill="white"/>
+  </g>
+</svg>

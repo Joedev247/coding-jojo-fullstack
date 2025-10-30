@@ -22,7 +22,7 @@ const AchievementsWidget: React.FC<AchievementsWidgetProps> = ({
       case "star":
         return <Star className="h-6 w-6 text-pink-400" />;
       case "target":
-        return <Target className="h-6 w-6 text-green-400" />;
+        return <Target className="h-6 w-6 text-blue-400" />;
       case "zap":
         return <Zap className="h-6 w-6 text-orange-400" />;
       case "book":

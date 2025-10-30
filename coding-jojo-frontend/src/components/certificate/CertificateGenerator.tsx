@@ -187,8 +187,8 @@ export default function CertificateGenerator({
   // Safety check: Return loading state if required props are missing
   if (!courseId || !courseName || !instructorName) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading certificate generator...</div>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-gray-900 text-xs">Loading certificate generator...</div>
       </div>
     );
   }
@@ -445,62 +445,62 @@ export default function CertificateGenerator({
 
     return (
       <div 
-        className="relative border-4 border-yellow-400 shadow-2xl mx-auto"
+        className="relative border-4 border-blue-400 shadow-xl mx-auto"
         style={{
           width: `${template.layout.width}px`,
           height: `${template.layout.height}px`,
           ...backgroundStyle,
-          transform: 'scale(0.8)',
+          transform: 'scale(0.7)',
           transformOrigin: 'top center'
         }}
       >
         {/* Certificate Border */}
-        <div className="absolute inset-2 border-2 border-yellow-300 opacity-50" />
-        <div className="absolute inset-4 border border-yellow-200 opacity-30" />
+        <div className="absolute inset-2 border-2 border-blue-300 opacity-50" />
+        <div className="absolute inset-4 border border-blue-200 opacity-30" />
         
         {/* Header */}
-        <div className="text-center pt-12">
-          <div className="flex items-center justify-center mb-4">
-            <Award className="h-12 w-12 text-yellow-600 mr-3" />
-            <h1 className="text-4xl font-bold text-gray-800">Certificate of Completion</h1>
-            <Award className="h-12 w-12 text-yellow-600 ml-3" />
+        <div className="text-center pt-8">
+          <div className="flex items-center justify-center mb-3">
+            <Award className="h-8 w-8 text-blue-600 mr-2" />
+            <h1 className="text-2xl font-bold text-gray-800">Certificate of Completion</h1>
+            <Award className="h-8 w-8 text-blue-600 ml-2" />
           </div>
           
-          <div className="w-24 h-1 bg-yellow-600 mx-auto mb-8" />
+          <div className="w-16 h-0.5 bg-blue-600 mx-auto mb-6" />
         </div>
         
         {/* Content */}
-        <div className="text-center px-16">
-          <p className="text-lg text-gray-600 mb-6">This is to certify that</p>
+        <div className="text-center px-12">
+          <p className="text-sm text-gray-600 mb-4">This is to certify that</p>
           
-          <h2 className="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-gray-300 pb-2 inline-block">
+          <h2 className="text-xl font-bold text-gray-800 mb-6 border-b-2 border-gray-300 pb-1 inline-block">
             {previewCertificate?.studentName || 'Student Name'}
           </h2>
           
-          <p className="text-lg text-gray-600 mb-4">has successfully completed the course</p>
+          <p className="text-sm text-gray-600 mb-3">has successfully completed the course</p>
           
-          <h3 className="text-2xl font-bold text-pink-600 mb-8">
+          <h3 className="text-lg font-bold text-blue-600 mb-6">
             {previewCertificate?.courseName || 'Course Name'}
           </h3>
           
-          <div className="flex items-center justify-between px-8">
+          <div className="flex items-center justify-between px-6">
             <div className="text-center">
-              <p className="text-sm text-gray-500 mb-2">Date of Completion</p>
-              <p className="text-lg font-semibold text-gray-700">
+              <p className="text-xs text-gray-500 mb-1">Date of Completion</p>
+              <p className="text-sm font-semibold text-gray-700">
                 {previewCertificate?.completionDate ? new Date(previewCertificate.completionDate).toLocaleDateString() : 'Not specified'}
               </p>
             </div>
             
             <div className="text-center">
-              <p className="text-sm text-gray-500 mb-2">Instructor</p>
-              <p className="text-lg font-semibold text-gray-700">
+              <p className="text-xs text-gray-500 mb-1">Instructor</p>
+              <p className="text-sm font-semibold text-gray-700">
                 {previewCertificate?.instructorName || 'Instructor Name'}
               </p>
             </div>
             
             <div className="text-center">
-              <p className="text-sm text-gray-500 mb-2">Certificate ID</p>
-              <p className="text-sm font-mono text-gray-600">
+              <p className="text-xs text-gray-500 mb-1">Certificate ID</p>
+              <p className="text-xs font-mono text-gray-600">
                 {previewCertificate?.certificateId || 'CERT-000000'}
               </p>
             </div>
@@ -509,60 +509,60 @@ export default function CertificateGenerator({
         
         {/* QR Code */}
         {previewCertificate.qrCode && (
-          <div className="absolute bottom-4 right-4">
+          <div className="absolute bottom-3 right-3">
             <img 
               src={previewCertificate.qrCode} 
               alt="Verification QR Code"
-              className="w-16 h-16"
+              className="w-12 h-12"
             />
-            <p className="text-xs text-gray-500 text-center mt-1">Verify</p>
+            <p className="text-xs text-gray-500 text-center mt-0.5">Verify</p>
           </div>
         )}
         
         {/* Decorative Elements */}
-        <div className="absolute top-4 left-4">
-          <Crown className="h-8 w-8 text-yellow-600" />
+        <div className="absolute top-3 left-3">
+          <Crown className="h-6 w-6 text-blue-600" />
         </div>
-        <div className="absolute top-4 right-4">
-          <Trophy className="h-8 w-8 text-yellow-600" />
+        <div className="absolute top-3 right-3">
+          <Trophy className="h-6 w-6 text-blue-600" />
         </div>
-        <div className="absolute bottom-4 left-4">
-          <Medal className="h-8 w-8 text-yellow-600" />
+        <div className="absolute bottom-3 left-3">
+          <Medal className="h-6 w-6 text-blue-600" />
         </div>
       </div>
     );
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
+    <div className="max-w-6xl mx-auto p-4 space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between bg-white  p-4 shadow-sm border border-gray-200">
         <div>
-          <h1 className="text-2xl font-bold text-white">Certificate Generator</h1>
-          <p className="text-gray-400">Create and manage course completion certificates</p>
+          <h1 className="text-lg font-bold text-gray-900">Certificate Generator</h1>
+          <p className="text-gray-600 text-sm">Create and manage course completion certificates</p>
         </div>
         
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2">
           <button
             onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-            className="p-2 bg-gray-700 hover:bg-gray-600 text-white "
+            className="p-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700  border border-gray-200"
           >
-            {viewMode === 'grid' ? <ListIcon className="h-4 w-4" /> : <Grid className="h-4 w-4" />}
+            {viewMode === 'grid' ? <ListIcon className="h-3 w-3" /> : <Grid className="h-3 w-3" />}
           </button>
           
           <button
             onClick={() => setShowBulkGeneration(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white "
+            className="flex items-center space-x-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm "
           >
-            <Users className="h-4 w-4" />
+            <Users className="h-3 w-3" />
             <span>Bulk Generate</span>
           </button>
           
           <button
             onClick={() => setShowTemplateEditor(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white "
+            className="flex items-center space-x-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm "
           >
-            <Palette className="h-4 w-4" />
+            <Palette className="h-3 w-3" />
             <span>Template Editor</span>
           </button>
         </div>
@@ -570,33 +570,33 @@ export default function CertificateGenerator({
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Certificate Templates */}
-        <div className="xl:col-span-1 space-y-4">
-          <div className="bg-gray-800 p-4 ">
-            <h2 className="text-lg font-semibold text-white mb-4">Certificate Templates</h2>
+        <div className="xl:col-span-1 space-y-3">
+          <div className="bg-white p-4  shadow-sm border border-gray-200">
+            <h2 className="text-xs font-semibold text-gray-900 mb-3">Certificate Templates</h2>
             
-            <div className="space-y-3">
+            <div className="space-y-2">
               {[...(defaultTemplates || []), ...(Array.isArray(customTemplates) ? customTemplates : [])].map((template) => (
                 <div
                   key={template.id}
-                  className={`p-3  cursor-pointer transition-colors ${
+                  className={`p-2 cursor-pointer transition-colors border  ${
                     selectedTemplate?.id === template.id
-                      ? 'bg-pink-600 border-pink-500'
-                      : 'bg-gray-700 hover:bg-gray-600 border-gray-600'
-                  } border-2`}
+                      ? 'bg-blue-50 border-blue-200'
+                      : 'bg-gray-50 hover:bg-gray-100 border-gray-200'
+                  }`}
                   onClick={() => setSelectedTemplate(template)}
                 >
-                  <h3 className="font-medium text-white">{template.name}</h3>
-                  <p className="text-sm text-gray-400">{template.description}</p>
+                  <h3 className="font-medium text-gray-900 text-sm">{template.name}</h3>
+                  <p className="text-xs text-gray-600">{template.description}</p>
                   
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center space-x-2 text-xs text-gray-500">
+                  <div className="flex items-center justify-between mt-1">
+                    <div className="flex items-center space-x-1 text-xs text-gray-500">
                       <span>{template.layout.orientation}</span>
                       <span>•</span>
                       <span>{template.layout.width}x{template.layout.height}</span>
                     </div>
                     
                     {selectedTemplate?.id === template.id && (
-                      <CheckCircle className="h-4 w-4 text-white" />
+                      <CheckCircle className="h-3 w-3 text-blue-600" />
                     )}
                   </div>
                 </div>
@@ -605,29 +605,29 @@ export default function CertificateGenerator({
             
             {/* Student Information */}
             {studentName && (
-              <div className="mt-6 p-4 bg-gray-700 ">
-                <h3 className="font-medium text-white mb-3">Student Information</h3>
+              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 ">
+                <h3 className="font-medium text-gray-900 mb-2 text-sm">Student Information</h3>
                 
-                <div className="space-y-2 text-sm">
+                <div className="space-y-1 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Name:</span>
-                    <span className="text-white">{studentName}</span>
+                    <span className="text-gray-600">Name:</span>
+                    <span className="text-gray-900">{studentName}</span>
                   </div>
                   
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Course:</span>
-                    <span className="text-white">{courseName}</span>
+                    <span className="text-gray-600">Course:</span>
+                    <span className="text-gray-900">{courseName}</span>
                   </div>
                   
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Instructor:</span>
-                    <span className="text-white">{instructorName}</span>
+                    <span className="text-gray-600">Instructor:</span>
+                    <span className="text-gray-900">{instructorName}</span>
                   </div>
                   
                   {completionDate && (
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Completed:</span>
-                      <span className="text-white">
+                      <span className="text-gray-600">Completed:</span>
+                      <span className="text-gray-900">
                         {new Date(completionDate).toLocaleDateString()}
                       </span>
                     </div>
@@ -637,7 +637,7 @@ export default function CertificateGenerator({
                 <button
                   onClick={() => generateCertificate()}
                   disabled={isGenerating || !studentId}
-                  className="w-full mt-4 px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 disabled:opacity-50 text-white "
+                  className="w-full mt-3 px-3 py-1.5 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 text-white text-sm "
                 >
                   {isGenerating ? 'Generating...' : 'Generate Certificate'}
                 </button>
@@ -648,15 +648,15 @@ export default function CertificateGenerator({
 
         {/* Certificate Preview */}
         <div className="xl:col-span-2">
-          <div className="bg-gray-800 p-6 ">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-white">Certificate Preview</h2>
+          <div className="bg-white p-4  shadow-sm border border-gray-200">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xs font-semibold text-gray-900">Certificate Preview</h2>
               
               <div className="flex items-center space-x-2">
                 <select
                   value={exportFormat}
                   onChange={(e) => setExportFormat(e.target.value as 'pdf' | 'png' | 'jpg')}
-                  className="px-3 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm"
+                  className="px-2 py-1 bg-white border border-gray-300 rounded text-gray-900 text-xs"
                 >
                   <option value="pdf">PDF</option>
                   <option value="png">PNG</option>
@@ -668,15 +668,15 @@ export default function CertificateGenerator({
                     id: previewCertificate.id 
                   } as Certificate, exportFormat)}
                   disabled={!previewCertificate}
-                  className="flex items-center space-x-1 px-3 py-1 bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white rounded text-sm"
+                  className="flex items-center space-x-1 px-2 py-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded text-xs"
                 >
-                  <Download className="h-4 w-4" />
+                  <Download className="h-3 w-3" />
                   <span>Export</span>
                 </button>
               </div>
             </div>
             
-            <div className="bg-white  p-8 overflow-auto">
+            <div className="bg-gray-50  p-4 overflow-auto border border-gray-200">
               {renderCertificatePreview()}
             </div>
           </div>
@@ -684,59 +684,59 @@ export default function CertificateGenerator({
       </div>
 
       {/* Generated Certificates */}
-      <div className="bg-gray-800 p-6 ">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-white">
+      <div className="bg-white p-4  shadow-sm border border-gray-200">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xs font-semibold text-gray-900">
             Generated Certificates ({certificates?.length || 0})
           </h2>
         </div>
 
         {!certificates || certificates.length === 0 ? (
-          <div className="text-center py-12">
-            <Award className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-2">No certificates generated yet</h3>
-            <p className="text-gray-400">
+          <div className="text-center py-8">
+            <Award className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+            <h3 className="text-xs font-semibold text-gray-900 mb-1">No certificates generated yet</h3>
+            <p className="text-gray-600 text-sm">
               Generate certificates for students who have completed the course
             </p>
           </div>
         ) : (
-          <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4' : 'space-y-3'}`}>
+          <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3' : 'space-y-2'}`}>
             {(certificates || []).filter(cert => cert && cert.id).map((certificate) => (
-              <div key={certificate.id} className={`bg-gray-700  p-4 ${
+              <div key={certificate.id} className={`bg-gray-50 border border-gray-200 p-3  ${
                 viewMode === 'list' ? 'flex items-center justify-between' : ''
               }`}>
-                <div className={`${viewMode === 'list' ? 'flex-1' : 'mb-3'}`}>
-                  <h3 className="font-medium text-white">{certificate.studentName || 'Unknown Student'}</h3>
-                  <p className="text-sm text-gray-400">{certificate.courseName || 'Unknown Course'}</p>
+                <div className={`${viewMode === 'list' ? 'flex-1' : 'mb-2'}`}>
+                  <h3 className="font-medium text-gray-900 text-sm">{certificate.studentName || 'Unknown Student'}</h3>
+                  <p className="text-xs text-gray-600">{certificate.courseName || 'Unknown Course'}</p>
                   
-                  <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                  <div className="flex items-center space-x-3 mt-1 text-xs text-gray-500">
                     <div className="flex items-center space-x-1">
-                      <Calendar className="h-3 w-3" />
+                      <Calendar className="h-2.5 w-2.5" />
                       <span>{certificate.issuedAt ? new Date(certificate.issuedAt).toLocaleDateString() : 'Unknown Date'}</span>
                     </div>
                     
                     <div className="flex items-center space-x-1">
-                      <Eye className="h-3 w-3" />
+                      <Eye className="h-2.5 w-2.5" />
                       <span>{certificate.views || 0} views</span>
                     </div>
                   </div>
                 </div>
                 
-                <div className={`flex items-center space-x-2 ${viewMode === 'list' ? '' : 'justify-between'}`}>
+                <div className={`flex items-center space-x-1 ${viewMode === 'list' ? '' : 'justify-between'}`}>
                   <button
                     onClick={() => setShareModal(certificate)}
-                    className="p-2 bg-pink-600 hover:bg-pink-700 text-white rounded"
+                    className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded"
                     title="Share Certificate"
                   >
-                    <Share2 className="h-4 w-4" />
+                    <Share2 className="h-3 w-3" />
                   </button>
                   
                   <button
                     onClick={() => downloadCertificate(certificate)}
-                    className="p-2 bg-green-600 hover:bg-green-700 text-white rounded"
+                    className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded"
                     title="Download Certificate"
                   >
-                    <Download className="h-4 w-4" />
+                    <Download className="h-3 w-3" />
                   </button>
                   
                   <button
@@ -744,10 +744,10 @@ export default function CertificateGenerator({
                       // Open certificate verification page
                       window.open(`/verify-certificate/${certificate.id}`, '_blank');
                     }}
-                    className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded"
+                    className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded"
                     title="Verify Certificate"
                   >
-                    <CheckCircle className="h-4 w-4" />
+                    <CheckCircle className="h-3 w-3" />
                   </button>
                 </div>
               </div>
@@ -759,38 +759,38 @@ export default function CertificateGenerator({
       {/* Bulk Generation Modal */}
       {showBulkGeneration && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 p-6  max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-white">Bulk Certificate Generation</h2>
+          <div className="bg-white p-4  max-w-3xl w-full mx-4 max-h-[85vh] overflow-y-auto shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xs font-semibold text-gray-900">Bulk Certificate Generation</h2>
               <button
                 onClick={() => setShowBulkGeneration(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 hover:text-gray-600"
               >
                 ✕
               </button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <p className="text-gray-400">Add students to generate certificates for:</p>
+                <p className="text-gray-600 text-sm">Add students to generate certificates for:</p>
                 <button
                   onClick={addBulkStudent}
-                  className="flex items-center space-x-2 px-3 py-1 bg-pink-600 hover:bg-pink-700 text-white rounded"
+                  className="flex items-center space-x-1 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs"
                 >
-                  <Plus className="h-4 w-4" />
+                  <Plus className="h-3 w-3" />
                   <span>Add Student</span>
                 </button>
               </div>
 
-              <div className="space-y-3 max-h-60 overflow-y-auto">
+              <div className="space-y-2 max-h-48 overflow-y-auto">
                 {(bulkStudents || []).map((student, index) => (
-                  <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-3 p-3 bg-gray-700 rounded">
+                  <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-2 p-2 bg-gray-50 border border-gray-200 rounded">
                     <input
                       type="text"
                       placeholder="Student Name"
                       value={student.name}
                       onChange={(e) => updateBulkStudent(index, 'name', e.target.value)}
-                      className="px-3 py-2 bg-gray-600 border border-gray-500 rounded text-white"
+                      className="px-2 py-1 bg-white border border-gray-300 rounded text-gray-900 text-sm"
                     />
                     
                     <input
@@ -798,30 +798,30 @@ export default function CertificateGenerator({
                       placeholder="Student Email"
                       value={student.email}
                       onChange={(e) => updateBulkStudent(index, 'email', e.target.value)}
-                      className="px-3 py-2 bg-gray-600 border border-gray-500 rounded text-white"
+                      className="px-2 py-1 bg-white border border-gray-300 rounded text-gray-900 text-sm"
                     />
                     
                     <input
                       type="date"
                       value={student.completionDate}
                       onChange={(e) => updateBulkStudent(index, 'completionDate', e.target.value)}
-                      className="px-3 py-2 bg-gray-600 border border-gray-500 rounded text-white"
+                      className="px-2 py-1 bg-white border border-gray-300 rounded text-gray-900 text-sm"
                     />
                     
                     <button
                       onClick={() => removeBulkStudent(index)}
-                      className="p-2 bg-red-600 hover:bg-red-700 text-white rounded"
+                      className="p-1 bg-red-600 hover:bg-red-700 text-white rounded"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-3 w-3" />
                     </button>
                   </div>
                 ))}
               </div>
 
-              <div className="flex items-center justify-end space-x-3 pt-6 border-t border-gray-700">
+              <div className="flex items-center justify-end space-x-2 pt-4 border-t border-gray-200">
                 <button
                   onClick={() => setShowBulkGeneration(false)}
-                  className="px-4 py-2 text-gray-400 hover:text-white"
+                  className="px-3 py-1.5 text-gray-600 hover:text-gray-800 text-sm"
                 >
                   Cancel
                 </button>
@@ -829,7 +829,7 @@ export default function CertificateGenerator({
                 <button
                   onClick={generateBulkCertificates}
                   disabled={isGenerating || !bulkStudents || bulkStudents.length === 0}
-                  className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 disabled:opacity-50 text-white "
+                  className="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 text-white text-sm rounded"
                 >
                   {isGenerating ? 'Generating...' : `Generate ${bulkStudents?.length || 0} Certificates`}
                 </button>
@@ -842,57 +842,57 @@ export default function CertificateGenerator({
       {/* Share Modal */}
       {shareModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 p-6  max-w-md w-full mx-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-white">Share Certificate</h2>
+          <div className="bg-white p-4  max-w-sm w-full mx-4 shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xs font-semibold text-gray-900">Share Certificate</h2>
               <button
                 onClick={() => setShareModal(null)}
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 hover:text-gray-600"
               >
                 ✕
               </button>
             </div>
 
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => shareCertificate(shareModal, 'facebook')}
-                  className="flex items-center justify-center space-x-2 p-3 bg-pink-600 hover:bg-pink-700 text-white "
+                  className="flex items-center justify-center space-x-1 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs"
                 >
-                  <Facebook className="h-5 w-5" />
+                  <Facebook className="h-3 w-3" />
                   <span>Facebook</span>
                 </button>
                 
                 <button
                   onClick={() => shareCertificate(shareModal, 'twitter')}
-                  className="flex items-center justify-center space-x-2 p-3 bg-blue-400 hover:bg-blue-500 text-white "
+                  className="flex items-center justify-center space-x-1 p-2 bg-blue-400 hover:bg-blue-500 text-white rounded text-xs"
                 >
-                  <Twitter className="h-5 w-5" />
+                  <Twitter className="h-3 w-3" />
                   <span>Twitter</span>
                 </button>
                 
                 <button
                   onClick={() => shareCertificate(shareModal, 'linkedin')}
-                  className="flex items-center justify-center space-x-2 p-3 bg-blue-700 hover:bg-blue-800 text-white "
+                  className="flex items-center justify-center space-x-1 p-2 bg-blue-700 hover:bg-blue-800 text-white rounded text-xs"
                 >
-                  <Linkedin className="h-5 w-5" />
+                  <Linkedin className="h-3 w-3" />
                   <span>LinkedIn</span>
                 </button>
                 
                 <button
                   onClick={() => shareCertificate(shareModal, 'email')}
-                  className="flex items-center justify-center space-x-2 p-3 bg-gray-600 hover:bg-gray-700 text-white "
+                  className="flex items-center justify-center space-x-1 p-2 bg-gray-600 hover:bg-gray-700 text-white rounded text-xs"
                 >
-                  <Mail className="h-5 w-5" />
+                  <Mail className="h-3 w-3" />
                   <span>Email</span>
                 </button>
               </div>
               
               <button
                 onClick={() => shareCertificate(shareModal, 'copy')}
-                className="w-full flex items-center justify-center space-x-2 p-3 bg-pink-600 hover:bg-pink-700 text-white "
+                className="w-full flex items-center justify-center space-x-1 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs"
               >
-                <Copy className="h-5 w-5" />
+                <Copy className="h-3 w-3" />
                 <span>Copy Link</span>
               </button>
             </div>

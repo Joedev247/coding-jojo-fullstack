@@ -79,7 +79,7 @@ const PurchasesContent: React.FC = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
+        return <CheckCircle className="w-4 h-4 text-blue-500" />;
       case "pending":
         return <Clock className="w-4 h-4 text-yellow-500" />;
       case "failed":
@@ -96,7 +96,7 @@ const PurchasesContent: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "bg-green-100 text-green-800";
+        return "bg-blue-100 text-blue-800";
       case "pending":
         return "bg-yellow-100 text-yellow-800";
       case "failed":
@@ -167,10 +167,10 @@ const PurchasesContent: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="  bg-gray-900/50 backdrop-blur-sm border border-gray-800 p-6 hover:shadow-lg transition duration-300">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-green-500/10 ">
-                <DollarSign className="w-6 h-6 text-green-500" />
+              <div className="p-3 bg-blue-500/10 ">
+                <DollarSign className="w-6 h-6 text-blue-500" />
               </div>
-              <TrendingUp className="w-5 h-5 text-green-500" />
+              <TrendingUp className="w-5 h-5 text-blue-500" />
             </div>
             <div>
               <p className="text-gray-400 text-sm mb-1">Total Revenue</p>
@@ -532,7 +532,7 @@ const PurchasesContent: React.FC = () => {
                 <span className="text-sm text-gray-400">PayPal (25%)</span>
               </div>
               <div className="flex items-center">
-                <span className="w-3 h-3 rounded-full bg-green-500 mr-2"></span>
+                <span className="w-3 h-3 rounded-full bg-blue-500 mr-2"></span>
                 <span className="text-sm text-gray-400">
                   Bank Transfer (7%)
                 </span>

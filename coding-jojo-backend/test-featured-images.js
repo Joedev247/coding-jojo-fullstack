@@ -4,7 +4,7 @@ const axios = require('axios');
 
 async function testFeaturedCoursesImageDisplay() {
   try {
-    const baseURL = 'http://localhost:5000';
+    const baseURL = 'https://codingjojo-backend.onrender.com';
     
     console.log('🎯 Testing featured courses image display...');
     

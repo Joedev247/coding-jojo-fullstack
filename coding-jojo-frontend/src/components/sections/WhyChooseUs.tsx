@@ -58,11 +58,11 @@ export function WhyChooseUsSection() {
   // Memoize features array to prevent unnecessary re-renders
   const features: Feature[] = useMemo(() => [
     {
-      icon: <BrainCircuit className="h-5 w-5 text-white" />,
+      icon: <BrainCircuit className="h-4 w-4 text-white" />,
       title: "AI-Powered Learning Paths",
       description: "Adaptive curriculum that evolves with your progress, using machine learning to identify your strengths and focus on improvement areas.",
-      color: "#ec4899",
-      secondaryColor: "#f97316",
+      color: "#2563eb",
+      secondaryColor: "#1d4ed8",
       codeSnippet: `// AI learning path algorithm
 function recommendNextModule(user) {
   const strengths = analyzePerformance(user.completedModules);
@@ -80,11 +80,11 @@ function recommendNextModule(user) {
       ]
     },
     {
-      icon: <Users className="h-5 w-5 text-white" />,
+      icon: <Users className="h-4 w-4 text-white" />,
       title: "Elite Mentor Network",
       description: "Connect with verified senior developers from FAANG companies who provide code reviews and mentor you through challenging concepts.",
-      color: "#ec4899",
-      secondaryColor: "#f97316",
+      color: "#2563eb",
+      secondaryColor: "#1d4ed8",
       codeSnippet: `// Mentor matching system
 class MentorMatcher {
   constructor(student) {
@@ -105,11 +105,11 @@ class MentorMatcher {
       ]
     },
     {
-      icon: <Code className="h-5 w-5 text-white" />,
+      icon: <Code className="h-4 w-4 text-white" />,
       title: "Interactive Projects",
       description: "Build real-world applications with immediate feedback using our intelligent code analysis system that catches bugs and suggests optimizations.",
-      color: "#ec4899",
-      secondaryColor: "#f97316",
+      color: "#2563eb",
+      secondaryColor: "#1d4ed8",
       codeSnippet: `// Project feedback engine
 async function analyzeCode(submission) {
   const staticAnalysisResults = await linter.check(submission.code);
@@ -127,11 +127,11 @@ async function analyzeCode(submission) {
       ]
     },
     {
-      icon: <Clock className="h-5 w-5 text-white" />,
+      icon: <Clock className="h-4 w-4 text-white" />,
       title: "Flexible Learning Schedule",
       description: "Asynchronous curriculum with spaced repetition algorithms to optimize your study time and maximize retention even with busy schedules.",
-      color: "#ec4899",
-      secondaryColor: "#f97316",
+      color: "#2563eb",
+      secondaryColor: "#1d4ed8",
       codeSnippet: `// Spaced repetition scheduler
 class LearningScheduler {
   calculateNextReviewDate(concept, lastReviewScore) {
@@ -148,11 +148,11 @@ class LearningScheduler {
       ]
     },
     {
-      icon: <Bot className="h-5 w-5 text-white" />,
+      icon: <Bot className="h-4 w-4 text-white" />,
       title: "Intelligent Code Review",
       description: "Get real-time feedback on your code's efficiency, style, and potential bugs from our AI assistant that learns from millions of code repositories.",
-      color: "#ec4899",
-      secondaryColor: "#f97316",
+      color: "#2563eb",
+      secondaryColor: "#1d4ed8",
       codeSnippet: `// AI code reviewer
 function reviewCode(code, language) {
   return codeAnalyzer.pipe([
@@ -173,11 +173,11 @@ function reviewCode(code, language) {
       ]
     },
     {
-      icon: <GraduationCap className="h-5 w-5 text-white" />,
+      icon: <GraduationCap className="h-4 w-4 text-white" />,
       title: "Industry-Verified Certification",
       description: "Complete challenges verified by top companies to earn blockchain-secured certificates that prove your skills to employers.",
-      color: "#ec4899",
-      secondaryColor: "#f97316",
+      color: "#2563eb",
+      secondaryColor: "#1d4ed8",
       codeSnippet: `// Certificate verification
 const createVerifiableCertificate = (graduate, course, score) => {
   const certificateData = {
@@ -232,31 +232,29 @@ const createVerifiableCertificate = (graduate, course, score) => {
     );
   }
   return (
-    <section className="relative py-16 md:py-24">
-      {/* <AnimatedBackground /> */}
-      
+    <section className="relative py-12 md:py-16 bg-gray-50">
       {/* Animated code snippets - Client-side only rendering */}
-      <div className="absolute inset-0 opacity-10" aria-hidden="true">
+      <div className="absolute inset-0 opacity-5" aria-hidden="true">
         {techStackElements}
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded-full text-sm font-medium backdrop-blur-sm shadow-lg mb-4 border border-pink-500/20">
-            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center">
-              <Sparkles className="h-3 w-3 text-white" />
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 rounded-full text-xs font-semibold shadow-sm mb-3 border border-blue-200">
+            <div className="h-4 w-4 rounded-full bg-blue-600 flex items-center justify-center">
+              <Sparkles className="h-2.5 w-2.5 text-white" />
             </div>
-            <span className="bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+            <span className="text-blue-700">
               Platform Features
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold leading-tight tracking-tight text-white mb-4">
-            Why Leading Companies <span className="bg-gradient-to-r from-pink-500 via-orange-500 to-pink-500 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient">
+          <h2 className="text-2xl md:text-3xl font-extrabold leading-tight tracking-tight text-gray-900 mb-3">
+            Why Leading Companies <span className="text-blue-600">
                Choose Our Platform
             </span>
           </h2>
-          <p className="max-w-2xl mx-auto text-gray-300 text-lg">
+          <p className="max-w-2xl mx-auto text-gray-600 text-sm">
             Our enterprise-grade learning platform combines advanced technology with industry expertise to accelerate developer growth and productivity.
           </p>
         </div>
@@ -271,18 +269,18 @@ const createVerifiableCertificate = (graduate, course, score) => {
                 role="tab"
                 aria-selected={activeFeature === index}
                 aria-controls={`feature-panel-${index}`}
-                className={`w-full px-4 py-4 transition-all duration-300 cursor-pointer flex items-center  text-left ${
+                className={`w-full px-3 py-3 transition-all duration-300 cursor-pointer flex items-center  text-left ${
                   activeFeature === index 
-                    ? 'bg-gradient-to-r from-pink-500/10 to-orange-500/10 backdrop-blur-sm shadow-lg border-pink-500/30' 
-                    : 'hover:bg-gray-800/40 border-gray-800 hover:border-gray-700'
+                    ? 'bg-gradient-to-r from-blue-50 to-indigo-50 backdrop-blur-sm shadow-lg border border-blue-200' 
+                    : 'hover:bg-gray-100 border border-gray-200 hover:border-gray-300'
                 }`}
                 onClick={() => handleFeatureClick(index)}
               >
                 <div 
                   className={`p-2 rounded-full mr-3 flex-shrink-0 transition-all duration-300 ${
                     activeFeature === index
-                      ? 'bg-gradient-to-r from-pink-500 to-orange-500 text-white'
-                      : 'bg-gray-800 text-gray-400'
+                      ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white'
+                      : 'bg-gray-200 text-gray-600'
                   }`}
                 >
                   {feature.icon}
@@ -290,19 +288,19 @@ const createVerifiableCertificate = (graduate, course, score) => {
                 <div className="flex-1">
                   <h3 className={`font-medium transition-colors duration-300 ${
                     activeFeature === index 
-                      ? 'text-white' 
-                      : 'text-gray-300'
+                      ? 'text-gray-900' 
+                      : 'text-gray-700'
                   }`}>
                     {feature.title}
                   </h3>
                   {activeFeature === index && (
-                    <p className="text-sm text-gray-400 mt-1 line-clamp-2 animate-fade-in">
+                    <p className="text-sm text-gray-600 mt-1 line-clamp-2 animate-fade-in">
                       {feature.description}
                     </p>
                   )}
                 </div>
                 {activeFeature === index && (
-                  <div className="ml-auto text-pink-400 animate-fade-in" aria-hidden="true">
+                  <div className="ml-auto text-blue-500 animate-fade-in" aria-hidden="true">
                     <ArrowRight className="h-4 w-4" />
                   </div>
                 )}
@@ -313,23 +311,23 @@ const createVerifiableCertificate = (graduate, course, score) => {
           {/* Feature Display Area */}
           <div className="lg:col-span-7 xl:col-span-8">
             <div 
-              className="bg-gray-900/95 shadow-xl overflow-hidden backdrop-blur-sm"
+              className="bg-white shadow-xl overflow-hidden backdrop-blur-sm border border-gray-200"
               role="tabpanel"
               id={`feature-panel-${activeFeature}`}
               aria-labelledby={`feature-tab-${activeFeature}`}
             >
               {/* Feature Header */}
-              <div className="p-6 border-b border-gray-800">
+              <div className="p-6 border-b border-gray-200">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-white">
+                    <h3 className="text-lg font-semibold text-gray-900">
                       {features[activeFeature].title}
                     </h3>
-                    <p className="mt-1 text-gray-300">
+                    <p className="mt-1 text-gray-600">
                       {features[activeFeature].description}
                     </p>
                   </div>
-                  <div className="p-2 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 ml-4">
+                  <div className="p-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 ml-4">
                     {features[activeFeature].icon}
                   </div>
                 </div>
@@ -337,11 +335,11 @@ const createVerifiableCertificate = (graduate, course, score) => {
                 {/* Key Stats */}
                 <div className="mt-4 grid grid-cols-2 gap-4">
                   {features[activeFeature].stats.map((stat, statIndex) => (
-                    <div key={statIndex} className="bg-gray-800/70 p-3 hover:border-pink-500/30 transition duration-300">
-                      <div className="text-lg font-bold bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+                    <div key={statIndex} className="bg-gray-50 p-3 border border-gray-200 hover:border-blue-300 transition duration-300">
+                      <div className="text-xs font-bold bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">
                         {stat.value}
                       </div>
-                      <div className="text-xs text-gray-300">
+                      <div className="text-xs text-gray-600">
                         {stat.label}
                       </div>
                     </div>
@@ -352,11 +350,11 @@ const createVerifiableCertificate = (graduate, course, score) => {
               {/* Code Sample */}
               <div className="relative">
                 {/* Code editor header */}
-                <div className="bg-gray-900 border-b border-gray-800 py-2 px-4 flex items-center">
+                <div className="bg-gray-800 border-b border-gray-700 py-2 px-4 flex items-center">
                   <div className="flex items-center space-x-1.5 mr-4" aria-hidden="true">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500 opacity-70"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 opacity-70"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500 opacity-70"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-blue-500 opacity-70"></div>
                   </div>
                   <div className="text-xs font-mono text-gray-400 flex-1">
                     {features[activeFeature].title.toLowerCase().replace(/\s/g, '-')}.js
@@ -369,7 +367,7 @@ const createVerifiableCertificate = (graduate, course, score) => {
                 
                 {/* Code content */}
                 <div 
-                  className="font-mono text-sm overflow-auto p-5 bg-gray-900 relative"
+                  className="font-mono text-xs overflow-auto p-3 bg-gray-800 relative"
                   style={{ maxHeight: '340px' }}
                   role="code"
                   aria-label={`Code example for ${features[activeFeature].title}`}
@@ -382,7 +380,7 @@ const createVerifiableCertificate = (graduate, course, score) => {
                   
                   {/* Subtle code cursor */}
                   <div 
-                    className="absolute w-0.5 h-4 bg-pink-400 opacity-70 animate-blink"
+                    className="absolute w-0.5 h-4 bg-blue-400 opacity-70 animate-blink"
                     style={{ 
                       bottom: '54px', 
                       left: '32px'
@@ -391,7 +389,7 @@ const createVerifiableCertificate = (graduate, course, score) => {
                 </div>
                 
                 {/* Accent color bar */}
-                <div className="h-1 w-full bg-gradient-to-r from-pink-500 to-orange-500" aria-hidden="true" />
+                <div className="h-1 w-full bg-gradient-to-r from-blue-500 to-indigo-500" aria-hidden="true" />
               </div>
             </div>
             
@@ -402,8 +400,8 @@ const createVerifiableCertificate = (graduate, course, score) => {
                 { icon: <Shield className="h-4 w-4" />, text: "ISO Certified" },
                 { icon: <Award className="h-4 w-4" />, text: "Award Winning" }
               ].map((badge, idx) => (
-                <div key={idx} className="flex items-center justify-center gap-2 bg-gray-800/50 backdrop-blur-sm px-4 py-3 text-sm font-medium text-gray-300 hover:border-pink-500/30 transition-all duration-300">
-                  <div className="text-pink-400">{badge.icon}</div>
+                <div key={idx} className="flex items-center justify-center gap-2 bg-white border border-gray-200 px-3 py-2 text-xs font-medium text-gray-700 hover:border-blue-500/30 transition-all duration-300">
+                  <div className="text-blue-500">{badge.icon}</div>
                   {badge.text}
                 </div>
               ))}
@@ -413,16 +411,16 @@ const createVerifiableCertificate = (graduate, course, score) => {
         
         {/* Testimonial Section */}
         <div className="mt-20">
-          <div className="bg-gradient-to-r from-pink-500/10 to-orange-500/10 p-6 backdrop-blur-sm shadow-lg">
+          <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 p-6 backdrop-blur-sm shadow-lg">
             <div className="flex items-start gap-4">
-              <div className="w-1 h-20 rounded-full bg-gradient-to-b from-pink-500 to-orange-500 flex-shrink-0" aria-hidden="true"></div>
+              <div className="w-1 h-20 rounded-full bg-gradient-to-b from-blue-500 to-indigo-500 flex-shrink-0" aria-hidden="true"></div>
               <div className="flex-1">
                 <div className="flex space-x-1 mb-2" aria-label="5 star rating">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 text-pink-400" fill="#ec4899" />
+                    <Star key={i} className="h-4 w-4 text-blue-400" fill="#2563eb" />
                   ))}
                 </div>
-                <blockquote className="text-gray-300 italic text-lg mb-4">
+                <blockquote className="text-gray-700 italic text-xs mb-4">
                   &ldquo;This platform has transformed how our engineering team learns and grows. The AI-powered recommendations and real-time feedback have accelerated our developers&apos; skills acquisition by over 40%.&rdquo;
                 </blockquote>
                 <div className="flex items-center">
@@ -438,8 +436,8 @@ const createVerifiableCertificate = (graduate, course, score) => {
                     />
                   </div>
                   <div>
-                    <cite className="text-white font-medium not-italic">Sarah Johnson</cite>
-                    <div className="text-sm text-gray-400">CTO, TechGlobal Inc.</div>
+                    <cite className="text-gray-900 font-medium not-italic">Sarah Johnson</cite>
+                    <div className="text-sm text-gray-600">CTO, TechGlobal Inc.</div>
                   </div>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://codingjojo-backend.onrender.com/api';
 
 interface VerificationInitRequest {
   phoneNumber: string;
@@ -385,7 +385,7 @@ class VerificationService {
   getStatusColor(status: string): string {
     switch (status) {
       case 'approved':
-        return 'green';
+        return 'blue';
       case 'rejected':
         return 'red';
       case 'under_review':

@@ -29,7 +29,7 @@ import {
 import { useToast } from '../../hooks/useToast';
 
 // API Configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://codingjojo-backend.onrender.com/api';
 
 interface VerificationItem {
   _id: string;
@@ -504,7 +504,7 @@ const AdminVerificationDashboard: React.FC<AdminVerificationDashboardProps> = ({
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'approved':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       case 'rejected':
         return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'under_review':
@@ -589,7 +589,7 @@ const AdminVerificationDashboard: React.FC<AdminVerificationDashboardProps> = ({
           title="Approved"
           value={stats.approved}
           icon={CheckCircle}
-          color="bg-green-500/10"
+          color="bg-blue-500/10"
           onClick={() => setStatusFilter('approved')}
         />
         <StatCard
@@ -768,7 +768,7 @@ const AdminVerificationDashboard: React.FC<AdminVerificationDashboardProps> = ({
                           <div className="flex items-center space-x-2">
                             <div className={`w-2 h-2 rounded-full ${
                               verification.educationStatus === 'verified' 
-                                ? 'bg-green-500' 
+                                ? 'bg-blue-500' 
                                 : verification.educationStatus === 'rejected'
                                   ? 'bg-red-500'
                                   : verification.educationStatus === 'needs_clarification'
@@ -780,7 +780,7 @@ const AdminVerificationDashboard: React.FC<AdminVerificationDashboardProps> = ({
                             </span>
                             <span className={`text-xs px-2 py-1 rounded ${
                               verification.educationStatus === 'verified' 
-                                ? 'bg-green-500/20 text-green-400' 
+                                ? 'bg-blue-500/20 text-blue-400' 
                                 : verification.educationStatus === 'rejected'
                                   ? 'bg-red-500/20 text-red-400'
                                   : verification.educationStatus === 'needs_clarification'
@@ -812,7 +812,7 @@ const AdminVerificationDashboard: React.FC<AdminVerificationDashboardProps> = ({
                             <div
                               key={step}
                               className={`w-3 h-3 rounded-full ${
-                                completed ? 'bg-green-500' : 'bg-gray-600'
+                                completed ? 'bg-blue-500' : 'bg-gray-600'
                               }`}
                               title={step}
                             />
@@ -983,7 +983,7 @@ const AdminVerificationDashboard: React.FC<AdminVerificationDashboardProps> = ({
                           <div className="bg-gray-800  p-4">
                             <div className="flex items-center space-x-2 mb-2">
                               <span className={`w-3 h-3 rounded-full ${
-                                selectedVerification.selfieVerification.livenessCheck.isPassed ? 'bg-green-500' : 'bg-red-500'
+                                selectedVerification.selfieVerification.livenessCheck.isPassed ? 'bg-blue-500' : 'bg-red-500'
                               }`}></span>
                               <span className="text-white">
                                 {selectedVerification.selfieVerification.livenessCheck.isPassed ? 'Passed' : 'Failed'}
@@ -1035,7 +1035,7 @@ const AdminVerificationDashboard: React.FC<AdminVerificationDashboardProps> = ({
                             <div className="flex items-center space-x-2">
                               <span className={`px-2 py-1 text-xs  ${
                                 certificate.verificationStatus === 'verified' 
-                                  ? 'bg-green-500/20 text-green-400 border-green-500/30' 
+                                  ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' 
                                   : certificate.verificationStatus === 'rejected'
                                     ? 'bg-red-500/20 text-red-400 border-red-500/30'
                                     : certificate.verificationStatus === 'needs_clarification'
@@ -1088,7 +1088,7 @@ const AdminVerificationDashboard: React.FC<AdminVerificationDashboardProps> = ({
                               <button
                                 onClick={() => verifyCertificate(selectedVerification._id, certificate._id, 'verified')}
                                 disabled={actionLoading}
-                                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm  transition-colors disabled:opacity-50"
+                                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm  transition-colors disabled:opacity-50"
                               >
                                 Verify Certificate
                               </button>
@@ -1136,7 +1136,7 @@ const AdminVerificationDashboard: React.FC<AdminVerificationDashboardProps> = ({
                     <button
                       onClick={() => approveVerification(selectedVerification._id)}
                       disabled={actionLoading}
-                      className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white  font-medium transition-colors disabled:opacity-50"
+                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white  font-medium transition-colors disabled:opacity-50"
                     >
                       {actionLoading ? 'Processing...' : 'Approve'}
                     </button>

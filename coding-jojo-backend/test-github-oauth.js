@@ -26,7 +26,7 @@ console.log(
 console.log(
   `   GITHUB_CALLBACK_URL: ${
     process.env.GITHUB_CALLBACK_URL ||
-    "http://localhost:5000
+    "https://codingjojo-backend.onrender.com
 /api/auth/github/callback"
   }`
 );
@@ -60,7 +60,7 @@ if (
   );
   console.log("2. Start the backend server: npm start");
   console.log("3. Start the frontend server: npm run dev");
-  console.log("4. Test the GitHub login button at http://localhost:3000/login");
+  console.log("4. Test the GitHub login button at https://codingjojo.vercel.app/login");
 } else {
   console.log("⚠️  GitHub OAuth needs configuration:");
   if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {

@@ -248,7 +248,7 @@ export default function CourseDetailsPage() {
 
   const getStatusBadge = (status: string) => {
     const styles = {
-      published: 'bg-green-100 text-green-800 border-green-200',
+      published: 'bg-blue-100 text-blue-800 border-blue-200',
       draft: 'bg-yellow-100 text-yellow-800 border-yellow-200',
       archived: 'bg-gray-100 text-gray-800 border-gray-200'
     };
@@ -273,7 +273,7 @@ export default function CourseDetailsPage() {
             <div>
               <p className="text-gray-400 text-sm">Total Students</p>
               <p className="text-2xl font-bold text-white">{course?.studentsCount}</p>
-              <p className="text-green-400 text-sm">+125 this month</p>
+              <p className="text-blue-400 text-sm">+125 this month</p>
             </div>
             <Users className="h-8 w-8 text-blue-400" />
           </div>
@@ -284,9 +284,9 @@ export default function CourseDetailsPage() {
             <div>
               <p className="text-gray-400 text-sm">Total Revenue</p>
               <p className="text-2xl font-bold text-white">{formatCurrency(course?.totalRevenue || 0)}</p>
-              <p className="text-green-400 text-sm">+8% this month</p>
+              <p className="text-blue-400 text-sm">+8% this month</p>
             </div>
-            <DollarSign className="h-8 w-8 text-green-400" />
+            <DollarSign className="h-8 w-8 text-blue-400" />
           </div>
         </div>
 
@@ -379,7 +379,7 @@ export default function CourseDetailsPage() {
               <div className="flex items-center space-x-2">
                 <span className={`px-2 py-1 rounded-full text-xs font-medium border ${
                   section.isPublished 
-                    ? 'bg-green-100 text-green-800 border-green-200'
+                    ? 'bg-blue-100 text-blue-800 border-blue-200'
                     : 'bg-yellow-100 text-yellow-800 border-yellow-200'
                 }`}>
                   {section.isPublished ? 'Published' : 'Draft'}
@@ -400,7 +400,7 @@ export default function CourseDetailsPage() {
                       {lesson.type === 'video' && <PlayCircle className="h-5 w-5 text-pink-400" />}
                       {lesson.type === 'text' && <FileText className="h-5 w-5 text-blue-400" />}
                       {lesson.type === 'quiz' && <AlertCircle className="h-5 w-5 text-yellow-400" />}
-                      {lesson.type === 'assignment' && <Award className="h-5 w-5 text-green-400" />}
+                      {lesson.type === 'assignment' && <Award className="h-5 w-5 text-blue-400" />}
                     </div>
                     <div>
                       <p className="text-white font-medium">{lesson.title}</p>
@@ -408,7 +408,7 @@ export default function CourseDetailsPage() {
                         <span className="capitalize">{lesson.type}</span>
                         <span>{formatDuration(lesson.duration)}</span>
                         {lesson.isPublished && (
-                          <span className="text-green-400">Published</span>
+                          <span className="text-blue-400">Published</span>
                         )}
                       </div>
                     </div>
@@ -466,7 +466,7 @@ export default function CourseDetailsPage() {
             </div>
             <div className="w-full bg-gray-700 rounded-full h-2">
               <div
-                className="bg-green-500 h-2 rounded-full"
+                className="bg-blue-500 h-2 rounded-full"
                 style={{ 
                   width: `${(course?.analytics.studentProgress.completed || 0) / (course?.studentsCount || 1) * 100}%` 
                 }}

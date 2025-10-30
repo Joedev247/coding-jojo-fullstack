@@ -264,7 +264,7 @@ class AdminService {
       });
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/courses/${courseId}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://codingjojo-backend.onrender.com/api'}/courses/${courseId}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
@@ -308,7 +308,7 @@ class AdminService {
     const formData = new FormData();
     formData.append('video', videoFile);
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/courses/${courseId}/lessons/${lessonId}/video`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://codingjojo-backend.onrender.com/api'}/courses/${courseId}/lessons/${lessonId}/video`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
@@ -353,7 +353,7 @@ class AdminService {
     formData.append('file', file);
     formData.append('type', type);
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1'}/admin/content/upload`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://codingjojo-backend.onrender.com/api/v1'}/admin/content/upload`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('auth_token')}`,

@@ -21,13 +21,13 @@ import {
   Award,
 } from "lucide-react";
 import Link from "next/link";
-import PaymentForm from "@/components/subscription/PaymentForm";
-import PlanSummary from "@/components/subscription/PlanSummary";
-import { useAuth } from "@/contexts/AuthContext";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import PaymentForm from "../../components/subscription/PaymentForm";
+import PlanSummary from "../../components/subscription/PlanSummary";
+import { useAuth } from "../../contexts/AuthContext";
+import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import { useToast } from "../../hooks/useToast";
-import Navbar from "@/components/Navbar";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import Navbar from "../../components/Navbar";
+import ProtectedRoute from "../../components/auth/ProtectedRoute";
 
 // Plan data matching pricing-plans.tsx
 const planData = {
@@ -180,21 +180,21 @@ function SubscriptionPageContent() {
   };
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <LoadingSpinner size="xl"  />
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">
+        <LoadingSpinner size="xl" />
       </div>
     );
   }
   if (paymentSuccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto p-8">
-          <div className="mb-6">
-            <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-white mb-2">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="mb-4">
+            <CheckCircle2 className="w-12 h-12 text-blue-500 mx-auto mb-3" />
+            <h1 className="text-xl font-bold text-gray-800 mb-2">
               Payment Successful!
             </h1>
-            <p className="text-gray-300">
+            <p className="text-gray-600 text-sm">
               Welcome to {selectedPlan?.title}! You'll be redirected to your
               dashboard shortly.
             </p>
@@ -208,72 +208,70 @@ function SubscriptionPageContent() {
     <ProtectedRoute>
       <>
         <Navbar />
-        <div className="min-h-screen relative overflow-hidden">
-          <div className="relative z-10 container mx-auto px-4 py-8 max-w-[1400px]">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white relative overflow-hidden">
+          <div className="relative z-10 container mx-auto px-4 py-6 max-w-[1200px]">
             {/* Header */}
-            <div className="mb-8 flex items-center justify-between">
+            <div className="mb-6 flex items-center justify-between">
               <Link
                 href="/pricing"
-                className="group inline-flex items-center gap-2 text-gray-400 hover:text-purple-400 transition-all duration-300"
+                className="group inline-flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-all duration-200"
               >
-                <div className="flex items-center justify-center w-8 h-8  bg-gray-900/60 group-hover:bg-purple-500/20 border border-gray-700/50 group-hover:border-purple-500/40 rounded-full transition-all duration-300 group-hover:scale-110">
-                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-all duration-300" />
+                <div className="flex items-center justify-center w-7 h-7 bg-white group-hover:bg-blue-50 border border-blue-200 group-hover:border-blue-300  transition-all duration-200 shadow-sm">
+                  <ArrowLeft className="w-3 h-3 group-hover:-translate-x-0.5 transition-all duration-200" />
                 </div>
                 <span className="text-sm font-medium group-hover:underline underline-offset-4">
                   Back to pricing
                 </span>
               </Link>
             </div>
-            <div className="flex flex-col items-center gap-8">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full blur-lg opacity-50 animate-pulse"></div>
-                      <div className="relative p-3 bg-gradient-to-br from-pink-500 via-purple-500 to-orange-500 rounded-full border-2 border-white/20 shadow-2xl">
-                        <Crown className="w-8 h-8 text-white drop-shadow-lg" />
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="w-6 h-6 text-yellow-400 animate-bounce" />
-                      <Diamond className="w-5 h-5 text-purple-400 animate-pulse" />
+            <div className="flex flex-col items-center gap-6">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full blur-md opacity-30"></div>
+                    <div className="relative p-2 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full border-2 border-blue-200 shadow-lg">
+                      <Crown className="w-6 h-6 text-white" />
                     </div>
                   </div>
+                  <div className="flex items-center gap-1">
+                    <Sparkles className="w-4 h-4 text-yellow-500" />
+                    <Diamond className="w-4 h-4 text-blue-600" />
+                  </div>
+                </div>
 
-                  <h1 className="text-2xl md:text-3xl font-bold text-white mb-3 relative">
-                    <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-orange-400 text-transparent bg-clip-text">
-                      Upgrade to Premium
-                    </span>
-                    <div className="absolute -top-2 -right-8 flex items-center gap-1">
-                      <Star className="w-4 h-4 text-yellow-400 animate-spin" />
-                      <Zap className="w-5 h-5 text-purple-400 animate-bounce" />
-                    </div>
-                  </h1>
+                <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-2 relative">
+                  <span className="bg-gradient-to-r from-blue-600 to-emerald-600 text-transparent bg-clip-text">
+                    Upgrade to Premium
+                  </span>
+                  <div className="absolute -top-1 -right-6 flex items-center gap-1">
+                    <Star className="w-3 h-3 text-yellow-500" />
+                    <Zap className="w-3 h-3 text-blue-600" />
+                  </div>
+                </h1>
 
-                  <p className="text-gray-300 flex items-center justify-center gap-2">
-                    <Lock className="w-4 h-4 text-green-400" />
-                    Complete your subscription to unlock premium features
-                    <Rocket className="w-4 h-4 text-pink-400" />
-                  </p>
+                <p className="text-gray-600 text-sm flex items-center justify-center gap-2 mb-3">
+                  <Lock className="w-3 h-3 text-blue-500" />
+                  Complete your subscription to unlock premium features
+                  <Rocket className="w-3 h-3 text-blue-600" />
+                </p>
 
-                  <div className="flex items-center justify-center gap-4 mt-4 opacity-60">
-                    <div className="flex items-center gap-1">
-                      <Shield className="w-4 h-4 text-blue-400" />
-                      <span className="text-xs text-blue-400">Secure</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <CheckCircle2 className="w-4 h-4 text-green-400" />
-                      <span className="text-xs text-green-400">Trusted</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Award className="w-4 h-4 text-yellow-400" />
-                      <span className="text-xs text-yellow-400">Premium</span>
-                    </div>
+                <div className="flex items-center justify-center gap-3">
+                  <div className="flex items-center gap-1">
+                    <Shield className="w-3 h-3 text-blue-600" />
+                    <span className="text-xs text-blue-600">Secure</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-blue-500" />
+                    <span className="text-xs text-blue-500">Trusted</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Award className="w-3 h-3 text-yellow-500" />
+                    <span className="text-xs text-yellow-500">Premium</span>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl w-full">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl w-full">
                 {/* Plan Summary - Left Column */}
                 <div className="flex justify-center">
                   <div className="w-full max-w-md">
@@ -288,11 +286,11 @@ function SubscriptionPageContent() {
                 {/* Payment Section - Right Column */}
                 <div className="flex justify-center">
                   <div className="w-full max-w-lg">
-                    <div className="  bg-gray-900/60 backdrop-blur-sm border border-gray-800 shadow-xl p-6 md:p-8">
+                    <div className="bg-white/95 backdrop-blur-sm border border-blue-200  shadow-lg p-4 md:p-6">
                       {/* Payment Method Selection */}
-                      <div className="mb-8">
-                        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                          <Sparkles className="w-5 h-5 text-pink-500" />
+                      <div className="mb-6">
+                        <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                          <Sparkles className="w-4 h-4 text-blue-600" />
                           Choose Payment Method
                         </h2>
 
@@ -300,70 +298,70 @@ function SubscriptionPageContent() {
                           {/* Card Payment */}
                           <button
                             onClick={() => setPaymentMethod("card")}
-                            className={`p-4 border-2 transition-all duration-300 flex items-center gap-3 ${
+                            className={`p-3 border-2  transition-all duration-200 flex items-center gap-3 ${
                               paymentMethod === "card"
-                                ? "border-pink-500 bg-pink-500/10"
-                                : "border-gray-700 hover:border-gray-600"
+                                ? "border-blue-600 bg-blue-50"
+                                : "border-gray-300 hover:border-blue-300 hover:bg-blue-50"
                             }`}
                           >
                             <CreditCard
-                              className={`w-6 h-6 ${
+                              className={`w-5 h-5 ${
                                 paymentMethod === "card"
-                                  ? "text-pink-500"
-                                  : "text-gray-400"
+                                  ? "text-blue-600"
+                                  : "text-gray-600"
                               }`}
                             />
                             <div className="text-left flex-1">
                               <div
-                                className={`font-medium ${
+                                className={`font-medium text-sm ${
                                   paymentMethod === "card"
-                                    ? "text-white"
-                                    : "text-gray-300"
+                                    ? "text-gray-800"
+                                    : "text-gray-700"
                                 }`}
                               >
                                 Credit/Debit Card
                               </div>
-                              <div className="text-sm text-gray-400">
+                              <div className="text-xs text-gray-600">
                                 Visa, Mastercard, American Express
                               </div>
                             </div>
                             {paymentMethod === "card" && (
-                              <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                              <CheckCircle2 className="w-4 h-4 text-blue-600" />
                             )}
                           </button>
 
                           {/* Mobile Money */}
                           <button
                             onClick={() => setPaymentMethod("momo")}
-                            className={`p-4 border-2 transition-all duration-300 flex items-center gap-3 ${
+                            className={`p-3 border-2  transition-all duration-200 flex items-center gap-3 ${
                               paymentMethod === "momo"
-                                ? "border-yellow-500 bg-yellow-500/10"
-                                : "border-gray-700 hover:border-gray-600"
+                                ? "border-yellow-500 bg-yellow-50"
+                                : "border-gray-300 hover:border-yellow-400 hover:bg-yellow-50"
                             }`}
                           >
                             <Smartphone
-                              className={`w-6 h-6 ${
+                              className={`w-5 h-5 ${
                                 paymentMethod === "momo"
-                                  ? "text-yellow-500"
-                                  : "text-gray-400"
+                                  ? "text-yellow-600"
+                                  : "text-gray-600"
                               }`}
                             />
                             <div className="text-left flex-1">
                               <div
-                                className={`font-medium ${
+                                className={`font-medium text-sm ${
                                   paymentMethod === "momo"
-                                    ? "text-white"
-                                    : "text-gray-300"
+                                    ? "text-gray-800"
+                                    : "text-gray-700"
                                 }`}
                               >
                                 MTN Mobile Money
                               </div>
-                              <div className="text-sm text-gray-400">
+                              <div className="text-xs text-gray-600">
                                 Pay with your MTN MoMo account
                               </div>
                             </div>
                             {paymentMethod === "momo" && (
-                              <CheckCircle2 className="w-5 h-5 text-yellow-500" />
+                              <CheckCircle2 className="w-4 h-4 text-yellow-600" />
                             )}
                           </button>
                         </div>
@@ -381,13 +379,13 @@ function SubscriptionPageContent() {
                       </div>
 
                       {/* Security Notice */}
-                      <div className="mt-6 p-4 bg-green-500/10 border border-green-500/20 flex items-start gap-3">
-                        <Lock className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <div className="mt-4 p-3 bg-blue-50 border border-blue-200  flex items-start gap-3">
+                        <Lock className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
                         <div>
-                          <div className="text-sm font-medium text-green-400 mb-1">
+                          <div className="text-sm font-medium text-blue-700 mb-1">
                             Secure Payment
                           </div>
-                          <div className="text-xs text-gray-300">
+                          <div className="text-xs text-gray-600">
                             Your payment information is encrypted and secure. We
                             never store your payment details.
                           </div>
@@ -409,8 +407,8 @@ export default function SubscriptionPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-black flex items-center justify-center">
-          <LoadingSpinner size="xl"  />
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">
+          <LoadingSpinner size="xl" />
         </div>
       }
     >

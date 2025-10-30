@@ -70,7 +70,7 @@ export const mockAnalytics: MockAnalytics = {
 };
 
 export const getProgressColor = (progress: number): string => {
-  if (progress >= 80) return 'text-green-400 bg-green-400/10';
+  if (progress >= 80) return 'text-blue-400 bg-blue-400/10';
   if (progress >= 60) return 'text-blue-400 bg-blue-400/10';
   if (progress >= 40) return 'text-yellow-400 bg-yellow-400/10';
   return 'text-gray-400 bg-gray-400/10';

@@ -4,7 +4,7 @@ const axios = require('axios');
 
 async function testAdminCourseCreation() {
   try {
-    const baseURL = 'http://localhost:5000';
+    const baseURL = 'https://codingjojo-backend.onrender.com';
     
     // First, login as admin to get token
     console.log('🔐 Logging in as admin...');

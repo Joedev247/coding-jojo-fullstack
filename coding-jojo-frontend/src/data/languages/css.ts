@@ -313,7 +313,7 @@ h1 + p { margin-top: 0; } /* Adjacent sibling */
 h1 ~ p { color: #888; } /* General sibling */
 
 /* Advanced Attribute Selectors */
-[href^="https"] { color: green; } /* Starts with */
+[href^="https"] { color: blue; } /* Starts with */
 [href$=".pdf"] { font-weight: bold; } /* Ends with */
 [class*="btn"] { padding: 10px; } /* Contains */
 
@@ -1380,7 +1380,7 @@ Example: &lt;div class="card card--large"&gt;...
         <ul>
           <li><strong>Color Keywords</strong> - Named colors like red, blue, transparent</li>
           <li><strong>Hexadecimal (#)</strong> - Six-digit hex codes (#FF5733, #333)</li>
-          <li><strong>RGB/RGBA</strong> - Red, Green, Blue with optional Alpha</li>
+          <li><strong>RGB/RGBA</strong> - Red, blue, blue with optional Alpha</li>
           <li><strong>HSL/HSLA</strong> - Hue, Saturation, Lightness with optional Alpha</li>
           <li><strong>CSS Color Functions</strong> - Modern color manipulation functions</li>
         </ul>
@@ -1417,7 +1417,7 @@ Example: &lt;div class="card card--large"&gt;...
 
 /* RGB and RGBA */
 .rgb-example {
-    background-color: rgb(52, 152, 219); /* Blue */
+    background-color: rgb(52, 152, 219); /* blue */
     color: rgb(255, 255, 255); /* White */
 }
 .rgba-example {
@@ -1427,13 +1427,13 @@ Example: &lt;div class="card card--large"&gt;...
 
 /* HSL and HSLA */
 .hsl-primary {
-    background-color: hsl(204, 70%, 53%); /* Blue */
+    background-color: hsl(204, 70%, 53%); /* blue */
 }
 .hsl-secondary {
     background-color: hsl(348, 80%, 50%); /* Red */
 }
 .hsl-alpha {
-    background-color: hsla(120, 50%, 50%, 0.3); /* Semi-transparent green */
+    background-color: hsla(120, 50%, 50%, 0.3); /* Semi-transparent blue */
 }
 
 /* Modern Color Functions */
@@ -1648,7 +1648,7 @@ Example: &lt;div class="card card--large"&gt;...
         .red { background-color: #e74c3c; }
         .orange { background-color: #f39c12; }
         .yellow { background-color: #f1c40f; }
-        .green { background-color: #2ecc71; }
+        .blue { background-color: #2ecc71; }
         .blue { background-color: #3498db; }
         .purple { background-color: #9b59b6; }
         .pink { background-color: #e91e63; }
@@ -1739,7 +1739,7 @@ Example: &lt;div class="card card--large"&gt;...
                     <div class="color-info">
                         <h3>RGB Values</h3>
                         <div class="color-code">rgb(52, 152, 219)</div>
-                        <p>Red, Green, Blue values from 0-255.</p>
+                        <p>Red, blue, blue values from 0-255.</p>
                     </div>
                 </div>
                 
@@ -1787,8 +1787,8 @@ Example: &lt;div class="card card--large"&gt;...
                     <div class="palette-color red">Red</div>
                     <div class="palette-color orange">Orange</div>
                     <div class="palette-color yellow">Yellow</div>
-                    <div class="palette-color green">Green</div>
-                    <div class="palette-color blue">Blue</div>
+                    <div class="palette-color blue">blue</div>
+                    <div class="palette-color blue">blue</div>
                     <div class="palette-color purple">Purple</div>
                     <div class="palette-color pink">Pink</div>
                     <div class="palette-color teal">Teal</div>

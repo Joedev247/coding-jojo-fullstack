@@ -30,7 +30,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   
   const colorClasses = {
     primary: 'bg-gradient-to-r from-purple-600 to-pink-600',
-    success: 'bg-gradient-to-r from-green-500 to-emerald-500',
+    success: 'bg-gradient-to-r from-blue-500 to-emerald-500',
     warning: 'bg-gradient-to-r from-yellow-400 to-amber-500',
     danger: 'bg-gradient-to-r from-red-500 to-pink-500',
     info: 'bg-gradient-to-r from-blue-500 to-cyan-500',

@@ -52,7 +52,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
+        return <CheckCircle className="w-4 h-4 text-blue-500" />;
       case "pending":
         return <Clock className="w-4 h-4 text-yellow-500" />;
       case "failed":
@@ -69,17 +69,17 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "text-green-400 bg-green-400/10";
+        return "text-blue-700 bg-blue-100";
       case "pending":
-        return "text-yellow-400 bg-yellow-400/10";
+        return "text-yellow-700 bg-yellow-100";
       case "failed":
-        return "text-red-400 bg-red-400/10";
+        return "text-red-700 bg-red-100";
       case "cancelled":
-        return "text-gray-400 bg-gray-400/10";
+        return "text-gray-700 bg-gray-100";
       case "refunded":
-        return "text-blue-400 bg-blue-400/10";
+        return "text-blue-700 bg-blue-100";
       default:
-        return "text-gray-400 bg-gray-400/10";
+        return "text-gray-700 bg-gray-100";
     }
   };
 
@@ -112,43 +112,43 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
     <div className={`space-y-6 ${className}`}>
       {/* Stats Overview */}
       {stats && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="  bg-gray-900/80 backdrop-blur-sm border border-gray-700 p-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-green-500/10 ">
-                <CreditCard className="w-6 h-6 text-green-500" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-white/90 backdrop-blur-sm border border-blue-200  shadow-sm p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 ">
+                <CreditCard className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-gray-400 text-sm">Total Spent</p>
-                <p className="text-2xl font-bold text-white">
+                <p className="text-gray-600 text-sm">Total Spent</p>
+                <p className="text-xl font-bold text-gray-900">
                   {formatAmount(stats.totalSpent)}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="  bg-gray-900/80 backdrop-blur-sm border border-gray-700 p-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-500/10 ">
-                <Receipt className="w-6 h-6 text-blue-500" />
+          <div className="bg-white/90 backdrop-blur-sm border border-blue-200  shadow-sm p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 ">
+                <Receipt className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-gray-400 text-sm">Total Transactions</p>
-                <p className="text-2xl font-bold text-white">
+                <p className="text-gray-600 text-sm">Total Transactions</p>
+                <p className="text-xl font-bold text-gray-900">
                   {stats.totalTransactions}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="  bg-gray-900/80 backdrop-blur-sm border border-gray-700 p-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-purple-500/10 ">
-                <Calendar className="w-6 h-6 text-purple-500" />
+          <div className="bg-white/90 backdrop-blur-sm border border-blue-200  shadow-sm p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-purple-100 ">
+                <Calendar className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <p className="text-gray-400 text-sm">Average Amount</p>
-                <p className="text-2xl font-bold text-white">
+                <p className="text-gray-600 text-sm">Average Amount</p>
+                <p className="text-xl font-bold text-gray-900">
                   {formatAmount(stats.avgTransactionAmount)}
                 </p>
               </div>
@@ -158,15 +158,15 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
       )}
 
       {/* Filters and Search */}
-      <div className="  bg-gray-900/80 backdrop-blur-sm border border-gray-700">
-        <div className="p-6 border-b border-gray-700">
+      <div className="bg-white/90 backdrop-blur-sm border border-blue-200  shadow-sm">
+        <div className="p-4 border-b border-blue-100">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <h2 className="text-xl font-bold text-white">
+            <h2 className="text-lg font-bold text-gray-900">
               Transaction History
             </h2>
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center gap-2 px-4 py-2  bg-gray-900 hover:bg-gray-700 text-white  transition-colors"
+              className="flex items-center gap-2 px-3 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700  transition-colors text-sm"
             >
               <Filter className="w-4 h-4" />
               Filters
@@ -174,23 +174,23 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
           </div>
 
           {showFilters && (
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-3">
               <div className="relative">
-                <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
+                <Search className="absolute left-3 top-2.5 text-gray-500 w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search transactions..."
                   value={filters.search}
                   onChange={(e) => handleFilterChange("search", e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-                  className="w-full pl-10 pr-4 py-2  bg-gray-900 border border-gray-600  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2 bg-white border border-gray-300  text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
               <select
                 value={filters.type}
                 onChange={(e) => handleFilterChange("type", e.target.value)}
-                className="px-4 py-2  bg-gray-900 border border-gray-600  text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-3 py-2 bg-white border border-gray-300  text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">All Types</option>
                 <option value="course_purchase">Course Purchase</option>
@@ -201,7 +201,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
               <select
                 value={filters.status}
                 onChange={(e) => handleFilterChange("status", e.target.value)}
-                className="px-4 py-2  bg-gray-900 border border-gray-600  text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-3 py-2 bg-white border border-gray-300  text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">All Status</option>
                 <option value="completed">Completed</option>
@@ -213,7 +213,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
 
               <button
                 onClick={handleSearch}
-                className="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white  transition-colors"
+                className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white  transition-colors text-sm"
               >
                 Apply Filters
               </button>
@@ -224,44 +224,44 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
         {/* Transaction List */}
         <div>
           {error && (
-            <div className="p-6 text-center">
-              <p className="text-red-400">{error}</p>
+            <div className="p-4 text-center">
+              <p className="text-red-600">{error}</p>
             </div>
           )}
 
           {transactions.length === 0 && !loading ? (
-            <div className="p-12 text-center">
-              <Receipt className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-white mb-2">
+            <div className="p-8 text-center">
+              <Receipt className="w-10 h-10 text-gray-400 mx-auto mb-3" />
+              <h3 className="text-xs font-medium text-gray-900 mb-2">
                 No Transactions
               </h3>
-              <p className="text-gray-400">
+              <p className="text-gray-600 text-sm">
                 Your transaction history will appear here once you make a
                 purchase.
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-gray-700">
+            <div className="divide-y divide-blue-100">
               {transactions.map((transaction: TransactionData) => (
                 <div
                   key={transaction.id}
-                  className="p-6 hover:bg-gray-800/50 transition-colors"
+                  className="p-4 hover:bg-blue-50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="p-3  bg-gray-900 ">
+                    <div className="flex items-center gap-3 flex-1">
+                      <div className="p-2 bg-blue-100 ">
                         {transaction.type === "course_purchase" ? (
-                          <CreditCard className="w-5 h-5 text-blue-400" />
+                          <CreditCard className="w-4 h-4 text-blue-600" />
                         ) : transaction.type === "subscription" ? (
-                          <Calendar className="w-5 h-5 text-purple-400" />
+                          <Calendar className="w-4 h-4 text-purple-600" />
                         ) : (
-                          <Receipt className="w-5 h-5 text-gray-400" />
+                          <Receipt className="w-4 h-4 text-gray-600" />
                         )}
                       </div>
 
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-medium text-white">
+                          <h3 className="font-medium text-gray-900 text-sm">
                             {transaction.course?.title ||
                               transaction.description}
                           </h3>
@@ -277,7 +277,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
                             </span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-4 text-sm text-gray-400">
+                        <div className="flex items-center gap-4 text-sm text-gray-600">
                           <span>ID: {transaction.transactionId}</span>
                           <span>{formatDate(transaction.createdAt)}</span>
                           <span className="capitalize">
@@ -288,18 +288,18 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
                     </div>
 
                     <div className="text-right">
-                      <p className="text-lg font-bold text-white">
+                      <p className="text-xs font-bold text-gray-900">
                         {formatAmount(transaction.amount, transaction.currency)}
                       </p>
                       {transaction.completedAt && (
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-gray-600">
                           Completed {formatDate(transaction.completedAt)}
                         </p>
                       )}
                     </div>
 
-                    <div className="ml-4">
-                      <button className="p-2 text-gray-400 hover:text-white transition-colors">
+                    <div className="ml-3">
+                      <button className="p-2 text-gray-500 hover:text-gray-700 transition-colors">
                         <Download className="w-4 h-4" />
                       </button>
                     </div>
@@ -311,9 +311,9 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
 
           {/* Pagination */}
           {pagination && pagination.totalPages > 1 && (
-            <div className="p-6 border-t border-gray-700">
+            <div className="p-4 border-t border-blue-100">
               <div className="flex items-center justify-between">
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-600 text-sm">
                   Showing{" "}
                   {(pagination.currentPage - 1) * pagination.itemsPerPage + 1}{" "}
                   to{" "}
@@ -324,7 +324,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
                   of {pagination.totalItems} transactions
                 </p>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   <button
                     onClick={() =>
                       handleFilterChange(
@@ -333,7 +333,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
                       )
                     }
                     disabled={pagination.currentPage === 1}
-                    className="p-2 text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="p-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -349,10 +349,10 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
                             onClick={() =>
                               handleFilterChange("page", page.toString())
                             }
-                            className={`w-8 h-8 rounded ${
+                            className={`w-8 h-8  text-sm ${
                               page === pagination.currentPage
-                                ? "bg-pink-600 text-white"
-                                : "text-gray-400 hover:text-white"
+                                ? "bg-blue-600 text-white"
+                                : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                             } transition-colors`}
                           >
                             {page}
@@ -370,7 +370,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
                       )
                     }
                     disabled={pagination.currentPage === pagination.totalPages}
-                    className="p-2 text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="p-2 text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>

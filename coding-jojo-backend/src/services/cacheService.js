@@ -6,13 +6,39 @@ class CacheService {
     this.client = null;
     this.isConnected = false;
     this.defaultTTL = 3600; // 1 hour in seconds
-    this.initializeClient();
+    this.redisEnabled = process.env.REDIS_ENABLED === 'true';
+    
+    if (this.redisEnabled) {
+      console.log('✓ Redis enabled for cache service');
+      this.initializeClient();
+    } else {
+      console.log('✓ Redis disabled for cache service');
+      // Create a no-op redis mock to prevent any connection attempts
+      this.client = {
+        get: async () => null,
+        set: async () => {},
+        del: async () => {},
+        exists: async () => false,
+        keys: async () => [],
+        flushall: async () => {},
+        info: async () => '',
+        connect: async () => {},
+        disconnect: async () => {},
+        on: () => {}
+      };
+    }
   }
 
   async initializeClient() {
-    // Only initialize Redis if enabled
+    // Completely skip Redis when disabled
+    if (!this.redisEnabled) {
+      return;
+    }
+
+    // Don't even attempt connection if Redis is disabled globally
     if (process.env.REDIS_ENABLED === 'false') {
-      console.log('Redis disabled for cache service');
+      this.redisEnabled = false;
+      this.isConnected = false;
       return;
     }
 
@@ -24,28 +50,30 @@ class CacheService {
           lazyConnect: true
         },
         retryDelayOnFailover: 100,
-        maxRetriesPerRequest: 3
+        maxRetriesPerRequest: 1
       });
 
       this.client.on('error', (err) => {
-        console.error('Redis Client Error:', err.message);
+        console.log('⚠️ Redis Client Error, disabling cache for this session');
         this.isConnected = false;
+        this.redisEnabled = false;
         this.client = null;
       });
 
       this.client.on('connect', () => {
-        console.log('Redis Client Connected');
+        console.log('✓ Redis Client Connected');
         this.isConnected = true;
       });
 
       this.client.on('ready', () => {
-        console.log('Redis Client Ready');
+        console.log('✓ Redis Client Ready');
       });
 
       await this.client.connect();
     } catch (error) {
-      console.error('Failed to connect to Redis:', error.message);
+      console.log('⚠️ Failed to connect to Redis, disabling cache for this session');
       this.isConnected = false;
+      this.redisEnabled = false;
       this.client = null;
     }
   }
@@ -64,7 +92,7 @@ class CacheService {
 
   // Set cache with TTL
   async set(key, value, ttl = this.defaultTTL) {
-    if (!this.isConnected) {
+    if (!this.isConnected || !this.redisEnabled) {
       return { success: false, error: 'Cache not available' };
     }
 
@@ -80,7 +108,7 @@ class CacheService {
 
   // Get from cache
   async get(key) {
-    if (!this.isConnected) {
+    if (!this.isConnected || !this.redisEnabled) {
       return { success: false, error: 'Cache not available' };
     }
 

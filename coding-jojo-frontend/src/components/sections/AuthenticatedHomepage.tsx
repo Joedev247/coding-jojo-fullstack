@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   BookOpen,
   Clock,
@@ -11,6 +12,7 @@ import {
   MessageCircle,
   Code,
   ChevronRight,
+  ChevronLeft,
   Sparkles,
   TrendingUp,
   Brain,
@@ -18,63 +20,237 @@ import {
   Star,
   CheckCircle,
   User,
+  Globe,
+  Smartphone,
+  Palette,
+  Database,
+  Shield,
+  Monitor,
+  ArrowRight,
+  Heart,
+  Eye,
+  ThumbsUp,
+  Download,
+  TrendingUp as TrendIcon,
+  Flame,
+  BookmarkPlus,
+  Bookmark,
+  PlayCircle,
+  ShoppingCart,
+  Lightbulb,
+  Gift,
+  MessageSquare,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useToast } from "../../hooks/useToast";
-import FeaturedCoursesSection from "./featured-courses";
-import AnimatedBackground from "../ui/AnimatedBackground";
+import { useCart } from "../../contexts/CartContext";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
-import PopularTopics from "./popular-topics";
-import PricingPlans from "./pricing-plans";
-import FAQSection from "./FAQs";
-import TestimonialSection from "./testimonial-cards";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import PricingPlanSection from "./PricingPlanSection";
+import PopularCoursesSection from "./popular-courses";
+import { courseService } from "../../services/courseService";
+import { formatCourseDuration } from "../../utils/formatters";
+import Link from "next/link";
+import PopularTopics from "./popular-topics";
+import FAQSection from "./FAQs";
 
 // Types
-interface UserStats {
-  coursesCompleted: number;
-  coursesInProgress: number;
-  totalHours: number;
-  avgScore: number;
-}
-
-interface QuickAction {
+interface Course {
   id: string;
   title: string;
-  description: string;
+  instructor: string;
+  rating: number;
+  students: number;
+  price: number;
+  originalPrice?: number;
+  image: string;
+  duration: string;
+  level: "Beginner" | "Intermediate" | "Advanced";
+  category: string;
+  tags: string[];
+  isNew?: boolean;
+  isTrending?: boolean;
+  discount?: number;
+}
+
+interface Category {
+  id: string;
+  name: string;
   icon: React.ReactNode;
-  href: string;
+  count: number;
   color: string;
+  bgColor: string;
 }
 
-interface Update {
+interface Testimonial {
   id: string;
-  type: "announcement" | "achievement" | "course" | "community";
-  title: string;
-  description: string;
-  time: string;
-  icon: React.ReactNode;
+  name: string;
+  role: string;
+  company: string;
+  content: string;
+  rating: number;
+  avatar: string;
+  author: string;
+  quote: string;
+  initial: string;
+  avatarColor: string;
+  timeAgo: string;
+  skillLevel: string;
+  completedCourses: number;
 }
-
-const tips = [
-  "Set a daily learning goal for consistency.",
-  "Join the community forums for help and networking.",
-  "Track your progress and celebrate small wins!",
-  "Experiment with code in the playground below.",
-  "Check out the latest featured courses.",
-];
 
 export default function AuthenticatedHomepage({ searchParams, router }: { searchParams: ReturnType<typeof import('next/navigation').useSearchParams>, router: ReturnType<typeof import('next/navigation').useRouter> }) {
   const { user, isAuthenticated, isLoading } = useAuth();
   const { success } = useToast();
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [activeCodeLanguage, setActiveCodeLanguage] = useState<
-    "javascript" | "python" | "html"
-  >("javascript");
-  const [codeContent, setCodeContent] = useState("");
-  const [showTip, setShowTip] = useState(0);
+  const [currentTip, setCurrentTip] = useState(0);
   const [mounted, setMounted] = useState(false);
+  // State to track bookmarked courses by id
+  const [bookmarked, setBookmarked] = useState<{ [id: number]: boolean }>({});
+  // Carousel state
+  const [carouselPosition, setCarouselPosition] = useState(0);
+  // Testimonial carousel state
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const slidesContainerRef = useRef<HTMLDivElement>(null);
+  
+  // Course state
+  const [recommendedCourses, setRecommendedCourses] = useState<any[]>([]);
+  const [featuredCourses, setFeaturedCourses] = useState<any[]>([]);
+  const [trendingCourses, setTrendingCourses] = useState<any[]>([]);
+  const [newCourses, setNewCourses] = useState<any[]>([]);
+  const [coursesLoading, setCoursesLoading] = useState(true);
+  const [addingToCart, setAddingToCart] = useState<Set<string>>(new Set());
+  
+  // Cart context
+  const cartContext = useCart();
+  const addToCart = cartContext?.addToCart || (async () => {});
+  const isInCart = cartContext?.isInCart || (() => false);
+  const addToCartTimeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
+
+  // Calculate responsive slides to show
+  const getSlidesToShow = () => {
+    if (typeof window === 'undefined') return 3;
+    if (window.innerWidth < 768) return 1;
+    if (window.innerWidth < 1024) return 2;
+    return 3;
+  };
+
+  const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
+
+  const testimonials: Testimonial[] = [
+    {
+      id: "1",
+      name: "Sarah Johnson",
+      role: "Frontend Developer",
+      company: "Google",
+      content: "CodingJojo transformed my career! The hands-on projects and expert instructors helped me land my dream job at Google.",
+      rating: 5,
+      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face",
+      author: "Sarah Johnson",
+      quote: "CodingJojo transformed my career! The hands-on projects and expert instructors helped me land my dream job at Google.",
+      initial: "S",
+      avatarColor: "from-purple-500 to-pink-500",
+      timeAgo: "2 days ago",
+      skillLevel: "Advanced",
+      completedCourses: 12,
+    },
+    {
+      id: "2",
+      name: "Michael Chen",
+      role: "Data Scientist",
+      company: "Microsoft",
+      content: "The data science courses are incredibly comprehensive. I went from beginner to professional in just 6 months!",
+      rating: 5,
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face",
+      author: "Michael Chen",
+      quote: "The data science courses are incredibly comprehensive. I went from beginner to professional in just 6 months!",
+      initial: "M",
+      avatarColor: "from-blue-500 to-cyan-500",
+      timeAgo: "1 week ago",
+      skillLevel: "Expert",
+      completedCourses: 18,
+    },
+    {
+      id: "3",
+      name: "Emily Rodriguez",
+      role: "Full Stack Developer",
+      company: "Airbnb",
+      content: "Amazing platform! The project-based learning approach really helped me understand complex concepts quickly.",
+      rating: 5,
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face",
+      author: "Emily Rodriguez",
+      quote: "Amazing platform! The project-based learning approach really helped me understand complex concepts quickly.",
+      initial: "E",
+      avatarColor: "from-green-500 to-emerald-500",
+      timeAgo: "3 days ago",
+      skillLevel: "Intermediate",
+      completedCourses: 8,
+    },
+  ];
+  
+  const totalSlides = testimonials.length;
+
+  useEffect(() => {
+    const handleResize = () => setSlidesToShow(getSlidesToShow());
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const nextSlide = () => {
+    if (animating) return;
+    setAnimating(true);
+    setActiveSlide((prev) => {
+      const maxSlide = Math.max(0, totalSlides - slidesToShow);
+      return prev >= maxSlide ? 0 : prev + 1;
+    });
+    setTimeout(() => setAnimating(false), 400);
+  };
+
+  const prevSlide = () => {
+    if (animating) return;
+    setAnimating(true);
+    setActiveSlide((prev) => {
+      const maxSlide = Math.max(0, totalSlides - slidesToShow);
+      return prev <= 0 ? maxSlide : prev - 1;
+    });
+    setTimeout(() => setAnimating(false), 400);
+  };
+
+  const goToSlide = (index: number) => {
+    if (animating) return;
+    setAnimating(true);
+    setActiveSlide(index);
+    setTimeout(() => setAnimating(false), 400);
+  };
+
+  const getSkillLevelColor = (level: string) => {
+    switch (level) {
+      case "Beginner":
+        return "bg-green-100 text-green-700";
+      case "Intermediate":
+        return "bg-blue-100 text-blue-700";
+      case "Advanced":
+        return "bg-purple-100 text-purple-700";
+      default:
+        return "bg-gray-100 text-gray-700";
+    }
+  };
+
+  // Render stars for rating
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-3 h-3 ${
+          i < Math.floor(rating)
+            ? "text-yellow-400 fill-yellow-400"
+            : "text-gray-300"
+        }`}
+      />
+    ));
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -100,19 +276,115 @@ export default function AuthenticatedHomepage({ searchParams, router }: { search
     }
   }, [mounted, isLoading, isAuthenticated, router]);
 
+  // Check if user has completed onboarding
+  useEffect(() => {
+    if (mounted && !isLoading && isAuthenticated && user) {
+      // Check if user has completed onboarding
+      // You can add an onboardingCompleted field to your user model
+      // For now, we'll skip this check, but you can enable it later
+      // if (!user.onboardingCompleted) {
+      //   router.push("/onboarding");
+      // }
+    }
+  }, [mounted, isLoading, isAuthenticated, user, router]);
+
   // Update time for dynamic greeting
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
+  // Learning tips
+  const learningTips = [
+    "Complete projects to reinforce your learning",
+    "Join study groups and coding communities",
+    "Practice coding every day, even if just for 15 minutes",
+    "Build a portfolio to showcase your skills",
+    "Stay updated with the latest tech trends",
+  ];
+
   // Tip rotator
   useEffect(() => {
     const tipTimer = setInterval(
-      () => setShowTip((prev) => (prev + 1) % tips.length),
-      7000
+      () => setCurrentTip((prev) => (prev + 1) % learningTips.length),
+      5000
     );
     return () => clearInterval(tipTimer);
   }, []);
+
+  // Fetch courses from backend
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchCourses = async () => {
+      try {
+        setCoursesLoading(true);
+        // Fetch all courses
+        const response = await courseService.getCourses({ limit: 50 }); // Fetch more to ensure all sections have data
+        
+        if (response?.success && response.data) {
+          const transformed = response.data
+            .filter((c: any) => !!(c.id || c._id))
+            .map((c: any) => ({
+              id: c.id || c._id,
+              title: c.title,
+              author: c.instructor?.name || "Unknown",
+              rating: c.averageRating || 4.7,
+              students: c.totalEnrollments || c.students || 0,
+              lessons: c.totalLessons || c.lessons || 6,
+              duration: formatCourseDuration(c.duration) || c.duration || "02 WEEKS",
+              price: c.price || 0,
+              originalPrice: c.originalPrice,
+              level: c.level || "Beginner",
+              category: c.category || "General",
+              thumbnail: c.thumbnail || "/api/placeholder/300/200",
+              instructor: {
+                name: c.instructor?.name || "Unknown",
+                avatarUrl: c.instructor?.avatar || "/default-avatar.png",
+              },
+              isNew: c.isNew || false,
+              isFeatured: c.isFeatured || false,
+              isTrending: c.isTrending || false,
+              createdAt: c.createdAt || new Date(),
+            }));
+
+          if (mounted) {
+            // Smart distribution: If backend has flags, use them; otherwise distribute evenly
+            const featuredFiltered = transformed.filter(c => c.isFeatured);
+            const trendingFiltered = transformed.filter(c => c.isTrending);
+            const newFiltered = transformed.filter(c => c.isNew);
+            
+            // If no courses have flags, distribute evenly from all available courses
+            if (transformed.length < 16) {
+              // If we have fewer than 16 courses, cycle through them for all sections
+              const cycledCourses = [...transformed, ...transformed, ...transformed, ...transformed];
+              setRecommendedCourses(cycledCourses.slice(0, 4));
+              setFeaturedCourses(cycledCourses.slice(0, 4));
+              setTrendingCourses(cycledCourses.slice(0, 4));
+              setNewCourses(cycledCourses.slice(0, 4));
+            } else {
+              // Normal distribution if we have enough courses
+              setRecommendedCourses(transformed.slice(0, 4));
+              setFeaturedCourses(featuredFiltered.length >= 4 ? featuredFiltered.slice(0, 4) : transformed.slice(4, 8));
+              setTrendingCourses(trendingFiltered.length >= 4 ? trendingFiltered.slice(0, 4) : transformed.slice(8, 12));
+              setNewCourses(newFiltered.length >= 4 ? newFiltered.slice(0, 4) : transformed.slice(12, 16));
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching courses:", err);
+      } finally {
+        if (mounted) setCoursesLoading(false);
+      }
+    };
+
+    if (mounted && isAuthenticated) {
+      fetchCourses();
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [isAuthenticated]);
 
   // Handle welcome message for new OAuth users
   useEffect(() => {
@@ -145,136 +417,88 @@ export default function AuthenticatedHomepage({ searchParams, router }: { search
     if (hour < 12) return "Good morning";
     if (hour < 18) return "Good afternoon";
     return "Good evening";
-  }; // Calculate real user stats from user data
-  const userStats: UserStats = {
-    coursesCompleted: 0, // Will be calculated from course completion data when available
-    coursesInProgress: user?.enrolledCourses?.length || 0,
-    totalHours: 0, // Will be calculated from learning analytics when available
-    avgScore: 0, // Will be calculated from course scores when available
-  };
-  // Quick actions
-  const quickActions: QuickAction[] = [
-    {
-      id: "dashboard",
-      title: "My Dashboard",
-      description: "Access your learning dashboard",
-      icon: <Target className="h-6 w-6" />,
-      href: "/dashboard",
-      color: "from-indigo-500 to-purple-500",
-    },
-    {
-      id: "continue-learning",
-      title: "Continue Learning",
-      description: "Resume where you left off",
-      icon: <Play className="h-6 w-6" />,
-      href: "/dashboard/courses",
-      color: "from-blue-500 to-purple-500",
-    },
-    {
-      id: "track-progress",
-      title: "Track Progress",
-      description: "View your achievements",
-      icon: <TrendingUp className="h-6 w-6" />,
-      href: "/dashboard/analytics",
-      color: "from-green-500 to-blue-500",
-    },
-    {
-      id: "schedule",
-      title: "Schedule",
-      description: "Manage your learning time",
-      icon: <Calendar className="h-6 w-6" />,
-      href: "/dashboard/schedule",
-      color: "from-orange-500 to-red-500",
-    },
-    {
-      id: "certificates",
-      title: "Certificates",
-      description: "View your achievements",
-      icon: <Award className="h-6 w-6" />,
-      href: "/dashboard/certifications",
-      color: "from-yellow-500 to-orange-500",
-    },
-    {
-      id: "community",
-      title: "Community",
-      description: "Connect with learners",
-      icon: <Users className="h-6 w-6" />,
-      href: "/community",
-      color: "from-pink-500 to-purple-500",
-    },
-  ];
-
-  // Sample code for different languages
-  const codeSnippets = {
-    javascript: `// Welcome to JavaScript!
-function greetUser(name) {
-  return \`Hello, \${name}! Ready to code?\`;
-}
-
-const message = greetUser('${user?.name || "Developer"}');
-console.log(message);
-
-// Try modifying this code!`,
-    python: `# Welcome to Python!
-def greet_user(name):
-    return f"Hello, {name}! Ready to code?"
-
-message = greet_user('${user?.name || "Developer"}')
-print(message)
-
-# Try modifying this code!`,
-    html: `<!-- Welcome to HTML! -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome ${user?.name || "Developer"}</title>
-</head>
-<body>
-    <h1>Hello, ${user?.name || "Developer"}!</h1>
-    <p>Ready to build amazing websites?</p>
-</body>
-</html>`,
   };
 
-  // Latest updates
-  const latestUpdates: Update[] = [
-    {
-      id: "1",
-      type: "course",
-      title: "New React 18 Course Available",
-      description: "Master the latest React features with hands-on projects",
-      time: "2 hours ago",
-      icon: <BookOpen className="h-4 w-4" />,
-    },
-    {
-      id: "2",
-      type: "achievement",
-      title: "Congratulations! JavaScript Badge Earned",
-      description: "You've completed all JavaScript fundamentals",
-      time: "1 day ago",
-      icon: <Trophy className="h-4 w-4" />,
-    },
-    {
-      id: "3",
-      type: "community",
-      title: "New Discussion: Best Practices",
-      description: "Join the conversation about clean code practices",
-      time: "2 days ago",
-      icon: <MessageCircle className="h-4 w-4" />,
-    },
-    {
-      id: "4",
-      type: "announcement",
-      title: "Live Coding Session Tomorrow",
-      description: "Join our instructor for a live React workshop",
-      time: "3 days ago",
-      icon: <Calendar className="h-4 w-4" />,
-    },
-  ];
-  useEffect(() => {
-    setCodeContent(codeSnippets[activeCodeLanguage]);
-  }, [activeCodeLanguage, user?.name]);
+  // NOTE: recommendedCourses, featuredCourses, trendingCourses, and newCourses
+  // are now fetched from the backend API via useEffect above
+
+  // Course Card Component
+  const CourseCard = ({ course, showDiscount = false }: { course: Course; showDiscount?: boolean }) => (
+    <div className="bg-white  shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 group">
+      <div className="relative">
+        <img
+          src={course.image}
+          alt={course.title}
+          className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        {course.isNew && (
+          <span className="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 text-xs font-semibold rounded-full">
+            NEW
+          </span>
+        )}
+        {course.isTrending && (
+          <span className="absolute top-2 left-2 bg-orange-500 text-white px-2 py-1 text-xs font-semibold rounded-full flex items-center gap-1">
+            <TrendIcon className="h-3 w-3" />
+            TRENDING
+          </span>
+        )}
+        {showDiscount && course.discount && (
+          <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 text-xs font-bold rounded-full">
+            -{course.discount}%
+          </span>
+        )}
+        <button className="absolute bottom-2 right-2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300">
+          <BookmarkPlus className="h-4 w-4 text-gray-600" />
+        </button>
+      </div>
+      <div className="p-4">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+            {course.category}
+          </span>
+          <span className="text-xs text-gray-500">{course.level}</span>
+        </div>
+        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+          {course.title}
+        </h3>
+        <p className="text-sm text-gray-600 mb-3">By {course.instructor}</p>
+        
+        <div className="flex items-center gap-2 mb-3">
+          <div className="flex items-center gap-1">
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <span className="text-sm font-medium text-gray-700">{course.rating}</span>
+          </div>
+          <span className="text-xs text-gray-500">({course.students.toLocaleString()} students)</span>
+        </div>
+        
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2 text-xs text-gray-500">
+            <Clock className="h-3 w-3" />
+            <span>{course.duration}</span>
+          </div>
+          <div className="flex flex-wrap gap-1">
+            {course.tags.slice(0, 2).map((tag) => (
+              <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-bold text-gray-900">${course.price}</span>
+            {course.originalPrice && (
+              <span className="text-sm text-gray-500 line-through">${course.originalPrice}</span>
+            )}
+          </div>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm font-medium  transition-colors">
+            Enroll Now
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 
   // Show loading spinner while authentication is being checked
   if (!mounted || isLoading) {
@@ -282,9 +506,8 @@ print(message)
       <>
         <Navbar />
 
-        <div className="min-h-screen flex items-center justify-center">
-          <AnimatedBackground />
-
+        <div className="min-h-screen bg-white flex items-center justify-center">
+  
           <LoadingSpinner size="sm" />
         </div>
       </>
@@ -296,228 +519,1143 @@ print(message)
     return null;
   }
 
+
+  function toggleBookmark(id: number): void {
+    setBookmarked((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  }
+
   return (
     <>
+      <style jsx global>{`
+        @keyframes gradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-12px);
+          }
+        }
+
+        @keyframes float-slow {
+          0%, 100% {
+            transform: translateY(0px) scale(1);
+          }
+          50% {
+            transform: translateY(-20px) scale(1.05);
+          }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 0.8;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(1.08);
+          }
+        }
+
+        @keyframes spin-slow {
+          0% {
+            transform: rotate(0deg) scale(1);
+          }
+          50% {
+            transform: rotate(180deg) scale(1.1);
+          }
+          100% {
+            transform: rotate(360deg) scale(1);
+          }
+        }
+
+        .animate-gradient {
+          animation: gradient 3s ease infinite;
+        }
+
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+
+        .animate-float-slow {
+          animation: float-slow 8s ease-in-out infinite;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+
+        .line-clamp-3 {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
       <Navbar />
-      <div className="min-h-screen relative overflow-hidden">
-        <AnimatedBackground />
+    <div className="min-h-screen bg-white">
+      {/* Hero Section - Unique Purple & Gradient Design - Full Screen Fit */}
+      <div className="relative h-screen max-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-hidden">
+        {/* Animated Mesh Gradient Background */}
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80"
+            alt="Team collaboration and learning"
+            fill
+            className="object-cover opacity-20"
+            priority
+          />
+          {/* Vibrant Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/95 via-gray-800/90 to-gray-700/95"></div>
+        </div>
 
-        <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Welcome Section */}
-          <div className="mb-12">
-            <div className="bg-gradient-to-br from-purple-900/40 to-pink-900/50 shadow-2xl shadow-purple-900/10 backdrop-blur-lg p-8 pb-12 relative overflow-hidden">
-              <div className="absolute -top-8 -right-8 w-48 h-48 bg-gradient-to-tr from-pink-400/20 to-purple-500/30 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-              <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-500/40 rounded-full blur-2xl opacity-60 pointer-events-none"></div>
-              <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-                <div className="flex-1">
-                  <div className="flex items-center gap-4 mb-2">
-                    <span className="block w-12 h-12 rounded-full border-2 border-purple-400 bg-gradient-to-br from-purple-600 via-pink-600 to-pink-400 flex items-center justify-center shadow-lg">
-                      <User className="h-7 w-7 text-white" />
-                    </span>
-                    <span className="font-semibold text-lg text-purple-200">
-                      Welcome back!
-                    </span>
-                  </div>
-                  <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-2 tracking-tight drop-shadow">
-                    {getGreeting()},{" "}
-                    <span className="bg-gradient-to-r from-pink-400 to-yellow-400 text-transparent bg-clip-text">
-                      {user?.name || "Developer"}
-                    </span>
-                    !
-                    <Sparkles className="inline-block ml-2 h-8 w-8 text-yellow-400 animate-bounce" />
-                  </h1>
-                  <p className="text-xl text-gray-300 mb-2">
-                    Ready to continue your coding journey?
-                  </p>
-                  <div className="text-sm text-pink-200/90 italic flex items-center gap-2 animate-fade-in-down">
-                    <Star className="h-4 w-4 text-yellow-300" />
-                    <span>{tips[showTip]}</span>
-                  </div>
-                </div>
-                <div className="flex-shrink-0 hidden lg:block relative">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-tr from-purple-400 via-pink-500 to-yellow-400 flex items-center justify-center shadow-2xl shadow-pink-900/20 border-4 border-white/10 animate-spin-slow">
-                    <Brain className="h-16 w-16 text-white drop-shadow" />
-                  </div>
-                  <div className="absolute bottom-0 -right-4 flex flex-col items-center space-y-2">
-                    <span className="inline-flex px-4 py-1 bg-white/20 text-xs  text-white font-semibold uppercase tracking-wider">
-                      Elite Learner
-                    </span>
-                  </div>
-                </div>
+        {/* Unique Geometric Pattern Overlay */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.6\'%3E%3Cpath d=\'M0 0h40v40H0V0zm40 40h40v40H40V40z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+          }}></div>
+        </div>
+
+        {/* Smooth Curved Bottom Border - Different Shape - Extended to Middle */}
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 ">
+          <svg className="w-full h-full" viewBox="0 0 1440 400" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0C360 120 720 120 1080 60C1200 30 1320 0 1440 0V400H0V0Z" fill="white"/>
+            <path d="M0 40C360 160 720 160 1080 100C1200 70 1320 40 1440 40V400H0V40Z" fill="#22033fff" fillOpacity="0.2"/>
+            <path d="M0 80C360 200 720 200 1080 140C1200 110 1320 80 1440 80V400H0V80Z" fill="slates" fillOpacity="0.1"/>
+          </svg>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center py-8">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            
+            {/* Left Content */}
+            <div className="space-y-4 text-white">
+              {/* Unique Badge with Icon */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-xl border border-white/20">
+                <Trophy className="w-3.5 h-3.5 text-yellow-300" />
+                <span className="text-white font-bold text-xs">CONTINUE YOUR JOURNEY</span>
               </div>
-              {/* User Stats */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
-                <div className="bg-white/5 backdrop-blur-sm p-5 flex flex-col items-center hover:scale-[1.04] transition-all shadow-md shadow-purple-500/10">
-                  <CheckCircle className="h-8 w-8 text-green-400 mb-1" />
-                  <p className="text-gray-300 text-xs">Completed</p>
-                  <p className="text-2xl font-bold text-white">
-                    {userStats.coursesCompleted}
-                  </p>
-                </div>
-                <div className="bg-white/5 backdrop-blur-sm p-5 flex flex-col items-center hover:scale-[1.04] transition-all shadow-md shadow-blue-500/10">
-                  <Clock className="h-8 w-8 text-blue-400 mb-1" />
-                  <p className="text-gray-300 text-xs">In Progress</p>
-                  <p className="text-2xl font-bold text-white">
-                    {userStats.coursesInProgress}
-                  </p>
-                </div>
-                <div className="bg-white/5 backdrop-blur-sm p-5 flex flex-col items-center hover:scale-[1.04] transition-all shadow-md shadow-purple-500/10">
-                  <Target className="h-8 w-8 text-purple-400 mb-1" />
-                  <p className="text-gray-300 text-xs">Hours Learned</p>
-                  <p className="text-2xl font-bold text-white">
-                    {userStats.totalHours}
-                  </p>
-                </div>
-                <div className="bg-white/5 backdrop-blur-sm p-5 flex flex-col items-center hover:scale-[1.04] transition-all shadow-md shadow-yellow-500/10">
-                  <Star className="h-8 w-8 text-yellow-400 mb-1" />
-                  <p className="text-gray-300 text-xs">Avg Score</p>
-                  <p className="text-2xl font-bold text-white">
-                    {userStats.avgScore}%
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Quick Actions Grid */}
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold text-white mb-6 flex items-center">
-              <Zap className="h-8 w-8 text-yellow-400 mr-3" />
-              Quick Actions
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-              {quickActions.map((action) => (
-                <a
-                  key={action.id}
-                  href={action.href}
-                  className="group bg-white/5 backdrop-blur-sm p-7 hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-purple-500/5"
-                >
-                  <div
-                    className={`w-14 h-14 bg-gradient-to-r ${action.color} rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-md`}
-                  >
-                    {action.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    {action.title}
-                  </h3>
-                  <p className="text-gray-400 mb-4">{action.description}</p>
-                  <div className="flex items-center text-purple-400 group-hover:text-purple-300 transition-colors">
-                    <span className="text-sm font-medium">Get Started</span>
-                    <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            {/* Code Editor Section */}
-            <div className="lg:col-span-2">
-              <div className="bg-white/5 backdrop-blur-sm overflow-hidden shadow-lg shadow-purple-900/10">
-                <div className="bg-gradient-to-r from-gray-900 to-gray-800 p-5 border-b border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                  <h3 className="text-xl font-semibold text-white flex items-center mb-2 sm:mb-0">
-                    <Code className="h-6 w-6 text-purple-400 mr-2" />
-                    Try It Yourself - Code Playground
-                  </h3>
-                  <div className="flex space-x-2">
-                    {Object.keys(codeSnippets).map((lang) => (
-                      <button
-                        key={lang}
-                        onClick={() =>
-                          setActiveCodeLanguage(
-                            lang as "javascript" | "python" | "html"
-                          )
-                        }
-                        className={`px-4 py-2 text-sm font-medium transition-all duration-200 ${activeCodeLanguage === lang
-                            ? "bg-purple-600 text-white shadow"
-                            : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                          }`}
-                      >
-                        {lang.charAt(0).toUpperCase() + lang.slice(1)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <div className="  bg-gray-900 p-4 font-mono text-sm border border-purple-800/20 shadow-lg">
-                    <textarea
-                      value={codeContent}
-                      onChange={(e) => setCodeContent(e.target.value)}
-                      className="w-full h-64 bg-transparent text-green-400 resize-none focus:outline-none"
-                      placeholder="Start coding..."
-                      spellCheck={false}
-                    />
-                  </div>
-                  <button className="mt-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-200 flex items-center shadow-lg hover:scale-105">
-                    <Play className="h-4 w-4 mr-2" />
-                    Run Code
-                  </button>
-                </div>
-                <div className="bg-gradient-to-r from-yellow-500/10 via-pink-500/10 to-purple-600/10 py-2 px-4 border-t border-purple-500/10 text-xs text-purple-200 flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-yellow-300" />
-                  Code Playground: Experiment, learn, and have fun!
-                </div>
+              <h1 className="text-4xl lg:text-5xl xl:text-6sxl font-bold text-white leading-tight">
+                Welcome Back!
+              </h1>
+              <p className="text-lg lg:text-3xl text-purple-100 font-semibold">
+                {getGreeting()}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-300">{user?.name || 'Learner'}</span>!
+              </p>
+              <p className="text-purple-100 text-lg lg:text-lg max-w-xl leading-relaxed">
+                Continue exploring thousands of courses and master the skills that matter most. Your next breakthrough is just one lesson away!
+              </p>
+              <div className="flex gap-3">
+                <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:from-yellow-500 hover:to-orange-600 text-gray-100 font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                  Continue Learning
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-800 hover:bg-white/25 backdrop-blur-md border-2 border-white/40 text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300">
+                  Explore Courses
+                  <Sparkles className="w-4 h-4" />
+                </button>
               </div>
             </div>
 
-            {/* Latest Updates */}
-            <div className="bg-white/5 backdrop-blur-sm p-2 shadow-lg shadow-purple-900/15">
-              <h3 className="text-xl font-semibold text-white mb-6 flex items-center">
-                <Sparkles className="h-6 w-6 text-yellow-400 mr-2" />
-                Latest Updates
-              </h3>
-              <div className="space-y-4">
-                {latestUpdates.map((update) => (
-                  <div
-                    key={update.id}
-                    className="bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-colors cursor-pointer flex items-start gap-3 shadow-md hover:shadow-lg"
-                  >
-                    <div
-                      className={`p-2 ${update.type === "course"
-                          ? "bg-blue-500/20 text-blue-400"
-                          : update.type === "achievement"
-                            ? "bg-yellow-500/20 text-yellow-400"
-                            : update.type === "community"
-                              ? "bg-green-500/20 text-green-400"
-                              : "bg-purple-500/20 text-purple-400"
-                        }`}
-                    >
-                      {update.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-white font-medium text-sm mb-1">
-                        {update.title}
-                      </h4>
-                      <p className="text-gray-400 text-xs mb-2">
-                        {update.description}
-                      </p>
-                      <p className="text-gray-500 text-xs">{update.time}</p>
+            {/* Right Content - Unique Hexagonal Frame Design - Smaller */}
+            <div className="relative flex justify-center lg:justify-end">
+              {/* Unique Decorative Elements */}
+              <div className="relative">
+                {/* Purple & Pink Gradient Rings - Smaller */}
+                <div className="absolute top-0 right-0 w-[280px] h-[42s0px] bg-gradient-to-br from-slate-500 to-blue-500 rounded-full opacity-30 blur-3xl animate-pulse-slow"></div>
+                <div className="absolute -top-4 -right-4 w-[400px] h-[400px] border-4 border-slate-400/30 rounded-full animate-spin-slow"></div>
+                <div className="absolute top-8s right-8 w-[350px] h-[350px] border-2 border-slate-300/20 rounded-full animate-float-slow"></div>
+                
+                {/* Modern Card Frame with Gradient Border - Smaller */}
+                <div className="relative w-[450px] h-[450px] bg-gradient-to-br from-slate-500 via-blue-500 to-slate-400 rounded-full shadow-2xl animate-float">
+                  {/* Inner White Border */}
+                  <div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 rounded-full p-6">
+                    {/* Inner Image Container with Rounded Corners */}
+                    <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative">
+                      <Image
+                        src="/images/instructor/authusers.png"
+                        alt="Happy students learning"
+                        width={450}
+                        height={450}
+                        className="w-full h-full object-cover"
+                        priority
+                      />
+                      {/* Subtle overlay gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-slate-600/20 to-transparent"></div>
                     </div>
                   </div>
-                ))}
+                </div>
+
+                {/* Decorative Floating Icons - Smaller */}
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-slate-400 to-blue-500 rounded-full flex items-center justify-center shadow-xl animate-float rotate-12">
+                  <Star className="w-6 h-6 text-white" />
+                </div>
+                <div className="absolute -bottom-5 -left-3 w-10 h-10 bg-gradient-to-br from-slate-400 to-blue-500 rounded-full flex items-center justify-center shadow-xl animate-float" style={{animationDelay: '0.5s'}}>
+                  <Target className="w-5 h-5 text-white" />
+                </div>
+                <div className="absolute top-1/4 -right-5 w-10 h-10 bg-gradient-to-br from-slate-400 to-indigo-500 rounded-full flex items-center justify-center shadow-xl animate-float" style={{animationDelay: '1s'}}>
+                  <Brain className="w-5 h-5 text-white" />
+                </div>
               </div>
+
             </div>
           </div>
 
-          {/* Featured Courses Section */}
-          <div>
-            <FeaturedCoursesSection />
-          </div>
-          <div>
-            <PopularTopics />
-          </div>
-          <div>
-            <PricingPlans />
-          </div>
-          <div>
-            <FAQSection />
-          </div>
-          <div>
-            <TestimonialSection />
+          {/* Stats Bar - Compact Glassmorphism Cards */}
+          <div className="grid grid-cols-4 mt-15 gap-3 mt-8">
+            {[
+              { label: 'Completed', value: '0', icon: CheckCircle, gradient: 'from-green-400 to-emerald-500' },
+              { label: 'In Progress', value: '0', icon: BookOpen, gradient: 'from-cyan-400 to-blue-500' },
+              { label: 'Hours Learned', value: '0', icon: Clock, gradient: 'from-purple-400 to-pink-500' },
+              { label: 'Avg Score', value: '0%', icon: Target, gradient: 'from-orange-400 to-red-500' }
+            ].map((stat, idx) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={idx} className="relative group">
+                  {/* Glow effect on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-20 group-hover:opacity-10 blur-xl transition-opacity duration-300`}></div>
+                  
+                  <div className="relative bg-white backdrop-blur-md p-3 border border-white/30 hover:bg-white/25 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 cursor-pointer">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className={`w-10 h-10 bg-gradient-to-br ${stat.gradient} rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
+                        <IconComponent className="w-5 h-5 text-black" />
+                      </div>
+                      <p className="text-2xl font-bold text-black">{stat.value}</p>
+                    </div>
+                    <p className="text-xs text-black-200 font-semibold uppercase tracking-wide">{stat.label}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <div >
+        
+        {/* Recommended for You */}
+        <section className="mb-10 max-w-7xl mx-auto py-8">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                <Lightbulb className="w-6 h-6 text-yellow-600" />
+              </div>
+              <div>
+                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">Recommended for You</h2>
+                <p className="text-gray-500 text-sm">Personalized course picks based on your interests</p>
+              </div>
+            </div>
+            <button className="text-blue-600 font-semibold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+              View All <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {coursesLoading ? (
+              <div className="col-span-full flex justify-center py-12">
+                <LoadingSpinner size="md" />
+              </div>
+            ) : recommendedCourses.length === 0 ? (
+              <div className="col-span-full text-center py-12 text-gray-500">
+                No courses available
+              </div>
+            ) : recommendedCourses.map((course) => (
+              <div
+                key={course.id}
+                className="bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-200"
+              >
+                {/* Course Image with Duration Badge */}
+                <div className="relative aspect-video overflow-hidden">
+                  <Image
+                    src={course.thumbnail || '/placeholder-course.jpg'}
+                    alt={course.title || 'Course thumbnail'}
+                    width={400}
+                    height={225}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e: any) => {
+                      e.currentTarget.src = '/placeholder-course.jpg';
+                    }}
+                  />
+                  
+                  {/* Duration Badge */}
+                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded font-medium">
+                    {course.duration}
+                  </div>
+
+                  {/* Course Time Badge */}
+                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>{Math.floor(course.lessons * 1.5)}h {Math.floor((course.lessons * 1.5 % 1) * 60)}m</span>
+                  </div>
+                </div>
+
+                {/* Course Content */}
+                <div className="p-4">
+                  {/* Rating and Level Row */}
+                  <div className="flex items-center justify-between mb-2">
+                    {/* Rating - Left */}
+                    <div className="flex items-center gap-1">
+                      {renderStars(course.rating)}
+                      <span className="text-gray-600 text-xs ml-1">({course.rating})</span>
+                    </div>
+                    
+                    {/* Level - Right */}
+                    <div className="flex items-center gap-1">
+                      <Star className="w-3 h-3 text-gray-600" />
+                      <span className="text-gray-600 text-xs">{course.level}</span>
+                    </div>
+                  </div>
+
+                  {/* Course Title */}
+                  <h3 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    {course.title}
+                  </h3>
+
+                  {/* Course Stats */}
+                  <div className="flex items-center justify-between text-gray-600 text-xs mb-3">
+                    {/* Lessons - Left */}
+                    <div className="flex items-center gap-1">
+                      <BookOpen className="w-3 h-3" />
+                      <span>Lesson {course.lessons}</span>
+                    </div>
+                    
+                    {/* Students - Right */}
+                    <div className="flex items-center gap-1">
+                      <Users className="w-3 h-3" />
+                      <span>Students {course.students}+</span>
+                    </div>
+                  </div>
+
+                  {/* Instructor and Price */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
+                        <Users className="w-3 h-3 text-gray-600" />
+                      </div>
+                      <span className="text-xs text-gray-700 font-medium">{course.author}</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-blue-600 font-bold text-sm">
+                        ${course.price}
+                      </div>
+                      {course.originalPrice && (
+                        <div className="text-gray-400 text-xs line-through">
+                          ${course.originalPrice}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link href={`/courses/${course.id}`}>
+                      <button className="w-full py-1.5 px-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 hover:text-gray-800 text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded">
+                        <Eye className="h-3 w-3" />
+                        <span>View Detail</span>
+                      </button>
+                    </Link>
+                    
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (isInCart(course.id) || addingToCart.has(course.id)) return;
+                        setAddingToCart((prev) => new Set([...prev, course.id]));
+                        addToCart(course as any).catch((err) => console.error('Failed to add to cart', err));
+                        const t = setTimeout(() => {
+                          setAddingToCart((prev) => {
+                            const s = new Set(prev);
+                            s.delete(course.id);
+                            return s;
+                          });
+                          addToCartTimeoutsRef.current.delete(course.id);
+                        }, 1500);
+                        addToCartTimeoutsRef.current.set(course.id, t);
+                      }}
+                      className={`w-full py-1.5 px-2 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded ${
+                        isInCart(course.id) ? "bg-blue-700 hover:bg-green-700" : addingToCart.has(course.id) ? "bg-blue-700" : "bg-blue-600 hover:bg-blue-700"
+                      }`}
+                      disabled={isInCart(course.id) || addingToCart.has(course.id)}
+                    >
+                      {isInCart(course.id) ? (
+                        <>
+                          <CheckCircle className="h-3 w-3" />
+                          <span>Added</span>
+                        </>
+                      ) : addingToCart.has(course.id) ? (
+                        <>
+                          <LoadingSpinner size="xs" />
+                          <span>Adding...</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="h-3 w-3" />
+                          <span>Add to Cart</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Featured Courses */}
+        <section className="mb-10 max-w-7xl mx-auto py-8">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                <Star className="w-6 h-6 text-blue-600 fill-blue-600" />
+              </div>
+              <div>
+                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">Featured Courses</h2>
+                <p className="text-gray-500 text-sm">Start with our most popular and highly-rated courses</p>
+              </div>
+            </div>
+            <Link href="/courses" className="text-blue-600 font-semibold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {coursesLoading ? (
+              <div className="col-span-full flex justify-center py-12">
+                <LoadingSpinner size="md" />
+              </div>
+            ) : featuredCourses.length === 0 ? (
+              <div className="col-span-full text-center py-12 text-gray-500">
+                No courses available
+              </div>
+            ) : featuredCourses.map((course) => (
+              <div
+                key={course.id}
+                className="bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-200"
+              >
+                {/* Course Image with Duration Badge */}
+                <div className="relative aspect-video overflow-hidden">
+                  <Image
+                    src={course.thumbnail || '/placeholder-course.jpg'}
+                    alt={course.title || 'Course thumbnail'}
+                    width={400}
+                    height={225}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e: any) => {
+                      e.currentTarget.src = '/placeholder-course.jpg';
+                    }}
+                  />
+                  
+                  {/* Duration Badge */}
+                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded font-medium">
+                    {course.duration}
+                  </div>
+
+                  {/* Course Time Badge */}
+                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>{Math.floor(course.lessons * 1.5)}h {Math.floor((course.lessons * 1.5 % 1) * 60)}m</span>
+                  </div>
+                </div>
+
+                {/* Course Content */}
+                <div className="p-4">
+                  {/* Rating and Level Row */}
+                  <div className="flex items-center justify-between mb-2">
+                    {/* Rating - Left */}
+                    <div className="flex items-center gap-1">
+                      {renderStars(course.rating)}
+                      <span className="text-gray-600 text-xs ml-1">({course.rating})</span>
+                    </div>
+                    
+                    {/* Level - Right */}
+                    <div className="flex items-center gap-1">
+                      <Star className="w-3 h-3 text-gray-600" />
+                      <span className="text-gray-600 text-xs">{course.level}</span>
+                    </div>
+                  </div>
+
+                  {/* Course Title */}
+                  <h3 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    {course.title}
+                  </h3>
+
+                  {/* Course Stats */}
+                  <div className="flex items-center justify-between text-gray-600 text-xs mb-3">
+                    {/* Lessons - Left */}
+                    <div className="flex items-center gap-1">
+                      <BookOpen className="w-3 h-3" />
+                      <span>Lesson {course.lessons}</span>
+                    </div>
+                    
+                    {/* Students - Right */}
+                    <div className="flex items-center gap-1">
+                      <Users className="w-3 h-3" />
+                      <span>Students {course.students}+</span>
+                    </div>
+                  </div>
+
+                  {/* Instructor and Price */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
+                        <Users className="w-3 h-3 text-gray-600" />
+                      </div>
+                      <span className="text-xs text-gray-700 font-medium">{course.author}</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-blue-600 font-bold text-sm">
+                        ${course.price}
+                      </div>
+                      {course.originalPrice && (
+                        <div className="text-gray-400 text-xs line-through">
+                          ${course.originalPrice}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link href={`/courses/${course.id}`}>
+                      <button className="w-full py-1.5 px-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 hover:text-gray-800 text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded">
+                        <Eye className="h-3 w-3" />
+                        <span>View Detail</span>
+                      </button>
+                    </Link>
+                    
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (isInCart(course.id) || addingToCart.has(course.id)) return;
+                        setAddingToCart((prev) => new Set([...prev, course.id]));
+                        addToCart(course as any).catch((err) => console.error('Failed to add to cart', err));
+                        const t = setTimeout(() => {
+                          setAddingToCart((prev) => {
+                            const s = new Set(prev);
+                            s.delete(course.id);
+                            return s;
+                          });
+                          addToCartTimeoutsRef.current.delete(course.id);
+                        }, 1500);
+                        addToCartTimeoutsRef.current.set(course.id, t);
+                      }}
+                      className={`w-full py-1.5 px-2 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded ${
+                        isInCart(course.id) ? "bg-blue-700 hover:bg-green-700" : addingToCart.has(course.id) ? "bg-blue-700" : "bg-blue-600 hover:bg-blue-700"
+                      }`}
+                      disabled={isInCart(course.id) || addingToCart.has(course.id)}
+                    >
+                      {isInCart(course.id) ? (
+                        <>
+                          <CheckCircle className="h-3 w-3" />
+                          <span>Added</span>
+                        </>
+                      ) : addingToCart.has(course.id) ? (
+                        <>
+                          <LoadingSpinner size="xs" />
+                          <span>Adding...</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="h-3 w-3" />
+                          <span>Add to Cart</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Trending Now */}
+        <section className="mb-10 max-w-7xl mx-auto py-8">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                <Flame className="w-6 h-6 text-orange-600" />
+              </div>
+              <div>
+                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">Trending Now</h2>
+                <p className="text-gray-500 text-sm">Popular courses that everyone's talking about</p>
+              </div>
+            </div>
+            <Link href="/courses" className="text-blue-600 font-semibold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {coursesLoading ? (
+              <div className="col-span-full flex justify-center py-12">
+                <LoadingSpinner size="md" />
+              </div>
+            ) : trendingCourses.length === 0 ? (
+              <div className="col-span-full text-center py-12 text-gray-500">
+                No courses available
+              </div>
+            ) : trendingCourses.map((course) => (
+              <div
+                key={course.id}
+                className="bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-200"
+              >
+                {/* Course Image with Duration Badge */}
+                <div className="relative aspect-video overflow-hidden">
+                  <Image
+                    src={course.thumbnail || '/placeholder-course.jpg'}
+                    alt={course.title || 'Course thumbnail'}
+                    width={400}
+                    height={225}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e: any) => {
+                      e.currentTarget.src = '/placeholder-course.jpg';
+                    }}
+                  />
+                  
+                  {/* Duration Badge */}
+                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded font-medium">
+                    {course.duration}
+                  </div>
+
+                  {/* Course Time Badge */}
+                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>{Math.floor(course.lessons * 1.5)}h {Math.floor((course.lessons * 1.5 % 1) * 60)}m</span>
+                  </div>
+                </div>
+
+                {/* Course Content */}
+                <div className="p-4">
+                  {/* Rating and Level Row */}
+                  <div className="flex items-center justify-between mb-2">
+                    {/* Rating - Left */}
+                    <div className="flex items-center gap-1">
+                      {renderStars(course.rating)}
+                      <span className="text-gray-600 text-xs ml-1">({course.rating})</span>
+                    </div>
+                    
+                    {/* Level - Right */}
+                    <div className="flex items-center gap-1">
+                      <Star className="w-3 h-3 text-gray-600" />
+                      <span className="text-gray-600 text-xs">{course.level}</span>
+                    </div>
+                  </div>
+
+                  {/* Course Title */}
+                  <h3 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    {course.title}
+                  </h3>
+
+                  {/* Course Stats */}
+                  <div className="flex items-center justify-between text-gray-600 text-xs mb-3">
+                    {/* Lessons - Left */}
+                    <div className="flex items-center gap-1">
+                      <BookOpen className="w-3 h-3" />
+                      <span>Lesson {course.lessons}</span>
+                    </div>
+                    
+                    {/* Students - Right */}
+                    <div className="flex items-center gap-1">
+                      <Users className="w-3 h-3" />
+                      <span>Students {course.students}+</span>
+                    </div>
+                  </div>
+
+                  {/* Instructor and Price */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
+                        <Users className="w-3 h-3 text-gray-600" />
+                      </div>
+                      <span className="text-xs text-gray-700 font-medium">{course.author}</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-blue-600 font-bold text-sm">
+                        ${course.price}
+                      </div>
+                      {course.originalPrice && (
+                        <div className="text-gray-400 text-xs line-through">
+                          ${course.originalPrice}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link href={`/courses/${course.id}`}>
+                      <button className="w-full py-1.5 px-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 hover:text-gray-800 text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded">
+                        <Eye className="h-3 w-3" />
+                        <span>View Detail</span>
+                      </button>
+                    </Link>
+                    
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (isInCart(course.id) || addingToCart.has(course.id)) return;
+                        setAddingToCart((prev) => new Set([...prev, course.id]));
+                        addToCart(course as any).catch((err) => console.error('Failed to add to cart', err));
+                        const t = setTimeout(() => {
+                          setAddingToCart((prev) => {
+                            const s = new Set(prev);
+                            s.delete(course.id);
+                            return s;
+                          });
+                          addToCartTimeoutsRef.current.delete(course.id);
+                        }, 1500);
+                        addToCartTimeoutsRef.current.set(course.id, t);
+                      }}
+                      className={`w-full py-1.5 px-2 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded ${
+                        isInCart(course.id) ? "bg-blue-700 hover:bg-green-700" : addingToCart.has(course.id) ? "bg-blue-700" : "bg-blue-600 hover:bg-blue-700"
+                      }`}
+                      disabled={isInCart(course.id) || addingToCart.has(course.id)}
+                    >
+                      {isInCart(course.id) ? (
+                        <>
+                          <CheckCircle className="h-3 w-3" />
+                          <span>Added</span>
+                        </>
+                      ) : addingToCart.has(course.id) ? (
+                        <>
+                          <LoadingSpinner size="xs" />
+                          <span>Adding...</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="h-3 w-3" />
+                          <span>Add to Cart</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <PopularCoursesSection/>  
+
+        {/* New Courses */}
+        <section className="mb-10 max-w-7xl mx-auto py-8">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                <Sparkles className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">Fresh Arrivals</h2>
+                <p className="text-gray-500 text-sm">Just launched courses you don't want to miss</p>
+              </div>
+            </div>
+            <Link href="/courses" className="text-blue-600 font-semibold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {coursesLoading ? (
+              <div className="col-span-full flex justify-center py-12">
+                <LoadingSpinner size="md" />
+              </div>
+            ) : newCourses.length === 0 ? (
+              <div className="col-span-full text-center py-12 text-gray-500">
+                No courses available
+              </div>
+            ) : newCourses.map((course) => (
+              <div
+                key={course.id}
+                className="bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-200"
+              >
+                {/* Course Image with Duration Badge */}
+                <div className="relative aspect-video overflow-hidden">
+                  <Image
+                    src={course.thumbnail || '/placeholder-course.jpg'}
+                    alt={course.title || 'Course thumbnail'}
+                    width={400}
+                    height={225}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e: any) => {
+                      e.currentTarget.src = '/placeholder-course.jpg';
+                    }}
+                  />
+                  
+                  {/* Duration Badge */}
+                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded font-medium">
+                    {course.duration}
+                  </div>
+
+                  {/* Course Time Badge */}
+                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>{Math.floor(course.lessons * 1.5)}h {Math.floor((course.lessons * 1.5 % 1) * 60)}m</span>
+                  </div>
+                </div>
+
+                {/* Course Content */}
+                <div className="p-4">
+                  {/* Rating and Level Row */}
+                  <div className="flex items-center justify-between mb-2">
+                    {/* Rating - Left */}
+                    <div className="flex items-center gap-1">
+                      {renderStars(course.rating)}
+                      <span className="text-gray-600 text-xs ml-1">({course.rating})</span>
+                    </div>
+                    
+                    {/* Level - Right */}
+                    <div className="flex items-center gap-1">
+                      <Star className="w-3 h-3 text-gray-600" />
+                      <span className="text-gray-600 text-xs">{course.level}</span>
+                    </div>
+                  </div>
+
+                  {/* Course Title */}
+                  <h3 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    {course.title}
+                  </h3>
+
+                  {/* Course Stats */}
+                  <div className="flex items-center justify-between text-gray-600 text-xs mb-3">
+                    {/* Lessons - Left */}
+                    <div className="flex items-center gap-1">
+                      <BookOpen className="w-3 h-3" />
+                      <span>Lesson {course.lessons}</span>
+                    </div>
+                    
+                    {/* Students - Right */}
+                    <div className="flex items-center gap-1">
+                      <Users className="w-3 h-3" />
+                      <span>Students {course.students}+</span>
+                    </div>
+                  </div>
+
+                  {/* Instructor and Price */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
+                        <Users className="w-3 h-3 text-gray-600" />
+                      </div>
+                      <span className="text-xs text-gray-700 font-medium">{course.author}</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-blue-600 font-bold text-sm">
+                        ${course.price}
+                      </div>
+                      {course.originalPrice && (
+                        <div className="text-gray-400 text-xs line-through">
+                          ${course.originalPrice}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link href={`/courses/${course.id}`}>
+                      <button className="w-full py-1.5 px-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 hover:text-gray-800 text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded">
+                        <Eye className="h-3 w-3" />
+                        <span>View Detail</span>
+                      </button>
+                    </Link>
+                    
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (isInCart(course.id) || addingToCart.has(course.id)) return;
+                        setAddingToCart((prev) => new Set([...prev, course.id]));
+                        addToCart(course as any).catch((err) => console.error('Failed to add to cart', err));
+                        const t = setTimeout(() => {
+                          setAddingToCart((prev) => {
+                            const s = new Set(prev);
+                            s.delete(course.id);
+                            return s;
+                          });
+                          addToCartTimeoutsRef.current.delete(course.id);
+                        }, 1500);
+                        addToCartTimeoutsRef.current.set(course.id, t);
+                      }}
+                      className={`w-full py-1.5 px-2 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1 rounded ${
+                        isInCart(course.id) ? "bg-blue-700 hover:bg-green-700" : addingToCart.has(course.id) ? "bg-blue-700" : "bg-blue-600 hover:bg-blue-700"
+                      }`}
+                      disabled={isInCart(course.id) || addingToCart.has(course.id)}
+                    >
+                      {isInCart(course.id) ? (
+                        <>
+                          <CheckCircle className="h-3 w-3" />
+                          <span>Added</span>
+                        </>
+                      ) : addingToCart.has(course.id) ? (
+                        <>
+                          <LoadingSpinner size="xs" />
+                          <span>Adding...</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="h-3 w-3" />
+                          <span>Add to Cart</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+                <PopularTopics/>
+
+
+              <PricingPlanSection />
+        {/* Call to Action */}
+        <section className="text-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-8 text-white">
+          <h2 className="text-2xl lg:text-3xl font-bold mb-3">Ready to Start Learning?</h2>
+          <p className="text-purple-100 text-base lg:text-lg mb-6 max-w-2xl mx-auto">
+            Join thousands of students already learning on CodingJojo. Get unlimited access to all courses and start building your future today.
+          </p>
+          <div className="flex gap-3 justify-center">
+            <button className="bg-white text-purple-600 px-6 py-2 font-semibold text-sm hover:bg-gray-100 transition-all transform hover:scale-105">
+              Start Free Trial
+            </button>
+            <button className="border-2 border-white text-white px-6 py-2 font-semibold text-sm hover:bg-white hover:text-purple-600 transition-all">
+             upgrade
+            </button>
+          </div>
+        </section>
+
+                <FAQSection/>
+        
+              
+        {/* Testimonials */}
+        <section className="relative py-12 md:py-16 mb-10 font-['Inter',sans-serif]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Enhanced Section Header for CODING JOJO */}
+            <div className="mb-10 md:mb-12 max-w-4xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-full text-xs font-semibold backdrop-blur-sm shadow-lg mb-4 border border-blue-500/20">
+                <div className="h-5 w-5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
+                  <Star className="h-2.5 w-2.5 text-white fill-white" />
+                </div>
+                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent font-bold">
+                  Student Success Stories
+                </span>
+              </div>
+
+              <h2 className="text-2xl md:text-3xl font-extrabold leading-tight tracking-tight text-gray-800 mb-3">
+                <span className="text-gray-800">Transforming Careers at </span>
+                <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient">
+                  CODING JOJO
+                </span>
+              </h2>
+
+              <p className="max-w-2xl mx-auto text-gray-600 text-xs">
+                Join thousands of developers who've landed their dream jobs through
+                our comprehensive coding bootcamps and mentorship programs
+              </p>
+
+              {/* Enhanced Stats */}
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+                <div className="bg-white border border-gray-200 backdrop-blur-sm p-3 hover:border-blue-500/30 transition-all duration-300">
+                  <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    4.9★
+                  </div>
+                  <div className="text-xs text-gray-600">Average Rating</div>
+                </div>
+                <div className="bg-white border border-gray-200 backdrop-blur-sm p-3 hover:border-blue-500/30 transition-all duration-300">
+                  <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    50K+
+                  </div>
+                  <div className="text-xs text-gray-600">Students Enrolled</div>
+                </div>
+                <div className="bg-white border border-gray-200 backdrop-blur-sm p-3 hover:border-blue-500/30 transition-all duration-300">
+                  <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    95%
+                  </div>
+                  <div className="text-xs text-gray-600">Job Placement</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Compact Testimonial Carousel */}
+            <div className="relative">
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevSlide}
+                disabled={animating}
+                className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-white border border-gray-200 hover:border-blue-500/50 rounded-full shadow-xl p-2.5 backdrop-blur-sm transition-all duration-300 group ${
+                  animating
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:shadow-blue-500/20 hover:bg-blue-50"
+                }`}
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors" />
+              </button>
+
+              <div className="overflow-hidden px-8">
+                <div
+                  ref={slidesContainerRef}
+                  className="flex transition-all duration-400 ease-out will-change-transform"
+                  style={{
+                    transform: `translateX(-${
+                      activeSlide * (100 / slidesToShow)
+                    }%)`,
+                  }}
+                >
+                  {testimonials.map((testimonial) => (
+                    <div
+                      key={testimonial.id}
+                      className="px-3 flex-shrink-0"
+                      style={{ width: `${100 / slidesToShow}%` }}
+                    >
+                      {/* Compact Testimonial Card */}
+                      <div className="bg-white border border-gray-200 backdrop-blur-sm p-5 shadow-xl hover:border-blue-500/30 h-full flex flex-col hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 relative group hover:transform hover:scale-[1.02] cursor-pointer">
+                        {/* User Info Header */}
+                        <div className="flex items-center mb-3">
+                          <div className="mr-3 flex-shrink-0 relative">
+                            <div
+                              className={`w-10 h-10 rounded-full bg-gradient-to-r ${testimonial.avatarColor} flex items-center justify-center text-white font-bold text-xs shadow-lg border-2 border-white/20`}
+                            >
+                              {testimonial.initial}
+                            </div>
+                            {/* Verified Badge */}
+                            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center shadow-md border-2 border-white">
+                              <Code className="w-2 h-2 text-white" />
+                            </div>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-bold text-gray-800 text-xs truncate">
+                              {testimonial.author}
+                            </h4>
+                            <div className="flex items-center text-xs">
+                              <span className="text-gray-600 font-medium">
+                                {testimonial.role}
+                              </span>
+                            </div>
+                            <div className="flex items-center mt-1">
+                              <span className="text-blue-600 text-xs font-semibold">
+                                {testimonial.company}
+                              </span>
+                              <span className="mx-2 text-gray-400 text-xs">•</span>
+                              <span className="text-gray-500 text-xs">
+                                {testimonial.timeAgo}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Rating Stars */}
+                        <div className="flex items-center mb-3">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400"
+                            />
+                          ))}
+                          <span className="ml-2 text-xs text-gray-600">
+                            ({testimonial.rating}.0)
+                          </span>
+                        </div>
+
+                        {/* Testimonial Quote - Compact */}
+                        <p className="text-gray-700 text-xs leading-relaxed flex-grow mb-3 line-clamp-3">
+                          "{testimonial.quote}"
+                        </p>
+
+                        {/* Skills & Progress */}
+                        <div className="mt-auto space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span
+                              className={`text-xs px-2 py-1 rounded-full font-medium ${getSkillLevelColor(
+                                testimonial.skillLevel
+                              )}`}
+                            >
+                              {testimonial.skillLevel}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              {testimonial.completedCourses} courses completed
+                            </span>
+                          </div>
+
+                          {/* Decorative Bottom Border */}
+                          <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full transform origin-left group-hover:scale-x-110 transition-transform duration-500"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={nextSlide}
+                disabled={animating}
+                className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 bg-white border border-gray-200 hover:border-blue-500/50 rounded-full shadow-xl p-2.5 backdrop-blur-sm transition-all duration-300 group ${
+                  animating
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:shadow-blue-500/20 hover:bg-blue-50"
+                }`}
+                aria-label="Next testimonial"
+              >
+                <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors" />
+              </button>
+            </div>
+
+            {/* Compact Pagination Dots */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {Array.from({
+                length: Math.max(1, totalSlides - slidesToShow + 1),
+              }).map((_, index) => {
+                const isActive = activeSlide === index;
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    disabled={animating}
+                    className={`h-2 rounded-full transition-all duration-300 ease-out ${
+                      isActive
+                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 w-6 shadow-lg shadow-blue-500/30"
+                        : "bg-gray-300 w-2 hover:bg-gray-400 hover:w-3"
+                    } ${animating ? "opacity-50" : ""}`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div> 
       <Footer />
     </>
   );

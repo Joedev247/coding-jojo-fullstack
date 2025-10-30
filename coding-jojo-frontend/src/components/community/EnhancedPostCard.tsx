@@ -73,7 +73,7 @@ const ViewersDisplay: React.FC<{
   return (
     <div className="relative">
       <div 
-        className="flex items-center space-x-2 cursor-pointer hover:text-pink-400 transition-colors"
+        className="flex items-center space-x-2 cursor-pointer hover:text-blue-600 transition-colors"
         onClick={() => setShowViewersList(!showViewersList)}
       >
         <div className="flex items-center space-x-1">
@@ -102,7 +102,7 @@ const ViewersDisplay: React.FC<{
 
       {/* Viewers dropdown */}
       {showViewersList && recentViewers.length > 0 && (
-        <div className="absolute top-full left-0 mt-2 bg-gray-800 border border-gray-700  shadow-xl p-3 min-w-64 z-50">
+        <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200  shadow-lg p-3 min-w-64 z-50">
           <div className="text-sm text-gray-300 mb-2">Recent viewers (last 7 days)</div>
           <div className="space-y-2">
             {recentViewers.map((viewer) => (
@@ -260,8 +260,8 @@ function CommentItem({
               onClick={handleCommentLike}
               className={`flex items-center space-x-1 text-xs transition duration-200 ${
                 localIsLiked
-                  ? "text-pink-400"
-                  : "text-gray-500 hover:text-pink-400"
+                  ? "text-blue-600"
+                  : "text-gray-500 hover:text-blue-600"
               }`}
             >
               <ThumbsUp
@@ -279,7 +279,7 @@ function CommentItem({
 
           {/* Reply form */}
           {showReplyForm && (
-            <div className="mt-3  bg-gray-900/50 p-3  border border-gray-700">
+            <div className="mt-3 bg-gray-50 p-3 rounded border border-gray-200">
               <div className="flex space-x-2">
                 <input
                   type="text"
@@ -501,11 +501,11 @@ export default function PostCard({
   const getRoleColor = (role: string) => {
     switch (role.toLowerCase()) {
       case "instructor":
-        return "from-pink-500/10 to-orange-500/10 text-pink-400 border-pink-500/20";
+        return "from-blue-100/50 to-blue-200/50 text-blue-600 border-blue-300/50";
       case "admin":
         return "from-purple-500/10 to-blue-500/10 text-purple-400 border-purple-500/20";
       case "moderator":
-        return "from-green-500/10 to-emerald-500/10 text-green-400 border-green-500/20";
+        return "from-blue-500/10 to-emerald-500/10 text-blue-400 border-blue-500/20";
       default:
         return "from-gray-500/10 to-gray-600/10 text-gray-400 border-gray-500/20";
     }
@@ -513,7 +513,7 @@ export default function PostCard({
 
   return (
     <div
-      className={`  bg-gray-900/50 backdrop-blur-sm shadow-xl p-6 hover:shadow-pink-900/10 transition duration-300 group relative ${
+      className={`bg-white border border-gray-200  shadow-sm p-4 hover:shadow-md hover:border-blue-200 transition duration-300 group relative ${
         isMuted ? "opacity-50" : ""
       }`}
     >
@@ -543,7 +543,7 @@ export default function PostCard({
 
         <div className="flex-1">
           <div className="flex items-center">
-            <h4 className="font-medium text-gray-200">{post.author.name}</h4>
+            <h4 className="font-medium text-gray-900 text-sm">{post.author.name}</h4>
             {post.author.email?.includes("instructor") && (
               <span
                 className={`ml-2 bg-gradient-to-r ${getRoleColor(
@@ -564,9 +564,9 @@ export default function PostCard({
             )}
           </div>
 
-          <div className="flex items-center space-x-2 text-sm text-gray-400">
+          <div className="flex items-center space-x-2 text-xs text-gray-600">
             <span>Posted in</span>
-            <button className="text-pink-400 hover:text-pink-300 font-medium capitalize">
+            <button className="text-blue-600 hover:text-blue-700 font-medium capitalize text-xs">
               {post.category}
             </button>
             <span>•</span>
@@ -588,10 +588,10 @@ export default function PostCard({
         className="cursor-pointer"
         onClick={() => window.open(`/community/posts/${post._id}`, "_blank")}
       >
-        <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-pink-400 transition duration-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition duration-200">
           {post.title}
         </h3>
-        <p className="text-gray-300 mb-4 line-clamp-3">
+        <p className="text-gray-700 mb-4 line-clamp-3 text-sm">
           {post.excerpt || post.content}
         </p>
       </div>
@@ -601,7 +601,7 @@ export default function PostCard({
           {post.tags.slice(0, 5).map((tag: string, index: number) => (
             <button
               key={index}
-              className="bg-gray-800 hover:bg-pink-900/40 text-gray-400 hover:text-pink-300 text-xs px-2.5 py-1 rounded transition duration-200 hover:border-pink-600"
+              className="bg-gray-100 hover:bg-blue-50 text-gray-600 hover:text-blue-600 text-xs px-2 py-0.5 rounded transition duration-200 border border-gray-200 hover:border-blue-300"
             >
               #{tag}
             </button>
@@ -621,8 +621,8 @@ export default function PostCard({
             onClick={handleLike}
             className={`flex items-center space-x-1.5 transition duration-200 group ${
               localIsLiked
-                ? "text-pink-400 font-medium"
-                : "text-gray-400 hover:text-pink-400"
+                ? "text-blue-600 font-medium"
+                : "text-gray-500 hover:text-blue-600"
             }`}
             aria-label={localIsLiked ? "Unlike" : "Like"}
           >
@@ -639,7 +639,7 @@ export default function PostCard({
           {/* Comment Button */}
           <button
             onClick={() => setShowCommentForm(!showCommentForm)}
-            className="flex items-center space-x-1.5 text-gray-400 hover:text-pink-400 transition duration-200 group"
+            className="flex items-center space-x-1.5 text-gray-500 hover:text-blue-600 transition duration-200 group"
           >
             <MessageCircle className="w-5 h-5 transition-all duration-200 transform group-hover:scale-110 group-active:scale-95 group-hover:stroke-pink-400" />
             <span>{localCommentCount}</span>
@@ -648,7 +648,7 @@ export default function PostCard({
           {/* Share Button */}
           <button
             onClick={handleShare}
-            className="flex items-center space-x-1.5 text-gray-400 hover:text-pink-400 transition duration-200 group"
+            className="flex items-center space-x-1.5 text-gray-500 hover:text-blue-600 transition duration-200 group"
             aria-label="Share"
           >
             <Share2 className="w-5 h-5 transition-all duration-200 transform group-hover:scale-110 group-active:scale-95 group-hover:stroke-pink-400" />
@@ -676,7 +676,7 @@ export default function PostCard({
         {/* More Options */}
         <div className="relative">
           <button
-            className="text-gray-400 hover:text-white transition duration-200 p-1 hover:bg-gray-800 rounded-full"
+            className="text-gray-500 hover:text-gray-700 transition duration-200 p-1 hover:bg-gray-100 rounded-full"
             aria-label="More options"
             onClick={() => setShowOptions(!showOptions)}
           >
@@ -684,7 +684,7 @@ export default function PostCard({
           </button>
 
           {showOptions && (
-            <div className="absolute z-50 right-0 mt-2 w-56  bg-gray-900 shadow-xl border border-gray-700 ">
+            <div className="absolute z-50 right-0 mt-2 w-48 bg-white  shadow-lg border border-gray-200">
               <ul className="py-1">
                 {/* Edit/Delete for author or admin */}
                 {(isAuthor || isAdmin) && (
@@ -764,7 +764,7 @@ export default function PostCard({
       {/* Comment Form */}
       {showCommentForm && (
         <div className="mt-4 pt-4 border-t border-gray-800">
-          <div className="bg-gray-800/50 p-4  border border-gray-700">
+          <div className="bg-gray-50 p-4 rounded border border-gray-200">
             <div className="flex space-x-3">
               <UserAvatar 
                 user={{
@@ -801,7 +801,7 @@ export default function PostCard({
                     <button
                       onClick={handleAddComment}
                       disabled={!commentText.trim()}
-                      className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white text-sm  hover:from-orange-500 hover:to-pink-500 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1"
+                      className="px-3 py-1.5 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1"
                     >
                       <MessageCircle className="w-4 h-4" />
                       <span>Comment</span>
@@ -816,7 +816,7 @@ export default function PostCard({
       {/* Report Dialog */}
       {showReportDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 p-6  max-w-md w-full mx-4">
+          <div className="bg-white  p-6 max-w-md w-full mx-4 border border-gray-200 shadow-lg">
             <h3 className="text-lg font-semibold text-white mb-4">
               Report Content
             </h3>
@@ -867,7 +867,7 @@ export default function PostCard({
                 onClick={() =>
                   window.open(`/community/posts/${post._id}`, "_blank")
                 }
-                className="text-sm text-pink-400 hover:text-pink-300 transition duration-200"
+                className="text-sm text-blue-600 hover:text-blue-700 transition duration-200"
               >
                 View all {post.commentCount} comments
               </button>

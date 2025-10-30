@@ -24,8 +24,8 @@ const CourseSidePanel: React.FC<CourseSidePanelProps> = ({
   return (
     <div className="lg:sticky lg:top-6 space-y-6">
       {/* Course Preview Card */}
-      <div className="  bg-gray-900/50 backdrop-blur-sm border border-gray-800  overflow-hidden shadow-xl">
-        <div className="relative h-48">
+      <div className="bg-white border border-gray-200  overflow-hidden shadow-sm">
+        <div className="relative h-40">
           <img
             src={typeof course.thumbnail === "string" && course.thumbnail.trim() !== "" ? course.thumbnail : "/default-course.jpg"}
             alt={course.title}
@@ -33,81 +33,81 @@ const CourseSidePanel: React.FC<CourseSidePanelProps> = ({
             className="object-cover w-full h-full absolute top-0 left-0"
           />
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/60 transition duration-300 cursor-pointer">
-            <div className="bg-pink-500/30 backdrop-blur-sm rounded-full p-4 hover:bg-pink-500/50 transition duration-300 transform hover:scale-110">
-              <Play className="w-10 h-10 text-white" />
+            <div className="bg-blue-600/80 backdrop-blur-sm rounded-full p-3 hover:bg-blue-600 transition duration-300 transform hover:scale-110">
+              <Play className="w-8 h-8 text-white" />
             </div>
           </div>
           <div className="absolute top-2 right-2">
             <button
               onClick={() => handleSaveCourse(course.id)}
-              className="p-2   bg-gray-900/70 hover:bg-gray-800 rounded-full transition duration-200"
+              className="p-1.5 bg-white/90 hover:bg-white rounded-full transition duration-200"
             >
               <Heart
-                className={`w-4 h-4 ${
-                  course.isSaved ? "text-pink-500 fill-pink-500" : "text-white"
+                className={`w-3.5 h-3.5 ${
+                  course.isSaved ? "text-blue-600 fill-blue-600" : "text-gray-400"
                 }`}
               />
             </button>
           </div>
         </div>
 
-        <div className="p-5">
-          <div className="flex items-center justify-between mb-4">
-            <div className="font-bold text-2xl text-white">
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="font-bold text-xl text-gray-800">
               {typeof course.price === "number"
                 ? `$${course.price.toFixed(2)}`
                 : course.price}
             </div>
             {course.isNew && (
-              <span className="bg-gradient-to-r from-pink-500 to-orange-500 text-xs font-bold text-white px-2.5 py-1 rounded-full">
+              <span className="bg-blue-600 text-xs font-bold text-white px-2 py-0.5 rounded-full">
                 30% OFF
               </span>
             )}
           </div>
 
-          <div className="space-y-3">
-            <button className="w-full bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white py-3  font-medium transition duration-200 flex items-center justify-center shadow-lg">
-              <ShoppingCart className="w-5 h-5 mr-2" />
+          <div className="space-y-2">
+            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5  font-medium text-sm transition duration-200 flex items-center justify-center">
+              <ShoppingCart className="w-4 h-4 mr-1.5" />
               Enroll Now
             </button>
 
-            <button className="w-full  bg-gray-900 hover:bg-gray-700 border border-gray-700 text-white py-3  font-medium transition duration-200 flex items-center justify-center">
-              <Play className="w-5 h-5 mr-2" />
+            <button className="w-full bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 py-2.5  font-medium text-sm transition duration-200 flex items-center justify-center">
+              <Play className="w-4 h-4 mr-1.5" />
               Preview This Course
             </button>
           </div>
 
-          <div className="mt-5 pt-5 border-t border-gray-800">
-            <h4 className="text-white font-medium mb-3">
+          <div className="mt-4 pt-3 border-t border-gray-200">
+            <h4 className="text-gray-800 font-medium mb-2 text-sm">
               This course includes:
             </h4>
-            <ul className="space-y-3">
-              <li className="flex items-center text-gray-300">
-                <Clock className="w-4 h-4 text-pink-400 mr-3" />
+            <ul className="space-y-2">
+              <li className="flex items-center text-gray-600 text-sm">
+                <Clock className="w-3.5 h-3.5 text-blue-600 mr-2" />
                 {course.duration} on-demand video
               </li>
-              <li className="flex items-center text-gray-300">
-                <BookOpen className="w-4 h-4 text-pink-400 mr-3" />
+              <li className="flex items-center text-gray-600 text-sm">
+                <BookOpen className="w-3.5 h-3.5 text-blue-600 mr-2" />
                 {course.lectures} lessons
               </li>
-              <li className="flex items-center text-gray-300">
-                <Download className="w-4 h-4 text-pink-400 mr-3" />
+              <li className="flex items-center text-gray-600 text-sm">
+                <Download className="w-3.5 h-3.5 text-blue-600 mr-2" />
                 15 downloadable resources
               </li>
-              <li className="flex items-center text-gray-300">
-                <Users className="w-4 h-4 text-pink-400 mr-3" />
+              <li className="flex items-center text-gray-600 text-sm">
+                <Users className="w-3.5 h-3.5 text-blue-600 mr-2" />
                 Forum access & community
               </li>
-              <li className="flex items-center text-gray-300">
-                <Award className="w-4 h-4 text-pink-400 mr-3" />
+              <li className="flex items-center text-gray-600 text-sm">
+                <Award className="w-3.5 h-3.5 text-blue-600 mr-2" />
                 Certificate of completion
               </li>
             </ul>
           </div>
 
-          <div className="mt-5 pt-5 border-t border-gray-800 flex justify-center">
-            <button className="text-pink-400 hover:text-pink-300 font-medium flex items-center">
-              <Share2 className="w-4 h-4 mr-2" />
+          <div className="mt-3 pt-3 border-t border-gray-200 flex justify-center">
+            <button className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-sm">
+              <Share2 className="w-3.5 h-3.5 mr-1.5" />
               Share This Course
             </button>
           </div>
@@ -115,12 +115,12 @@ const CourseSidePanel: React.FC<CourseSidePanelProps> = ({
       </div>
 
       {/* Instructor Card */}
-      <div className="  bg-gray-900/50 backdrop-blur-sm border border-gray-800  overflow-hidden shadow-xl p-5">
-        <h3 className="text-lg font-semibold text-white mb-4">
+      <div className="bg-white border border-gray-200  overflow-hidden shadow-sm p-4">
+        <h3 className="text-xs font-semibold text-gray-800 mb-3">
           About the Instructor
         </h3>
-        <div className="flex items-center mb-4">
-          <div className="w-16 h-16 flex items-center justify-center rounded-full bg-pink-500 text-white font-bold text-2xl border-2 border-pink-500">
+        <div className="flex items-center mb-3">
+          <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold text-lg">
             {course.instructor && course.instructor.name
               ? course.instructor.name
                   .split(' ')
@@ -129,34 +129,34 @@ const CourseSidePanel: React.FC<CourseSidePanelProps> = ({
                   .toUpperCase()
               : 'U'}
           </div>
-          <div className="ml-3">
-            <h4 className="text-white font-medium">{course.instructor.name}</h4>
-            <p className="text-gray-400 text-sm">{course.instructor.role}</p>
+          <div className="ml-2.5">
+            <h4 className="text-gray-800 font-medium text-sm">{course.instructor.name}</h4>
+            <p className="text-gray-600 text-xs">{course.instructor.role}</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="bg-gray-800/70 rounded p-3 text-center">
-            <div className="text-pink-400 font-bold text-xl">12</div>
-            <div className="text-gray-400 text-sm">Courses</div>
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <div className="bg-gray-50  p-2 text-center">
+            <div className="text-blue-600 font-bold text-lg">12</div>
+            <div className="text-gray-600 text-xs">Courses</div>
           </div>
-          <div className="bg-gray-800/70 rounded p-3 text-center">
-            <div className="text-pink-400 font-bold text-xl">45K+</div>
-            <div className="text-gray-400 text-sm">Students</div>
+          <div className="bg-gray-50  p-2 text-center">
+            <div className="text-blue-600 font-bold text-lg">45K+</div>
+            <div className="text-gray-600 text-xs">Students</div>
           </div>
-          <div className="bg-gray-800/70 rounded p-3 text-center">
-            <div className="text-pink-400 font-bold text-xl">4.9</div>
-            <div className="text-gray-400 text-sm">Rating</div>
+          <div className="bg-gray-50  p-2 text-center">
+            <div className="text-blue-600 font-bold text-lg">4.9</div>
+            <div className="text-gray-600 text-xs">Rating</div>
           </div>
-          <div className="bg-gray-800/70 rounded p-3 text-center">
-            <div className="text-pink-400 font-bold text-xl">5+</div>
-            <div className="text-gray-400 text-sm">Years Exp.</div>
+          <div className="bg-gray-50  p-2 text-center">
+            <div className="text-blue-600 font-bold text-lg">5+</div>
+            <div className="text-gray-600 text-xs">Years Exp.</div>
           </div>
         </div>
-        <p className="text-gray-300 text-sm">
+        <p className="text-gray-600 text-xs mb-3">
           Expert instructor with years of industry experience in the field.
           Passionate about teaching and helping students achieve their goals.
         </p>
-        <button className="w-full mt-4  bg-gray-900 hover:bg-gray-700 text-white py-2  font-medium transition duration-200">
+        <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2  font-medium text-sm transition duration-200">
           View Profile
         </button>
       </div>

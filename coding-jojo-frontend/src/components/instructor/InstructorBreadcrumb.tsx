@@ -230,23 +230,23 @@ const InstructorBreadcrumb: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-gray-900/20 backdrop-blur-sm border-b border-gray-700/50 sticky top-0 z-30">
-      <div className="px-4 py-3">
+    <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-blue-200/50 sticky top-0 z-30">
+      <div className="px-3 py-2">
         <div className="flex items-center justify-between">
           {/* Breadcrumb Navigation */}
-          <nav className="flex items-center space-x-2 text-sm">
+          <nav className="flex items-center space-x-1.5 text-xs">
             {breadcrumbs.map((crumb, index) => (
               <React.Fragment key={crumb.href}>
                 {index > 0 && (
-                  <ChevronRight className="h-4 w-4 text-gray-500" />
+                  <ChevronRight className="h-3 w-3 text-blue-400" />
                 )}
                 <Link
                   href={crumb.href}
                   className={`
-                    hover:text-pink-400 transition-colors
+                    hover:text-blue-600 transition-colors px-2 py-1 
                     ${crumb.isActive 
-                      ? 'text-pink-400 font-medium' 
-                      : 'text-gray-400'
+                      ? 'text-blue-600 font-medium bg-blue-200/50' 
+                      : 'text-blue-500'
                     }
                   `}
                 >
@@ -257,42 +257,42 @@ const InstructorBreadcrumb: React.FC = () => {
           </nav>
 
           {/* Search and Actions */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             {/* Search */}
             <div className="relative" ref={searchRef}>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 h-3.5 w-3.5 text-blue-400" />
                 <input
                   type="text"
-                  placeholder="Search instructor features..."
+                  placeholder="Search features..."
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
-                  className="w-64 pl-10 pr-4 py-2 bg-gray-800/60 backdrop-blur-sm border border-gray-700  text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-48 pl-8 pr-3 py-1.5 bg-white/70 backdrop-blur-sm border border-blue-200  text-blue-800 placeholder-blue-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white"
                 />
               </div>
               
               {/* Search Results Dropdown */}
               {showSearchResults && searchResults.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-gray-800/95 backdrop-blur-sm border border-gray-700  shadow-lg max-h-64 overflow-y-auto z-50">
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white backdrop-blur-sm border border-blue-200  shadow-lg max-h-48 overflow-y-auto z-50">
                   {searchResults.map((result, index) => (
                     <Link
                       key={index}
                       href={result.href}
-                      className="block px-4 py-3 hover:bg-gray-700/60 border-b border-gray-700 last:border-0"
+                      className="block px-3 py-2 hover:bg-blue-50 border-b border-blue-100 last:border-0 first:rounded-t-lg last:rounded-b-lg"
                       onClick={() => {
                         setShowSearchResults(false);
                         setSearchQuery("");
                       }}
                     >
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-2">
                         <div className={`
-                          w-2 h-2 rounded-full
+                          w-1.5 h-1.5 rounded-full
                           ${result.type === 'page' ? 'bg-blue-400' : 
-                            result.type === 'course' ? 'bg-green-400' : 'bg-pink-400'}
+                            result.type === 'course' ? 'bg-blue-400' : 'bg-blue-500'}
                         `} />
                         <div>
-                          <p className="text-white font-medium">{result.title}</p>
-                          <p className="text-gray-400 text-xs">{result.description}</p>
+                          <p className="text-blue-800 font-medium text-sm">{result.title}</p>
+                          <p className="text-blue-500 text-xs">{result.description}</p>
                         </div>
                       </div>
                     </Link>
@@ -305,11 +305,11 @@ const InstructorBreadcrumb: React.FC = () => {
             <div className="relative" ref={notificationRef}>
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-2 text-gray-400 hover:text-white transition-colors  hover:bg-gray-800/60"
+                className="relative p-1.5 text-blue-500 hover:text-blue-600 transition-colors  hover:bg-blue-100"
               >
-                <Bell className="h-5 w-5" />
+                <Bell className="h-4 w-4" />
                 {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-gradient-to-r from-pink-500 to-orange-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
+                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs rounded-full flex items-center justify-center font-bold">
                     {unreadCount}
                   </span>
                 )}
@@ -317,29 +317,29 @@ const InstructorBreadcrumb: React.FC = () => {
 
               {/* Notifications Dropdown */}
               {showNotifications && (
-                <div className="absolute top-full right-0 mt-2 w-80 bg-gray-800/95 backdrop-blur-sm border border-gray-700  shadow-lg z-50">
-                  <div className="p-4 border-b border-gray-700">
-                    <h3 className="text-white font-semibold">Notifications</h3>
+                <div className="absolute top-full right-0 mt-1 w-72 bg-white backdrop-blur-sm border border-blue-200  shadow-lg z-50">
+                  <div className="p-3 border-b border-blue-200">
+                    <h3 className="text-blue-800 font-semibold text-sm">Notifications</h3>
                   </div>
-                  <div className="max-h-64 overflow-y-auto">
+                  <div className="max-h-48 overflow-y-auto">
                     {notifications.map((notification) => (
                       <div
                         key={notification.id}
-                        className={`p-4 border-b border-gray-700 last:border-0 hover:bg-gray-700/40 cursor-pointer ${
-                          !notification.read ? 'bg-gray-700/20' : ''
+                        className={`p-3 border-b border-blue-100 last:border-0 hover:bg-blue-50 cursor-pointer ${
+                          !notification.read ? 'bg-blue-50/50' : ''
                         }`}
                       >
-                        <div className="flex items-start space-x-3">
+                        <div className="flex items-start space-x-2">
                           <div className={`
-                            w-2 h-2 rounded-full mt-2
-                            ${notification.type === 'success' ? 'bg-green-400' :
+                            w-1.5 h-1.5 rounded-full mt-1.5
+                            ${notification.type === 'success' ? 'bg-blue-400' :
                               notification.type === 'warning' ? 'bg-yellow-400' :
                               notification.type === 'error' ? 'bg-red-400' : 'bg-blue-400'}
                           `} />
                           <div className="flex-1">
-                            <p className="text-white font-medium text-sm">{notification.title}</p>
-                            <p className="text-gray-400 text-xs mt-1">{notification.message}</p>
-                            <p className="text-gray-500 text-xs mt-1">{notification.time}</p>
+                            <p className="text-blue-800 font-medium text-xs">{notification.title}</p>
+                            <p className="text-blue-600 text-xs mt-0.5">{notification.message}</p>
+                            <p className="text-blue-400 text-xs mt-0.5">{notification.time}</p>
                           </div>
                         </div>
                       </div>
@@ -353,17 +353,17 @@ const InstructorBreadcrumb: React.FC = () => {
             <div className="relative" ref={profileRef}>
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="flex items-center space-x-3 p-2  hover:bg-gray-800/60 transition-colors"
+                className="flex items-center space-x-2 p-1.5  hover:bg-blue-100 transition-colors"
               >
                 <div className="relative">
                   {(instructor?.profilePicture || instructor?.avatar) ? (
                     <img
-                      className="h-8 w-8 rounded-full object-cover border-2 border-gray-600"
+                      className="h-7 w-7 rounded-full object-cover border-2 border-blue-200"
                       src={instructor.profilePicture || instructor.avatar}
                       alt={instructor?.name || instructor?.firstName || "Instructor"}
                     />
                   ) : (
-                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white font-bold text-sm border-2 border-gray-600">
+                    <div className="h-7 w-7 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-medium text-xs border-2 border-blue-200">
                       {getUserInitials(
                         instructor?.name || 
                         (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
@@ -372,35 +372,34 @@ const InstructorBreadcrumb: React.FC = () => {
                       )}
                     </div>
                   )}
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs">⭐</span>
+                  <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-blue-400 rounded-full border border-blue-100">
                   </div>
                 </div>
                 <div className="hidden md:block">
-                  <p className="text-white text-sm font-medium">
+                  <p className="text-blue-800 text-xs font-medium">
                     {instructor?.name || 
                      (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
                      instructor?.email || 
                      "Instructor"}
                   </p>
-                  <p className="text-gray-400 text-xs">Instructor</p>
+                  <p className="text-blue-500 text-xs">Instructor</p>
                 </div>
               </button>
 
               {/* Profile Dropdown */}
               {showProfileMenu && (
-                <div className="absolute top-full right-0 mt-2 w-64 bg-gray-800/95 backdrop-blur-sm border border-gray-700  shadow-lg z-50">
-                  <div className="p-4 border-b border-gray-700">
-                    <div className="flex items-center space-x-3">
+                <div className="absolute top-full right-0 mt-1 w-56 bg-white backdrop-blur-sm border border-blue-200  shadow-lg z-50">
+                  <div className="p-3 border-b border-blue-200">
+                    <div className="flex items-center space-x-2">
                       <div className="relative">
                         {(instructor?.profilePicture || instructor?.avatar) ? (
                           <img
-                            className="h-12 w-12 rounded-full object-cover"
+                            className="h-10 w-10 rounded-full object-cover border-2 border-blue-200"
                             src={instructor.profilePicture || instructor.avatar}
                             alt={instructor?.name || instructor?.firstName || "Instructor"}
                           />
                         ) : (
-                          <div className="h-12 w-12 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-white font-bold">
+                          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-medium border-2 border-blue-200">
                             {getUserInitials(
                               instructor?.name || 
                               (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
@@ -410,33 +409,33 @@ const InstructorBreadcrumb: React.FC = () => {
                           </div>
                         )}
                       </div>
-                      <div>
-                        <p className="text-white font-semibold">
+                      <div className="min-w-0">
+                        <p className="text-blue-800 font-semibold text-sm truncate">
                           {instructor?.name || 
                            (instructor?.firstName && instructor?.lastName ? `${instructor.firstName} ${instructor.lastName}` : '') ||
                            instructor?.email || 
                            "Instructor"}
                         </p>
-                        <p className="text-gray-400 text-sm">{instructor?.email}</p>
-                        <p className="text-pink-400 text-xs font-medium">Instructor Panel</p>
+                        <p className="text-blue-500 text-xs truncate">{instructor?.email}</p>
+                        <p className="text-blue-600 text-xs font-medium">Instructor</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="py-2">
+                  <div className="py-1">
                     <Link
                       href="/instructor/settings"
-                      className="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/60 hover:text-white"
+                      className="flex items-center px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 hover:text-blue-700  mx-1"
                       onClick={() => setShowProfileMenu(false)}
                     >
-                      <Settings className="h-4 w-4 mr-3" />
+                      <Settings className="h-3.5 w-3.5 mr-2" />
                       Settings
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/60 hover:text-white"
+                      className="w-full flex items-center px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 hover:text-blue-700  mx-1"
                     >
-                      <LogOut className="h-4 w-4 mr-3" />
+                      <LogOut className="h-3.5 w-3.5 mr-2" />
                       Sign Out
                     </button>
                   </div>

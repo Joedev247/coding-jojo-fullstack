@@ -37,7 +37,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <AnimatedBackground />
         <div className="z-10">
           <LoadingSpinner size="sm" text="Verifying access..." />
         </div>
@@ -48,7 +47,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <AnimatedBackground />
         <div className="z-10 text-center">
           <LoadingSpinner size="sm" text="Redirecting to login..." />
         </div>
@@ -59,7 +57,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (requireAdmin && user?.role !== 'admin') {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <AnimatedBackground />
         <div className="z-10 text-center">
           <LoadingSpinner size="sm" text="Redirecting..." />
           <p className="text-gray-400 mt-4">Admin access required</p>

@@ -389,7 +389,7 @@ const CoursesContent: React.FC<CoursesContentProps> = ({
               <button
                 onClick={() => handleBulkAction("publish")}
                 disabled={loading}
-                className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded transition-colors disabled:opacity-50"
+                className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded transition-colors disabled:opacity-50"
               >
                 Publish
               </button>
@@ -572,7 +572,7 @@ const CoursesContent: React.FC<CoursesContentProps> = ({
                         disabled={loading}
                         className={`text-xs px-2 py-1 rounded-full border-0 focus:ring-2 focus:ring-pink-500 disabled:opacity-50 ${
                           course.status === "published"
-                            ? "bg-green-100 text-green-800"
+                            ? "bg-blue-100 text-blue-800"
                             : course.status === "draft"
                             ? "bg-blue-100 text-blue-800"
                             : course.status === "archived"
@@ -595,7 +595,7 @@ const CoursesContent: React.FC<CoursesContentProps> = ({
                           <Edit className="h-4 w-4" />
                         </button>
                         <button
-                          className="p-2 text-gray-400 hover:text-green-500 transition-colors hover:bg-gray-800"
+                          className="p-2 text-gray-400 hover:text-blue-500 transition-colors hover:bg-gray-800"
                           title="View course"
                         >
                           <Eye className="h-4 w-4" />
@@ -721,8 +721,8 @@ const CoursesContent: React.FC<CoursesContentProps> = ({
                 {courses.filter((c) => c.status === "published").length}
               </div>
             </div>
-            <div className="p-3 bg-green-500/20">
-              <Eye className="h-6 w-6 text-green-400" />
+            <div className="p-3 bg-blue-500/20">
+              <Eye className="h-6 w-6 text-blue-400" />
             </div>
           </div>
         </div>

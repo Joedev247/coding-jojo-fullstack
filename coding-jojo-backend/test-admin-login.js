@@ -4,7 +4,7 @@ async function testAdminLogin() {
   try {
     console.log('🔍 Testing admin login...');
     
-    const response = await axios.post('http://localhost:5000/api/auth/admin-login', {
+    const response = await axios.post('https://codingjojo-backend.onrender.com/api/auth/admin-login', {
       password: 'admin123'
     });
     
@@ -16,7 +16,7 @@ async function testAdminLogin() {
     // Test token with admin stats
     if (response.data.token) {
       console.log('\n🔍 Testing admin stats with token...');
-      const statsResponse = await axios.get('http://localhost:5000/api/admin/stats', {
+      const statsResponse = await axios.get('https://codingjojo-backend.onrender.com/api/admin/stats', {
         headers: {
           Authorization: `Bearer ${response.data.token}`
         }

@@ -74,8 +74,8 @@ const ProgressAnalytics: React.FC<ProgressAnalyticsProps> = ({
         </div>
 
         <div className="flex items-center p-6  bg-gray-900">
-          <div className="p-3 bg-green-500/20 mr-4">
-            <CheckCircle className="h-8 w-8 text-green-400" />
+          <div className="p-3 bg-blue-500/20 mr-4">
+            <CheckCircle className="h-8 w-8 text-blue-400" />
           </div>
           <div>
             <p className="text-sm text-gray-400">Learning Streak</p>
@@ -117,7 +117,7 @@ const ProgressAnalytics: React.FC<ProgressAnalyticsProps> = ({
                     <div
                       className={`h-full ${
                         course.progress === 100
-                          ? "bg-gradient-to-r from-green-500 to-green-400"
+                          ? "bg-gradient-to-r from-blue-500 to-blue-400"
                           : "bg-gradient-to-r from-purple-500 to-pink-500"
                       }`}
                       style={{ width: `${course.progress}%` }}
@@ -129,7 +129,7 @@ const ProgressAnalytics: React.FC<ProgressAnalyticsProps> = ({
                   <span
                     className={`text-sm font-medium ${
                       course.progress === 100
-                        ? "text-green-400"
+                        ? "text-blue-400"
                         : "text-purple-400"
                     }`}
                   >
@@ -181,7 +181,7 @@ const ProgressAnalytics: React.FC<ProgressAnalyticsProps> = ({
                       <circle
                         className={`${
                           quiz.score / quiz.maxScore >= 0.75
-                            ? "text-green-500"
+                            ? "text-blue-500"
                             : quiz.score / quiz.maxScore >= 0.5
                             ? "text-yellow-500"
                             : "text-red-500"
